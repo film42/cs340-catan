@@ -4,14 +4,14 @@ catan.models.chat = catan.models.chat || {};
 
 catan.models.chat.Chat = (function() {
 
-    // Constructor 
-    function Chat(json) {
+  // Constructor 
+  function Chat(json) {
 
-    }
+  }
 
-    Chat.prototype.example = function() {
-        return null;
-    };
+  Chat.prototype.example = function() {
+      return null;
+  };
 
-    return Chat;
+  return Chat;
 })();

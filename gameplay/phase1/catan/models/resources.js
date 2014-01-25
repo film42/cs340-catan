@@ -3,14 +3,14 @@ catan.models = catan.models || {};
 
 catan.models.ResourceList = (function() {
 
-    // Constructor 
-    function ResourceList(json) {
+  // Constructor 
+  function ResourceList(json) {
 
-    }
+  }
 
-    ResourceList.prototype.example = function() {
-        return null;
-    };
+  ResourceList.prototype.example = function() {
+      return null;
+  };
 
-    return ResourceList;
+  return ResourceList;
 })();

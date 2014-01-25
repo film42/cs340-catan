@@ -4,14 +4,14 @@ catan.models.map = catan.models.map || {};
 
 catan.models.map.Edge = (function() {
 
-    // Constructor 
-    function Edge(json) {
+  // Constructor 
+  function Edge(json) {
 
-    }
+  }
 
-    Edge.prototype.example = function() {
-        return null;
-    };
+  Edge.prototype.example = function() {
+      return null;
+  };
 
-    return Edge;
+  return Edge;
 })();

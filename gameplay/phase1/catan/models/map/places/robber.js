@@ -5,14 +5,14 @@ catan.models.map.places = catan.models.map.places || {};
 
 catan.models.map.places.Robber = (function() {
 
-    // Constructor 
-    function Robber(json) {
+  // Constructor 
+  function Robber(json) {
 
-    }
+  }
 
-    Robber.prototype.example = function() {
-        return null;
-    };
+  Robber.prototype.example = function() {
+      return null;
+  };
 
-    return Robber;
+  return Robber;
 })();

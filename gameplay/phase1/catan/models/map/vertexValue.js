@@ -4,14 +4,14 @@ catan.models.map = catan.models.map || {};
 
 catan.models.map.VertexValue = (function() {
 
-    // Constructor 
-    function VertexValue(json) {
+  // Constructor 
+  function VertexValue(json) {
 
-    }
+  }
 
-    VertexValue.prototype.example = function() {
-        return null;
-    };
+  VertexValue.prototype.example = function() {
+      return null;
+  };
 
-    return VertexValue;
+  return VertexValue;
 })();

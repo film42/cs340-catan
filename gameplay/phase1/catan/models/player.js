@@ -3,14 +3,14 @@ catan.models = catan.models || {};
 
 catan.models.Player = (function() {
 
-    // Constructor 
-    function Player(json) {
+  // Constructor 
+  function Player(json) {
 
-    }
+  }
 
-    Player.prototype.example = function() {
-        return null;
-    };
+  Player.prototype.example = function() {
+      return null;
+  };
 
-    return Player;
+  return Player;
 })();

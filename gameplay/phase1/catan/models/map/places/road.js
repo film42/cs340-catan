@@ -5,14 +5,14 @@ catan.models.map.places = catan.models.map.places || {};
 
 catan.models.map.places.Road = (function() {
 
-    // Constructor 
-    function Road(json) {
+  // Constructor 
+  function Road(json) {
 
-    }
+  }
 
-    Road.prototype.example = function() {
-        return null;
-    };
+  Road.prototype.example = function() {
+      return null;
+  };
 
-    return Road;
+  return Road;
 })();

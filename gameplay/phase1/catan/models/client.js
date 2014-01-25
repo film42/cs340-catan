@@ -1,55 +1,63 @@
+/**
+  This module contains the top-level client model class
+
+  @module                catan.models
+  @namespace             catan.models
+*/
+
 var catan = catan || {};
 catan.models = catan.models || {};
 
 catan.models.ClientModel = (function() {
 
-    // Constructor 
-    function ClientModel(json) {
+  // Constructor 
+  function ClientModel(json) {
 
-    }
+  }
 
-    //
-    // Getters
-    //
-    ClientModel.prototype.getPlayers = function() {};
+  //
+  // Getters
+  //
 
-    ClientModel.prototype.getBank = function() {};
+  ClientModel.prototype.getPlayers = function() {};
 
-    ClientModel.prototype.getDeck = function() {};
+  ClientModel.prototype.getBank = function() {};
 
-    ClientModel.prototype.getChat = function() {};
+  ClientModel.prototype.getDeck = function() {};
 
-    ClientModel.prototype.getTurn = function() {};
+  ClientModel.prototype.getChat = function() {};
 
-    ClientModel.prototype.getTradeOffer = function() {};
+  ClientModel.prototype.getTurn = function() {};
 
-    ClientModel.prototype.getMap = function() {};
+  ClientModel.prototype.getTradeOffer = function() {};
 
-    //
-    // Cans
-    //
+  ClientModel.prototype.getMap = function() {};
 
-    ClientModel.prototype.canBuydevelomentCard = function() {};
+  //
+  // Cans
+  //
 
-    ClientModel.prototype.canBuyRoad = function() {};
+  ClientModel.prototype.canBuydevelomentCard = function() {};
 
-    ClientModel.prototype.canBuySettlement = function() {};
+  ClientModel.prototype.canBuyRoad = function() {};
 
-    ClientModel.prototype.canBuyCity = function() {};
+  ClientModel.prototype.canBuySettlement = function() {};
 
-    ClientModel.prototype.canBuyResources = function() {};
+  ClientModel.prototype.canBuyCity = function() {};
 
-    ClientModel.prototype.canOfferTrade = function() {};
+  ClientModel.prototype.canBuyResources = function() {};
 
-    ClientModel.prototype.canAcceptTrade = function() {};
+  ClientModel.prototype.canOfferTrade = function() {};
 
-    ClientModel.prototype.needDiscardCard = function() {};
+  ClientModel.prototype.canAcceptTrade = function() {};
 
-    ClientModel.prototype.canPlaceRood = function() {};
+  ClientModel.prototype.needDiscardCard = function() {};
 
-    ClientModel.prototype.canPlaceSettlement = function() {};
+  ClientModel.prototype.canPlaceRood = function() {};
 
-    ClientModel.prototype.canPlaceCity = function() {};
+  ClientModel.prototype.canPlaceSettlement = function() {};
 
-    return ClientModel;
+  ClientModel.prototype.canPlaceCity = function() {};
+
+  return ClientModel;
 })();

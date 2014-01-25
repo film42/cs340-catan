@@ -5,14 +5,14 @@ catan.models.map.places = catan.models.map.places || {};
 
 catan.models.map.places.Settlement = (function() {
 
-    // Constructor 
-    function Settlement(json) {
+  // Constructor 
+  function Settlement(json) {
 
-    }
+  }
 
-    Settlement.prototype.example = function() {
-        return null;
-    };
+  Settlement.prototype.example = function() {
+      return null;
+  };
 
-    return Settlement;
+  return Settlement;
 })();

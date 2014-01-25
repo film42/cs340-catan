@@ -5,14 +5,14 @@ catan.models.map.places = catan.models.map.places || {};
 
 catan.models.map.places.City = (function() {
 
-    // Constructor 
-    function City(json) {
+  // Constructor 
+  function City(json) {
 
-    }
+  }
 
-    City.prototype.example = function() {
-        return null;
-    };
+  City.prototype.example = function() {
+      return null;
+  };
 
-    return City;
+  return City;
 })();

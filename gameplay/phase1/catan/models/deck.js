@@ -3,14 +3,14 @@ catan.models = catan.models || {};
 
 catan.models.Deck = (function() {
 
-    // Constructor 
-    function Deck(json) {
+  // Constructor 
+  function Deck(json) {
 
-    }
+  }
 
-    Deck.prototype.example = function() {
-        return null;
-    };
+  Deck.prototype.example = function() {
+      return null;
+  };
 
-    return Deck;
+  return Deck;
 })();

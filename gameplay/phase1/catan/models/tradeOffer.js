@@ -3,14 +3,14 @@ catan.models = catan.models || {};
 
 catan.models.TradeOffer = (function() {
 
-    // Constructor 
-    function TradeOffer(json) {
+  // Constructor 
+  function TradeOffer(json) {
 
-    }
+  }
 
-    TradeOffer.prototype.example = function() {
-        return null;
-    };
+  TradeOffer.prototype.example = function() {
+      return null;
+  };
 
-    return TradeOffer;
+  return TradeOffer;
 })();
