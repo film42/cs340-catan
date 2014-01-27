@@ -280,5 +280,3 @@ catan.proxy.ClientProxy = (function() {
 
   return ClientProxy;
 })();
-
-TODO: Finish params
