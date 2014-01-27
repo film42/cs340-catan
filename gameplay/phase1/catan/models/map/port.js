@@ -31,16 +31,14 @@ catan.models.map.port = (function() {
       @constructor
       @param {Object} portjson the port json data from server used to intialize the port
   */
-  function Port(portjson) {
-
-  }
+  function Port(portjson) {}
 
   
 
-
-  port.prototype.getValidVertices = function() {
-      return null;
-  };
+  //not sure if this is needed, or just basic gets and sets
+  //port.prototype.getValidVertices = function() {
+  //    return null;
+  //};
 
   return port;
 })();
