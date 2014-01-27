@@ -17,7 +17,7 @@ catan.proxy.ClientProxy = (function() {
     PRE: A string URL, ex: http://myserver/
     </pre>
 
-    @class catan.proxy.ClientProxy
+    @class ClientProxy
     @constructor
       
     @param {String} url to the server
