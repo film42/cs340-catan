@@ -238,7 +238,7 @@ catan.proxy.ClientProxy = (function() {
     </pre>
 
     @param {integer} playerId The player using the monopoly card
-
+    @param {string} resource The resource to collect
     @param {function} callback The response callback
      
     @method playMonopoly
