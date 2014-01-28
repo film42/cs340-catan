@@ -1,45 +1,119 @@
 var catan = catan || {};
 catan.core = catan.core || {};
 
+/**
+  This module contains the core classes, including: Game
+
+  @module                catan.core
+  @namespace             catan.core
+*/
+
+
 catan.core.Game = (function() {
 
-  // Constructor 
-  function Game() {
+  /**
+    The Game class, the big mama! This class contains all server communication, client models. It is also responsible for real time persistence. The Interface is designed to be extremely powerful for the development of Catan.
+
+    <pre>
+    PRE: A string URL, ex: http://myserver/
+    </pre>
+
+    @property {ClientModel} model
+    @property {ClientProxy} proxy
+
+    @class Game
+    @constructor
+      
+    @param {String} url to the server
+  */
+  function Game(url) {
     this.model = {};
     this.proxy = {};
   }
 
+  /**
+    INIT Game method tells the proxy to get a client model, refreshUI, and then established the 2000ms persistence loop with the server.
+
+    <pre>
+    PRE: There is an internet connection
+    PRE: The whole UI is waiting to be rendered
+    PRE: Caller provides a callback
+    POST: The caller handles the callback
+    </pre>
+      
+    @return {ClientModel}
+  */
   Game.prototype.startGame = function(callback) {
     this.getState(function(err, resp) {
       model = new catan.models.ClientModel(resp);
       callback();
     });
+
     // Refresh every 2000 seconds
-    setInterval(this.getState, 2000);
+    setInterval(function() {
+      var that = this;
+      proxy.getState(function(err, resp) {
+        if(err) return callback(err);
+
+        that.model = new catan.models.ClientModel(resp);
+        that.refreshUI();
+        callback(err);
+      });
+    }, 2000);
   };
 
+  /**
+    Refresh the UI with the current Client Model
+
+    <pre>
+    PRE: A ClientModel exists
+    PRE: The Caller provides a callback
+    POST: The caller handles the callback
+    </pre>
+      
+    @return {ClientModel}
+  */
   Game.prototype.refreshUI = function(callback) {};
 
-  Game.prototype.getState = function(callback) {
-    var that = this;
-    proxy.getState(function(err, resp) {
-      if(err) return callback(err);
+  /**
+    Get the model that's hooked up to this GAME class
 
-      that.model = new catan.models.ClientModel(resp);
-      that.refreshUI();
-      callback(err);
-    });
-  };
-
+    <pre>
+    PRE: None
+    POST: The Game's model
+    </pre>
+      
+    @return {ClientModel}
+  */
   Game.prototype.getModel = function() {
     return this.model;
   };
 
+  /**
+    Get the proxy that's hooked up to this GAME class
+
+    <pre>
+    PRE: None
+    POST: The Game's proxy
+    </pre>
+      
+    @return {ClientProxy}
+  */
   Game.prototype.getProxy = function() {
     return this.proxy;
   };
 
-  Game.prototype.getCurrentUser = function() {
+  /**
+    Get the ID of the current player based on the cookie set by the game server.
+
+    <pre>
+    PRE: None
+    POST: The player ID set in the cookie
+    </pre>
+      
+    @return {integer}
+  */
+  Game.prototype.getCurrentPlayerId = function() {
     return $.cookie('catan.user');
   };
 
@@ -64,7 +138,7 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.sendChat = function(message, callback) {
-    var playerId = this.getCurrentUser();
+    var playerId = this.getCurrentPlayerId();
     this.proxy.sendChat(playerId, message, function(err) {
       if(!err) callback(null);
       else callback(err);
@@ -86,7 +160,7 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.acceptTrade = function(status, callback) {
-    var playerId = this.getCurrentUser();
+    var playerId = this.getCurrentPlayerId();
     // TODO: Make sure this works fine with debugger
     this.proxy.acceptTrade(playerId, status, callback);
   };
