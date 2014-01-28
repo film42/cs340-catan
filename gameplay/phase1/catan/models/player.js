@@ -105,10 +105,9 @@ catan.models.Player = (function() {
     
     PRE:  This object has already been initialized.
     POST: The method returns whether the user can offer a trade. 
-  No parameters are necessary to check this value. 
+    @param {resourceList} cardsTraded - cards the client wants to trade in 
   */
-  Player.prototype.canOfferTrade = function() {
-    return null;
+  Player.prototype.canOfferTrade = function(cardsTraded)
   };
 
   /**
@@ -117,7 +116,7 @@ catan.models.Player = (function() {
     
     PRE:  This object has already been initialized.
     POST: The method returns whether the user can accept a trade. 
-  No parameters are necessary to check this value. 
+    @param {resourceList} cardsRecieved -cards the client will receive
   */
   Player.prototype.canAcceptTrade = function() {
     return null;
@@ -137,14 +136,14 @@ catan.models.Player = (function() {
 
   /**
     @author Steve Allred
-      Checks with the internal data to find out if it can discard a card.
+      Checks with the internal data to find out if the player has the given cards
       
       PRE:  This object has already been initialized.
       POST: The method returns whether the user can can discard a card.
- 
-    No parameters are necessary to check this value. 
+    @method canDiscardCard
+    @param {resourceList} cardsDiscarded -the cards to be discarded
   */
-  Player.prototype.discardCard = function() {
+  Player.prototype.canDiscardCard = function(cardsDiscarded) {
     return null;
   };
 
