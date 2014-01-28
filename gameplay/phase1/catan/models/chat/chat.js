@@ -10,46 +10,46 @@ catan.models.chat.Chat = (function() {
     @class catan.models.chat.Chat
     @constructor
     
-    @param {array} lines A list of objects with source(the player name attached to the event), message(the contents of the line)
+    @param {array} messages A list of objects with source(the player name attached to the event), message(the contents of the line)
   */
-  function Chat(lines) {
-    this.lines = lines;
+  function Chat(messages) {
+    this.messages = messages;
   }
   
   /**
-    Returns the array of lines 
+    Returns the array of messages 
     <pre>
     PRE: None
     </pre>
      
-    @method getLines
-    @return {array} The array of line objects   
+    @method getmessages
+    @return {array} The array of message objects   
   */
-  Chat.prototype.getLines = function() {
-    return this.lines;
+  Chat.prototype.getMessages = function() {
+    return this.messages;
   };
   
   /**
-    Add a line object to array of lines
+    Add a message object to array of messages
     <pre>
       PRE: !isNaN()
     </pre>
 
     @method addLine
-    @param {object} line object which contain message and source 
+    @param {object} message object which contain message and source 
   */
-  Chat.prototype.addLine= function (line) {};
+  Chat.prototype.addMessage = function (message) {};
     
   /**
-    Returns the line object for given source 
+    Returns the message object for given source 
     <pre>
       PRE: !isNaN(source)
     </pre>
        
-    @method getLine
-    @return {object } line object which contain message and source for given source 
+    @method getMessage
+    @return {object } message object which contain message and source for given source 
   */
-  Chat.prototype.getLine = function (source) {
+  Chat.prototype.getMessage = function (source) {
     return null;
   };
 
