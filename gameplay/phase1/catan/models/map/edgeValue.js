@@ -36,7 +36,7 @@ catan.models.map.EdgeValue = (function() {
 
   /**
   Returns the value of ownerID
-  A value of -1 means is it un 
+  A value of -1 means is it unoccupied
   <pre>
   PRE: None
   POST: Returns a value between -1 and 3 that represents the owner that occupies the edge.
