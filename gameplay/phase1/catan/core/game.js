@@ -193,11 +193,10 @@ catan.core.Game = (function() {
     </pre>
      
     @method maritimeTrade
-    @param {integer} playerId The player ID of the current player
     @param {resourceList} cardsTraded cards the client wants to trade in
     @param {resourceList} cardsRecieved cards the client will recieve
   */
-  Game.prototype.maritimeTrade = function(playerId, cardsTraded, cardsRecieved) {};
+  Game.prototype.maritimeTrade = function(cardsTraded, cardsRecieved) {};
 
   /**
     Discard a number of playing cards
