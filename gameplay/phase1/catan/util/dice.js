@@ -5,15 +5,15 @@ catan.util.dice = catan.util.dice || {};
 /**
   This module contains the game's util functinos
 
-  @module                catan.models
-  @namespace             catan.models
+  @module                catan.util
+  @namespace             catan.util
 */
 
 /**
   This module is the dice util methods
 
-  @module                catan.models.dice
-  @namespace             catan.models.dice
+  @module                catan.util.dice
+  @namespace             catan.util.dice
 */
 
 /**
