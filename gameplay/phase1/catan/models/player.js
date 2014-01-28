@@ -163,47 +163,5 @@ catan.models.Player = (function() {
     return null;
   };
 
-  /**
-  @author Steve Allred
-    Checks with the internal data to find out if it can place a road.
-    
-  Constructor Specification:
-    PRE:  This object has already been initialized.
-    POST: The method returns whether the user can place a road.
-  @class Player 
-  No parameters are necessary to check this value. 
-  */
-  Player.prototype.canPlaceRood = function() {
-    return null;
-  };
-
-  /**
-  @author Steve Allred
-    Checks with the internal data to find out if it can place a settlement.
-    
-  Constructor Specification:
-    PRE:  This object has already been initialized.
-    POST: The method returns whether the user can place a settlement.
-  @class Player 
-  No parameters are necessary to check this value. 
-  */
-  Player.prototype.canPlaceSettlement = function() {
-    return null;
-  };
-
-  /**
-  @author Steve Allred
-    Checks with the internal data to find out if it can place a city.
-    
-  Constructor Specification:
-    PRE:  This object has already been initialized.
-    POST: The method returns whether the user can place a city.
-  @class Player 
-  No parameters are necessary to check this value. 
-  */
-  Player.prototype.canPlaceCity = function() {
-    return null;
-  };
-
   return Player;
 })();
