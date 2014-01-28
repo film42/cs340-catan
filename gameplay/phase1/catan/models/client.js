@@ -195,8 +195,6 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.canBuyCity = function() {};
 
-  ClientModel.prototype.canBuyResources = function() {};
-
   /**
     Can offer a trade?
 
