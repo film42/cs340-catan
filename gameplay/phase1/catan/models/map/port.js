@@ -4,10 +4,30 @@ catan.models.map = catan.models.map || {};
 
 catan.models.map.port = (function() {
 
+  /**
+  @property inputResource
+  @type String
+  */
   core.defineProperty(Port.prototype,"inputResource");
+  /**
+  @property location
+  @type HexLocation
+  */
   core.defineProperty(Port.prototype,"location");
+  /**
+  @property orientation
+  @type EdgeDirection
+  */
   core.defineProperty(Port.prototype,"orientation");
+  /**
+  @property ratio
+  @type number
+  */
   core.defineProperty(Port.prototype,"ratio");
+  /**
+  @property validVertices
+  @type vertexLocation[]
+  */
   core.defineProperty(Port.prototype,"validVertices");
 
   /**
@@ -44,10 +64,22 @@ catan.models.map.port = (function() {
 })();
 
 
-catan.models.map.vertexLocatiion = function() {
+catan.models.map.vertexLocation = function() {
 
+  /**
+  @property x
+  @type number
+  */
   core.defineProperty(HexLocation.prototype,"x");
+  /**
+  @property y
+  @type number
+  */s
   core.defineProperty(HexLocation.prototype,"y");
+  /**
+  @property direction
+  @type VertexDirection
+  */
   core.defineProperty(HexLocation.prototype,"direction");
 
   /**
