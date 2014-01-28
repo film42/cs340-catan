@@ -33,7 +33,100 @@ catan.models.map.Hex = (function CatanHex_Class(){
 
   core.forceClassInherit(Hex, hexgrid.BasicHex);
   
+  /**
+  @property location
+  */
+  core.defineProperty(Hex.prototype, "location");
+  /**
+  @property edges
+  */
+  core.defineProperty(Hex.prototype, "edges");
+  /**
+  @property vertexes
+  */
+  core.defineProperty(Hex.prototype, "vertexes");
+  /**
+  @property landtype
+  */
+  core.defineProperty(Hex.prototype, "landtype");
+  /**
+  @property island
+  */
+  core.defineProperty(Hex.prototype, "island");
+
+  //constructor
   function Hex(hexjson){}
+
+  /**
+  Returns the location of the Hex
+  <pre>
+  PRE: none
+  POST: returns a HexLocation that is the location for the Hex
+  </pre>
+
+  @method getLocation
+  @return HexLocation
+  */
+  Hex.prototype.getLocation = function(){
+
+  }
   
+  /**
+  Returns the edge belonging to the Hex at direction given
+  <pre>
+  PRE: A valid EdgeDirection object that specifies a direction on the Hex
+  POST: returns an Edge belonging to the hex in the specified direction
+  </pre>
+
+  @method getEdge
+  @param EdgeDirection
+  @return Edge
+  */
+  Hex.prototype.getEdge= function(){
+
+  }
+
+  /**
+  Returns the vertex belonging to the Hex at direction given
+  <pre>
+  PRE: A valid VertexDirection object that specifies a direction on the Hex
+  POST: returns a Vertex belonging to the hex in the specified direction
+  </pre>
+
+  @method getVertex
+  @param VertexDirection
+  @return Vertex
+  */
+  Hex.prototype.getVertex = function(){
+
+  }
+
+  /**
+  Specifies whether the hex is land or water
+  <pre>
+  PRE: none
+  POST: returns a boolean that is true if the Hex represents land
+  </pre>
+
+  @method isLand
+  @return boolean
+  */
+  Hex.prototype.isLand = function(){
+
+  }
+
+  /**
+  Returns what kind of land the Hex is
+  <pre>
+  PRE: Caller has already determined that it is land using isLand()
+  POST: returns a string indicating what kind of land it is
+  </pre>
+
+  @method getLandType
+  @return string
+  */
+  Hex.prototype.getLandType = function(){
+
+  }
   return Hex;
 }());
