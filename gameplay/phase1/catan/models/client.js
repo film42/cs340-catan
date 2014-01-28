@@ -234,4 +234,56 @@ catan.models.ClientModel = (function() {
   ClientModel.prototype.canMaritimeTrade = function(cardsTraded, cardsRecieved) {};
 
   return ClientModel;
+  
+   /**
+    Checks with the internal data to find out if it can buy a dev card.
+    
+    PRE:  This object has already been initialized.
+    POST: The method returns whether the user can buy a dev card.  
+    @method canBuyDevelomentCard
+  */
+  ClientModel.prototype.canBuyDevelomentCard = function() {
+    return null;
+  };
+  
+  /**
+    Checks with the internal data to find out if it can offer a trade.
+    
+    PRE:  This object has already been initialized.
+    POST: The method returns whether the user can offer a trade. 
+    @method canOfferTrade
+    
+    @param {resourceList} cardsTraded - cards the client wants to trade in
+    @param {resourceList} cardsRecieved -cards the client will receive
+  */
+  ClientModel.prototype.canOfferTrade = function(cardsTraded,cardsRecieved ) {
+    return null;
+  };
+  
+  /**
+    Checks with the internal data to find out if it can accept a trade.
+    
+    PRE:  This object has already been initialized.
+    POST: The method returns whether the user can accept a trade. 
+    @method canAcceptTrade
+    @param {resourceList} cardsRecieved -cards the client will receive
+  */
+  ClientModel.prototype.canAcceptTrade = function() {
+    return null;
+  };
+  
+  /**
+    Checks with the internal data to find out if the player has the given cards
+      
+    PRE:  This object has already been initialized.
+    POST: The method returns whether the user can can discard a card.
+    
+    @method canDiscardCard
+    @param {resourceList} cardsDiscarded -the cards to be discarded
+  */
+  Player.prototype.canDiscardCard = function(cardsDiscarded) {
+    return null;
+  };
+  
+  
 })();
