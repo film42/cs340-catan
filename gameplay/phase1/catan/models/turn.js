@@ -83,20 +83,43 @@ catan.models.Turn = (function() {
 	};
 	
 	 /**
-        Returns if a player is currently playing
-        <pre>
-        PRE: !isNaN(playerID)
-        </pre>
-         
-        @method isPlayingPhase
+        Returns ture if the status is playing state otherwise, false.
+
+        @method isPlayingState
         @return {boolean} true or false
     */
-    Turn.prototype.isPlayingState() = function(playID) {
+    Turn.prototype.isPlayingState() = function() {
       
 	};
+
+	/**
+        Returns ture if the status is rolling state otherwise, false.
+         
+        @method isRollingState
+        @return {boolean} true or false
+    */
+    Turn.prototype.isRollingState() = function() {
+      
+    };
 	
-	
-	
+	/**
+        Returns ture if the status is discard state otherwise, false.
+         
+        @method isDiscardState
+        @return {boolean} true or false
+    */
+    Turn.prototype.isDiscardState() = function() {
+      
+    };
+    /**
+        Returns ture if the status is robbing state otherwise, false.
+         
+        @method isRobbing State
+        @return {boolean} true or false
+    */
+    Turn.prototype.isRobbingState() = function() {
+      
+    };
 
   return Turn;
 })();

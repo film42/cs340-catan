@@ -5,7 +5,7 @@ catan.models.chat = catan.models.chat || {};
 catan.models.chat.Line = (function() {
 
     /**
-        The model class for the line of Chad  
+        The model class for the message line of Chad  
         <pre>      
         Domain:
 			message: Chat message, String

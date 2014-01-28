@@ -4,7 +4,7 @@ catan.models.chat = catan.models.chat || {};
 
 catan.models.chat.Chat = (function() {
 
-	/**
+/**
         The model class for Chat 
        
         @class catan.models.chat.Chat
@@ -14,22 +14,10 @@ catan.models.chat.Chat = (function() {
 		 message(the contents of the line)
 	*/
 	function Chat(lines) {
-		This.setLines(lines);
+		This.lines = lines;
 
 	}
 	
-	/**
-	    <pre>
-        PRE: !isNaN(lines)
-        </pre>
-         
-        @method setLines
-        @param {array} lines A list of objects wih source and message
-    */
-	
-	Chat.prototype.setLines = function(lines) {
-		this.lines= lines;
-	};
 	
 	 /**
         Returns the array of lines 
