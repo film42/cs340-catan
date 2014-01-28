@@ -158,7 +158,7 @@ catan.models.ClientModel = (function() {
       
     @return {integer}
   */
-  ClientModel.prototype.getWinnderId = function() {};
+  ClientModel.prototype.getWinnerId = function() {};
 
   //
   // Cans

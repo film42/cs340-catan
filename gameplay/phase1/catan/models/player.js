@@ -55,10 +55,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can buy a dev card.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can buy a dev card.
-  @class Player  
+    POST: The method returns whether the user can buy a dev card.  
   No parameters are necessary to check this value. 
   */
   Player.prototype.canBuyDevelomentCard = function() {
@@ -69,10 +67,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can buy a road.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can buy a road.
-  @class Player 
+    POST: The method returns whether the user can buy a road. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.canBuyRoad = function() {
@@ -83,10 +79,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can buy a settlement.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can buy a settlement.
-  @class Player 
+    POST: The method returns whether the user can buy a settlement. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.canBuySettlement = function() {
@@ -97,10 +91,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can buy a city.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can buy a settlement.
-  @class Player 
+    POST: The method returns whether the user can buy a settlement. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.canBuyCity = function() {
@@ -111,10 +103,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can offer a trade.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can offer a trade.
-  @class Player 
+    POST: The method returns whether the user can offer a trade. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.canOfferTrade = function() {
@@ -125,10 +115,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if it can accept a trade.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user can accept a trade.
-  @class Player 
+    POST: The method returns whether the user can accept a trade. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAcceptTrade = function() {
@@ -139,10 +127,8 @@ catan.models.Player = (function() {
   @author Steve Allred
     Checks with the internal data to find out if the user needs to discard a card.
     
-  Constructor Specification:
     PRE:  This object has already been initialized.
-    POST: The method returns whether the user needs to discard a card.
-  @class Player 
+    POST: The method returns whether the user needs to discard a card. 
   No parameters are necessary to check this value. 
   */
   Player.prototype.needDiscardCard = function() {
@@ -150,18 +136,25 @@ catan.models.Player = (function() {
   };
 
   /**
-  @author Steve Allred
-    Checks with the internal data to find out if it can discard a card.
-    
-  Constructor Specification:
-    PRE:  This object has already been initialized.
-    POST: The method returns whether the user can can discard a card.
-  @class Player 
-  No parameters are necessary to check this value. 
+    @author Steve Allred
+      Checks with the internal data to find out if it can discard a card.
+      
+      PRE:  This object has already been initialized.
+      POST: The method returns whether the user can can discard a card.
+ 
+    No parameters are necessary to check this value. 
   */
   Player.prototype.discardCard = function() {
     return null;
   };
+
+  /**
+    PRE: There are resources associated with the user (there can be no, but we have to at least be able to check).
+    POST: The method returns whether the user has the resources in the list.
+
+    No parameters are necessary to check this value. 
+  */
+  Player.prototype.hasXResources = function(resourceList) {};
 
   return Player;
 })();
