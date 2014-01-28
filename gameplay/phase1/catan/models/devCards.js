@@ -33,7 +33,7 @@ catan.models.DevCards = (function() {
   Gets the Monopoly card count.
 
     @class DevCards
-    @param {JSON} the data containing the initialized objects
+    @return an integer of the desired property
   */
   DevCards.prototype.getMonopolyCardCount = function() {
       return null;
@@ -42,7 +42,7 @@ catan.models.DevCards = (function() {
   Gets the Monument card count.
 
     @class DevCards
-    @param {JSON} the data containing the initialized objects
+    @return an integer of the desired property
   */
   DevCards.prototype.getMonumentCardCount = function() {
       return null;
@@ -51,7 +51,7 @@ catan.models.DevCards = (function() {
   Gets the roadBuilding card count.
 
     @class DevCards
-    @param {JSON} the data containing the initialized objects
+    @return an integer of the desired property
   */
   DevCards.prototype.getRoadBuildingCardCount = function() {
       return null;
@@ -60,7 +60,7 @@ catan.models.DevCards = (function() {
   Gets the Soldier card count.
 
     @class DevCards
-    @param {JSON} the data containing the initialized objects
+    @return an integer of the desired property
   */
   DevCards.prototype.getSoldierCardCount = function() {
       return null;
@@ -69,7 +69,7 @@ catan.models.DevCards = (function() {
   Gets the year of plenty card count.
 
     @class DevCards
-    @param {JSON} the data containing the initialized objects
+    @return an integer of the desired property
   */
   DevCards.prototype.getYearOfPlentyCardCount = function() {
       return null;
