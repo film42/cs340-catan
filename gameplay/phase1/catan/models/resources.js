@@ -33,7 +33,6 @@ catan.models.ResourceList = (function() {
   Gets the quantity of Brick resources in the Resources.
 
     @class Resources
-    @constructor
     @param {JSON} the data containing the initialized objects
   */
   Resources.prototype.getBrickCount = function() {
@@ -43,7 +42,6 @@ catan.models.ResourceList = (function() {
   Gets the quantity of Ore in the Resources.
 
     @class Resources
-    @constructor
     @param {JSON} the data containing the initialized objects
   */
   Resources.prototype.getOreCount = function() {
@@ -53,7 +51,6 @@ catan.models.ResourceList = (function() {
   Gets the quantity of Sheep in the Resources.
 
     @class Resources
-    @constructor
     @param {JSON} the data containing the initialized objects
   */
 Resources.prototype.getSheepCount = function() {
@@ -63,7 +60,6 @@ Resources.prototype.getSheepCount = function() {
   Gets the quantity of Wheat in the Resources.
 
     @class Resources
-    @constructor
     @param {JSON} the data containing the initialized objects
   */
 Resources.prototype.getWheatCount = function() {
@@ -73,7 +69,6 @@ Resources.prototype.getWheatCount = function() {
   Gets the quantity of Wood in the Resources.
 
     @class Resources
-    @constructor
     @param {JSON} the data containing the initialized objects
   */
 Resources.prototype.getWoodCount = function() {
