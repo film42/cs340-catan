@@ -15,6 +15,10 @@ catan.models.ClientModel = (function() {
     The model class for ClientModel. This Class and it's children are supposed to be immutable. This serves as the foundational model piece, through which all state is accessed. 
 
     <pre>
+    Domain:
+      - JSON has valid ClinetModel Schema referencing the TA provided spec
+      - Has a player Id that's an integer
+
     PRE: A player ID
     PRE: A JavaScript Object from /game/model
     POST: A fully stocked ClientModel, ready to be used
@@ -172,6 +176,8 @@ catan.models.ClientModel = (function() {
     else 
       POST: Returns false
     </pre>
+
+    @param {Locaion} location 
       
     @return {boolean}
   */
@@ -189,6 +195,8 @@ catan.models.ClientModel = (function() {
     else 
       POST: Returns false
     </pre>
+
+    @param {Locaion} location 
       
     @return {boolean}
   */
@@ -206,6 +214,8 @@ catan.models.ClientModel = (function() {
     else 
       POST: Returns false
     </pre>
+
+    @param {Locaion} location 
       
     @return {boolean}
   */
