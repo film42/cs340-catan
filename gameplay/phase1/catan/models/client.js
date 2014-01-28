@@ -119,6 +119,43 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.getMap = function() {};
 
+  /**
+    Get the player id for longest road
+
+    <pre>
+    PRE: None
+    POST: Returns the player id for longest road or none
+    </pre>
+      
+    @return {integer}
+  */
+  ClientModel.prototype.getLongestRoadId = function() {};
+
+  /**
+    Get the player id for biggest army
+
+    <pre>
+    PRE: None
+    POST: Returns the player id for biggest army or none
+    </pre>
+      
+    @return {integer}
+  */
+  ClientModel.prototype.getBiggestArmyId = function() {};
+
+
+  /**
+    Get the winning player id
+
+    <pre>
+    PRE: None
+    POST: Returns the winning player id or none
+    </pre>
+      
+    @return {integer}
+  */
+  ClientModel.prototype.getWinnderId = function() {};
+
   //
   // Cans
   //
