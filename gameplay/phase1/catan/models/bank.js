@@ -3,9 +3,10 @@ catan.models = catan.models || {};
 
 catan.models.Bank = (function() {
 
+  var catan.models.resources;
   /**
   @author Steve Allred
-  The Bank has a bunch of read-only variables that the controller can query.
+  The Bank has a bunch of read-only variables that the controller can query.  It is a wrapper object of a resources object, which actually contains the values.
   Domain: 
     JSON: This should contain the initial values of our resources.
     
