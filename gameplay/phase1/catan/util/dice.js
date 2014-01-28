@@ -10,6 +10,13 @@ catan.util.dice = catan.util.dice || {};
 */
 
 /**
+  This module is the dice util methods
+
+  @module                catan.models.dice
+  @namespace             catan.models.dice
+*/
+
+/**
   Play soldier card
   <pre>
   PRE: None
