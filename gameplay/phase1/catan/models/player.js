@@ -61,7 +61,7 @@ catan.models.Player = (function() {
   @class Player  
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canBuydevelomentCard = function() {
+  Player.prototype.canBuyDevelomentCard = function() {
     return null;
   };
 
