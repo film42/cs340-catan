@@ -9,9 +9,9 @@ catan.models = catan.models || {};
   /**
     This is the namespace for what abstracts the hex grid interface:
       locations, the hex grid, directions and a basic hex class
-    @module catan.models
-    @submodule catan.models.hexgrid
-    @namespace hexgrid
+    @module catan.models.map
+    @submodule catan.models.map
+    @namespace catan.models.map
   */
 
 catan.models.hexgrid = (function HexGrid_Namespace(){
