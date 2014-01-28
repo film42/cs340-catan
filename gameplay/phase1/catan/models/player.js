@@ -152,7 +152,8 @@ catan.models.Player = (function() {
     PRE: There are resources associated with the user (there can be no, but we have to at least be able to check).
     POST: The method returns whether the user has the resources in the list.
 
-    No parameters are necessary to check this value. 
+    @param {array} resourceList The list of resources that you want to check.
+    @return {boolean}
   */
   Player.prototype.hasXResources = function(resourceList) {};
 
