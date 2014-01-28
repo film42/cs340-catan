@@ -187,6 +187,19 @@ catan.core.Game = (function() {
   Game.prototype.offerTrade = function(otherPlayerId, offer, request, callback) {};
 
   /**
+    <pre>
+    PRE: The client has the cards he wants to trade at a port with
+    POST: caller always calls callback
+    </pre>
+     
+    @method maritimeTrade
+    @param {integer} playerId The player ID of the current player
+    @param {resourceList} cardsTraded cards the client wants to trade in
+    @param {resourceList} cardsRecieved cards the client will recieve
+  */
+  Game.prototype.maritimeTrade = function(playerId, cardsTraded, cardsRecieved) {};
+
+  /**
     Discard a number of playing cards
     <pre>
     PRE: A list of cards

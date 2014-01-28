@@ -85,6 +85,18 @@ catan.proxy.ClientProxy = (function() {
   ClientProxy.prototype.offerTrade = function(playerId, otherPlayerId, offer, request, callback) {};
 
   /**
+    <pre>
+    PRE: The client has the cards he wants to trade at a port with
+    POST: caller always calls callback
+    </pre>
+     
+    @method maritimeTrade
+    @param {resourceList} cardsTraded cards the client wants to trade in
+    @param {resourceList} cardsRecieved cards the client will recieve
+  */
+  ClientProxy.prototype.maritimeTrade = function(cardsTraded, cardsRecieved) {};
+
+  /**
     Discard a number of playing cards
     <pre>
     PRE: A Valid player ID

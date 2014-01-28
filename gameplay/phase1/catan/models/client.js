@@ -221,5 +221,17 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.canPlaceCity = function(location) {};
 
+  /**
+    <pre>
+    PRE: The client has the cards he wants to trade in
+    POST: returns whether or not the trade is valid based 
+    </pre>
+     
+    @method canMaritimeTrade
+    @param {resourceList} cardsTraded - cards the client wants to trade in
+    @param {resourceList} cardsRecieved -cards the client will recieve
+  */
+  ClientModel.prototype.canMaritimeTrade = function(cardsTraded, cardsRecieved) {};
+
   return ClientModel;
 })();
