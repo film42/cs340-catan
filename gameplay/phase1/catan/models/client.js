@@ -192,7 +192,7 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceSettlement = function() {};
+  ClientModel.prototype.canPlaceSettlement = function(location) {};
 
   /**
     Can the current player place a city at a location?
@@ -209,7 +209,7 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceCity = function() {};
+  ClientModel.prototype.canPlaceCity = function(location) {};
 
   return ClientModel;
 })();
