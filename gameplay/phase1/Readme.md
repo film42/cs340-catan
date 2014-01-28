@@ -16,7 +16,7 @@ bank.js       client.js     devCards.js   player.js     tradeOffer.js
 chat          deck.js       map           resources.js  turn.js
 
 ./catan/models/chat: Chat Module
-chat.js        chatMessage.js
+chat.js        message.js
 
 ./catan/models/map: Map Module
 edge.js           hexGrid.js        places            vertexValue.js
