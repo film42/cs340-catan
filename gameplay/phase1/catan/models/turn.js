@@ -44,7 +44,7 @@ catan.models.Turn = (function() {
 	
   /**
     Returns current player's ID
-	<pre>
+    <pre>
     PRE: None
     </pre>
          
@@ -56,13 +56,13 @@ catan.models.Turn = (function() {
   };
 
   /**
-  	Sets the playing state
-	<pre>
-    PRE: !isNaN(status)
-    </pre>
+  Sets the playing state
+  <pre>
+  PRE: !isNaN(status)
+  </pre>
          
-    @method setStatus
-    @param {String} Status The playing status
+  @method setStatus
+  @param {String} Status The playing status
   */
 	
   Turn.prototype.setStatus = function(status) {
