@@ -117,6 +117,22 @@ catan.core.Game = (function() {
     return $.cookie('catan.user');
   };
 
+  /**
+    Get the current player model
+
+    <pre>
+    PRE: A valid current user id exists
+    POST: The player model
+    </pre>
+      
+    @return {Player}
+  */
+  Game.prototype.getCurrentPlayer = function() {
+    var currentUserId = this.getCurrentPlayerId();
+    return this.model.getCurrentPlayerWithId(currentUserId);
+  };
+
+
   /////////////////////////////////////////////
   /////////////////////////////////////////////
   // Prettier Core API Interface with State  //

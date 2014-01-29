@@ -160,6 +160,18 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.getWinnerId = function() {};
 
+  /**
+    Get player object for some id
+
+    <pre>
+    PRE: None
+    POST: Returns some player or empty player if no player is found
+    </pre>
+      
+    @return {Player}
+  */
+  ClientModel.prototype.getPlayerWithId = function(playerId) {};
+
   //
   // Cans
   //
