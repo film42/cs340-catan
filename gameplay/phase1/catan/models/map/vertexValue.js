@@ -10,14 +10,15 @@ catan.models.map.VertexValue = (function() {
   core.defineProperty(Map.prototype, "ownerID");
 
   /**
-  @property worth
+  @property buildsite
+  @type BuildStatus(enumeration)
   */  
-  core.defineProperty(Map.prototype, "worth");
+  core.defineProperty(Map.prototype, "buildsite");
 
   /**
   VertexValue class to hold an Vertex's values
   Domain:
-    json: JSON that contains a value for ownerID and for worth
+    json: JSON that contains a value for ownerID and for worth(translated to buildsite)
 
   Invariants:
     INVARIANT: VertexValue objects are read only
@@ -57,10 +58,10 @@ catan.models.map.VertexValue = (function() {
   PRE: None
   POST: Returns a value between 0 and 2 that represents the owner that occupies the vertex.
   </pre>
-  @method getWorth
+  @method getBuildSite
   @return Integer between 0 and 2 representing the worth of a vertex
   */
-  VertexValue.prototype.getWorth = function() {
+  VertexValue.prototype.getBuildSite= function() {
       return null;
   };
 
