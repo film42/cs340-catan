@@ -5,10 +5,10 @@ catan.models.map = catan.models.map || {};
 catan.models.map.port = (function() {
 
   /**
-  @property inputResource
+  @property type
   @type String
   */
-  core.defineProperty(Port.prototype,"inputResource");
+  core.defineProperty(Port.prototype,"type");
   /**
   @property location
   @type HexLocation
@@ -51,14 +51,20 @@ catan.models.map.port = (function() {
       @constructor
       @param {Object} portjson the port json data from server used to intialize the port
   */
-  function Port(portjson) {}
-
-  
-
-  //not sure if this is needed, or just basic gets and sets
-  //port.prototype.getValidVertices = function() {
-  //    return null;
-  //};
+  function Port(portjson) {
+    //init type
+    this.type = portjson.inputResource;
+    //init location
+    this.location = new catan.model.hexgrid.HexLocation(portjson.location.x, portjson.location.y);
+    //init orientation
+    this.orientation = portjson.orientation;
+    //init ratio
+    this.ratio = portjson.ratio;
+    //init validVertices
+    this.validVertices = [];
+    this.validVertices[0] = new catan.models.map.VertexLocation(portjson.validVertex1);
+    this.validVertices[1] = new catan.models.map.VertexLocation(portjson.validVertex2);
+  }
 
   return port;
 })();
@@ -101,7 +107,9 @@ catan.models.map.vertexLocation = function() {
       @param {Object} portjson the port json data from server used to intialize the port
   */
   function VertexLocation(vertexjson) {
-
+    this.x = vertexjson.x;
+    this.y = vertexjson.y;
+    this.direction = vertexjson.direction;
   }
 
 

@@ -349,7 +349,7 @@ catan.models.hexgrid = (function HexGrid_Namespace(){
   /**
     This represents a location of a hex on a hex grid.
    
-        @class HexLocation
+    @class HexLocation
     @constructor
     @param {Integer} x
     @param {Integer} y
