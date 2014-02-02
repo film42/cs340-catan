@@ -17,21 +17,22 @@ catan.models.Turn = (function() {
  
   };
 
-  playerID: current player's id, Number
-  phase:  phase, Stirng
+  JSON: This should contain the initial values of current trun:
+    
+  currentTur: current player's id, Number
+  status:  playing phase, Stirng
          
   Constructor Specification:
-  PRE: !isNaN(playerID)
-  PRE: !isNaN(phase) 
-  POST: getPlayer() == playerID
-  POST: getPlayingPhase() == phase
+  RE: the JSON provides value for keeping current turn
+  POST: The constructor creates an object that has all of the following fields initialized:
+      -playerID: current player's ID, integer
+      -phase: current player's playing phase, integer
   </pre>
 
   @class catan.models.Turn
   @constructor
         
-  @param {Number} playerID 
-  @param {String} phase
+  @param {JSON} the data containing the initialized objects
 */
 
   var phases =
@@ -40,75 +41,51 @@ catan.models.Turn = (function() {
     Playing: "playing",
     Rolling: "rolling",
     Discarding: "discarding",
-    Robbing: "robbing",
+    Robbing: "robbing"
  
   };
 
-  function Turn(playerID, phase) {
-    this.playerID = setCurrentTurn(playerID);
-    this.phase = setPhase(phase);
+  function Turn(json) {
+
+    this.playerID = json.currentTurn;
+    this.phase = json.status.toLowerCase();
 
   }
   
-  /**
-    Sets current turn to the player
-    <pre>
-    PRE: !isNaN(playID)
-    </pre>
-         
-    @method setCurrentTurn
-    @param {Number} playerID The player's ID
-  */
-	
-  Turn.prototype.setCurrentTurn = function(playerID) {
-    this.playerID = playerID;
-  };
+  
 	
   /**
-    Returns current player's ID
-    <pre>
-    PRE: None
-    </pre>
+  Returns current player's ID
+  <pre>
+  PRE: None
+  </pre>
          
-    @method getCurrentTurn
-    @return {Number} player's ID    
+  @method getCurrentTurn
+  @return {Number} player's ID    
   */
   Turn.prototype.getCurrentTurn = function() {
     return this.playerID;
   };
 
+  
   /**
-  Sets the phase of current turn
+  Returns current turn phase
   <pre>
-  PRE: !isNaN(phase)
+  PRE: None
   </pre>
          
-  @method setPhase
-  @param {String} phase The playing phase
-  */
-	
-  Turn.prototype.setPhase = function(phase) {
-    this.phase == phases.toLowerCase();
-  };
-	
-  /**
-    Returns current turn phase
-    <pre>
-    PRE: None
-    </pre>
-         
-    @method getphase
-    @return {String } phase
+  @method getphase
+  @return {String } phase
   */
   Turn.prototype.getphase = function() {
     return this.phase;
   };
 	
   /**
-    Returns ture if the phase is playing phase otherwise, false.
+  Returns ture if the phase is playing phase otherwise, false.
 
-    @method isPlayingPhase
-    @return {boolean} true or false
+  @method isPlayingPhase
+  @return {boolean} true or false
   */
   Turn.prototype.isPlayingPhase() = function() {
     if (this.phase == phases.Playing )
@@ -118,10 +95,10 @@ catan.models.Turn = (function() {
   };
 
   /**
-    Returns ture if the phase is rolling phase otherwise, false.
+  Returns ture if the phase is rolling phase otherwise, false.
          
-    @method isRollingPhase
-    @return {boolean} true or false
+  @method isRollingPhase
+  @return {boolean} true or false
   */
   Turn.prototype.isRollingPhase() = function() {
     if (this.phase == phases.Rolling )
@@ -131,10 +108,10 @@ catan.models.Turn = (function() {
   };
 	
   /**
-    Returns ture if the phase is discard Phase otherwise, false.
+  Returns ture if the phase is discard Phase otherwise, false.
          
-    @method isDiscardingPhase
-    @return {boolean} true or false
+  @method isDiscardingPhase
+  @return {boolean} true or false
   */
   Turn.prototype.isDiscardingPhase() = function() {
     if (this.phase == phases.Discarding )
@@ -145,10 +122,10 @@ catan.models.Turn = (function() {
   };
   
   /**
-    Returns ture if the phase is robbing Phase otherwise, false.
+  Returns ture if the phase is robbing Phase otherwise, false.
          
-    @method isRobbingPhase
-    @return {boolean} true or false
+  @method isRobbingPhase
+  @return {boolean} true or false
   */
   Turn.prototype.isRobbingPhase() = function() {
     if (this.phase == phases.Robbing )
