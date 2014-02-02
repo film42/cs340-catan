@@ -28,7 +28,7 @@ catan.core.Game = (function() {
   */
   function Game(url) {
     this.model = {};
-    this.proxy = {};
+    this.proxy = new catan.proxy.ClientProxy();
   }
 
   /**
@@ -50,13 +50,15 @@ catan.core.Game = (function() {
     });
 
     // Refresh every 2000 seconds
+    var self = this;
     setInterval(function() {
-      var that = this;
-      proxy.getState(function(err, resp) {
+      self.proxy.getState(function(err, resp) {
         if(err) return callback(err);
 
-        that.model = new catan.models.ClientModel(resp);
-        that.refreshUI();
+        // Override the model as we update.
+        // This could give us some collisions.
+        self.model = new catan.models.ClientModel(resp);
+        self.refreshUI();
         callback(err);
       });
     }, 2000);

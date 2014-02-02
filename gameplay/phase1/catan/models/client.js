@@ -31,7 +31,32 @@ catan.models.ClientModel = (function() {
     @param {Object} json object from /game/model
   */
   function ClientModel(playerId, json) {
+    // ASK: Do we need the playerId here?
     this.currentUserId = playerId;
+
+    // JSON attribures
+    this.biggestArmyId = json.biggestArmy;
+    this.longestRoadId = json.longestRoad;
+    this.winnerId = json.winner;
+
+    // Children attributes
+    this.deck = new catan.models.Deck(json.deck);
+    this.log = new catan.models.chat.Log(json.log);
+    this.bank = new catan.models.Bank(json.bank);
+    this.gameMap = new catan.models.map.Map(json.map);
+    this.turn = new catan.models.Turn(json.turnTracker);
+    this.chat = new catan.models.chat.Chat(json.chat);
+    // Using the collection map function, it's awesome,
+    // you it just may not be super familiar to everyone.
+    this.players = json.players.map(function(player) {
+      // Create a new user for each in list with json `player'
+      return new catan.model.Player(player);
+    });
+
+    // TODO: Fix the trade offer thing. Not always there it seems.
+
+    // This isn't needed, but last item is the implicit return.
+    return this;
   }
 
   //
@@ -49,7 +74,9 @@ catan.models.ClientModel = (function() {
       
     @return {array} List of players
   */
-  ClientModel.prototype.getPlayers = function() {};
+  ClientModel.prototype.getPlayers = function() {
+    return this.players;
+  };
 
   /**
     Get the ClientModel Bank
@@ -61,7 +88,9 @@ catan.models.ClientModel = (function() {
       
     @return {Bank} the bank model
   */
-  ClientModel.prototype.getBank = function() {};
+  ClientModel.prototype.getBank = function() {
+    return this.bank;
+  };
 
   /**
     Get the ClientModel Deck, that is, the game Deck
@@ -73,7 +102,9 @@ catan.models.ClientModel = (function() {
       
     @return {Deck} the deck model
   */
-  ClientModel.prototype.getDeck = function() {};
+  ClientModel.prototype.getDeck = function() {
+    return this.deck;
+  };
 
   /**
     Get the Chat model, which contains all the chat logs from the game
@@ -85,7 +116,9 @@ catan.models.ClientModel = (function() {
       
     @return {Chat} the chat log
   */
-  ClientModel.prototype.getChat = function() {};
+  ClientModel.prototype.getChat = function() {
+    return this.chat;
+  };
 
   /**
     Get the current Turn model, the current Turn state
@@ -97,7 +130,9 @@ catan.models.ClientModel = (function() {
       
     @return {Turn} the Turn model
   */
-  ClientModel.prototype.getTurn = function() {};
+  ClientModel.prototype.getTurn = function() {
+    return this.turn;
+  };
 
   /**
     Get the any trade offers if availible
@@ -121,7 +156,10 @@ catan.models.ClientModel = (function() {
       
     @return {Map} the Map model
   */
-  ClientModel.prototype.getMap = function() {};
+  ClientModel.prototype.getMap = function() {
+    // Called gameMap so it's not confused with collections `map'
+    return this.gameMap;
+  };
 
   /**
     Get the player id for longest road
@@ -133,7 +171,9 @@ catan.models.ClientModel = (function() {
       
     @return {integer}
   */
-  ClientModel.prototype.getLongestRoadId = function() {};
+  ClientModel.prototype.getLongestRoadId = function() {
+    return this.longestRoadId;
+  };
 
   /**
     Get the player id for biggest army
@@ -145,7 +185,9 @@ catan.models.ClientModel = (function() {
       
     @return {integer}
   */
-  ClientModel.prototype.getBiggestArmyId = function() {};
+  ClientModel.prototype.getBiggestArmyId = function() {
+    return this.biggestArmyId;
+  };
 
 
   /**
@@ -158,7 +200,9 @@ catan.models.ClientModel = (function() {
       
     @return {integer}
   */
-  ClientModel.prototype.getWinnerId = function() {};
+  ClientModel.prototype.getWinnerId = function() {
+    return this.winnerId;
+  };
 
   /**
     Get player object for some id
@@ -170,7 +214,15 @@ catan.models.ClientModel = (function() {
       
     @return {Player}
   */
-  ClientModel.prototype.getPlayerWithId = function(playerId) {};
+  ClientModel.prototype.getPlayerWithId = function(playerId) {
+    // Filter is another great method to clean up for loops
+    var results = this.players.filter(function(p) {
+      // Add to results if expression is true
+      return p.getPlayerId() == playerId;
+    });
+    // Return the first result, or null
+    return results[0] || null;
+  };
 
   //
   // Cans
@@ -244,8 +296,6 @@ catan.models.ClientModel = (function() {
     @param {resourceList} cardsRecieved -cards the client will recieve
   */
   ClientModel.prototype.canMaritimeTrade = function(cardsTraded, cardsRecieved) {};
-
-  return ClientModel;
   
    /**
     Checks with the internal data to find out if it can buy a dev card.
@@ -297,5 +347,5 @@ catan.models.ClientModel = (function() {
     return null;
   };
   
-  
+  return ClientModel;
 })();
