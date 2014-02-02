@@ -3,28 +3,50 @@ catan.models = catan.models || {};
 
 catan.models.Turn = (function() {
 /**
-  The model class keeps current turn state and its player's ID
+  The model class keeps current turn of player's playing phase and its player's ID
   <pre>      
   Domain:
-  currentTurn: Player's id, Number
-  status:  Status, Stirng
+
+  var phases =
+  {
+ 
+    Playing: "playing",
+    Rolling: "rolling",
+    Discarding: "discarding",
+    Robbing: "robbing",
+ 
+  };
+
+  playerID: current player's id, Number
+  phase:  phase, Stirng
          
   Constructor Specification:
   PRE: !isNaN(playerID)
-  PRE: !isNaN(playStatus) 
+  PRE: !isNaN(phase) 
   POST: getPlayer() == playerID
-  POST: getStatus() == status
+  POST: getPlayingPhase() == phase
   </pre>
 
   @class catan.models.Turn
   @constructor
         
   @param {Number} playerID 
-  @param {String} Status
+  @param {String} phase
 */
-  function Turn(playerID, status) {
-    this.setCurrentTurn(playerID);
-    this.setStatus(status);
+
+  var phases =
+  {
+ 
+    Playing: "playing",
+    Rolling: "rolling",
+    Discarding: "discarding",
+    Robbing: "robbing",
+ 
+  };
+
+  function Turn(playerID, phase) {
+    this.playerID = setCurrentTurn(playerID);
+    this.phase = setPhase(phase);
 
   }
   
@@ -39,7 +61,7 @@ catan.models.Turn = (function() {
   */
 	
   Turn.prototype.setCurrentTurn = function(playerID) {
-    this.currentTurn = playerID;
+    this.playerID = playerID;
   };
 	
   /**
@@ -52,73 +74,87 @@ catan.models.Turn = (function() {
     @return {Number} player's ID    
   */
   Turn.prototype.getCurrentTurn = function() {
-      return this.currentTurn;
+    return this.playerID;
   };
 
   /**
-  Sets the playing state
+  Sets the phase of current turn
   <pre>
-  PRE: !isNaN(status)
+  PRE: !isNaN(phase)
   </pre>
          
-  @method setStatus
-  @param {String} Status The playing status
+  @method setPhase
+  @param {String} phase The playing phase
   */
 	
-  Turn.prototype.setStatus = function(status) {
-    this.status = status;
+  Turn.prototype.setPhase = function(phase) {
+    this.phase == phases.toLowerCase();
   };
 	
   /**
-    Returns the playing status
+    Returns current turn phase
     <pre>
     PRE: None
     </pre>
          
-    @method getStatus
-    @return {String } status
+    @method getphase
+    @return {String } phase
   */
-  Turn.prototype.getStatus = function() {
-    return this.status;
+  Turn.prototype.getphase = function() {
+    return this.phase;
   };
 	
   /**
-    Returns ture if the status is playing state otherwise, false.
+    Returns ture if the phase is playing phase otherwise, false.
 
-    @method isPlayingState
+    @method isPlayingPhase
     @return {boolean} true or false
   */
-  Turn.prototype.isPlayingState() = function() {
-      
+  Turn.prototype.isPlayingPhase() = function() {
+    if (this.phase == phases.Playing )
+      return true;
+    else
+      return false;
   };
 
   /**
-    Returns ture if the status is rolling state otherwise, false.
+    Returns ture if the phase is rolling phase otherwise, false.
          
-    @method isRollingState
+    @method isRollingPhase
     @return {boolean} true or false
   */
-  Turn.prototype.isRollingState() = function() {
-      
+  Turn.prototype.isRollingPhase() = function() {
+    if (this.phase == phases.Rolling )
+      return true;
+    else
+      return false;
   };
 	
   /**
-    Returns ture if the status is discard state otherwise, false.
+    Returns ture if the phase is discard Phase otherwise, false.
          
-    @method isDiscardState
+    @method isDiscardingPhase
     @return {boolean} true or false
   */
-  Turn.prototype.isDiscardState() = function() {
+  Turn.prototype.isDiscardingPhase() = function() {
+    if (this.phase == phases.Discarding )
+      return true;
+    else
+      return false;
       
   };
   
   /**
-    Returns ture if the status is robbing state otherwise, false.
+    Returns ture if the phase is robbing Phase otherwise, false.
          
-    @method isRobbing State
+    @method isRobbingPhase
     @return {boolean} true or false
   */
-  Turn.prototype.isRobbingState() = function() {
+  Turn.prototype.isRobbingPhase() = function() {
+    if (this.phase == phases.Robbing )
+      return true;
+    else
+      return false;
       
   };
 
