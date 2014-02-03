@@ -8,14 +8,15 @@ catan.models.chat.Message = (function() {
     The model class for the message Message of Chad  
     <pre>      
     Domain:
-      message: Chat message, String
+
       source: The player name attached to chat, string
-    
+      message: Chat message, String
+      
     Constructor Specification:
         PRE: !isNaN(messasge)
-        PRE: !isNaN(name)
+        PRE: !isNaN(source)
         POST: getMessage() == message
-        POST: getSource() == name
+        POST: getSource() == source
     </pre>
 
     @class Message
@@ -24,9 +25,9 @@ catan.models.chat.Message = (function() {
     @param {String} message The chat message 
     @param {String} source The player name attached to message
   */
-  function Message(message, name) {
-    this.setMessasge(message);
-    this.setSource(name);
+  function Message(source,message) {
+    this.source(source);
+    this.messasge(message);  
   }
   
   /**

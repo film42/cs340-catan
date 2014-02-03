@@ -6,14 +6,25 @@ catan.models.chat.Chat = (function() {
 
   /**
     The model class for Chat 
-   
+    <pre>      
+    Domain:
+    JSON: This should contain array list of the messages
+    POST: array of object catan.models.chat.Message
+    </pre>
+
     @class catan.models.chat.Chat
     @constructor
     
-    @param {array} messages A list of objects with source(the player name attached to the event), message(the contents of the line)
+    @param {json} messages A list of objects with source(the player name attached to the event), 
+    message(the contents of the line)
   */
-  function Chat(messages) {
-    this.messages = messages;
+
+  function Chat(json) 
+    this.messages = [];
+   
+    for (var i = 0, len = json.lines.length; i < len; i++){
+      this.addMessage(json.Lines[i].source, json.Lines[i].message));
+    }
   }
   
   /**
@@ -32,16 +43,20 @@ catan.models.chat.Chat = (function() {
   /**
     Add a message object to array of messages
     <pre>
-      PRE: !isNaN()
+      PRE: source which is user's name is not be empty
+      PRE: message should be not empty
+      POST message object is added to messages array
     </pre>
 
-    @method addLine
+    @method addMessage
     @param {object} message object which contain message and source 
   */
-  Chat.prototype.addMessage = function (message) {};
+  Chat.prototype.addMessage = function (source, message) {
+    this.messages.push(new catan.models.chat.Message(source, message));
+  };
     
   /**
-    Returns the message object for given source 
+    Returns the message objects for given source 
     <pre>
       PRE: !isNaN(source)
     </pre>
@@ -50,9 +65,14 @@ catan.models.chat.Chat = (function() {
     @return {object } message object which contain message and source for given source 
   */
   Chat.prototype.getMessage = function (source) {
-    return null;
+    var msgs = [];
+    for (var i = 0; i < this.messages.length; i++) {
+      if (this.messages[i].getSource == source){
+         msgs.push(this.messages[i]);
+      }
+    }
+    return msgs;
   };
-
   return Chat;
 })();
 

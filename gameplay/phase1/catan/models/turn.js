@@ -19,11 +19,11 @@ catan.models.Turn = (function() {
 
   JSON: This should contain the initial values of current trun:
     
-  currentTur: current player's id, Number
-  status:  playing phase, Stirng
+    currentTurn: current player's id, Number
+    status:  playing phase, Stirng
          
   Constructor Specification:
-  RE: the JSON provides value for keeping current turn
+  PRE: the JSON provides value for keeping current turn
   POST: The constructor creates an object that has all of the following fields initialized:
       -playerID: current player's ID, integer
       -phase: current player's playing phase, integer
@@ -32,7 +32,7 @@ catan.models.Turn = (function() {
   @class catan.models.Turn
   @constructor
         
-  @param {JSON} the data containing the initialized objects
+  @param {json} the data containing the initialized objects
 */
 
   var phases =
