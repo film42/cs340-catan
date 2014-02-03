@@ -31,7 +31,9 @@ catan.models.map.Edge = (function Edge_Class(){
   core.defineProperty(Edge.prototype, "value");
 
 
-  function Edge(edgejson){}
+  function Edge(edgejson){
+    this.value = new EdgeValue(edgejson.value);
+  }
   
   /**
   Returns true if edge is occupied by a player's piece (i.e. a road)
@@ -43,7 +45,10 @@ catan.models.map.Edge = (function Edge_Class(){
   @method isOccupied
   */
   function isOccupied(){
-    return false; // default implementation, change this!
+    if(this.value.getOwnerID() > -1){
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -51,6 +56,7 @@ catan.models.map.Edge = (function Edge_Class(){
   @method getValue
   */
   function getValue(){
+    return this.value;
   }
 
   return Edge;

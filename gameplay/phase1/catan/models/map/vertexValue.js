@@ -34,7 +34,8 @@ catan.models.map.VertexValue = (function() {
 
   // Constructor 
   function VertexValue(json) {
-
+    this.ownerID = json.ownerID;
+    this.buildsite = json.worth; //need to add enumeration here...
   }
 
   /**
@@ -48,7 +49,7 @@ catan.models.map.VertexValue = (function() {
   @return Integer between -1 and 3 that represents the owner that occupies the vertex. -1 means it is unoccupied
   */
   VertexValue.prototype.getOwnerId = function() {
-      return null;
+      return ownerID;
   };
 
   /**
@@ -62,7 +63,7 @@ catan.models.map.VertexValue = (function() {
   @return Integer between 0 and 2 representing the worth of a vertex
   */
   VertexValue.prototype.getBuildSite= function() {
-      return null;
+      return buildsite;
   };
 
   return VertexValue;
