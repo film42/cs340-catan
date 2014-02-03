@@ -77,7 +77,7 @@ catan.models.Turn = (function() {
   @method getphase
   @return {String } phase
   */
-  Turn.prototype.getphase = function() {
+  Turn.prototype.getPhase = function() {
     return this.phase;
   };
 	
@@ -87,7 +87,7 @@ catan.models.Turn = (function() {
   @method isPlayingPhase
   @return {boolean} true or false
   */
-  Turn.prototype.isPlayingPhase() = function() {
+  Turn.prototype.isPlayingPhase = function() {
     if (this.phase == phases.Playing )
       return true;
     else
@@ -100,7 +100,7 @@ catan.models.Turn = (function() {
   @method isRollingPhase
   @return {boolean} true or false
   */
-  Turn.prototype.isRollingPhase() = function() {
+  Turn.prototype.isRollingPhase = function() {
     if (this.phase == phases.Rolling )
       return true;
     else
@@ -113,7 +113,7 @@ catan.models.Turn = (function() {
   @method isDiscardingPhase
   @return {boolean} true or false
   */
-  Turn.prototype.isDiscardingPhase() = function() {
+  Turn.prototype.isDiscardingPhase = function() {
     if (this.phase == phases.Discarding )
       return true;
     else
@@ -127,7 +127,7 @@ catan.models.Turn = (function() {
   @method isRobbingPhase
   @return {boolean} true or false
   */
-  Turn.prototype.isRobbingPhase() = function() {
+  Turn.prototype.isRobbingPhase = function() {
     if (this.phase == phases.Robbing )
       return true;
     else
