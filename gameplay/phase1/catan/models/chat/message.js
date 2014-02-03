@@ -26,8 +26,8 @@ catan.models.chat.Message = (function() {
     @param {String} source The player name attached to message
   */
   function Message(source,message) {
-    this.source(source);
-    this.messasge(message);  
+    this.source = source;
+    this.messasge = message;  
   }
   
   /**
