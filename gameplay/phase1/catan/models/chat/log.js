@@ -23,7 +23,7 @@ catan.models.chat.Chat = (function() {
     this.messages = [];
    
     for (var i = 0, len = json.lines.length; i < len; i++){
-      this.addMessage(json.Lines[i].source, json.Lines[i].message));
+      this.addMessage(json.lines[i].source, json.lines[i].message));
     }
   }
   
