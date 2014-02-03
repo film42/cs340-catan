@@ -27,7 +27,7 @@ catan.models.chat.Message = (function() {
   */
   function Message(source,message) {
     this.source = source;
-    this.messasge = message;  
+    this.message = message;  
   }
   
   /**
