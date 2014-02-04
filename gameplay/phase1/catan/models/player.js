@@ -71,7 +71,7 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can buy a dev card.  
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canBuyDevelomentCard = function() {
+  Player.prototype.canAffordToBuyDevelomentCard = function() {
     return !this.playedDevCard;
   };
 
@@ -88,9 +88,8 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can buy a road. 
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canBuyRoad = function() {
+  Player.prototype.canAffordToBuyRoad = function() {
     var can = true
-    // Figure out how to access the road location stuff
     if (!this.resources.hasAtLeast(new catan.models.resources(1,0,0,0,1)))
       can = false;
     return can;
@@ -108,9 +107,8 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can buy a settlement. 
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canBuySettlement = function() {
+  Player.prototype.canAffordToBuySettlement = function() {
     var can = true
-    // Figure out how to access the map location stuff
     if (!this.resources.hasAtLeast(new catan.models.resources(1,0,1,1,1)))
       can = false;
     return can;
@@ -124,9 +122,8 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can buy a settlement. 
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canBuyCity = function() {
+  Player.prototype.canAffordToBuyCity = function() {
     var can = true
-    // Figure out how to access the map location stuff
     if (!this.resources.hasAtLeast(new catan.models.resources(0,3,0,2,0)))
       can = false;
     return can;
@@ -140,8 +137,11 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can offer a trade. 
     @param {resourceList} cardsTraded - cards the client wants to trade in 
   */
-  Player.prototype.canOfferTrade = function(cardsTraded)
-  
+  Player.prototype.canAffordToOfferTrade = function(cardsTraded)
+  	var can = true
+    if (!this.resources.hasAtLeast(new catan.models.resources(cardsTraded)))
+      can = false;
+    return can;
   };
 
   /**
@@ -152,8 +152,11 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can accept a trade. 
     @param {resourceList} cardsRecieved -cards the client will receive
   */
-  Player.prototype.canAcceptTrade = function() {
-    return null;
+  Player.prototype.canAcceptTrade = function(cardsToGive) {
+      	var can = true
+    if (!this.resources.hasAtLeast(new catan.models.resources(cardsToGive)))
+      can = false;
+    return can;
   };
 
   /**
@@ -164,8 +167,8 @@ catan.models.Player = (function() {
     POST: The method returns whether the user needs to discard a card. 
   No parameters are necessary to check this value. 
   */
-  Player.prototype.needDiscardCard = function() {
-    return null;
+  Player.prototype.hasMoreThan7Cards = function() {
+    return this.resources
   };
 
   /**
