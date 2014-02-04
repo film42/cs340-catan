@@ -2,7 +2,7 @@ var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.chat = catan.models.chat || {};
 
-catan.models.chat.Chat = (function() {
+catan.models.chat.Log = (function() {
 
   /**
     The model class for Log 
