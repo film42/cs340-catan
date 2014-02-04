@@ -19,11 +19,11 @@ catan.models.chat.Chat = (function() {
     message(the contents of the line)
   */
 
-  function Chat(json) 
+  function Chat(json) {
     this.messages = [];
    
     for (var i = 0, len = json.lines.length; i < len; i++){
-      this.addMessage(json.lines[i].source, json.lines[i].message));
+      this.addMessage(json.lines[i].source, json.lines[i].message);
     }
   }
   

@@ -19,11 +19,11 @@ catan.models.chat.Chat = (function() {
     message(the contents of the line)
   */
 
-  function Log(json) 
+  function Log(json){
     this.messages = [];
    
     for (var i = 0, len = json.lines.length; i < len; i++){
-      this.addMessage(json.lines[i].source, json.lines[i].message));
+      this.addMessage(json.lines[i].source, json.lines[i].message);
     }
   }
   
@@ -74,6 +74,6 @@ catan.models.chat.Chat = (function() {
     return msgs;
   };
   
-  return Chat;
+  return Log;
 })();
 
