@@ -55,7 +55,23 @@ catan.models.map.Hex = (function CatanHex_Class(){
   core.defineProperty(Hex.prototype, "island");
 
   //constructor
-  function Hex(hexjson){}
+  function Hex(hexjson){
+    //set location
+    this.location = new catan.model.hexgrid.HexLocation(hexjson.location.x, hexjson.location.y);
+    this.island = hexjson.isLand;
+    if(this.isLand){
+      this.landtype = hexjson.landtype;
+    }
+    //make edges
+    for(var i = 0; i < hexjson.edges.length; i++){
+      this.edges[i] = new Edge(hexjson.edges[i]);
+    }
+
+    //make vertexes
+    for(var i = 0; i < hexjson.vertexes.length; i++){
+      this.vertexes[i] = new Vertex(hexjson.vertexes[i]);
+    }      
+  }
 
   /**
   Returns the location of the Hex
@@ -68,7 +84,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return HexLocation
   */
   Hex.prototype.getLocation = function(){
-
+    return this.location;
   }
   
   /**
@@ -82,7 +98,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @param EdgeDirection
   @return Edge
   */
-  Hex.prototype.getEdge= function(){
+  Hex.prototype.getEdge = function(direction){
 
   }
 
@@ -97,7 +113,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @param VertexDirection
   @return Vertex
   */
-  Hex.prototype.getVertex = function(){
+  Hex.prototype.getVertex = function(direction){
 
   }
 
@@ -112,11 +128,12 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return boolean
   */
   Hex.prototype.isLand = function(){
-
+    return this.island;
   }
 
   /**
   Returns what kind of land the Hex is
+  If it is not land, returns "water" which should not be passed to server.
   <pre>
   PRE: Caller has already determined that it is land using isLand()
   POST: returns a string indicating what kind of land it is
@@ -126,7 +143,12 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return string
   */
   Hex.prototype.getLandType = function(){
-
+    if(this.island){
+      return this.landtype
+    }
+    else{
+      return "water";
+    }
   }
   return Hex;
 }());

@@ -30,7 +30,7 @@ catan.models.map.EdgeValue = (function() {
 
     // Constructor 
   function EdgeValue(json) {
-
+    this.ownerID = json.ownerID;
   }
 
 
@@ -45,7 +45,7 @@ catan.models.map.EdgeValue = (function() {
   @return Integer between -1 and 3 that represents the owner that occupies the edge. -1 means it is unoccupied
   */
   EdgeValue.prototype.getOwnerId = function() {
-      return null;
+      return ownerID;
   };
 
   return EdgeValue;

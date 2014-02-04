@@ -3,6 +3,12 @@ catan.models = catan.models || {};
 
 catan.models.ResourceList = (function() {
 
+  var brick;
+  var ore;
+  var sheep;
+  var wheat;
+  var wood;
+  
   /**
   @author Steve Allred
   The Resources object has a bunch of read-only variables that the controller can query.  It actually contains the data in local variables.
@@ -26,8 +32,24 @@ catan.models.ResourceList = (function() {
     @constructor
     @param {JSON} the data containing the initialized objects
 */
-  function Resources(json) {
-    
+  function Resources(json){
+    this.Resources(json.brick, json.ore, json.sheep, json.wheat, json.wood);
+  }
+  /**
+   *  Initializes a ResourceList to Zeroes
+   */
+  function Resources() {
+    this.Resources(0,0,0,0,0);
+  }
+  /**
+   * Initializes a ResourceList to the values passed in the correct order.
+   */
+  function Resources(br, or, sh, wh, wo) {
+    this.brick = br;
+    this.ore = or;
+    this.sheep = sh;
+    this.wheat = wh;
+    this.wood = wo;
   }
   /**
   Gets the quantity of Brick resources in the Resources.
@@ -36,7 +58,7 @@ catan.models.ResourceList = (function() {
     @return an integer of the desired property
   */
   Resources.prototype.getBrickCount = function() {
-      return null;
+      return this.brick;
   };
   /**
   Gets the quantity of Ore in the Resources.
@@ -45,7 +67,7 @@ catan.models.ResourceList = (function() {
     @return an integer of the desired property
   */
   Resources.prototype.getOreCount = function() {
-    return null;
+    return this.ore;
   };
   /**
   Gets the quantity of Sheep in the Resources.
@@ -54,7 +76,7 @@ catan.models.ResourceList = (function() {
     @return an integer of the desired property
   */
 Resources.prototype.getSheepCount = function() {
-    return null;
+    return this.sheep;
   };
   /**
   Gets the quantity of Wheat in the Resources.
@@ -63,7 +85,7 @@ Resources.prototype.getSheepCount = function() {
     @return an integer of the desired property
   */
 Resources.prototype.getWheatCount = function() {
-    return null;
+    return this.wheat;
   };
   /**
   Gets the quantity of Wood in the Resources.
@@ -72,8 +94,25 @@ Resources.prototype.getWheatCount = function() {
     @return an integer of the desired property
   */
 Resources.prototype.getWoodCount = function() {
-    return null;
+    return this.wood;
 };
+/**
+ * Checks to see if this resource list has at least the amount in the new resourceList.
+ * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
+ */
+Resources.prototype.hasAtLeast = function(resources) {
+    if (this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood)
+      return false;
+    return true;
+}
+
+/**
+ * Checks to see if this resource list has at least the amount in the new resourceList.
+ * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
+ */
+Resources.prototype.count = function(resources) {
+    return this.get
+}
 
   return ResourceList;
 })();

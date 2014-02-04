@@ -28,8 +28,14 @@ catan.models.map.Vertex = (function Vertex_Class(){
   
   core.forceClassInherit(Vertex, hexgrid.BaseContainer);
 
+  /**
+  @property value
+  @type vertexValue
+  */
   
-  function Vertex(vertexjson){}
+  function Vertex(vertexjson){
+    this.value = new vertexValue(vertexjson.value);
+  }
   
   /**
   Returns true if vertex is occupied by a player's piece (i.e. a settlement or city)
@@ -41,14 +47,19 @@ catan.models.map.Vertex = (function Vertex_Class(){
   @method isOccupied
   */
   function isOccupied() {
-    return false; // default implementation, change this!
+    if(this.value.getOwnerID() > -1){
+      return true;
+    }
+    return false;
   }
 
   /**
   Returns the value of the edge, which contains the ownerID
   @method getValue
   */
-  function getValue(){}
+  function getValue(){
+    return this.value;
+  }
 
   return Vertex;
 
