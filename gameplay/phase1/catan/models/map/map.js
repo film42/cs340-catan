@@ -28,8 +28,8 @@ catan.models.map.Map = (function() {
   */
   function Map(mapjson) {
     //init hexgrid
-    //TODO figure out how to init hexgrid
-    this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
+    //this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
+    this.hexGrid = new hexgrid.HexGrid(mapjson.hexgrid);
     //init ports
     this.ports = [];
     mapjson.ports.forEach(function(portjson){
@@ -45,12 +45,22 @@ catan.models.map.Map = (function() {
     
   }
   
-  core.defineProperty(Map.prototype,"hexGrid");
-  core.defineProperty(Map.prototype,"numbers");
-  core.defineProperty(Map.prototype,"ports");
-  core.defineProperty(Map.prototype,"radius");
-  core.defineProperty(Map.prototype,"robber");
-  
+  Map.prototype.getHexGrid() = function(){
+    return this.hexGrid;
+  }
+  Map.prototype.getNumbers() = function(){
+    return this.numbers;
+  }
+  Map.prototype.getPorts() = function(){
+    return this.ports;
+  }
+  Map.prototype.getRadius() = function(){
+    return this.radius;
+  }
+  Map.prototype.getRobber() = function(){
+    return this.robber;
+  }
+
   /**
   <pre>
   PRE: gave valid hexLocation and string
@@ -62,11 +72,35 @@ catan.models.map.Map = (function() {
   @param {String} dir Direction which indicates which vertex the user is trying to build on.
     
   */
-  Map.prototype.canBuildSettlement = function(playerId, hexLoc, dir) {
-  //make sure it is a valid vertex
-  //make sure the vertex does not already have a buildings build there.
-  //make sure the adjacent vertices do not have buildings
-  //make sure there is a road owned by the player adjacent to the vertex
+  Map.prototype.canBuildSettlement = function(playerId, hexLoc, dir, isSetupPhase) {
+    //make sure it is a valid vertex
+    var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
+    if(buildVertex){
+      //make sure the vertex does not already have a building built there.
+      if(!buildVertex.isOccupied()){
+        
+        //make sure the adjacent vertices do not have buildings
+        var adjVertexes = this.hexGrid.getAdjVertex(hexLoc,dir)
+        for(var i=0; i<adjVertexes.length; i++){
+          if(adjVertexes[i].isOccupied()){
+            return false;
+          }
+        }
+        //setup phase logic
+        if(isSetupPhase){
+          return true;
+        }
+        //make sure there is a road owned by the player adjacent to the vertex
+        var adjEdges = this.hexGrid.getEdgesFromVertex(hexLoc, dir);
+        for(var i=0; i< adjEdges.length; i++){
+          if(adjEdges[i].isOccupied() && adjEdges[i].getOwnerId() == playerId){ //may not need first check
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+
   };
   
   /**
@@ -81,7 +115,12 @@ catan.models.map.Map = (function() {
     
   */
   Map.prototype.canBuildCity = function(playerId, hexLoc, dir) {
-  //check if there is a settlement at the given vertex
+    //check if there is a settlement at the given vertex
+    var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
+    if(buildVertex.getValue() == 1/*"settlement"*/){
+      return true;
+    }
+    return false;
   };
   
   /**
@@ -96,47 +135,118 @@ catan.models.map.Map = (function() {
   @param {String} dir Direction which indicates which edge the user is trying to build on.
     
   */
-  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir) {
-  //make sure it is a valid edge and not in the ocean
-  //Check if edge already has a road
-  //Check if adjacent edges have roads 
+  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir, isSetupPhase){
+    
+    var buildEdge = this.hexGrid.getEdge(hexLoc, dir);
+    if(buildEdge){ //make sure it is a valid edge and not in the ocean
+      //Check if edge already has a road
+      if(buildEdge.isOccupied){
+        //setup phase logic check for a adj settlement owned by that player
+        if(isSetupPhase){
+          var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
+          for(var i=0; i <adjVertexes.length; i++){
+            if(adjVertexes[i].isOccupied() && adjVertexes[i].getOwnerId()){
+              return true;
+            }
+          }
+        }else{
+          //Check if adjacent edges have roads owned by that player
+          var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
+          for(var i=0; i< adjEdges.length; i++){
+            if(adjEdges[i].isOccupied() && adjEdges[i].getOwnerId()){
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   };
   
   /**
   <pre>
   PRE: The client has the cards he wants to trade in
+  PRE: This is a single trade of trading a few cards of the same type for a single other card.
   POST: returns whether or not the trade is valid based 
   </pre>
    
   @method canMaritimeTrade
   @param {resourceList} cardsTraded - cards the client wants to trade in
-  @param {resourceList} cardsRecieved -cards the client will recieve
     
   */
-  Map.prototype.canMaritimeTrade = function(playerId, cardsTraded, cardsRecieved){
-  //check if it is a 4:1 trade
-    //return true;
-  //else check if it is a 3:1 trade
-    //get valid vertices of 3:1 trade
-    //check for buildings of playerId at those locations
-      //return true;
-  //check if it is a 2:1 trade
-    //check what type of 
-    //check for buildings of playerId at those locations
-      //return true;
-  //else return false
+  Map.prototype.canMaritimeTrade = function(playerId, cardsTraded){
+    var cardType = ""; //string
+    var ratio;    //int
+    var portVertices;
+    //find the nonzero resource in cardsTraded
+    if(cardsTraded.getBrick()){
+      cardType = "brick";
+      ratio = cardsTraded.getBrick();
+      
+    }else if(cardsTraded.Ore()){
+      cardType = "ore";
+      ratio = cardsTraded.getOre();
+      
+    }else if(cardsTraded.getSheep()){
+      cardType = "sheep";
+      ratio = cardsTraded.getSheep();
+      
+    }else if(cardsTraded.getWheat()){
+      cardType = "wheat";
+      ratio = cardsTraded.getWheat();
+      
+    }else if(cardsTraded.getWood()){
+      cardType = "wood";
+      ratio = cardsTraded.getWood();
+    } else{ //no values given for resources
+      return false;
+    }
     
+    
+    //check if it is a 4:1 trade
+    if(ratio == 4){
+      return true;
+    }else if( ratio == 3){
+      portVertices = findAllXPortVertices();
+    }else if( ratio == 2){
+      portVertices = findAllXPortVertices(cardType);
+    }
+    if(!portVertices){
+      return false;
+    }
+    
+    //check for buildings of playerId at those locations
+    for(var i=0; i<portVertices.length; i++){
+      var portVertex = this.hexGrid.get(portVertices[i].getLocation(),portVertices[i].getDirection())
+      if(portVertex && portVertex.isOccupied() && portVertex.getOwnerId == playerId){
+        return true;
+      }
+      
+    }
+    return false;
   };
+
+  
+  Map.prototype.canPlaceRobber = function(newLoc, oldLoc){
+    if(newLoc.x == oldLoc.x && newLoc.y == oldLoc.y){
+      return false;
+    }
+    
+    if(this.hexGrid.isLand(newLoc)){
+      return true;
+    }
+    return false;
+  }
   
   
   /**
   <pre>
   This method is a private function used for calculating if maritime trade is legal
-  PRE: type is a valid type of port
+  PRE: type is a valid type of port either the type enumerated 
   POST: returns an array of vertices of VertexLocation
   </pre>
    
-  @method canMaritimeTrade
+  @method findAllXPortVertices
   @param {string} type - the type of port to search for
     
   */

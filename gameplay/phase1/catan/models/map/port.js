@@ -8,27 +8,46 @@ catan.models.map.port = (function() {
   @property type
   @type String
   */
-  core.defineProperty(Port.prototype,"type");
+  Port.prototype.getType() = function(){
+      return this.type;
+  }
+  //core.defineProperty(Port.prototype,"type");
+  
   /**
   @property location
   @type HexLocation
   */
-  core.defineProperty(Port.prototype,"location");
+  Port.prototype.getLocation() = function(){
+      return this.location;
+  }
+  //core.defineProperty(Port.prototype,"location");
+  
   /**
   @property orientation
   @type EdgeDirection
   */
-  core.defineProperty(Port.prototype,"orientation");
+  Port.prototype.getOrientation() = function(){
+      return this.orientation;
+  }
+  //core.defineProperty(Port.prototype,"orientation");
+  
   /**
   @property ratio
   @type number
   */
-  core.defineProperty(Port.prototype,"ratio");
+  Port.prototype.getRatio() = function(){
+      return this.ratio;
+  }
+  //core.defineProperty(Port.prototype,"ratio");
+  
   /**
   @property validVertices
   @type vertexLocation[]
   */
-  core.defineProperty(Port.prototype,"validVertices");
+  Port.prototype.getValidVertices() = function(){
+      return this.validVertices;
+  }
+  //core.defineProperty(Port.prototype,"validVertices");
 
   /**
     @author Jon George
@@ -73,19 +92,20 @@ catan.models.map.port = (function() {
 catan.models.map.vertexLocation = function() {
 
   /**
-  @property x
-  @type number
+  @property location
+  @type HexLocation
   */
-  core.defineProperty(HexLocation.prototype,"x");
-  /**
-  @property y
-  @type number
-  */s
-  core.defineProperty(HexLocation.prototype,"y");
+  Port.prototype.getLocation() = function(){
+      return this.location;
+  }
+  //core.defineProperty(HexLocation.prototype,"location");
   /**
   @property direction
   @type VertexDirection
   */
+  Port.prototype.getDirection() = function(){
+      return this.direction;
+  }
   core.defineProperty(HexLocation.prototype,"direction");
 
   /**
@@ -107,8 +127,7 @@ catan.models.map.vertexLocation = function() {
       @param {Object} portjson the port json data from server used to intialize the port
   */
   function VertexLocation(vertexjson) {
-    this.x = vertexjson.x;
-    this.y = vertexjson.y;
+    this.loc = new catan.model.hexgrid.HexLocation(vertexjson.x, vertexjson.y);
     this.direction = vertexjson.direction;
   }
 
