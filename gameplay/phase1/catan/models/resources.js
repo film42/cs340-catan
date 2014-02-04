@@ -101,17 +101,15 @@ Resources.prototype.getWoodCount = function() {
  * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
  */
 Resources.prototype.hasAtLeast = function(resources) {
-    if (this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood)
-      return false;
-    return true;
+    return !(this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood);
 }
 
 /**
  * Checks to see if this resource list has at least the amount in the new resourceList.
  * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
  */
-Resources.prototype.count = function(resources) {
-    return this.get
+Resources.prototype.getTotalCount = function() {
+    return this.getBrickCount() + this.getOreCount() + this.getSheepCount() + this.getWheatCount() + this.getWoodCount();
 }
 
   return ResourceList;

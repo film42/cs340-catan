@@ -2,7 +2,7 @@ var catan = catan || {};
 catan.models = catan.models || {};
 
 catan.models.Deck = (function() {
-
+  var devCards;
   /**
   @author Steve Allred
   The Deck is a wrapper object of the DevCards object, and represents what's in the deck.
@@ -27,7 +27,7 @@ catan.models.Deck = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function Deck(json) {
-
+    devCards = new catan.models.devCards(json.devCards);
   }
   /**
   Gets the Monopoly card count.
@@ -35,8 +35,8 @@ catan.models.Deck = (function() {
     @class Deck
     @return an integer of the desired property
   */
-  Deck.prototype.getMonopolyCardCount = function() {
-      return null;
+  Deck.prototype.getMonopolyCount = function() {
+      return this.devCards.getMonopolyCount();
   };
   /**
   Gets the Monument card count.
@@ -44,8 +44,8 @@ catan.models.Deck = (function() {
     @class Deck
     @return an integer of the desired property
   */
-  Deck.prototype.getMonumentCardCount = function() {
-      return null;
+  Deck.prototype.getMonumentCount = function() {
+      return this.devCards.getMonumentCount();
   };
   /**
   Gets the roadBuilding card count.
@@ -53,8 +53,8 @@ catan.models.Deck = (function() {
     @class Deck
     @return an integer of the desired property
   */
-  Deck.prototype.getRoadBuildingCardCount = function() {
-      return null;
+  Deck.prototype.getRoadBuildingCount = function() {
+      return this.devCards.getRoadBuildingCount();
   };
   /**
   Gets the Soldier card count.
@@ -62,8 +62,8 @@ catan.models.Deck = (function() {
     @class Deck
     @return an integer of the desired property
   */
-  Deck.prototype.getSoldierCardCount = function() {
-      return null;
+  Deck.prototype.getSoldierCount = function() {
+      return this.devCards.getSoldierCount();
   };
   /**
   Gets the year of plenty card count.
@@ -71,8 +71,8 @@ catan.models.Deck = (function() {
     @class Deck
     @return an integer of the desired property
   */
-  Deck.prototype.getYearOfPlentyCardCount = function() {
-      return null;
+  Deck.prototype.getYearOfPlentyCount = function() {
+      return this.devCards.getYearOfPlentyCount();
   };
 
   return Deck;

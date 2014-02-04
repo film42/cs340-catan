@@ -27,7 +27,9 @@ catan.models.Bank = (function() {
     @constructor
     @param {JSON} the data containing the initialized objects
   */
-  function Bank(json) {}
+  function Bank(json) {
+    resources = new catan.models.ResourceList(json.resources);
+  }
 
   /**
   Gets the quantity of Brick resources in the bank.
@@ -36,7 +38,7 @@ catan.models.Bank = (function() {
     @return an integer of the desired property
   */
   Bank.prototype.getBrickCount = function() {
-    return null;
+    return this.resources.getBrickCount();
   };
 
   /**
@@ -46,7 +48,7 @@ catan.models.Bank = (function() {
     @return an integer of the desired property
   */
   Bank.prototype.getOreCount = function() {
-    return null;
+    return this.resources.getOreCount();
   };
 
   /**
@@ -56,7 +58,7 @@ catan.models.Bank = (function() {
     @return an integer of the desired property
   */
   Bank.prototype.getSheepCount = function() {
-    return null;
+    return this.resources.getSheepCount();
   };
 
   /**
@@ -66,7 +68,7 @@ catan.models.Bank = (function() {
     @return an integer of the desired property
   */
   Bank.prototype.getWheatCount = function() {
-    return null;
+    return this.resources.getWheatCount();
   };
 
   /**
@@ -76,7 +78,7 @@ catan.models.Bank = (function() {
     @return an integer of the desired property
   */
   Bank.prototype.getWoodCount = function() {
-    return null;
+    return this.resources.getWoodCount();
   };
   
   return Bank;

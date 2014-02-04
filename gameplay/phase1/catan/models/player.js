@@ -49,7 +49,7 @@ catan.models.Player = (function() {
   */
   function Player(data) {
     this.cities = 0;       
-    this.color = data.color;     //need to figure out actual way to get the color from the JSON  
+    this.color = data.color;
     this.discarded = null;    
     this.largestArmy = false;  
     this.longestRoad = false;  
@@ -168,7 +168,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.hasMoreThan7Cards = function() {
-    return this.resources
+    return this.resources.getTotalCount() > 7;
   };
 
   /**
@@ -176,22 +176,26 @@ catan.models.Player = (function() {
       Checks with the internal data to find out if the player has the given cards
       
       PRE:  This object has already been initialized.
+      Assuming that the only time that the user can't discard a card is if they have none.
+      The specs didn't clarify this well.
       POST: The method returns whether the user can can discard a card.
     @method canDiscardCard
     @param {resourceList} cardsDiscarded -the cards to be discarded
   */
   Player.prototype.canDiscardCard = function(cardsDiscarded) {
-    return null;
+    return this.resources.getTotalCount() > 0;
   };
 
   /**
-    PRE: There are resources associated with the user (there can be no, but we have to at least be able to check).
+    PRE: There are resources associated with the user (there can be none, but we have to at least be able to check).
     POST: The method returns whether the user has the resources in the list.
 
     @param {array} resourceList The list of resources that you want to check.
     @return {boolean}
   */
-  Player.prototype.hasXResources = function(resourceList) {};
+  Player.prototype.hasXResources = function(resourceList) {
+    return this.resources.hasAtLeast(resourceList);
+  };
 
   return Player;
 })();
