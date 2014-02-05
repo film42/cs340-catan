@@ -48,7 +48,7 @@ catan.models.Turn = (function() {
   function Turn(json) {
 
     this.playerID = json.currentTurn;
-    this.phase = json.status.toLowerCase();
+    this.phase = json.status;
 
   }
   
@@ -66,7 +66,19 @@ catan.models.Turn = (function() {
   Turn.prototype.getCurrentTurn = function() {
     return this.playerID;
   };
-
+/**
+  set phase
+  <pre>
+  PRE: valid phase
+  POST; phase value is set
+  </pre>
+         
+  @method setPhase
+  @param phase string
+  */
+  Turn.prototype.setPhase = function(phase) {
+    this.phase = phase;
+  };
   
   /**
   Returns current turn phase
@@ -88,7 +100,7 @@ catan.models.Turn = (function() {
   @return {boolean} true or false
   */
   Turn.prototype.isPlayingPhase = function() {
-    if (this.phase == phases.Playing )
+    if (this.phase.toLowerCase() == phases.Playing)
       return true;
     else
       return false;
@@ -101,7 +113,7 @@ catan.models.Turn = (function() {
   @return {boolean} true or false
   */
   Turn.prototype.isRollingPhase = function() {
-    if (this.phase == phases.Rolling )
+    if (this.phase.toLowerCase() == phases.Rolling )
       return true;
     else
       return false;
@@ -114,7 +126,7 @@ catan.models.Turn = (function() {
   @return {boolean} true or false
   */
   Turn.prototype.isDiscardingPhase = function() {
-    if (this.phase == phases.Discarding )
+    if (this.phase.toLowerCase() == phases.Discarding )
       return true;
     else
       return false;
@@ -128,7 +140,7 @@ catan.models.Turn = (function() {
   @return {boolean} true or false
   */
   Turn.prototype.isRobbingPhase = function() {
-    if (this.phase == phases.Robbing )
+    if (this.phase.toLowerCase() == phases.Robbing )
       return true;
     else
       return false;
