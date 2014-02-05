@@ -34,7 +34,7 @@ catan.models.ClientModel = (function() {
     // ASK: Do we need the playerId here?
     this.currentUserId = playerId;
 
-    // JSON attribures
+   // JSON attribures
     this.biggestArmyId = json.biggestArmy;
     this.longestRoadId = json.longestRoad;
     this.winnerId = json.winner;
@@ -56,7 +56,8 @@ catan.models.ClientModel = (function() {
     // TODO: Fix the trade offer thing. Not always there it seems.
 
     // This isn't needed, but last item is the implicit return.
-    return this;
+    //return this;
+  
   }
 
   //
@@ -343,7 +344,7 @@ catan.models.ClientModel = (function() {
     @method canDiscardCard
     @param {resourceList} cardsDiscarded -the cards to be discarded
   */
-  Player.prototype.canDiscardCard = function(cardsDiscarded) {
+  ClientModel.prototype.canDiscardCard = function(cardsDiscarded) {
     return null;
   };
   

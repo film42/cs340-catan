@@ -32,7 +32,7 @@ catan.models.ResourceList = (function() {
     @constructor
     @param {JSON} the data containing the initialized objects
 */
-  function Resources(json){
+  function ResourceList(json){
     this.Resources(json.brick, json.ore, json.sheep, json.wheat, json.wood);
   }
   /**

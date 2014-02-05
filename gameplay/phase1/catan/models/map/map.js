@@ -45,19 +45,19 @@ catan.models.map.Map = (function() {
     
   }
   
-  Map.prototype.getHexGrid() = function(){
+  Map.prototype.getHexGrid = function(){
     return this.hexGrid;
   }
-  Map.prototype.getNumbers() = function(){
+  Map.prototype.getNumbers = function(){
     return this.numbers;
   }
-  Map.prototype.getPorts() = function(){
+  Map.prototype.getPorts = function(){
     return this.ports;
   }
-  Map.prototype.getRadius() = function(){
+  Map.prototype.getRadius = function(){
     return this.radius;
   }
-  Map.prototype.getRobber() = function(){
+  Map.prototype.getRobber = function(){
     return this.robber;
   }
 
@@ -252,7 +252,7 @@ catan.models.map.Map = (function() {
   */
   Map.prototype.findAllXPortVertices = function(type){
     //check if type is valid
-    var validTypes = ["Wood", "Brick", "Sheep", "Wheat", "Ore"]
+    var validTypes = ["Wood", "Brick", "Sheep", "Wheat", "Ore"];
     if(type){
       var check = false;
       for(var i=0; i<validTypes.length; i++){
@@ -262,7 +262,7 @@ catan.models.map.Map = (function() {
         }
       }
       if(!check){
-        console.debug("type: " + type " is not a valid input to findAllXPortVertices()");
+        console.debug("type: " + type +" is not a valid input to findAllXPortVertices()");
         return undefined;
       }
     }

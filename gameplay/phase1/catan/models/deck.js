@@ -27,7 +27,7 @@ catan.models.Deck = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function Deck(json) {
-    devCards = new catan.models.devCards(json.devCards);
+    devCards = new catan.models.DevCards(json.devCards);
   }
   /**
   Gets the Monopoly card count.

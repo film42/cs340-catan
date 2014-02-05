@@ -8,7 +8,7 @@ catan.models.map.port = (function() {
   @property type
   @type String
   */
-  Port.prototype.getType() = function(){
+  Port.prototype.getType = function(){
       return this.type;
   }
   //core.defineProperty(Port.prototype,"type");
@@ -17,7 +17,7 @@ catan.models.map.port = (function() {
   @property location
   @type HexLocation
   */
-  Port.prototype.getLocation() = function(){
+  Port.prototype.getLocation = function(){
       return this.location;
   }
   //core.defineProperty(Port.prototype,"location");
@@ -26,7 +26,7 @@ catan.models.map.port = (function() {
   @property orientation
   @type EdgeDirection
   */
-  Port.prototype.getOrientation() = function(){
+  Port.prototype.getOrientation = function(){
       return this.orientation;
   }
   //core.defineProperty(Port.prototype,"orientation");
@@ -35,7 +35,7 @@ catan.models.map.port = (function() {
   @property ratio
   @type number
   */
-  Port.prototype.getRatio() = function(){
+  Port.prototype.getRatio = function(){
       return this.ratio;
   }
   //core.defineProperty(Port.prototype,"ratio");
@@ -44,7 +44,7 @@ catan.models.map.port = (function() {
   @property validVertices
   @type vertexLocation[]
   */
-  Port.prototype.getValidVertices() = function(){
+  Port.prototype.getValidVertices = function(){
       return this.validVertices;
   }
   //core.defineProperty(Port.prototype,"validVertices");
@@ -85,7 +85,7 @@ catan.models.map.port = (function() {
     this.validVertices[1] = new catan.models.map.VertexLocation(portjson.validVertex2);
   }
 
-  return port;
+  return Port;
 })();
 
 
@@ -95,7 +95,7 @@ catan.models.map.vertexLocation = function() {
   @property location
   @type HexLocation
   */
-  Port.prototype.getLocation() = function(){
+  Port.prototype.getLocation = function(){
       return this.location;
   }
   //core.defineProperty(HexLocation.prototype,"location");
@@ -103,7 +103,7 @@ catan.models.map.vertexLocation = function() {
   @property direction
   @type VertexDirection
   */
-  Port.prototype.getDirection() = function(){
+  Port.prototype.getDirection = function(){
       return this.direction;
   }
   core.defineProperty(HexLocation.prototype,"direction");

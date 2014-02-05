@@ -5,7 +5,7 @@ catan.models.TradeOffer = (function() {
 
   var senderID;//int
   var receiverID;//int
-  var resources
+  var resources;
   /**
   @author Steve Allred
   A trade offer is a container object that contains values specific to a trade offer.
@@ -40,7 +40,7 @@ catan.models.TradeOffer = (function() {
     @class Resources
     @return An integer that represents the Sender id
   */
-Resources.prototype.getSender = function() {
+TradeOffer.prototype.getSender = function() {
     return this.senderID;
   };
   /**
@@ -49,7 +49,7 @@ Resources.prototype.getSender = function() {
     @class Resources
     @return An integer that represents the Receiver id
   */
-Resources.prototype.getReceiver = function() {
+TradeOffer.prototype.getReceiver = function() {
     return this.receiverID;
   };
   /**
@@ -58,7 +58,7 @@ Gets the offer (a resource list) from this object.
     @class Resources
     @return A resource list
   */
-Resources.prototype.getOffer = function() {
+TradeOffer.prototype.getOffer = function() {
     return this.resources;
   };
 
