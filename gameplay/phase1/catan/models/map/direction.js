@@ -12,14 +12,14 @@ catan.models.map = catan.models.map || {};
   
   @class EdgeDirection
   */
- catan.model.map.EdgeDirection = core.numberEnumeration(["NW","N","NE","SE","S","SW"]);
+ catan.models.map.EdgeDirection = core.numberEnumeration(["NW","N","NE","SE","S","SW"]);
     
   /**
   These are simply a copy of EdgeDirections. They can be fed to a hexgrid.HexLocation to get 
   the location of the hex next to it in that direction. It's really just an enumeration.
   @class HexDirection
   */
-  catan.model.map.HexDirection = catan.model.map.EdgeDirection;
+  catan.models.map.HexDirection = catan.models.map.EdgeDirection;
   /**
     Use this class to look up the numerical value of a VertexDirection from JSON.
   These are the vertex values in clockwise order starting at NW.
@@ -29,6 +29,6 @@ catan.models.map = catan.models.map || {};
     The possible VertexDirection are "W","NW","NE","E","SE","SW"
   @class VertexDirection
   */
-  catan.model.map.VertexDirection = core.numberEnumeration(["W","NW","NE","E","SE","SW"]);
+  catan.models.map.VertexDirection = core.numberEnumeration(["W","NW","NE","E","SE","SW"]);
     
    

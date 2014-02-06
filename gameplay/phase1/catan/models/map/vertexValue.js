@@ -7,13 +7,13 @@ catan.models.map.VertexValue = (function() {
   /**
   @property ownerID
   */  
-  core.defineProperty(Map.prototype, "ownerID");
+  //core.defineProperty(Map.prototype, "ownerID");
 
   /**
   @property buildsite
   @type BuildStatus(enumeration)
   */  
-  core.defineProperty(Map.prototype, "buildsite");
+  //core.defineProperty(Map.prototype, "buildsite");
 
   /**
   VertexValue class to hold an Vertex's values

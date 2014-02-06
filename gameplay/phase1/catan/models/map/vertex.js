@@ -26,7 +26,7 @@ Constructor Specification:
 */
 catan.models.map.Vertex = (function Vertex_Class(){
   
-  core.forceClassInherit(Vertex, hexgrid.BaseContainer);
+  //core.forceClassInherit(Vertex, hexgrid.BaseContainer);
 
   /**
   @property value
