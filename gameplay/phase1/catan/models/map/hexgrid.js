@@ -7,9 +7,9 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
 
   function HexGrid(hexgridjson){
     for(var i = 0; i < hexgridjson.hexes.length; i++){
-      var hexloc = new HexLocation(hexgridjson.hexes[i].location.x, hexgridjson.hexes[i].location.y);
+      var hexloc = new catan.models.map.HexLocation(hexgridjson.hexes[i].location.x, hexgridjson.hexes[i].location.y);
       var arrayloc = _getInternalHexRef(hexloc);
-      this.hexes[arrayloc.y][arrayloc.x] = new Hex(hexgridjson.hexes[i]);
+      this.hexes[arrayloc.y][arrayloc.x] = new catan.models.map.Hex(hexgridjson.hexes[i]);
     }
     this.radius = hexgridjson.radius;
     this.x0 = hexgridjson.x0;
@@ -44,8 +44,8 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     if(!hex.isLand()){
       var dirnum = catan.model.map.VertexDirection(dir);
       var leftdir = nextDirectionCounterClockwise(dirnum);
-      var leftneighbor = getHex(hexLoc.getNeighborLocation(leftdir));
-      var rightneighbor = getHex(hexLoc.getNeighborLocation(dirnum));
+      var leftneighbor = this.getHex(hexLoc.getNeighborLocation(leftdir));
+      var rightneighbor = this.getHex(hexLoc.getNeighborLocation(dirnum));
       var both = true;
       if(leftneighbor){
         if(leftneighbor.isLand()){
@@ -73,7 +73,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     if(!hex.isLand()){
       var dirnum = catan.model.map.EdgeDirection(dir);
       var neighborloc = hexLoc.getNeighborLocation(dirnum);
-      var neighborhex = getHex(neighborloc);
+      var neighborhex = this.getHex(neighborloc);
       if(!neighborhex){
         return null;
       }
@@ -107,7 +107,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
 
 
     var neighborloc = hexLoc.getNeighborLocation(dirnum);
-    var neighborhex = getHex(neighborloc);
+    var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       //var oppdir = ((((dirnum+3)%6)+6)%6);
       var oppdir = getOppositeDirection(dirnum);
@@ -144,7 +144,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
   }
 
   HexGrid.prototype.getAdjVertexes = function(hexLoc, dir){
-    var hex = getHex(hexLoc);
+    var hex = this.getHex(hexLoc);
     if(!hex){
       return null;
     }
@@ -164,7 +164,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
 
     var neighborloc = hexLoc.getNeighborLocation(dir);
-    var neighborhex = getHex(neighborloc);
+    var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       var oppdir = getOppositeDirection(dirnum);
       var across = neighborhex.getVertex(nextDirectionCounterClockwise(oppdir));
@@ -176,7 +176,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
   }
 
   HexGrid.prototype.getAdjEdges = function(hexLoc, dir){
-    var hex = getHex(hexLoc);
+    var hex = this.getHex(hexLoc);
     if(!hex){
       return null;
     }
@@ -196,7 +196,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
 
     var neighborloc = hexLoc.getNeighborLocation(dirnum);
-    var neighborhex = getHex(neighborloc);
+    var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       var oppdir = getOppositeDirection(dirnum);
       var acrossleft = neighborhex.getEdge(nextDirectionCounterClockwise(oppdir));
