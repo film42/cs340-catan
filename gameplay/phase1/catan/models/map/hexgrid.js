@@ -232,5 +232,5 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
   function nextDirectionCounterClockwise(direction){
     return positiveModulo((direction - 1),6);
   }
-
+  return HexGrid;
 }());

@@ -2,7 +2,7 @@ var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
-catan.models.map.port = (function() {
+catan.models.map.Port = (function() {
 
   /**
   @property type

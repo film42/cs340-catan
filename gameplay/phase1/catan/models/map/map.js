@@ -29,7 +29,9 @@ catan.models.map.Map = (function() {
   function Map(mapjson) {
     //init hexgrid
     //this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
-    this.hexGrid = new hexgrid.HexGrid(mapjson.hexgrid);
+    if(!catan.models.map)
+      console.log("Bad")
+    this.hexGrid = new catan.models.map.HexGrid(mapjson.hexgrid);
     //init ports
     this.ports = [];
     mapjson.ports.forEach(function(portjson){
@@ -37,7 +39,7 @@ catan.models.map.Map = (function() {
     ports.push(new catan.models.Port(portjson));
     });
     //init robber
-    this.robber = new catan.model.hexgrid.HexLocation(mapjson.robber.x, mapjson.robber.y);
+    this.robber = new catan.model.map.HexLocation(mapjson.robber.x, mapjson.robber.y);
     //init numbers- since this is just a lookup table, so just use the json object from the server
     this.numbers = mapjson.numbers;
     //init radius
