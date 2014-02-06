@@ -33,18 +33,12 @@ catan.models.ResourceList = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function ResourceList(json){
-    this.Resources(json.brick, json.ore, json.sheep, json.wheat, json.wood);
-  }
-  /**
-   *  Initializes a ResourceList to Zeroes
-   */
-  function Resources() {
-    this.Resources(0,0,0,0,0);
+    this.setResourceListItems(json.brick, json.ore, json.sheep, json.wheat, json.wood);
   }
   /**
    * Initializes a ResourceList to the values passed in the correct order.
    */
-  function Resources(br, or, sh, wh, wo) {
+  ResourceList.prototype.setResourceListItems = function(br, or, sh, wh, wo) {
     this.brick = br;
     this.ore = or;
     this.sheep = sh;
@@ -57,7 +51,7 @@ catan.models.ResourceList = (function() {
     @class Resources
     @return an integer of the desired property
   */
-  Resources.prototype.getBrickCount = function() {
+  ResourceList.prototype.getBrickCount = function() {
       return this.brick;
   };
   /**
@@ -66,7 +60,7 @@ catan.models.ResourceList = (function() {
     @class Resources
     @return an integer of the desired property
   */
-  Resources.prototype.getOreCount = function() {
+  ResourceList.prototype.getOreCount = function() {
     return this.ore;
   };
   /**
@@ -75,7 +69,7 @@ catan.models.ResourceList = (function() {
     @class Resources
     @return an integer of the desired property
   */
-Resources.prototype.getSheepCount = function() {
+  ResourceList.prototype.getSheepCount = function() {
     return this.sheep;
   };
   /**
@@ -84,7 +78,7 @@ Resources.prototype.getSheepCount = function() {
     @class Resources
     @return an integer of the desired property
   */
-Resources.prototype.getWheatCount = function() {
+  ResourceList.prototype.getWheatCount = function() {
     return this.wheat;
   };
   /**
@@ -93,24 +87,24 @@ Resources.prototype.getWheatCount = function() {
     @class Resources
     @return an integer of the desired property
   */
-Resources.prototype.getWoodCount = function() {
+  ResourceList.prototype.getWoodCount = function() {
     return this.wood;
-};
-/**
- * Checks to see if this resource list has at least the amount in the new resourceList.
- * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
- */
-Resources.prototype.hasAtLeast = function(resources) {
-    return !(this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood);
-}
-
-/**
- * Checks to see if this resource list has at least the amount in the new resourceList.
- * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
- */
-Resources.prototype.getTotalCount = function() {
-    return this.getBrickCount() + this.getOreCount() + this.getSheepCount() + this.getWheatCount() + this.getWoodCount();
-}
-
-  return ResourceList;
+  };
+  /**
+   * Checks to see if this resource list has at least the amount in the new resourceList.
+   * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
+   */
+  ResourceList.prototype.hasAtLeast = function(resources) {
+      return !(this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood);
+  }
+  
+  /**
+   * Checks to see if this resource list has at least the amount in the new resourceList.
+   * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
+   */
+  ResourceList.prototype.getTotalCount = function() {
+      return this.getBrickCount() + this.getOreCount() + this.getSheepCount() + this.getWheatCount() + this.getWoodCount();
+  }
+  
+    return ResourceList;
 })();

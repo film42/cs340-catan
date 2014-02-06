@@ -48,19 +48,19 @@ catan.models.Player = (function() {
       @param {Object} the data containing the user name and color
   */
   function Player(data) {
-    this.cities = 0;       
+    this.cities = data.cities;       
     this.color = data.color;
-    this.discarded = null;    
-    this.largestArmy = false;  
-    this.longestRoad = false;  
-    this.monuments = 0;    
+    this.discarded = data.discarded;    
+    this.largestArmy = data.largestArmy;  
+    this.longestRoad = data.longestRoad;  
+    this.monuments = data.monuments;    
     this.name = data.name;         
     this.newDevCards = data.newDevCards;  
     this.oldDevCards = data.oldDevCards;  
     this.orderNumber = data.orderNumber;  
-    this.playedDevCard = false;
-    this.playerID = data.playerID;     
-    this.resources = new catan.models.resources(data.resources);    
+    this.playedDevCard = data.playedDevCard;
+    this.playerID = data.playerID;
+    this.resources = new catan.models.ResourceList(data.resources);    
   }
 
   /**
@@ -109,7 +109,7 @@ catan.models.Player = (function() {
   */
   Player.prototype.canAffordToBuySettlement = function() {
     var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.resources(1,0,1,1,1)))
+    if (!this.resources.hasAtLeast(new catan.models.ResourceList(1,0,1,1,1)))
       can = false;
     return can;
   };
@@ -124,7 +124,7 @@ catan.models.Player = (function() {
   */
   Player.prototype.canAffordToBuyCity = function() {
     var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.resources(0,3,0,2,0)))
+    if (!this.resources.hasAtLeast(new catan.models.ResourceList(0,3,0,2,0)))
       can = false;
     return can;
   };
@@ -139,7 +139,7 @@ catan.models.Player = (function() {
   */
   Player.prototype.canAffordToOfferTrade = function(cardsTraded){
   	var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.resources(cardsTraded)))
+    if (!this.resources.hasAtLeast(new catan.models.ResourceList(cardsTraded)))
       can = false;
     return can;
   };
@@ -154,7 +154,7 @@ catan.models.Player = (function() {
   */
   Player.prototype.canAcceptTrade = function(cardsToGive) {
       	var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.resources(cardsToGive)))
+    if (!this.resources.hasAtLeast(new catan.models.ResourceList(cardsToGive)))
       can = false;
     return can;
   };
@@ -196,6 +196,20 @@ catan.models.Player = (function() {
   Player.prototype.hasXResources = function(resourceList) {
     return this.resources.hasAtLeast(resourceList);
   };
+  
+  /**
+   * This is a getter that wraps up all of the resources in a single object.
+   */
+  Player.prototype.getResourceList = function() {
+    var resourcesOut = { 
+        "brick" : this.resources.brick,
+        "ore" : this.resources.ore,
+        "sheep" : this.resources.sheep,
+        "wheat" : this.resources.wheat,
+        "wood" : this.resources.wood
+    };
+    return resourcesOut;
+  }
 
   return Player;
 })();
