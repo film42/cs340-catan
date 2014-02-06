@@ -35,22 +35,27 @@ catan.models.map.Hex = (function CatanHex_Class(){
   
   /**
   @property location
+  @type HexLocation
   */
   core.defineProperty(Hex.prototype, "location");
   /**
   @property edges
+  @type array<Edges>
   */
   core.defineProperty(Hex.prototype, "edges");
   /**
   @property vertexes
+  @type array<Vertexes>
   */
   core.defineProperty(Hex.prototype, "vertexes");
   /**
   @property landtype
+  @type string
   */
   core.defineProperty(Hex.prototype, "landtype");
   /**
   @property island
+  @type Boolean
   */
   core.defineProperty(Hex.prototype, "island");
 
@@ -99,7 +104,11 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Edge
   */
   Hex.prototype.getEdge = function(direction){
-
+    var dir = EdgeDirection(direction);
+    if(!dir){
+      throw new Error("Invalid Direction");
+    }
+    return edges[dir];
   }
 
   /**
@@ -114,7 +123,11 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Vertex
   */
   Hex.prototype.getVertex = function(direction){
-
+    var dir = VertexDirection(direction);
+    if(!dir){
+      throw new Error("Invalid Direction");
+    }
+    return vertexes[dir];
   }
 
   /**
