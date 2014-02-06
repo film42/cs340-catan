@@ -31,33 +31,33 @@ Constructor Specification:
 */
 catan.models.map.Hex = (function CatanHex_Class(){
 
-  core.forceClassInherit(Hex, hexgrid.BasicHex);
+  //core.forceClassInherit(Hex, hexgrid.BasicHex);
   
   /**
   @property location
   @type HexLocation
   */
-  core.defineProperty(Hex.prototype, "location");
+  //core.defineProperty(Hex.prototype, "location");
   /**
   @property edges
   @type array<Edges>
   */
-  core.defineProperty(Hex.prototype, "edges");
+  //core.defineProperty(Hex.prototype, "edges");
   /**
   @property vertexes
   @type array<Vertexes>
   */
-  core.defineProperty(Hex.prototype, "vertexes");
+  //core.defineProperty(Hex.prototype, "vertexes");
   /**
   @property landtype
   @type string
   */
-  core.defineProperty(Hex.prototype, "landtype");
+  //core.defineProperty(Hex.prototype, "landtype");
   /**
   @property island
   @type Boolean
   */
-  core.defineProperty(Hex.prototype, "island");
+  //core.defineProperty(Hex.prototype, "island");
 
   //constructor
   function Hex(hexjson){

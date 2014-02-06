@@ -21,7 +21,7 @@
   <script src="../catan/models/map/edge.js"></script>
   <script src="../catan/models/map/edgeValue.js"></script>
   <script src="../catan/models/map/hex.js"></script>
-  <script src="../catan/models/map/hexgrid.js"></script>
+  <script src="../catan/models/map/hexGrid.js"></script>
   <script src="../catan/models/map/map.js"></script>
   <script src="../catan/models/map/port.js"></script>
   <script src="../catan/models/map/vertex.js"></script>

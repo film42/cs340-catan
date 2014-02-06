@@ -26,9 +26,9 @@ Constructor Specification:
 */
 catan.models.map.Edge = (function Edge_Class(){
   
-  core.forceClassInherit(Edge, hexgrid.BaseContainer);
+  //core.forceClassInherit(Edge, hexgrid.BaseContainer);
 
-  core.defineProperty(Edge.prototype, "value");
+  //core.defineProperty(Edge.prototype, "value");
 
 
   function Edge(edgejson){

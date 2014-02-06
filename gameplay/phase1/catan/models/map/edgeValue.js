@@ -9,7 +9,7 @@ catan.models.map.EdgeValue = (function() {
   /**
   @property ownerID
   */  
-  core.defineProperty(Map.prototype, "ownerID");
+  //core.defineProperty(Map.prototype, "ownerID");
 
   /**
   EdgeValue class to hold an Edge's values
