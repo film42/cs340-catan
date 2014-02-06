@@ -29,9 +29,10 @@ catan.models.map.Map = (function() {
   function Map(mapjson) {
     //init hexgrid
     //this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
+    console.log(mapjson);
     if(!catan.models.map)
       console.log("Bad")
-    this.hexGrid = new catan.models.map.HexGrid(mapjson.hexgrid);
+    this.hexGrid = new catan.models.map.HexGrid(mapjson.hexGrid);
     //init ports
     this.ports = [];
     mapjson.ports.forEach(function(portjson){
