@@ -9,7 +9,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     for(var i = 0; i < hexgridjson.hexes.length; i++){
       var hexloc = new HexLocation(hexgridjson.hexes[i].location.x, hexgridjson.hexes[i].location.y);
       var arrayloc = _getInternalHexRef(hexloc);
-      this.hexes[arrayloc.y][arrayloc.x];
+      this.hexes[arrayloc.y][arrayloc.x] = new Hex(hexgridjson.hexes[i]);
     }
     this.radius = hexgridjson.radius;
     this.x0 = hexgridjson.x0;
