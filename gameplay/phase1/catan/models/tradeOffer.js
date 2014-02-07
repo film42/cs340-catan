@@ -29,6 +29,7 @@ catan.models.TradeOffer = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function TradeOffer(json) {
+    debugger
     senderID = json.senderID;
     receiverID = json.receiverID;
     resources = json.resources;
