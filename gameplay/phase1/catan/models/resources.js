@@ -42,6 +42,17 @@ catan.models.ResourceList = (function() {
   }
 
   /**
+   * Initializes a ResourceList to the values passed in the correct order.
+   */
+  ResourceList.prototype.setResourceListItems = function(br, or, sh, wh, wo) {
+    this.brick = br;
+    this.ore = or;
+    this.sheep = sh;
+    this.wheat = wh;
+    this.wood = wo;
+  }
+  
+  /**
   Gets the quantity of Brick resources in the Resources.
 
     @class Resources
