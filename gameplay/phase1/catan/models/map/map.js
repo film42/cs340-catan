@@ -297,4 +297,3 @@ catan.models.map.Map = (function() {
 
 
 
-
