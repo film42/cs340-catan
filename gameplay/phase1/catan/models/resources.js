@@ -40,16 +40,7 @@ catan.models.ResourceList = (function() {
     this.wood = json.wood;
     return this;
   }
-  /**
-   * Initializes a ResourceList to the values passed in the correct order.
-   */
-  ResourceList.prototype.setResourceListItems = function(br, or, sh, wh, wo) {
-    this.brick = br;
-    this.ore = or;
-    this.sheep = sh;
-    this.wheat = wh;
-    this.wood = wo;
-  }
+
   /**
   Gets the quantity of Brick resources in the Resources.
 
@@ -59,6 +50,7 @@ catan.models.ResourceList = (function() {
   ResourceList.prototype.getBrickCount = function() {
       return this.brick;
   };
+
   /**
   Gets the quantity of Ore in the Resources.
 
@@ -68,6 +60,7 @@ catan.models.ResourceList = (function() {
   ResourceList.prototype.getOreCount = function() {
     return this.ore;
   };
+
   /**
   Gets the quantity of Sheep in the Resources.
 
@@ -77,6 +70,7 @@ catan.models.ResourceList = (function() {
   ResourceList.prototype.getSheepCount = function() {
     return this.sheep;
   };
+
   /**
   Gets the quantity of Wheat in the Resources.
 
@@ -86,6 +80,7 @@ catan.models.ResourceList = (function() {
   ResourceList.prototype.getWheatCount = function() {
     return this.wheat;
   };
+
   /**
   Gets the quantity of Wood in the Resources.
 
@@ -95,13 +90,14 @@ catan.models.ResourceList = (function() {
   ResourceList.prototype.getWoodCount = function() {
     return this.wood;
   };
+
   /**
    * Checks to see if this resource list has at least the amount in the new resourceList.
    * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
    */
   ResourceList.prototype.hasAtLeast = function(br, or, sh, wh, wo) {
       return !(this.brick < br || this.ore < or || this.sheep < sh || this.wheat < wh || this.wood < wo);
-  }
+  };
   
   /**
    * Checks to see if this resource list has at least the amount in the new resourceList.
@@ -109,7 +105,7 @@ catan.models.ResourceList = (function() {
    */
   ResourceList.prototype.getTotalCount = function() {
       return this.getBrickCount() + this.getOreCount() + this.getSheepCount() + this.getWheatCount() + this.getWoodCount();
-  }
+  };
   
-    return ResourceList;
+  return ResourceList;
 })();

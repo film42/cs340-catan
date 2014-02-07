@@ -117,24 +117,23 @@ catan.proxy.ClientProxy = (function() {
     </pre>
 
     @param {integer} playerId The player who is offering the trade request
-    @param {integer} otherPlayerId The OTHER player who will respond to the trade request
-    @param {array} offer Resouces that the player is offering
-    @param {array} offer Resouces that the player is requesting from the trade
+    @param {integer} receiverId The OTHER player who will respond to the trade request
+    @param {ResourceList} request Resouces that the player is requesting from the trade
     @param {function} callback The response callback
      
     @method acceptTrade
     @return {function(err)} callback
   */
-  ClientProxy.prototype.offerTrade = function(playerId, receiverId, brickCount, oreCount, sheepCount, wheatCount, woolCount, callback) {
+  ClientProxy.prototype.offerTrade = function(playerId, receiverId, list, callback) {
     var template = {
       type: "offerTrade",
       playerIndex: playerId,
       offer: {
-        brick: brickCount,
-        ore: oreCount,
-        sheep: sheepCount,
-        wheat: wheatCount,
-        wood: woolCount
+        brick: list.getBrickCount(),
+        ore: list.getOreCount(),
+        sheep: list.getSheepCount(),
+        wheat: list.getWheatCount(),
+        wood: list.getWoodCount()
       },
       receiver: receiverId
     };
@@ -156,8 +155,9 @@ catan.proxy.ClientProxy = (function() {
     @param {integer} playerId The player ID of the current player
     @param {string} inputCardType card type the client wants to trade in
     @param {string} outputCardType card type the client will recieve
+    @param {function} callback The response callback
   */
-  ClientProxy.prototype.maritimeTrade = function(playerId, inputCardType, outputCardType) {
+  ClientProxy.prototype.maritimeTrade = function(playerId, inputCardType, outputCardType, callback) {
     var template =  {
       type: "maritimeTrade",
       playerIndex: playerId,
