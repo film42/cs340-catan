@@ -39,25 +39,26 @@ catan.models.map.HexLocation = (function HexLocationClass(){
             @param {[HexDirection]} hexDirection
             @return hexgrid.HexLocation Returns a location next to this one, in the direction of the 'hexDirection' given
         */
-    HexLocation.prototype.getNeighborLocation = function getNeighborLocation(hexDirection){
+    HexLocation.prototype.getNeighborLocation = function getNeighborLocation(hexDir){
       var x,  y , z = 0;
+      var hexDirection = catan.models.map.HexDirection[hexDir];
         switch (hexDirection) {
-        case HexDirection.SE:
+        case catan.models.map.HexDirection.SE:
           x = 1; y = 0; z = -1;
           break;
-        case HexDirection.S:
+        case catan.models.map.HexDirection.S:
           x = 0; y = 1; z = -1;
           break;
-        case HexDirection.SW:
+        case catan.models.map.HexDirection.SW:
           x = -1; y = 1; z = 0;
           break;
-        case HexDirection.NW:
+        case catan.models.map.HexDirection.NW:
           x = -1; y = 0; z = 1;
           break;
-        case HexDirection.N:
+        case catan.models.map.HexDirection.N:
           x = 0; y = -1; z = 1;
           break;
-        case HexDirection.NE:
+        case catan.models.map.HexDirection.NE:
           x = 1; y = -1; z = 0;
           break;
         default:
@@ -65,7 +66,36 @@ catan.models.map.HexLocation = (function HexLocationClass(){
           core.assert(false);
           throw new Error("Invalid Direction");
       }
-      return new HexLocation(this.getX() + x,this.getY() + y);
+      return new catan.models.map.HexLocation(this.getX() + x,this.getY() + y);
+    }
+
+  HexLocation.prototype.getNeighborLocationNum = function getNeighborLocationNum(hexDirection){
+      var x,  y , z = 0;
+        switch (hexDirection) {
+        case 3:
+          x = 1; y = 0; z = -1;
+          break;
+        case 4:
+          x = 0; y = 1; z = -1;
+          break;
+        case 5:
+          x = -1; y = 1; z = 0;
+          break;
+        case 0:
+          x = -1; y = 0; z = 1;
+          break;
+        case 1:
+          x = 0; y = -1; z = 1;
+          break;
+        case 2:
+          x = 1; y = -1; z = 0;
+          break;
+        default:
+          console.log(hexDirection,this);
+          core.assert(false);
+          throw new Error("Invalid Direction");
+      }
+      return new catan.models.map.HexLocation(this.getX() + x,this.getY() + y);
     }
     
     return HexLocation;

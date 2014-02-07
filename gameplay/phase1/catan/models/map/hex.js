@@ -107,7 +107,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   */
   Hex.prototype.getEdge = function(direction){
     var dir = catan.models.map.EdgeDirection[direction];
-    if(!dir){
+    if(!dir && dir != 0){
       throw new Error("Invalid Direction");
     }
     return this.edges[dir];
@@ -126,11 +126,49 @@ catan.models.map.Hex = (function CatanHex_Class(){
   */
   Hex.prototype.getVertex = function(direction){
     var dir = catan.models.map.VertexDirection[direction];
-    if(!dir){
+    if(!dir && dir != 0){
+      console.log("Bad direction? " + direction + " dirnum " + dir);
       throw new Error("Invalid Direction");
     }
     return this.vertexes[dir];
   }
+
+  /**
+  Returns the vertex belonging to the Hex at direction given
+  <pre>
+  PRE: A number that corresponds to a vertex is given.
+  POST: returns a Vertex belonging to the hex in the specified direction
+  </pre>
+
+  @method getVertexNum
+  @param number
+  @return Vertex
+  */
+  Hex.prototype.getVertexNum = function(direction){
+    if(direction < 0 || direction > 6){
+      throw new Error("Invalid Direction");
+    }
+    return this.vertexes[direction];
+  }
+
+  /**
+  Returns the edge belonging to the Hex at direction given
+  <pre>
+  PRE: A valid EdgeDirection object that specifies a direction on the Hex
+  POST: returns an Edge belonging to the hex in the specified direction
+  </pre>
+
+  @method getEdgeNum
+  @param number
+  @return Edge
+  */
+  Hex.prototype.getEdgeNum = function(direction){
+    if(direction < 0 || direction > 6){
+      throw new Error("Invalid Direction");
+    }
+    return this.edges[direction];
+  }
+
 
   /**
   Specifies whether the hex is land or water
