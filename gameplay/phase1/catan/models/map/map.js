@@ -122,7 +122,7 @@ catan.models.map.Map = (function() {
   Map.prototype.canBuildCity = function(playerId, hexLoc, dir) {
     //check if there is a settlement at the given vertex
     var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
-    if(buildVertex.getValue() == 1/*"settlement"*/){
+    if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/){
       return true;
     }
     return false;
@@ -150,7 +150,7 @@ catan.models.map.Map = (function() {
         if(isSetupPhase){
           var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
           for(var i=0; i <adjVertexes.length; i++){
-            if(adjVertexes[i].isOccupied() && adjVertexes[i].getValue().getOwnerID()){
+            if(adjVertexes[i].isOccupied() && adjVertexes[i].getValue().getOwnerID() == playerId){
               return true;
             }
           }
@@ -158,7 +158,7 @@ catan.models.map.Map = (function() {
           //Check if adjacent edges have roads owned by that player
           var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
           for(var i=0; i< adjEdges.length; i++){
-            if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID()){
+            if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
               return true;
             }
           }
