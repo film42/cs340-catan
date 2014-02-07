@@ -7,37 +7,54 @@ test("ClientModel", function(){
   //  var s = new catan.models.ClientModel(0, data);
 
     //equal(s, null, "failed" );
-   equal(1,1, "successed");
+  equal(1,1, "successed");
   //});
 
 });
 
-test("port", function(){
-  console.log("port test");
-  stop();
-   var port = {
-        
-        "ratio": 3,
-        "validVertex1": {
-          "direction": "SW",
-          "x": 3,
-          "y": -3
-        },
-        "validVertex2": {
-          "direction": "W",
-          "x": 3,
-          "y": -3
-        },
-        "orientation": "SW",
-        "location": {
-          "x": 3,
-          "y": -3
-        }
-      };
-   var s = new catan.models.map.Port(port);
-   ok(1,1, "successed")
-   start(); 
-  
+test("catan.models.map.VertexLocation", function() {
+  var json = {
+    "direction": "W",
+    "x": 3,
+    "y": -3
+  };
+
+  var vertexLocation = new catan.models.map.VertexLocation(json);
+  equal("W", vertexLocation.getDirection(), "Valid direction set");
+  notEqual(null, vertexLocation.getLocation(), "None null locations");
+});
+
+test("catan.models.map.Port", function() {
+  var json = {
+    "ratio": 3,
+    "validVertex1": {
+      "direction": "SW",
+      "x": 3,
+      "y": -3
+    },
+    "validVertex2": {
+      "direction": "W",
+      "x": 3,
+      "y": -3
+    },
+    "orientation": "SW",
+    "location": {
+      "x": 3,
+      "y": -3
+    }
+  };
+
+  // Instantiate
+  var port = new catan.models.map.Port(json);
+
+  // Tests
+  equal("SW", port.getOrientation(), "Has valid orientation");
+  equal(3, port.getRatio(), "Has a ratio of 3");
+  var verts = port.getValidVertices();
+  equal(2, verts.length, "Has 2 verticies");
+  notEqual(null, verts[0], "Not null vertex 1");
+  notEqual(null, verts[1], "Not null vertex 2");
+  notEqual(null, port.getLocation(), "Location not null");
 });
 
 

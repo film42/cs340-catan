@@ -14,9 +14,10 @@ catan.models.map.Port = (function() {
     //init ratio
     this.ratio = portjson.ratio;
     //init validVertices
-    this.validVertices = [];
-    this.validVertices[0] = new catan.models.map.VertexLocation(portjson.validVertex1);
-    this.validVertices[1] = new catan.models.map.VertexLocation(portjson.validVertex2);
+    this.validVertices = [
+      new catan.models.map.VertexLocation(portjson.validVertex1),
+      new catan.models.map.VertexLocation(portjson.validVertex2)
+    ];
   }
 
   /**
@@ -25,7 +26,7 @@ catan.models.map.Port = (function() {
   */
   Port.prototype.getType = function(){
       return this.type;
-  }
+  };
   //core.defineProperty(Port.prototype,"type");
   
   /**
@@ -34,7 +35,7 @@ catan.models.map.Port = (function() {
   */
   Port.prototype.getLocation = function(){
       return this.location;
-  }
+  };
   //core.defineProperty(Port.prototype,"location");
   
   /**
@@ -43,7 +44,7 @@ catan.models.map.Port = (function() {
   */
   Port.prototype.getOrientation = function(){
       return this.orientation;
-  }
+  };
   //core.defineProperty(Port.prototype,"orientation");
   
   /**
@@ -52,7 +53,7 @@ catan.models.map.Port = (function() {
   */
   Port.prototype.getRatio = function(){
       return this.ratio;
-  }
+  };
   //core.defineProperty(Port.prototype,"ratio");
   
   /**
@@ -61,7 +62,7 @@ catan.models.map.Port = (function() {
   */
   Port.prototype.getValidVertices = function(){
       return this.validVertices;
-  }
+  };
   //core.defineProperty(Port.prototype,"validVertices");
 
   /**
@@ -111,7 +112,7 @@ catan.models.map.VertexLocation = (function() {
       @param {Object} portjson the port json data from server used to intialize the port
   */
   function VertexLocation(vertexjson) {
-    this.loc = new catan.models.map.HexLocation(vertexjson.x, vertexjson.y);
+    this.location = new catan.models.map.HexLocation(vertexjson.x, vertexjson.y);
     this.direction = vertexjson.direction;
   }
   /**
@@ -120,7 +121,7 @@ catan.models.map.VertexLocation = (function() {
   */
   VertexLocation.prototype.getLocation = function(){
       return this.location;
-  }
+  };
   //core.defineProperty(HexLocation.prototype,"location");
   /**
   @property direction
@@ -128,11 +129,9 @@ catan.models.map.VertexLocation = (function() {
   */
   VertexLocation.prototype.getDirection = function(){
       return this.direction;
-  }
+  };
   
   //core.defineProperty(HexLocation.prototype,"direction");
-
-  
 
 
   return VertexLocation;
