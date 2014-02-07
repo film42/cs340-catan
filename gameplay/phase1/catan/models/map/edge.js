@@ -44,7 +44,7 @@ catan.models.map.Edge = (function Edge_Class(){
 
   @method isOccupied
   */
-  function isOccupied(){
+  Edge.prototype.isOccupied = function isOccupied(){
     if(this.value.getOwnerID() > -1){
       return true;
     }
@@ -55,7 +55,7 @@ catan.models.map.Edge = (function Edge_Class(){
   Returns the value of the edge, which contains the ownerID
   @method getValue
   */
-  function getValue(){
+  Edge.prototype.getValue = function getValue(){
     return this.value;
   }
 

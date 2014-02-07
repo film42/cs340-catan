@@ -106,11 +106,11 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Edge
   */
   Hex.prototype.getEdge = function(direction){
-    var dir = catan.models.map.EdgeDirection(direction);
+    var dir = catan.models.map.EdgeDirection[direction];
     if(!dir){
       throw new Error("Invalid Direction");
     }
-    return edges[dir];
+    return this.edges[dir];
   }
 
   /**
@@ -125,11 +125,11 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Vertex
   */
   Hex.prototype.getVertex = function(direction){
-    var dir = catan.models.map.VertexDirection(direction);
+    var dir = catan.models.map.VertexDirection[direction];
     if(!dir){
       throw new Error("Invalid Direction");
     }
-    return vertexes[dir];
+    return this.vertexes[dir];
   }
 
   /**
