@@ -27,6 +27,25 @@ catan.proxy.ClientProxy = (function() {
   }
 
   /**
+    Get the model, the current
+    <pre>
+    POST: Caller always calls callback
+    </pre>
+    
+    @param {function} callback The response callback
+     
+    @method getModel
+    @return {function(err, data)} callback
+  */
+  ClientProxy.prototype.getModel = function(callback) {
+    this.GET('/game/model', function(data) {
+      callback(null, data);
+    }, function(err) {
+      callback(err, null);
+    });
+  };
+
+  /**
     Sends a chat message to server
     <pre>
     PRE: A Valid player ID
