@@ -54,13 +54,19 @@ test("Map.canBuildRoad",function(){
 
 test("Map.canMaritimeTrade",function(){
   var map = new catan.models.map.Map(modelJson.map);
-  var resources = catan.models.ResourceList(0,0,0,2,0);
-  ok(map.canMaritimeTrade(0,resources), "True: Wheat Trade");
-  var resources = catan.models.ResourceList(0,0,0,3,0)
-  ok(map.canMaritimeTrade(0,resources), "False: no 3:1 port");
-  var resources = catan.models.ResourceList(0,0,0,0,2)
-  ok(map.canMaritimeTrade(0,resources), "False: wrong resource");
-  
+  //what I'm doing here is initializing empty 
+  //and then using the setResourceListItems function to init.
+  var resources = new catan.models.ResourceList({});
+  resources.setResourceListItems(0,0,0,2,0);
+  var test1 = map.canMaritimeTrade(0,resources);
+  console.log(test1);
+  ok(test1, "True: Wheat Trade");
+  resources.setResourceListItems(0,0,0,3,0);
+  ok(!map.canMaritimeTrade(2,resources), "False: no 3:1 port");
+  resources.setResourceListItems(0,0,0,0,2);
+  ok(!map.canMaritimeTrade(0,resources), "False: wrong resource");
+  resources.setResourceListItems(0,0,0,0,4);
+  ok(map.canMaritimeTrade(0,resources), "True: 4:1");
 });
 
 

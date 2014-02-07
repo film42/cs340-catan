@@ -30,8 +30,8 @@ catan.models.map.Map = (function() {
     //init hexgrid
     //this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
     //console.log(mapjson);
-    if(!catan.models.map)
-      console.log("Bad")
+    //if(!catan.models.map)
+      //console.log("Bad")
     this.hexGrid = new catan.models.map.HexGrid(mapjson.hexGrid);
     //init ports
     this.ports = [];
@@ -183,26 +183,27 @@ catan.models.map.Map = (function() {
     var cardType = ""; //string
     var ratio;    //int
     var portVertices;
+    //console.log(cardsTraded);
     //find the nonzero resource in cardsTraded
-    if(cardsTraded.getBrick()){
-      cardType = "brick";
-      ratio = cardsTraded.getBrick();
+    if(cardsTraded.getBrickCount()){
+      cardType = "Brick";
+      ratio = cardsTraded.getBrickCount();
       
-    }else if(cardsTraded.Ore()){
-      cardType = "ore";
-      ratio = cardsTraded.getOre();
+    }else if(cardsTraded.getOreCount()){
+      cardType = "Ore";
+      ratio = cardsTraded.getOreCount();
       
-    }else if(cardsTraded.getSheep()){
-      cardType = "sheep";
-      ratio = cardsTraded.getSheep();
+    }else if(cardsTraded.getSheepCount()){
+      cardType = "Sheep";
+      ratio = cardsTraded.getSheepCount();
       
-    }else if(cardsTraded.getWheat()){
-      cardType = "wheat";
-      ratio = cardsTraded.getWheat();
+    }else if(cardsTraded.getWheatCount()){
+      cardType = "Wheat";
+      ratio = cardsTraded.getWheatCount();
       
-    }else if(cardsTraded.getWood()){
-      cardType = "wood";
-      ratio = cardsTraded.getWood();
+    }else if(cardsTraded.getWoodCount()){
+      cardType = "Wood";
+      ratio = cardsTraded.getWoodCount();
     } else{ //no values given for resources
       return false;
     }
@@ -212,9 +213,9 @@ catan.models.map.Map = (function() {
     if(ratio == 4){
       return true;
     }else if( ratio == 3){
-      portVertices = findAllXPortVertices();
+      portVertices = this.findAllXPortVertices();
     }else if( ratio == 2){
-      portVertices = findAllXPortVertices(cardType);
+      portVertices = this.findAllXPortVertices(cardType);
     }
     if(!portVertices){
       return false;
@@ -222,8 +223,8 @@ catan.models.map.Map = (function() {
     
     //check for buildings of playerId at those locations
     for(var i=0; i<portVertices.length; i++){
-      var portVertex = this.hexGrid.get(portVertices[i].getLocation(),portVertices[i].getDirection())
-      if(portVertex && portVertex.isOccupied() && portVertex.getOwnerID == playerId){
+      var portVertex = this.hexGrid.getVertex(portVertices[i].getLocation(),portVertices[i].getDirection())
+      if(portVertex && portVertex.isOccupied() && portVertex.getValue().getOwnerID() == playerId){
         return true;
       }
       
@@ -275,9 +276,13 @@ catan.models.map.Map = (function() {
     
     var ret =[];
     
-    for(var i=0; i<this.port.length; i++){
-      if(port[i].getType == type || (!port[i].getType && !type)){
-        ret.concat(port[i].getValidVertices());
+    for(var i=0; i<this.ports.length; i++){
+      if(this.ports[i].getType() == type || (!this.ports[i].getType() && !type)){
+        var validVertices = this.ports[i].getValidVertices();
+        for(var j=0; j<validVertices.length; j++){
+          ret[ret.length] = validVertices[j];
+        }
+        //ret.concat(validVertices); this isn't working for me so I'm writing it explicit
       }
     }
     return ret;
