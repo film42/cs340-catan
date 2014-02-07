@@ -34,7 +34,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
   */
   
   function Vertex(vertexjson){
-    this.value = new vertexValue(vertexjson.value);
+    this.value = new catan.models.map.VertexValue(vertexjson.value);
   }
   
   /**

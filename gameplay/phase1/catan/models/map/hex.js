@@ -62,19 +62,21 @@ catan.models.map.Hex = (function CatanHex_Class(){
   //constructor
   function Hex(hexjson){
     //set location
-    this.location = new catan.model.hexgrid.HexLocation(hexjson.location.x, hexjson.location.y);
+    this.location = new catan.models.map.HexLocation(hexjson.location.x, hexjson.location.y);
     this.island = hexjson.isLand;
+    this.edges = [];
     if(this.isLand){
       this.landtype = hexjson.landtype;
     }
     //make edges
     for(var i = 0; i < hexjson.edges.length; i++){
-      this.edges[i] = new Edge(hexjson.edges[i]);
+      this.edges[i] = new catan.models.map.Edge(hexjson.edges[i]);
     }
 
     //make vertexes
+    this.vertexes = [];
     for(var i = 0; i < hexjson.vertexes.length; i++){
-      this.vertexes[i] = new Vertex(hexjson.vertexes[i]);
+      this.vertexes[i] = new catan.models.map.Vertex(hexjson.vertexes[i]);
     }      
   }
 
@@ -104,7 +106,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Edge
   */
   Hex.prototype.getEdge = function(direction){
-    var dir = EdgeDirection(direction);
+    var dir = catan.models.map.EdgeDirection(direction);
     if(!dir){
       throw new Error("Invalid Direction");
     }
@@ -123,7 +125,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @return Vertex
   */
   Hex.prototype.getVertex = function(direction){
-    var dir = VertexDirection(direction);
+    var dir = catan.models.map.VertexDirection(direction);
     if(!dir){
       throw new Error("Invalid Direction");
     }

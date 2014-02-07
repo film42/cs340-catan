@@ -32,7 +32,7 @@ catan.models.map.Edge = (function Edge_Class(){
 
 
   function Edge(edgejson){
-    this.value = new EdgeValue(edgejson.value);
+    this.value = new catan.models.map.EdgeValue(edgejson.value);
   }
   
   /**

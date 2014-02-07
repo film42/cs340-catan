@@ -6,10 +6,21 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
 
 
   function HexGrid(hexgridjson){
+    //console.log(hexgridjson);
+    this.hexes = [];
     for(var i = 0; i < hexgridjson.hexes.length; i++){
-      var hexloc = new catan.models.map.HexLocation(hexgridjson.hexes[i].location.x, hexgridjson.hexes[i].location.y);
+      //console.log(hexgridjson.hexes[i]);
+      /*var hexloc = new catan.models.map.HexLocation(hexgridjson.hexes[i].location.x, hexgridjson.hexes[i].location.y);
       var arrayloc = _getInternalHexRef(hexloc);
       this.hexes[arrayloc.y][arrayloc.x] = new catan.models.map.Hex(hexgridjson.hexes[i]);
+      */
+      this.hexes[i]= [];
+      console.log(hexgridjson.hexes[i].length);
+      for(var j = 0; j < hexgridjson.hexes[i].length; j++){
+        console.log(j);
+        console.log(hexgridjson.hexes[i][j]);
+        this.hexes[i][j] = new catan.models.map.Hex(hexgridjson.hexes[i][j]);      
+      }
     }
     this.radius = hexgridjson.radius;
     this.x0 = hexgridjson.x0;
