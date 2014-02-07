@@ -28,7 +28,7 @@ catan.models.Bank = (function() {
     @param {JSON} the data containing the initialized objects
   */
   function Bank(json) {
-    resources = new catan.models.ResourceList(json.resources);
+    this.resources = new catan.models.ResourceList(json);
   }
 
   /**

@@ -319,3 +319,30 @@ test("Player", function(){
      ok(!john.hasXResources(someResources), "hasXResources() returned false correctly");
  });
 
+test("Bank", function(){
+  var bankjson = {
+    "brick": 4,
+    "wood": 9,
+    "sheep": 1,
+    "wheat": 7,
+    "ore": 2
+  }
+  
+  var bank = new catan.models.Bank(bankjson);
+  
+  
+  equal(bank.resources.brick, bankjson.brick, "brick initialized correctly");
+  equal(bank.resources.wood, bankjson.wood, "wood initialized correctly");
+  equal(bank.resources.sheep, bankjson.sheep, "sheep initialized correctly");
+  equal(bank.resources.wheat, bankjson.wheat, "wheat initialized correctly");
+  equal(bank.resources.ore, bankjson.ore, "ore initialized correctly");
+  
+  equal(bank.getBrickCount(), bankjson.brick, "brick returned the correct number");
+  equal(bank.getWoodCount(), bankjson.wood, "wood returned the correct number");
+  equal(bank.getSheepCount(), bankjson.sheep, "sheep returned the correct number");
+  equal(bank.getWheatCount(), bankjson.wheat, "wheat returned the correct number");
+  equal(bank.getOreCount(), bankjson.ore, "ore returned the correct number");
+  
+});
+
+
