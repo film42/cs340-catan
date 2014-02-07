@@ -2,7 +2,23 @@ var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
-catan.models.map.port = (function() {
+catan.models.map.Port = (function() {
+
+  function Port(portjson) {
+    //init type
+    this.type = portjson.inputResource;
+    //init location
+    this.location = new catan.models.map.HexLocation(portjson.location.x, portjson.location.y);
+    //init orientation
+    this.orientation = portjson.orientation;
+    //init ratio
+    this.ratio = portjson.ratio;
+    //init validVertices
+    this.validVertices = [
+      new catan.models.map.VertexLocation(portjson.validVertex1),
+      new catan.models.map.VertexLocation(portjson.validVertex2)
+    ];
+  }
 
   /**
   @property type
@@ -10,7 +26,7 @@ catan.models.map.port = (function() {
   */
   Port.prototype.getType = function(){
       return this.type;
-  }
+  };
   //core.defineProperty(Port.prototype,"type");
   
   /**
@@ -19,7 +35,7 @@ catan.models.map.port = (function() {
   */
   Port.prototype.getLocation = function(){
       return this.location;
-  }
+  };
   //core.defineProperty(Port.prototype,"location");
   
   /**
@@ -28,7 +44,7 @@ catan.models.map.port = (function() {
   */
   Port.prototype.getOrientation = function(){
       return this.orientation;
-  }
+  };
   //core.defineProperty(Port.prototype,"orientation");
   
   /**
@@ -37,7 +53,7 @@ catan.models.map.port = (function() {
   */
   Port.prototype.getRatio = function(){
       return this.ratio;
-  }
+  };
   //core.defineProperty(Port.prototype,"ratio");
   
   /**
@@ -46,7 +62,7 @@ catan.models.map.port = (function() {
   */
   Port.prototype.getValidVertices = function(){
       return this.validVertices;
-  }
+  };
   //core.defineProperty(Port.prototype,"validVertices");
 
   /**
@@ -70,44 +86,13 @@ catan.models.map.port = (function() {
       @constructor
       @param {Object} portjson the port json data from server used to intialize the port
   */
-  function Port(portjson) {
-    //init type
-    this.type = portjson.inputResource;
-    //init location
-    this.location = new catan.model.hexgrid.HexLocation(portjson.location.x, portjson.location.y);
-    //init orientation
-    this.orientation = portjson.orientation;
-    //init ratio
-    this.ratio = portjson.ratio;
-    //init validVertices
-    this.validVertices = [];
-    this.validVertices[0] = new catan.models.map.VertexLocation(portjson.validVertex1);
-    this.validVertices[1] = new catan.models.map.VertexLocation(portjson.validVertex2);
-  }
+  
 
   return Port;
 })();
 
 
-catan.models.map.vertexLocation = function() {
-
-  /**
-  @property location
-  @type HexLocation
-  */
-  Port.prototype.getLocation = function(){
-      return this.location;
-  }
-  //core.defineProperty(HexLocation.prototype,"location");
-  /**
-  @property direction
-  @type VertexDirection
-  */
-  Port.prototype.getDirection = function(){
-      return this.direction;
-  }
-  core.defineProperty(HexLocation.prototype,"direction");
-
+catan.models.map.VertexLocation = (function() {
   /**
     @author Jon George
     VertexLocation class contains a location and direction of a given vertex
@@ -127,10 +112,27 @@ catan.models.map.vertexLocation = function() {
       @param {Object} portjson the port json data from server used to intialize the port
   */
   function VertexLocation(vertexjson) {
-    this.loc = new catan.model.hexgrid.HexLocation(vertexjson.x, vertexjson.y);
+    this.location = new catan.models.map.HexLocation(vertexjson.x, vertexjson.y);
     this.direction = vertexjson.direction;
   }
+  /**
+  @property location
+  @type HexLocation
+  */
+  VertexLocation.prototype.getLocation = function(){
+      return this.location;
+  };
+  //core.defineProperty(HexLocation.prototype,"location");
+  /**
+  @property direction
+  @type VertexDirection
+  */
+  VertexLocation.prototype.getDirection = function(){
+      return this.direction;
+  };
+  
+  //core.defineProperty(HexLocation.prototype,"direction");
 
 
-
-}
+  return VertexLocation;
+}());

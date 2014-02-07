@@ -9,7 +9,7 @@ catan.models.map.EdgeValue = (function() {
   /**
   @property ownerID
   */  
-  core.defineProperty(Map.prototype, "ownerID");
+  //core.defineProperty(Map.prototype, "ownerID");
 
   /**
   EdgeValue class to hold an Edge's values
@@ -44,8 +44,8 @@ catan.models.map.EdgeValue = (function() {
   @method getOwnerId
   @return Integer between -1 and 3 that represents the owner that occupies the edge. -1 means it is unoccupied
   */
-  EdgeValue.prototype.getOwnerId = function() {
-      return ownerID;
+  EdgeValue.prototype.getOwnerID = function() {
+      return this.ownerID;
   };
 
   return EdgeValue;

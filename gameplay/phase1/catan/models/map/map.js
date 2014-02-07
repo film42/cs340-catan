@@ -29,15 +29,20 @@ catan.models.map.Map = (function() {
   function Map(mapjson) {
     //init hexgrid
     //this.hexGrid = hexgrid.HexGrid.getRegular(mapjson.radius, CatanHex); //given line
-    this.hexGrid = new hexgrid.HexGrid(mapjson.hexgrid);
+    //console.log(mapjson);
+    if(!catan.models.map)
+      console.log("Bad")
+    this.hexGrid = new catan.models.map.HexGrid(mapjson.hexGrid);
     //init ports
     this.ports = [];
-    mapjson.ports.forEach(function(portjson){
+    for(var i = 0; i < mapjson.ports.length; i++){
+      this.ports.push(new catan.models.map.Port(mapjson.ports[i]));
+    }
+    //mapjson.ports.forEach(function(portjson){
     //is this the correct way to create a new object?
-    ports.push(new catan.models.Port(portjson));
-    });
+    //});
     //init robber
-    this.robber = new catan.model.hexgrid.HexLocation(mapjson.robber.x, mapjson.robber.y);
+    this.robber = new catan.models.map.HexLocation(mapjson.robber.x, mapjson.robber.y);
     //init numbers- since this is just a lookup table, so just use the json object from the server
     this.numbers = mapjson.numbers;
     //init radius
@@ -80,7 +85,7 @@ catan.models.map.Map = (function() {
       if(!buildVertex.isOccupied()){
         
         //make sure the adjacent vertices do not have buildings
-        var adjVertexes = this.hexGrid.getAdjVertex(hexLoc,dir)
+        var adjVertexes = this.hexGrid.getAdjVertexes(hexLoc,dir)
         for(var i=0; i<adjVertexes.length; i++){
           if(adjVertexes[i].isOccupied()){
             return false;

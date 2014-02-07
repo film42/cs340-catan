@@ -12,7 +12,7 @@ catan.models.map = catan.models.map || {};
   */
 catan.models.map.HexLocation = (function HexLocationClass(){
 
-    function HexLocation(x, y)){
+    function HexLocation(x, y){
       this.x = x;
       this.y = y;
     }

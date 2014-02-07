@@ -26,7 +26,7 @@ Constructor Specification:
 */
 catan.models.map.Vertex = (function Vertex_Class(){
   
-  core.forceClassInherit(Vertex, hexgrid.BaseContainer);
+  //core.forceClassInherit(Vertex, hexgrid.BaseContainer);
 
   /**
   @property value
@@ -34,7 +34,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
   */
   
   function Vertex(vertexjson){
-    this.value = new vertexValue(vertexjson.value);
+    this.value = new catan.models.map.VertexValue(vertexjson.value);
   }
   
   /**
@@ -46,7 +46,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
 
   @method isOccupied
   */
-  function isOccupied() {
+  Vertex.prototype.isOccupied = function isOccupied() {
     if(this.value.getOwnerID() > -1){
       return true;
     }
@@ -57,7 +57,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
   Returns the value of the edge, which contains the ownerID
   @method getValue
   */
-  function getValue(){
+  Vertex.prototype.getValue = function getValue(){
     return this.value;
   }
 

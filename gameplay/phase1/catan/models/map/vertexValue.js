@@ -7,13 +7,13 @@ catan.models.map.VertexValue = (function() {
   /**
   @property ownerID
   */  
-  core.defineProperty(Map.prototype, "ownerID");
+  //core.defineProperty(Map.prototype, "ownerID");
 
   /**
   @property buildsite
   @type BuildStatus(enumeration)
   */  
-  core.defineProperty(Map.prototype, "buildsite");
+  //core.defineProperty(Map.prototype, "buildsite");
 
   /**
   VertexValue class to hold an Vertex's values
@@ -48,8 +48,8 @@ catan.models.map.VertexValue = (function() {
   @method getOwnerId
   @return Integer between -1 and 3 that represents the owner that occupies the vertex. -1 means it is unoccupied
   */
-  VertexValue.prototype.getOwnerId = function() {
-      return ownerID;
+  VertexValue.prototype.getOwnerID = function() {
+      return this.ownerID;
   };
 
   /**
@@ -63,7 +63,7 @@ catan.models.map.VertexValue = (function() {
   @return Integer between 0 and 2 representing the worth of a vertex
   */
   VertexValue.prototype.getBuildSite= function() {
-      return buildsite;
+      return this.buildsite;
   };
 
   return VertexValue;
