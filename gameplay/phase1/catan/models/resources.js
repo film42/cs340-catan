@@ -33,7 +33,12 @@ catan.models.ResourceList = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function ResourceList(json){
-    this.setResourceListItems(json.brick, json.ore, json.sheep, json.wheat, json.wood);
+    this.brick = json.brick;
+    this.ore = json.ore;
+    this.sheep = json.sheep;
+    this.wheat = json.wheat;
+    this.wood = json.wood;
+    return this;
   }
   /**
    * Initializes a ResourceList to the values passed in the correct order.
@@ -94,8 +99,8 @@ catan.models.ResourceList = (function() {
    * Checks to see if this resource list has at least the amount in the new resourceList.
    * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
    */
-  ResourceList.prototype.hasAtLeast = function(resources) {
-      return !(this.brick < resources.brick || this.ore < resources.ore || this.sheep < resources.sheep || this.wheat < resources.wheat || this.wood < resources.wood);
+  ResourceList.prototype.hasAtLeast = function(br, or, sh, wh, wo) {
+      return !(this.brick < br || this.ore < or || this.sheep < sh || this.wheat < wh || this.wood < wo);
   }
   
   /**

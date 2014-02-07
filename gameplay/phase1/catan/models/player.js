@@ -72,7 +72,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuyDevelomentCard = function() {
-    return !this.playedDevCard;
+    return this.resources.hasAtLeast(0,1,1,1,0);
   };
 
   /**
@@ -89,10 +89,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuyRoad = function() {
-    var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.resources(1,0,0,0,1)))
-      can = false;
-    return can;
+    return this.resources.hasAtLeast(1,0,0,0,1);
   };
 
   /**
@@ -108,10 +105,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuySettlement = function() {
-    var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.ResourceList(1,0,1,1,1)))
-      can = false;
-    return can;
+    return this.resources.hasAtLeast(1,0,1,1,1);
   };
 
   /**
@@ -123,10 +117,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuyCity = function() {
-    var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.ResourceList(0,3,0,2,0)))
-      can = false;
-    return can;
+    return this.resources.hasAtLeast(0,3,0,2,0);
   };
 
   /**
@@ -137,11 +128,8 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can offer a trade. 
     @param {resourceList} cardsTraded - cards the client wants to trade in 
   */
-  Player.prototype.canAffordToOfferTrade = function(cardsTraded){
-  	var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.ResourceList(cardsTraded)))
-      can = false;
-    return can;
+  Player.prototype.canAffordToOfferTrade = function(cardsToGive) {
+    return this.resources.hasAtLeast(cardsToGive.brick, cardsToGive.ore, cardsToGive.sheep, cardsToGive.wheat, cardsToGive.wood);
   };
 
   /**
@@ -150,13 +138,10 @@ catan.models.Player = (function() {
     
     PRE:  This object has already been initialized.
     POST: The method returns whether the user can accept a trade. 
-    @param {resourceList} cardsRecieved -cards the client will receive
+    @param {resourceList} cardsToDiscard -cards the client will need to give
   */
   Player.prototype.canAcceptTrade = function(cardsToGive) {
-      	var can = true;
-    if (!this.resources.hasAtLeast(new catan.models.ResourceList(cardsToGive)))
-      can = false;
-    return can;
+    return this.resources.hasAtLeast(cardsToGive.brick, cardsToGive.ore, cardsToGive.sheep, cardsToGive.wheat, cardsToGive.wood);
   };
 
   /**
@@ -180,10 +165,10 @@ catan.models.Player = (function() {
       The specs didn't clarify this well.
       POST: The method returns whether the user can can discard a card.
     @method canDiscardCard
-    @param {resourceList} cardsDiscarded -the cards to be discarded
+    @param {resourceList} cardsToDiscard -the cards to be discarded
   */
-  Player.prototype.canDiscardCard = function(cardsDiscarded) {
-    return this.resources.getTotalCount() > 0;
+  Player.prototype.canDiscardCards = function(cardsToDiscard) {
+    return this.resources.hasAtLeast(cardsToDiscard.brick, cardsToDiscard.ore, cardsToDiscard.sheep, cardsToDiscard.wheat, cardsToDiscard.wood);
   };
 
   /**
@@ -194,13 +179,13 @@ catan.models.Player = (function() {
     @return {boolean}
   */
   Player.prototype.hasXResources = function(resourceList) {
-    return this.resources.hasAtLeast(resourceList);
+    return this.resources.hasAtLeast(resourceList.brick, resourceList.ore, resourceList.sheep, resourceList.wheat, resourceList.wood);
   };
   
   /**
-   * This is a getter that wraps up all of the resources in a single object.
+   * This is a getter that wraps up all of the resources in a single object (without the methods of resourceList)
    */
-  Player.prototype.getResourceList = function() {
+  Player.prototype.getResources = function() {
     var resourcesOut = { 
         "brick" : this.resources.brick,
         "ore" : this.resources.ore,
