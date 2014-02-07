@@ -44,7 +44,7 @@ test("Map.canBuildRoad",function(){
   var map = new catan.models.map.Map(modelJson.map);
   var hexLoc = new catan.models.map.HexLocation(1,1);
   ok(map.canBuildRoad(0,hexLoc,"N",false), "True");
-  ok(!map.canBuildRoad(0,hexLoc,"S",false), "False: no nearby road")
+  ok(!map.canBuildRoad(0,hexLoc,"S",false), "Failure Test: no nearby road");
   ok(map.canBuildRoad(0,hexLoc,"S",true), "True: setup near settlement");
   var hexLoc = new catan.models.map.HexLocation(0,0);
   ok(!map.canBuildRoad(0,hexLoc,"N",true), "False: setup not near settlement");

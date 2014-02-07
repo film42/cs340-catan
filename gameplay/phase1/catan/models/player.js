@@ -60,18 +60,27 @@ catan.models.Player = (function() {
     this.orderNumber = data.orderNumber;  
     this.playedDevCard = data.playedDevCard;
     this.playerID = data.playerID;
-    this.resources = new catan.models.ResourceList(data.resources);    
+    this.resources = new catan.models.ResourceList(data.resources);
   }
-
   /**
+    Checks with the internal data to find out if it can use a dev card.
+    PRE:  This object has already been initialized.
+    POST: The method returns whether the user can use a dev card.  
+  */
+  Player.prototype.canPlayDevCard = function(){
+    return this.playedDevCard;
+  };
   
+  
+  
+  /**
     Checks with the internal data to find out if it can buy a dev card.
     
     PRE:  This object has already been initialized.
     POST: The method returns whether the user can buy a dev card.  
   No parameters are necessary to check this value. 
   */
-  Player.prototype.canAffordToBuyDevelomentCard = function() {
+  Player.prototype.canAffordToBuyDevCard = function() {
     return this.resources.hasAtLeast(0,1,1,1,0);
   };
 
