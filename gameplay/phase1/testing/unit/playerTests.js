@@ -9,10 +9,10 @@ var samjson = {
  "ore": 8
 },
 "oldDevCards": {
- "yearOfPlenty": 0,
- "monopoly": 0,
+ "yearOfPlenty": 1,
+ "monopoly": 1,
  "soldier": 2,
- "roadBuilding": 0,
+ "roadBuilding": 1,
  "monument": 1
 },
 "newDevCards": {
@@ -69,7 +69,7 @@ var joejson = {
  "monuments": 99,
  "longestRoad": true,
  "largestArmy": true,
- "playedDevCard": true,
+ "playedDevCard": false,
  "discarded": true,
  "playerID": 0,
  "orderNumber": 0,
@@ -115,7 +115,7 @@ var johnjson = {
 "monuments": 0,
 "longestRoad": true,
 "largestArmy": true,
-"playedDevCard": true,
+"playedDevCard": false,
 "discarded": true,
 "playerID": 0,
 "orderNumber": 0,
@@ -147,10 +147,11 @@ test("Player Init", function(){
      equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");   
      deepEqual(sam.getResources(), samjson.resources, "player.resources was initialized correctly");   
 });
-test("Can Tests", function(){
+test("Player: Dev Card Tests", function(){
      // Method Unit Testing
      var joe = new catan.models.Player(joejson);
      var john = new catan.models.Player(johnjson);
+     var sam = new catan.models.Player(samjson);
      var someResources = new catan.models.ResourceList(resourcesjson);
      
      ok(joe.canAffordToBuyDevCard(), "canAffordToBuyDevelomentCard() returned true correctly");
@@ -171,6 +172,21 @@ test("Can Tests", function(){
      ok(!john.canDiscardCards(someResources), "canDiscardCard() returned false correctly");
      ok(joe.hasXResources(someResources), "hasXResources() returned true correctly");
      ok(!john.hasXResources(someResources), "hasXResources() returned false correctly");     
-     
-     
+     ok(joe.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return true correctly");
+     ok(!sam.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return false correctly");
+     ok(!john.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return false correctly -not enough resources");
+     ok(joe.canPlayRoadBuilding(),"canPlayRoadBuilding() return true correctly");
+     ok(!sam.canPlayRoadBuilding(),"canPlayRoadBuilding() return false correctly");
+     ok(!john.canPlayRoadBuilding(),"canPlayRoadBuilding() return false correctly -not enough resources");
+     ok(joe.canPlaySoldier(),"canPlaySoldier() return true correctly");
+     ok(!sam.canPlaySoldier(),"canPlaySoldier() return false correctly");
+     ok(!john.canPlaySoldier(),"canPlaySoldier() return false correctly -not enough resources");
+     ok(joe.canPlayMonument(),"canPlayMonument() return true correctly");
+     ok(!sam.canPlayMonument(),"canPlayMonument() return false correctly");
+     ok(!john.canPlayMonument(),"canPlayMonument() return false correctly -not enough resources");
+     ok(joe.canPlayMonopoly(),"canPlayMonopoly() return true correctly");
+     ok(!sam.canPlayMonopoly(),"canPlayMonopoly() return false correctly");
+     ok(!john.canPlayMonopoly(),"canPlayMonopoly() return false correctly -not enough resources");
+
  });
+
