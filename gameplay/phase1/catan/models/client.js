@@ -32,32 +32,31 @@ catan.models.ClientModel = (function() {
   */
   function ClientModel(playerId, json) {
     // ASK: Do we need the playerId here?
-    this.currentUserId = playerId;
+    this._currentUserId = playerId;
 
    // JSON attribures
-    this.biggestArmyId = json.biggestArmy;
-    this.longestRoadId = json.longestRoad;
-    this.winnerId = json.winner;
+    this._biggestArmyId = json.biggestArmy;
+    this._longestRoadId = json.longestRoad;
+    this._winnerId = json.winner;
 
     // Children attributes
-    this.deck = new catan.models.Deck(json.deck);
-    this.log = new catan.models.chat.Log(json.log);
-    this.bank = new catan.models.Bank(json.bank);
-    this.gameMap = new catan.models.map.Map(json.map);
-    this.turn = new catan.models.Turn(json.turnTracker);
-    this.chat = new catan.models.chat.Chat(json.chat);
+    this._deck = new catan.models.Deck(json.deck);
+    this._log = new catan.models.chat.Log(json.log);
+    this._bank = new catan.models.Bank(json.bank);
+    this._map = new catan.models.map.Map(json.map);
+    this._turn = new catan.models.Turn(json.turnTracker);
+    this._chat = new catan.models.chat.Chat(json.chat);
     // Using the collection map function, it's awesome,
     // you it just may not be super familiar to everyone.
-    this.players = json.players.map(function(player) {
+    this._players = json.players.map(function(player) {
       // Create a new user for each in list with json `player'
-      return new catan.model.Player(player);
+      return new catan.models.Player(player);
     });
 
     // TODO: Fix the trade offer thing. Not always there it seems.
 
     // This isn't needed, but last item is the implicit return.
     //return this;
-  
   }
 
   //
@@ -76,7 +75,7 @@ catan.models.ClientModel = (function() {
     @return {array} List of players
   */
   ClientModel.prototype.getPlayers = function() {
-    return this.players;
+    return this._players;
   };
 
   /**
@@ -90,7 +89,7 @@ catan.models.ClientModel = (function() {
     @return {Bank} the bank model
   */
   ClientModel.prototype.getBank = function() {
-    return this.bank;
+    return this._bank;
   };
 
   /**
@@ -104,7 +103,7 @@ catan.models.ClientModel = (function() {
     @return {Deck} the deck model
   */
   ClientModel.prototype.getDeck = function() {
-    return this.deck;
+    return this._deck;
   };
 
   /**
@@ -118,7 +117,7 @@ catan.models.ClientModel = (function() {
     @return {Chat} the chat log
   */
   ClientModel.prototype.getChat = function() {
-    return this.chat;
+    return this._chat;
   };
 
   /**
@@ -132,7 +131,7 @@ catan.models.ClientModel = (function() {
     @return {Turn} the Turn model
   */
   ClientModel.prototype.getTurn = function() {
-    return this.turn;
+    return this._turn;
   };
 
   /**
@@ -159,7 +158,7 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.getMap = function() {
     // Called gameMap so it's not confused with collections `map'
-    return this.gameMap;
+    return this._map;
   };
 
   /**
@@ -173,7 +172,7 @@ catan.models.ClientModel = (function() {
     @return {integer}
   */
   ClientModel.prototype.getLongestRoadId = function() {
-    return this.longestRoadId;
+    return this._longestRoadId;
   };
 
   /**
@@ -187,7 +186,7 @@ catan.models.ClientModel = (function() {
     @return {integer}
   */
   ClientModel.prototype.getBiggestArmyId = function() {
-    return this.biggestArmyId;
+    return this._biggestArmyId;
   };
 
 
@@ -202,7 +201,7 @@ catan.models.ClientModel = (function() {
     @return {integer}
   */
   ClientModel.prototype.getWinnerId = function() {
-    return this.winnerId;
+    return this._winnerId;
   };
 
   /**
@@ -217,9 +216,9 @@ catan.models.ClientModel = (function() {
   */
   ClientModel.prototype.getPlayerWithId = function(playerId) {
     // Filter is another great method to clean up for loops
-    var results = this.players.filter(function(p) {
+    var results = this._players.filter(function(p) {
       // Add to results if expression is true
-      return p.getPlayerId() == playerId;
+      return p.playerID == playerId;
     });
     // Return the first result, or null
     return results[0] || null;
@@ -246,7 +245,24 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceRoad = function(location) {};
+  ClientModel.prototype.canPlaceRoad = function(location, direction) {
+    var player = this.getPlayerWithId(this._currentUserId);
+
+    var isSetupPhase = this._turn.isSetupPhase();
+    var isPlayPhase = this._turn.isPlayingPhase();
+    var turnPlayerId = this._turn.getTurnPlayerId();
+    var canPlaceRoad = this._map.canBuildRoad(this._currentUserId, location, direction);
+
+    var canAffordToBuyRoad = player.canAffordToBuyRoad();
+
+    // Can build road logic
+    var status = isSetupPhase || isPlayPhase;
+    status = status && canPlaceRoad && turnPlayerId == this._currentUserId;
+    if(!isSetupPhase) {
+      status = status && canAffordToBuyRoad;
+    }
+    return status;
+  };
 
   /**
     Can the current player place a settlement at a location?
