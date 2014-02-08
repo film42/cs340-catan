@@ -194,4 +194,29 @@ test("Bank", function(){
   
 });
 
+test("Deck", function(){
+  var deckjson = {
+    "yearOfPlenty": 2,
+    "monopoly": 2,
+    "soldier": 10,
+    "roadBuilding": 1,
+    "monument": 4
+  }
+  
+  var deck = new catan.models.Deck(deckjson);
+  
+  console.log(deck.devCards);
+  equal(deck.devCards.yearOfPlenty, deckjson.yearOfPlenty, "yearOfPlenty initialized correctly");
+  equal(deck.devCards.monopoly, deckjson.monopoly, "monopoly initialized correctly");
+  equal(deck.devCards.soldier, deckjson.soldier, "soldier initialized correctly");
+  equal(deck.devCards.roadBuilding, deckjson.roadBuilding, "roadBuilding initialized correctly");
+  equal(deck.devCards.monument, deckjson.monument, "monument initialized correctly");
+  
+  equal(deck.getYearOfPlentyCount(), deckjson.yearOfPlenty, "yearOfPlenty() returned the correct number");
+  equal(deck.getMonopolyCount(), deckjson.monopoly, "monopoly() returned the correct number");
+  equal(deck.getSoldierCount(), deckjson.soldier, "soldier() returned the correct number");
+  equal(deck.getRoadBuildingCount(), deckjson.roadBuilding, "roadBuilding() returned the correct number");
+  equal(deck.getMonumentCount(), deckjson.monument, "monument() returned the correct number");
+  
+});
 
