@@ -2,6 +2,26 @@ var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
+
+/**
+This class represents a HexGrid. 
+ 
+Domain: 
+  hexgridjson: the JSON returned by the server for a the HexGrid including its hexes, radius, and offsets for the hexes 
+  
+Invariants:
+  INVARIANT: HexGrid objects are read only
+  
+Constructor Specification:
+  PRE: hexgridjson.hexes contains a 2D array of hexes
+  PRE: hexgridjson.radius contains the radius of the map
+  PRE: hexgridjson.offsets is an array offsets for lineing up the map in its 2D array.
+
+@constructor
+@param {Object} hexgridjson the JSON returned by the server for a the HexGrid including its hexes, radius, and offsets for the hexes  
+
+@class HexGrid
+*/
 catan.models.map.HexGrid = (function HexGrid_Class(){
 
 
@@ -37,6 +57,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return {x:arrayX, y:arrayY};
   }
 
+  /**
+  Gets the Hex associated with the given HexLocation.
+  Uses internal methods to match the HexLocation to a hex in the 2D array.
+  @method getHex
+  @param HexLocation
+  @return Hex
+  */
   HexGrid.prototype.getHex = function(hexLoc){
     var internalLoc = this._getInternalHexRef(hexLoc);
     if (this.hexes[internalLoc.y]){
@@ -46,6 +73,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
   }
 
+  /**
+  Gets the Vertex in the dir direction on the Hex determined by the HexLocation
+
+  @method getVertex
+  @param HexLocation, VertexDirection
+  @return Vertex
+  */
   HexGrid.prototype.getVertex = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -76,6 +110,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return hex.getVertex(dir);
   }
   
+  /**
+  Gets the Edge in the dir direction on the Hex determined by the HexLocation
+
+  @method getEdge
+  @param HexLocation, EdgeDirection
+  @return Edge
+  */
   HexGrid.prototype.getEdge = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -96,6 +137,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return hex.getEdge(dir);
   }
 
+  /**
+  Gets the Edges touching the Vertex in the dir direction on the Hex determined by the HexLocation
+
+  @method getEdgesFromVertex
+  @param HexLocation, VertexDirection
+  @return array<Edge>
+  */
   HexGrid.prototype.getEdgesFromVertex = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -132,6 +180,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return edges;
   }
 
+  /**
+  Gets the Vertexes touching the Edge in the dir direction on the Hex determined by the HexLocation
+
+  @method getVertexesFromEdge
+  @param HexLocation, EdgeDirection
+  @return array<Vertex>
+  */
   HexGrid.prototype.getVertexesFromEdge = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -155,6 +210,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return vertexes;
   }
 
+  /**
+  Gets the Vertexes adjacent to the Vertex in the dir direction on the Hex determined by the HexLocation
+
+  @method getAdjVertexes
+  @param HexLocation, VertexDirection
+  @return array<Vertex>
+  */
   HexGrid.prototype.getAdjVertexes = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -189,6 +251,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return vertexes;
   }
 
+  /**
+  Gets the Edges adjacent to the Edge in the dir direction on the Hex determined by the HexLocation
+
+  @method getAdjEdges
+  @param HexLocation, EdgeDirection
+  @return array<Edge>
+  */
   HexGrid.prototype.getAdjEdges = function(hexLoc, dir){
     var hex = this.getHex(hexLoc);
     if(!hex){
@@ -226,6 +295,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return edges;
   }
 
+  /**
+  Returns true if the two edges are adjacent to one another
+
+  @method areEdgesAdj
+  @param HexLocation, EdgeDirection, HexLocation, EdgeDirection
+  @return boolean
+  */
   HexGrid.prototype.areEdgesAdj = function(hexLoc, dir, otherHexLoc, otherDir){
     var dirnum = catan.models.map.EdgeDirection[dir];
     var otherdirnum = catan.models.map.EdgeDirection[otherDir];
@@ -236,7 +312,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
       return true;      
     }
     else{
-      //make sure its a neighbor that can has an adjacent edge to this edge. namely across the edge, and across the clockwise
+      //make sure it's a neighbor that can has an adjacent edge to this edge. namely across the edge, and across the clockwise
       // and counterclockwise edges from that edge
       var neighbor = hexLoc.getNeighborLocation(dir);
       var neighborcw = hexLoc.getNeighborLocationNum(cw);
