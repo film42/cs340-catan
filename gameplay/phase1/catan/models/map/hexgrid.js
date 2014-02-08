@@ -226,6 +226,48 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return edges;
   }
 
+  HexGrid.prototype.areEdgesAdj = function(hexLoc, dir, otherHexLoc, otherDir){
+    var dirnum = catan.models.map.EdgeDirection[dir];
+    var otherdirnum = catan.models.map.EdgeDirection[otherDir];
+    var cw = nextDirectionClockWise(dirnum);
+    var ccw = nextDirectionCounterClockwise(dirnum);
+    //same hex
+    if(hexLoc.Equals(otherHexLoc) && (otherdirnum == cw || otherdirnum == ccw)){
+      return true;      
+    }
+    else{
+      //make sure its a neighbor that can has an adjacent edge to this edge. namely across the edge, and across the clockwise
+      // and counterclockwise edges from that edge
+      var neighbor = hexLoc.getNeighborLocation(dir);
+      var neighborcw = hexLoc.getNeighborLocationNum(cw);
+      var neighborccw = hexLoc.getNeighborLocationNum(ccw);
+      if(otherHexLoc.Equals(neighbor)){
+        var oppdir = getOppositeDirection(dirnum);
+        var ocw = nextDirectionClockwise(oppdir);
+        var occw = nextDirectionCounterClockwise(oppdir);
+        if(otherdirnum == ocw || otherdirnum == occw){
+          return true;
+        }
+      }
+      else if (otherHexLoc.Equals(neighborcw)){
+        var oppdir = getOppositeDirection(cw);
+        var ocw = nextDirectionClockwise(oppdir);
+        if(otherdirnum == oppdir || otherdirnum == ocw){
+          return true;
+        }
+      }
+      else if (otherHexLoc.Equals(neighborccw)){
+        var oppdir = getOppositeDirection(ccw);
+        var occw = nextDirectionCounterClockwise(oppdir);
+        if(otherdirnum == oppdir || otherdirnum == occw){
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   function positiveModulo(lhs,rhs){
     // The inner paren makes the range -rhs to rhs
     // The addition puts it to 0 to 2rhs
