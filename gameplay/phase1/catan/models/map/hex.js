@@ -3,13 +3,8 @@ catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
 /**
-This class represents a Hex. You may add any methods that you need (e.g., to get the resource/hex type, etc.)
-
-In order to work with the hexgrid, this class must extend hexgrid.BasicHex (already done in the code). You also need to implement
-a CatanVertex and CatanEdge classes (stubs are provided in this file).  Look at their documentation to see what needs to be done there.
+This class represents a Hex. 
  
-The hexgrid will be passed an instance of this class to use as a model, and will pull the constructor from that instance. 
-(The core.forceInherit sets the constructor, in case you are curious how that works)
 Domain: 
   hexjson: the JSON returned by the server for an individual Hex, including its edges, vertexes, location, and type 
   
@@ -25,13 +20,11 @@ Constructor Specification:
 
 @constructor
 @param {Object} hexjson The JSON returned by the server for an individual Hex, including its edges, vertexes, location, and type 
-@extends hexgrid.BasicHex
 
 @class Hex
 */
 catan.models.map.Hex = (function CatanHex_Class(){
 
-  //core.forceClassInherit(Hex, hexgrid.BasicHex);
   
   /**
   @property location

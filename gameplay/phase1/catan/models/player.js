@@ -118,20 +118,47 @@ catan.models.Player = (function() {
     return !this.playedDevCard;
   };
   
-  //Here are the play dev card functions. Need to document this later
-  
+  /**
+  Checks with the internal data to find out if it can use Year of Plenty.
+  PRE:  This object has already been initialized.
+  POST: The method returns whether the user can use Year of Plenty.  
+   */
   Player.prototype.canPlayYearOfPlenty= function(){
     return this.oldDevCards.yearOfPlenty > 1 && this.canPlayDevCard();
   }
+  
+  /**
+  Checks with the internal data to find out if it can use Road Building.
+  PRE:  This object has already been initialized.
+  POST: The method returns whether the user can use Road Building.  
+   */
   Player.prototype.canPlayRoadBuilding = function(){
     return this.oldDevCards.roadBuilding > 1 && this.canPlayDevCard();
   }
+  
+  /**
+  Checks with the internal data to find out if it can play a Soldier card.
+  PRE:  This object has already been initialized.
+  POST: The method returns whether the user can play a Soldier card.  
+   */
   Player.prototype.canPlaySoldier = function(){
     return this.oldDevCards.soldier > 1 && this.canPlayDevCard();
   }
+  
+  /**
+  Checks with the internal data to find out if it can play a monument card.
+  PRE:  This object has already been initialized.
+  POST: The method returns whether the user can play a monument card.  
+   */
   Player.prototype.canPlayMonument = function(){
     return this.newDevCards.monument > 1 && this.canPlayDevCard();
   }
+  
+  /**
+  Checks with the internal data to find out if it can play monopoly.
+  PRE:  This object has already been initialized.
+  POST: The method returns whether the user can play monopoly.  
+   */
   Player.prototype.canPlayMonopoly = function(){
     return this.oldDevCards.monopoly > 1 && this.canPlayDevCard();
   }

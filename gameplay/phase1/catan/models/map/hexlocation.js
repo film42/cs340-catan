@@ -69,6 +69,13 @@ catan.models.map.HexLocation = (function HexLocationClass(){
       return new catan.models.map.HexLocation(this.getX() + x,this.getY() + y);
     }
 
+        /**
+          This represents a location of a hex on a hex grid.
+         
+            @method getNeighborLocation
+            @param number
+            @return hexgrid.HexLocation Returns a location next to this one, in the direction of the 'hexDirection' given
+        */
   HexLocation.prototype.getNeighborLocationNum = function getNeighborLocationNum(hexDirection){
       var x,  y , z = 0;
         switch (hexDirection) {

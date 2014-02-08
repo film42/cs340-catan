@@ -31,10 +31,13 @@ catan.models.DevCards = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function DevCards(json) {
-    this.DevCards(json.Monopoly, json.Monument, json.RoadBuilding, json.Soldier, json.YearOfPlenty)
+    console.log("dev cards init");
+    console.log(json);
+    this.setIndividualValues(json.monopoly, json.monument, json.roadBuilding, json.soldier, json.yearOfPlenty);
+    return this;
   };
   
-  function DevCards(mono, monu, road, sold, year){
+  DevCards.prototype.setIndividualValues = function(mono, monu, road, sold, year){
     this.monopoly = mono;    
     this.monument = monu;     
     this.roadBuilding = road;
