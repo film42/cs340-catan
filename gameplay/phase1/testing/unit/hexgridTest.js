@@ -137,16 +137,29 @@ test("hexgrid.getEdge", function(){
 
 test("hexgrid.getEdgesFromVertex", function(){
   var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+  
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var edges = hexgrid.getEdgesFromVertex(hexLoc, "W");
+  ok(edges.length == 3, "Three edges correspond to a vertex");
 });
 
 test("hexgrid.getVertexesFromEdge", function(){
-  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);  
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var vertexes = hexgrid.getVertexesFromEdge(hexLoc, "N");
+  ok(vertexes.length == 2, "Two vertexes correspond to a edge");
 });
 
 test("hexgrid.getAdjEdges", function(){
   var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var edges = hexgrid.getAdjEdges(hexLoc, "N");
+  ok(edges.length == 4, "Four edges are adjacent to an edge.");
 });
 
 test("hexgrid.getAdjVertexes", function(){
   var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var vertexes = hexgrid.getAdjVertexes(hexLoc, "W");
+  ok(vertexes.length == 3, "Three vertexes are adjacent to a vertex.");
 });
