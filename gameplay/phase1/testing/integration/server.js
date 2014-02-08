@@ -101,6 +101,27 @@ test("catan.proxy.ClientProxy.buildRoad", function() {
 });
 
 
+test("catan.proxy.ClientProxy.discardCards", function() {
+  stop();
+  var template = {
+    brick: 0,
+    wood: 0,
+    sheep: -9,
+    wheat: -9,
+    ore: -9
+  };
+
+  list = new catan.models.ResourceList(template);
+
+  var proxy = new catan.proxy.ClientProxy();
+  var location = new catan.models.map.HexLocation(-1, -1);
+  proxy.discardCards(-1, list, function(err) {
+    equal(BAD_MOVE_BUT_SUCCESS, err.responseText);
+    start();
+  });
+});
+
+
 test("catan.proxy.ClientProxy.buildSettlement", function() {
   stop();
   var proxy = new catan.proxy.ClientProxy();

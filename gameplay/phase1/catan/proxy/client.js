@@ -118,7 +118,7 @@ catan.proxy.ClientProxy = (function() {
 
     @param {integer} playerId The player who is offering the trade request
     @param {integer} receiverId The OTHER player who will respond to the trade request
-    @param {ResourceList} request Resouces that the player is requesting from the trade
+    @param {ResourceList} list Resouces that the player is requesting from the trade
     @param {function} callback The response callback
      
     @method acceptTrade
@@ -183,26 +183,22 @@ catan.proxy.ClientProxy = (function() {
     </pre>
 
     @param {integer} playerId The player who is discarding cards
-    @param {integer} brickCount The resource cards the player will discard
-    @param {integer} oreCount The resource cards the player will discard
-    @param {integer} sheepCount The resource cards the player will discard
-    @param {integer} wheatCount The resource cards the player will discard
-    @param {integer} woolCount The resource cards the player will discard
+    @param {ResourceList} list Resouces that the player is requesting from the trade
     @param {function} callback The response callback
      
     @method discardCards
     @return {function(err)} callback
   */
-  ClientProxy.prototype.discardCards = function(playerId, brickCount, oreCount, sheepCount, wheatCount, woolCount, callback) {
+  ClientProxy.prototype.discardCards = function(playerId, list, callback) {
     var template = {
       type: "discardCards",
       playerIndex: playerId,
       discardedCards: {
-        brick: brickCount,
-        ore: oreCount,
-        sheep: sheepCount,
-        wheat: wheatCount,
-        wood: woolCount
+        brick: list.getBrickCount(),
+        ore: list.getOreCount(),
+        sheep: list.getSheepCount(),
+        wheat: list.getWheatCount(),
+        wood: list.getWoodCount()
       }
     };
 
