@@ -111,7 +111,7 @@ test("Map.canMaritimeTrade",function(){
 });
 
 test("Map.canPlaceRobber", function(){
-  map = new catan.models.map.Map(modelJson.map);
+  var map = new catan.models.map.Map(modelJson.map);
   var hexLoc = new catan.models.map.HexLocation(1,1);
   ok( map.canPlaceRobber(hexLoc) ,"Success");
   var hexLoc = new catan.models.map.HexLocation(1,-1);

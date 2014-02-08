@@ -146,7 +146,7 @@ test("Player Init", function(){
      equal(sam.playedDevCard, samjson.playedDevCard, "player.playedDevCard was initialized correctly");
      equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");     
 });
-test("Player: Dev Card Tests", function(){
+test("Player: Can Tests", function(){
      // Method Unit Testing
      var joe = new catan.models.Player(joejson);
      var john = new catan.models.Player(johnjson);
