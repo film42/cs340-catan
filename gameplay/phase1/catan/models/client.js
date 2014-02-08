@@ -423,15 +423,18 @@ catan.models.ClientModel = (function() {
     return player.canDiscardCards(cardsDiscarded);
   };
   
-  ClientModel.prototype.canPlayYearOfPlenty = function() {
+  ClientModel.prototype.canPlayYearOfPlenty = function(resource1, resource2) {
     var player = this.getPlayerWithId(this._currentUserId);
     var status = this.isMyTurn();
+    var status = status && this._bank.hasResource(resource1) && this._bank.hasResource(resource2);
+    
     return player.canPlayYearOfPlenty() && status;
   };
   
-  ClientModel.prototype.canPlayRoadBuilding = function() {
+  
+  ClientModel.prototype.canPlayRoadBuilding = function(loc1, dir1, loc2, dir2) {
     var player = this.getPlayerWithId(this._currentUserId);
-    var status = this.isMyTurn();
+    var status = this.isMyTurn() && this._map.canPlayRoadBuilder(this._currentUserId, loc1, dir1, loc2, dir2s);
     return player.canPlayRoadBuilding() && status;
   };
   
