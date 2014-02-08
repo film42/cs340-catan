@@ -31,6 +31,26 @@ catan.models.Bank = (function() {
     this.resources = new catan.models.ResourceList(json);
   }
 
+  Bank.prototype.hasResource = function(resource){
+    if(resource == "Brick"){
+      if(this.getBrickCount() > 0)
+        return true;
+    } else if(resource == "Ore"){
+      if(this.getOreCount() > 0)
+        return true;
+    } else if(resource == "Sheep"){
+      if(this.getSheepCount() > 0)
+        return true;
+    } else if(resource == "Wheat"){
+      if(this.getWheatCount() > 0)
+        return true;
+    } else if(resource == "Wood"){
+      if(this.getWoodCount() > 0)
+        return true;
+    } 
+    return false
+  };
+
   /**
   Gets the quantity of Brick resources in the bank.
 
