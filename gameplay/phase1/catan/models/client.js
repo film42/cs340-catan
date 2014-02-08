@@ -434,8 +434,8 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.canPlayRobber = function(playerIdToRob, newRobberLoc) {
     var status = this.isMyTurn();
-    var status = status && this._map.canRobPlayer(playerIdToRob);
-    var status = status && this._map.canPlaceRobber(newRobberLoc);
+    status = status && this._map.canRobPlayer(playerIdToRob);
+    status = status && this._map.canPlaceRobber(newRobberLoc);
     return status;
   };
   
@@ -454,14 +454,14 @@ catan.models.ClientModel = (function() {
     var isRollingPhase = this._turn.isRollingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
     var status = isRollingPhase && turnPlayerId == this._currentUserId;
-    return status; 
+    return status;
   };
   
   ClientModel.prototype.isMyTurn = function(){
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
     var status = isPlayPhase && turnPlayerId == this._currentUserId;
-    return status; 
+    return status;
   };
   
   return ClientModel;
