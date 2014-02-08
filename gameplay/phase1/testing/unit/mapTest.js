@@ -65,6 +65,8 @@ test("Map.canPlayRoadBuilder", function(){
   ok(!map.canPlayRoadBuilder(2, hexLoc, "N", hexLoc, "NW"), "False: Not Attached to road or settlement");
   //same hex, not adjacent edges
   ok(!map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc, "N"), "False: Not Attached to road or settlement");
+  ok(map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc, "NE"), "True: seperated but attached");
+
   //different hex good
   var hexLoc2 = new catan.models.map.HexLocation(-1, 1);
   ok(map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc2, "N"), "True: Adjacent Hexes and Adjacent Edges, Attached to player 2 settlement");
