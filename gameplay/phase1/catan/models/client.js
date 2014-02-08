@@ -456,6 +456,12 @@ catan.models.ClientModel = (function() {
     return player.canPlayMonopoly() && status;
   };
   
+  ClientModel.prototype.canPlayMonument = function() {
+    var player = this.getPlayerWithId(this._currentUserId);
+    var status = this.isMyTurn();
+    return player.canPlayMonument() && status;
+  };
+  
   ClientModel.prototype.canRoll = function() {
     var isRollingPhase = this._turn.isRollingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
