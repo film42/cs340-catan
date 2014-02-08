@@ -52,6 +52,45 @@ test("Map.canBuildRoad",function(){
   ok(!map.canBuildRoad(0,hexLoc,"S",false), "False: occupied");
 });
 
+test("Map.canPlayRoadBuilder", function(){
+  var map = new catan.models.map.Map(modelJson.map);
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  //same hex good attached to settlement
+  ok(map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc, "NW"), "True: Attached to player 2's settlement on hex (0,0)");
+  ok(map.canPlayRoadBuilder(2, hexLoc, "NW", hexLoc, "SW"), "True: Flipped - Attached to player 2's settlement on hex (0,0)");
+  //same hex, occupied already
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "S", hexLoc, "SE"), "False: Already Occupied with a road");
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "SE", hexLoc, "S"), "False: Flipped - Already Occupied with a road");
+  //same hex, not attached
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "N", hexLoc, "NW"), "False: Not Attached to road or settlement");
+  //same hex, not adjacent edges
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc, "N"), "False: Not Attached to road or settlement");
+  //different hex good
+  var hexLoc2 = new catan.models.map.HexLocation(-1, 1);
+  ok(map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc2, "N"), "True: Adjacent Hexes and Adjacent Edges, Attached to player 2 settlement");
+  ok(map.canPlayRoadBuilder(2, hexLoc2, "N", hexLoc, "SW"), "True: Flipped - Adjacent Hexes and Adjacent Edges, Attached to player 2 settlement");
+
+  //different direction adjacent hex
+  hexLoc2 = new catan.models.map.HexLocation(-1, 0);
+  ok(map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc2, "SE"), "True: Adjacent Hexes and Adjacent Edges, Attached to player 2 settlement");
+
+  //adjacent hexes, not adjacent edges
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc2, "NW"), "False: Hexes are adjacent but Edges are not");
+
+  //not adjacent hexes
+  hexLoc2 = new catan.models.map.HexLocation(-1, 2);
+  ok(!map.canPlayRoadBuilder(2, hexLoc, "SW", hexLoc2, "NW"), "False: Hexes are not adjacent.");
+  //same hex good attached to road
+  hexLoc = new catan.models.map.HexLocation(-1, 0);
+  ok(map.canPlayRoadBuilder(1, hexLoc, "NE", hexLoc, "SE"), "True: Attached to player 1's road on (-1, 0)");
+  ok(map.canPlayRoadBuilder(1, hexLoc, "SE", hexLoc, "NE"), "True: Flipped - Attached to player 1's road on (-1, 0)");
+  //played on top of itself
+  ok(!map.canPlayRoadBuilder(1, hexLoc, "NE", hexLoc, "NE"), "False: Overlapping");
+  hexLoc2 = new catan.models.map.HexLocation(0, -1);
+  ok(!map.canPlayRoadBuilder(1, hexLoc, "NE", hexLoc2, "SW"), "False: Overlapping");
+
+});
+
 test("Map.canMaritimeTrade",function(){
   var map = new catan.models.map.Map(modelJson.map);
   //what I'm doing here is initializing empty 
