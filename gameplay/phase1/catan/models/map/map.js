@@ -176,6 +176,9 @@ catan.models.map.Map = (function() {
   };
   
   Map.prototype.canPlayRoadBuilder = function(playerId, hexLoc, dir, hexLoc2, dir2){
+    if(this.hexGrid.areSameEdge(hexLoc, dir, hexLoc2, dir2)){
+      return false;
+    }
     var isSuccess1 = this.canBuildRoad(playerId, hexLoc, dir, false);
     var isSuccess2 = this.canBuildRoad(playerId, hexLoc2, dir2, false);
     if(isSuccess1 && isSuccess2){

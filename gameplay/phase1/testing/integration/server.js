@@ -73,17 +73,7 @@ test("catan.proxy.ClientProxy.offerTrade", function() {
 test("catan.proxy.ClientProxy.maritimeTrade", function() {
   stop();
   var proxy = new catan.proxy.ClientProxy();
-  proxy.maritimeTrade(-1, -1, "Brick", function(err) {
-    equal(BAD_MOVE_BUT_SUCCESS, err.responseText);
-    start();
-  });
-});
-
-
-test("catan.proxy.ClientProxy.maritimeTrade", function() {
-  stop();
-  var proxy = new catan.proxy.ClientProxy();
-  proxy.maritimeTrade(-1, -1, "Brick", function(err) {
+  proxy.maritimeTrade(-1, "Wood", "Brick", 2, function(err) {
     equal(BAD_MOVE_BUT_SUCCESS, err.responseText);
     start();
   });

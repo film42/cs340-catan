@@ -155,13 +155,14 @@ catan.proxy.ClientProxy = (function() {
     @param {integer} playerId The player ID of the current player
     @param {string} inputCardType card type the client wants to trade in
     @param {string} outputCardType card type the client will recieve
+    @param {integer} ratio the ratio you're trading in, we don't care at this point what that is
     @param {function} callback The response callback
   */
-  ClientProxy.prototype.maritimeTrade = function(playerId, inputCardType, outputCardType, callback) {
+  ClientProxy.prototype.maritimeTrade = function(playerId, inputCardType, outputCardType, ratio, callback) {
     var template =  {
       type: "maritimeTrade",
       playerIndex: playerId,
-      ratio: 2,
+      ratio: ratio,
       inputResource: inputCardType,
       outputResource: outputCardType
     };

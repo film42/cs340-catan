@@ -344,6 +344,26 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     return false;
   }
 
+  HexGrid.prototype.areSameEdge = function(hexLoc, dir, otherHexLoc, otherDir){
+    if(hexLoc.equals(otherHexLoc)){
+      if(dir == otherDir){
+        return true;
+      }
+      return false;
+    }
+    var neighborloc = hexLoc.getNeighborLocation(dir);
+    if(!neighborloc.equals(otherHexLoc)){
+      return false;
+    }
+    var dirnum = catan.models.map.EdgeDirection[dir];
+    var otherdirnum = catan.models.map.EdgeDirection[otherDir];
+    var oppdir = getOppositeDirection(dirnum);
+    if(otherdirnum == oppdir){
+      return true;
+    }
+    return false;
+  }
+
   function positiveModulo(lhs,rhs){
     // The inner paren makes the range -rhs to rhs
     // The addition puts it to 0 to 2rhs
