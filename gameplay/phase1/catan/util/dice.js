@@ -27,5 +27,5 @@ catan.util.dice = catan.util.dice || {};
   @return {integer} the result of the die roll
 */
 catan.util.dice.rollDie = function() {
-  return 2;
+  return Math.floor(Math.random() * 6) + 1;
 };
