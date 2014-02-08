@@ -46,6 +46,7 @@ catan.models.ClientModel = (function() {
     this._map = new catan.models.map.Map(json.map);
     this._turn = new catan.models.Turn(json.turnTracker);
     this._chat = new catan.models.chat.Chat(json.chat);
+    this._tradeOffer = new catan.models.TradeOffer(json.tradeOffer) || null;
     // Using the collection map function, it's awesome,
     // you it just may not be super familiar to everyone.
     this._players = json.players.map(function(player) {
@@ -398,10 +399,12 @@ catan.models.ClientModel = (function() {
     @param {resourceList} cardsRecieved -cards the client will receive
   */
   ClientModel.prototype.canAcceptTrade = function() {
+    if(this._tradeOffer === null) return false;
+
     var player = this.getPlayerWithId(this._currentUserId);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var canAfford = player.canAcceptTrade(cardsTraded);
+    var canAfford = player.canAcceptTrade(this._tradeOffer.getCardsAskedFor());
     var status = isPlayPhase && turnPlayerId == this._currentUserId && canAfford;
     return status;
   };

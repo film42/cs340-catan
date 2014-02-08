@@ -202,7 +202,12 @@ catan.core.Game = (function() {
     @method acceptTrade
     @return {function(err)} callback
   */
-  Game.prototype.offerTrade = function(otherPlayerId, offer, request, callback) {};
+  Game.prototype.offerTrade = function(otherPlayerId, offer, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canOfferTrade = this.model.canOfferTrade(offer);
+
+    this.proxy.offerTrade(playerId, otherPlayerId, offer, callback);
+  };
 
   /**
     <pre>
@@ -211,10 +216,14 @@ catan.core.Game = (function() {
     </pre>
      
     @method maritimeTrade
-    @param {resourceList} cardsTraded cards the client wants to trade in
-    @param {resourceList} cardsRecieved cards the client will recieve
+    @param {resourceList} cardTraded cards the client wants to trade in
+    @param {resourceList} cardRecieved cards the client will recieve
   */
-  Game.prototype.maritimeTrade = function(cardsTraded, cardsRecieved) {};
+  Game.prototype.maritimeTrade = function(cardTraded, cardRecieved) {
+    var playerId = this.getCurrentPlayerId();
+    var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, cardRecieved);
+
+  };
 
   /**
     Discard a number of playing cards

@@ -110,7 +110,6 @@ test("log", function(){
         "source": "Brooke",
         "message": "Brooke built a settlement"
       }
-      
     ]
   }
  stop();
