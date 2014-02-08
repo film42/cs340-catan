@@ -157,10 +157,7 @@ catan.core.Game = (function() {
   */
   Game.prototype.sendChat = function(message, callback) {
     var playerId = this.getCurrentPlayerId();
-    this.proxy.sendChat(playerId, message, function(err) {
-      if(!err) callback(null);
-      else callback(err);
-    });
+    this.proxy.sendChat(playerId, message, callback);
   };
 
   /**
@@ -179,7 +176,10 @@ catan.core.Game = (function() {
   */
   Game.prototype.acceptTrade = function(status, callback) {
     var playerId = this.getCurrentPlayerId();
-    // TODO: Make sure this works fine with debugger
+    var canAcceptTrade = this.model.canAcceptTrade();
+
+    if(!canAcceptTrade) return callback({error: "Cannont accept trade with these rescources."});
+
     this.proxy.acceptTrade(playerId, status, callback);
   };
 
@@ -206,6 +206,8 @@ catan.core.Game = (function() {
     var playerId = this.getCurrentPlayerId();
     var canOfferTrade = this.model.canOfferTrade(offer);
 
+    if(!canOfferTrade) return callback({error: "Cannot offer trade!"});
+
     this.proxy.offerTrade(playerId, otherPlayerId, offer, callback);
   };
 
@@ -219,10 +221,13 @@ catan.core.Game = (function() {
     @param {resourceList} cardTraded cards the client wants to trade in
     @param {resourceList} cardRecieved cards the client will recieve
   */
-  Game.prototype.maritimeTrade = function(cardTraded, cardRecieved) {
+  Game.prototype.maritimeTrade = function(cardTraded, cardRecieved, ratio, callback) {
     var playerId = this.getCurrentPlayerId();
-    var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, cardRecieved);
+    var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, rato, cardRecieved);
 
+    if(!canMaritimeTrade) return callback({error: "Cannot maritime trade!"});
+
+    this.proxy.maritimeTrade(playerId, cardTraded, cardRecieved, ratio, callback);
   };
 
   /**
@@ -233,13 +238,20 @@ catan.core.Game = (function() {
     POST: Caller always calls callback
     </pre>
 
-    @param {array} cards The resource cards the player will discard
+    @param {resourceList} cards The resource cards the player will discard
     @param {function} callback The response callback
      
     @method discardCards
     @return {function(err)} callback
   */
-  Game.prototype.discardCards = function(cards, callback) {};
+  Game.prototype.discardCards = function(cards, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canDiscard = this.model.canDiscardCards(cards);
+
+    if(!canDiscard) return callback({ error: "Cannot Discard!" });
+
+    this.proxy.discardCards(playerId, cards, callback);
+  };
 
   /**
     Build a road at a map Location
@@ -249,14 +261,22 @@ catan.core.Game = (function() {
     POST: Caller always calls callback
     </pre>
 
-    @param {integer} playerId The player who is building a road
-    @param {location} location A map location object
+    @param {HexLocation} location A map location object
+    @param {string} direction N, SW etc. The location direction on the hex
     @param {function} callback The response callback
      
     @method buildRoad
     @return {function(err)} callback
   */
-  Game.prototype.buildRoad = function(location, callback) {};
+  Game.prototype.buildRoad = function(location, direction, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canBuildRoad = this.model.canBuildRoad(location, direction);
+    var free = this.model.getTurn().isSetupPhase();
+
+    if(!canBuildRoad) return callback({error: "Cannot build Road!"});
+
+    this.proxy.buildRoad(playerId, location, direction, free, callback);
+  };
 
 
   /**
@@ -267,13 +287,22 @@ catan.core.Game = (function() {
     POST: Caller always calls callback
     </pre>
 
-    @param {location} location A map location object
+    @param {HexLoaction} location A map location object
+    @param {string} direction N, SW etc. The location direction on the hex
     @param {function} callback The response callback
      
     @method buildSettlement
     @return {function(err)} callback
   */
-  Game.prototype.buildSettlement = function(location, callback) {};
+  Game.prototype.buildSettlement = function(location, direction, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canBuildSettlement = this.model.canBuildSettlement(location, direction);
+    var free = this.model.getTurn().isSetupPhase();
+
+    if(!canBuildSettlement) return callback({error: "Cannot build settlement!"});
+
+    this.proxy.buildSettlement(playerId, location, direction, free, callback);
+  };
 
   /**
     Build a city at a map Location
@@ -289,7 +318,15 @@ catan.core.Game = (function() {
     @method buildCity
     @return {function(err)} callback
   */
-  Game.prototype.buildCity = function(location, callback) {};
+  Game.prototype.buildCity = function(location, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canBuildCity = this.model.canBuildCity(location, direction);
+    var free = this.model.getTurn().isSetupPhase();
+
+    if(!canBuildCity) return callback({error: "Cannot build city!"});
+
+    this.proxy.buildCity(playerId, location, direction, free, callback);
+  };
 
   /**
     Buy a development card
@@ -302,7 +339,14 @@ catan.core.Game = (function() {
     @method buyDevelopmentCard
     @return {function(err)} callback
   */
-  Game.prototype.buyDevelopmentCard = function(callback) {};
+  Game.prototype.buyDevelopmentCard = function(callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canBuyDevelopmentCard = this.model.canBuyDevelopmentCard();
+
+    if(!canBuyDevelopmentCard) return callback({error: "Cannot buy development card!"});
+
+    this.proxy.buyDevelopmentCard(playerId, callback);
+  };
 
   /**
     Play the year of plenty card
@@ -319,7 +363,14 @@ catan.core.Game = (function() {
     @method playYearOfPlenty
     @return {function(err)} callback
   */
-  Game.prototype.playYearOfPlenty = function(resource1, resource2, callback) {};
+  Game.prototype.playYearOfPlenty = function(resource1, resource2, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canPlayYearOfPlenty = this.model.canPlayYearOfPlenty(resource1, resource2);
+
+    if(!canPlayYearOfPlenty) return callback({error: "Cannot play year of plenty card!"});
+
+    this.proxy.playYearOfPlenty(playerId, resource1, resource2, callback);
+  };
 
   /**
     Play road building card
@@ -330,13 +381,22 @@ catan.core.Game = (function() {
     </pre>
 
     @param {Location} location1 The first location on which the player wants to build a road
+    @param {string} direction1 The direction of the first location
     @param {Location} location2 The second location on which the player wants to build a road
+    @param {string} direction2 The direction of the second location
     @param {function} callback The response callback
      
     @method playRoadBuilding
     @return {function(err)} callback
   */
-  Game.prototype.playRoadBuilding = function(location1, location2, callback) {};
+  Game.prototype.playRoadBuilding = function(location1, direction1, location2, direction2, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canPlayRoadBuilding = this.model.canPlayRoadBuilding(location1, direction1, location2, direction2);
+
+    if(!canPlayRoadBuilding) return callback({error: "Cannot play year of plenty card!"});
+
+    this.proxy.playRoadBuilding(playerId, location1, direction1, location2, direction2, callback);
+  };
 
   /**
     Play soldier card
@@ -353,7 +413,14 @@ catan.core.Game = (function() {
     @method playSoldier
     @return {function(err)} callback
   */
-  Game.prototype.playSoldier = function(victimId, location, callback) {};
+  Game.prototype.playSoldier = function(victimId, location, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canPlaySoldier = this.model.canPlaySoldier(victimId, location);
+
+    if(!canPlaySoldier) return callback({error: "Cannot play soldier!"});
+
+    this.proxy.playSoldier(playerId, victimId, location, callback);
+  };
 
   /**
     Play a Monopoly card
@@ -368,7 +435,14 @@ catan.core.Game = (function() {
     @method playMonopoly
     @return {function(err)} callback
   */
-  Game.prototype.playMonopoly = function(resource, callback) {};
+  Game.prototype.playMonopoly = function(resource, callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canPlayMonopoly = this.client.canPlayMonopoly();
+
+    if(!canPlayMonopoly) return callback({ error: "Cannot play Monopoly!" });
+
+    this.proxy.playMonopoly(playerId, resource, callback);
+  };
 
   /**
     Play a Monument card
@@ -377,13 +451,42 @@ catan.core.Game = (function() {
     POST: Caller always calls callback
     </pre>
 
-    @param {string} resource The resource card the player wants to collect
     @param {function} callback The response callback
      
     @method playMonument
     @return {function(err)} callback
   */
-  Game.prototype.playMonument = function(resource, callback) {};
+  Game.prototype.playMonument = function(callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canPlayMonument = this.client.canPlayMonument();
+
+    if(!canPlayMonument) return callback({ error: "Cannot play Monument!" });
+
+    this.proxy.playMonument(playerId, callback);
+  };
+
+  /**
+    Tell the server we're starting a turn and rolling for the number
+    <pre>
+    POST: Caller always calls callback
+    </pre>
+
+    @param {function} callback The response callback
+     
+    @method rollDice
+    @return {function(err)} callback
+  */
+  Game.prototype.rollDice = function(callback) {
+    var playerId = this.getCurrentPlayerId();
+    var canRoll = this.client.canRoll();
+
+    if(!canRoll) return callback({ error: "Cannot roll, it's not your turn!" });
+
+    var number1 = catan.util.dice.rollDie();
+    var number2 = catan.util.dice.rollDie();
+
+    this.proxy.rollNumber(playerId, number1 + number2, callback);
+  };
 
   /**
     Tell the server that a turn is now finished.
@@ -396,7 +499,14 @@ catan.core.Game = (function() {
     @method finishTurn
     @return {function(err)} callback
   */
-  Game.prototype.finishTurn = function(callback) {};
+  Game.prototype.finishTurn = function(callback) {
+    var playerId = this.getCurrentPlayerId();
+    var isMyTurn = this.client.isMyTurn();
+
+    if(!isMyTurn) return callback({ error: "Cannot play finish turn, it's not your turn!" });
+
+    this.proxy.finishTurn(playerId, callback);
+  };
 
   return Game;
 })();
