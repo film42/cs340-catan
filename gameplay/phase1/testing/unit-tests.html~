@@ -13,6 +13,7 @@
   <script src="vendor/qunit.js"></script>
 
   <!-- PROJECT INCLUDES -->
+  <script src="../../js/Core.js"></script>
   <script src="../catan/models/chat/chat.js"></script>
   <script src="../catan/models/chat/message.js"></script>
   <script src="../catan/models/chat/log.js"></script>
@@ -39,5 +40,9 @@
   
   <!-- TEST CASE INCLUDES -->
   <script src="unit/models.js"></script>
+  <script src="unit/playerTest.js"></script>
+  <script src="unit/mapTest.js"></script>
+  <script src="unit/mapModel.js"></script>
+  
 </body>
 </html>
