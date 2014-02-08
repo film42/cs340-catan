@@ -140,12 +140,12 @@ catan.models.map.Map = (function() {
   @param {String} dir Direction which indicates which edge the user is trying to build on.
     
   */
-  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir, isSetupPhase){
+  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir, isSetupPhase, otherHexLoc, otherDir){
     
     var buildEdge = this.hexGrid.getEdge(hexLoc, dir);
     if(buildEdge){ //make sure it is a valid edge and not in the ocean
       //Check if edge already has a road
-      if(buildEdge.isOccupied){
+      if(!buildEdge.isOccupied()){
         //setup phase logic check for a adj settlement owned by that player
         if(isSetupPhase){
           var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
@@ -155,6 +155,13 @@ catan.models.map.Map = (function() {
             }
           }
         }else{
+          //check if the other edge passed in is adjacent
+          if(otherHexLoc && otherDir){
+            if(this.hexGrid.areEdgesAdj(hexLoc, dir,otherHexLoc, otherDir)){
+             return true;
+            }
+          }
+        
           //Check if adjacent edges have roads owned by that player
           var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
           for(var i=0; i< adjEdges.length; i++){
@@ -166,6 +173,20 @@ catan.models.map.Map = (function() {
       }
     }
     return false;
+  };
+  
+  Map.prototype.canPlayRoadBuilder = function(playerId, hexLoc, dir, hexLoc2, dir2){
+    var isSuccess1 = this.canBuildRoad(playerId, hexLoc, dir, false);
+    var isSuccess2 = this.canBuildRoad(playerId, hexLoc2, dir2, false);
+    if(isSuccess1 && isSuccess2){
+      return true;
+    }else if(isSuccess1 && !isSuccess2){
+      return this.canBuildRoad(playerId, hexLoc2, dir2, false, hexLoc, dir);
+    }else if(!isSuccess1 && isSuccess2){
+      return this.canBuildRoad(playerId, hexLoc, dir, false, hexLoc2, dir2);
+    }else{
+      return false;
+    }
   };
   
   /**
@@ -242,6 +263,15 @@ catan.models.map.Map = (function() {
     }
     return false;
   }
+  
+  Map.prototype.canRobPlayer = function(playerId, hexLoc){
+    var robVertices = this.hexGrid.getHex(hexLoc).getVertices();
+    for(var i=0; i<robVertices.length; i++){
+      if(robVertices[i].isOccupied() && robVertices[i].getValue().getOwnerID() == playerId){
+        return true;
+      }
+    }
+  };
   
   
   /**

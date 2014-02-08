@@ -62,29 +62,91 @@ test("hex.getVertexNum", function(){
 });
 
 test("hexgrid.getHex", function(){
-
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var hex = hexgrid.getHex(hexLoc);
+  var location = hex.getLocation();
+  ok(location.getX() == 0 && location.getY() == 0, "getHex gets the proper hex from location (0,0)");
+  hexLoc = new catan.models.map.HexLocation(99, 100); //invalid hexlocation in this particular map
+  hex = hexgrid.getHex(hexLoc);
+  ok(!hex, "undefined: location out of the array");
 });
 
 test("hexgrid.getVertex", function(){
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
+ 
+  //normal vertex
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var vertex = hexgrid.getVertex(hexLoc, "SW");
+  ok(vertex.getValue().getOwnerID() == 2, "Southwest Vertex of (0,0) is owned by player 2");
+  //bad direction
+  stop();
+  try{
+    hexgrid.getVertex(hexLoc, "S");
+  }
+  catch(err) {
+    ok(true, "Error Thrown: Invalid Direction");
+  }
+  finally {
+    start();
+  }
 
+  //vertex on coast
+  hexLoc = new catan.models.map.HexLocation(3, -2);
+  vertex = hexgrid.getVertex(hexLoc, "SW");
+  ok(vertex.getValue().getOwnerID() == 0, "Coast vertex of (3, -2) occupied by player 0");
+
+  //vertex in water
+  vertex = hexgrid.getVertex(hexLoc, "E");
+  ok(!vertex, "Null: vertex entirely in water. Invalid for all uses");
 });
 
 test("hexgrid.getEdge", function(){
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
 
+  //normal vertex
+  var hexLoc = new catan.models.map.HexLocation(0, 0);
+  var edge = hexgrid.getEdge(hexLoc, "S");
+  ok(edge.getValue().getOwnerID() == 2, "South Edge of (0,0) is owned by player 2");
+  
+  //bad direction
+  stop();
+  try{
+    hexgrid.getEdge(hexLoc, "W");
+  }
+  catch(err) {
+    ok(true, "Error Thrown: Invalid Direction");
+  }
+  finally {
+    start();
+  }
+
+  //edge on coast
+  hexLoc = new catan.models.map.HexLocation(3, -2);
+  edge = hexgrid.getEdge(hexLoc, "SW");
+  ok(edge.getValue().getOwnerID() == 0, "Coast edge of (3, -2) occupied by player 0");
+
+  //edge inbetween waters
+  edge = hexgrid.getEdge(hexLoc, "N");
+  ok(!edge, "Null: edge entirely in water. Invalid for all uses");
+
+  //edge of map on water
+  edge = hexgrid.getEdge(hexLoc, "NE");
+  ok(!edge, "Null: edge entirely in water. Invalid for all uses");
 });
 
 test("hexgrid.getEdgesFromVertex", function(){
-
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
 });
 
 test("hexgrid.getVertexesFromEdge", function(){
-
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
 });
 
 test("hexgrid.getAdjEdges", function(){
-
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
 });
 
 test("hexgrid.getAdjVertexes", function(){
-
+  var hexgrid = new catan.models.map.HexGrid(modelJson.map.hexGrid);
 });

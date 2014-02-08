@@ -127,7 +127,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   Hex.prototype.getVertex = function(direction){
     var dir = catan.models.map.VertexDirection[direction];
     if(!dir && dir != 0){
-      console.log("Bad direction? " + direction + " dirnum " + dir);
+      //console.log("Bad direction? " + direction + " dirnum " + dir);
       throw new Error("Invalid Direction");
     }
     return this.vertexes[dir];

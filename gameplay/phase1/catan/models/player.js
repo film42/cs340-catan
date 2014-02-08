@@ -48,7 +48,9 @@ catan.models.Player = (function() {
       @param {Object} the data containing the user name and color
   */
   function Player(data) {
-    this.cities = data.cities;       
+    this.cities = data.cities; 
+    this.roads = data.roads;
+    this.settlements = data.settlements;
     this.color = data.color;
     this.discarded = data.discarded;    
     this.largestArmy = data.largestArmy;  
@@ -62,6 +64,51 @@ catan.models.Player = (function() {
     this.playerID = data.playerID;
     this.resources = new catan.models.ResourceList(data.resources);
   }
+  //Getters
+  Player.prototype.getCities = function(){
+    return this.cities;
+  };
+  Player.prototype.getRoads = function(){
+    return this.roads;
+  };
+  Player.prototype.getSettlements = function(){
+    return this.settlements;
+  };
+  Player.prototype.getColor = function(){
+    return this.color;
+  };
+  Player.prototype.getDiscarded = function(){
+    return this.discarded;
+  };
+  Player.prototype.getLargestArmy = function(){
+    return this.largestArmy;
+  };
+  Player.prototype.getLongestRoad = function(){
+    return this.longestRoad;
+  };
+  Player.prototype.getMonuments = function(){
+    return this.monuments;
+  };
+  Player.prototype.getName = function(){
+    return this.name;
+  };
+  Player.prototype.getNewDevCards = function(){
+    return this.newDevCards;
+  };
+  Player.prototype.getOldDevCards = function(){
+    return this.oldDevCards;
+  };
+  Player.prototype.getOrderNumber = function(){
+    return this.orderNumber;
+  };
+  Player.prototype.getPlayedDevCard = function(){
+    return this.playedDevCard;
+  };
+  Player.prototype.getplayerID = function(){
+    return this.playerID;
+  };
+  
+  
   /**
     Checks with the internal data to find out if it can use a dev card.
     PRE:  This object has already been initialized.
@@ -114,7 +161,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuyRoad = function() {
-    return this.resources.hasAtLeast(1,0,0,0,1);
+    return this.resources.hasAtLeast(1,0,0,0,1) && this.roads > 0;
   };
 
   /**
@@ -130,7 +177,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuySettlement = function() {
-    return this.resources.hasAtLeast(1,0,1,1,1);
+    return this.resources.hasAtLeast(1,0,1,1,1) && this.settlements > 0;
   };
 
   /**
@@ -142,7 +189,7 @@ catan.models.Player = (function() {
   No parameters are necessary to check this value. 
   */
   Player.prototype.canAffordToBuyCity = function() {
-    return this.resources.hasAtLeast(0,3,0,2,0);
+    return this.resources.hasAtLeast(0,3,0,2,0) && this.cities > 0;
   };
 
   /**
