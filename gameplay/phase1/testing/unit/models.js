@@ -1,14 +1,16 @@
 test("ClientModel", function(){
- 
- console.log("ClientModel Test");
-  //jQuery.getJSON("model.json", function(data){
-    
+  var clientModel = new catan.models.ClientModel(0, modelJson);
 
-  //  var s = new catan.models.ClientModel(0, data);
+  var hexLoc1 = new catan.models.map.HexLocation(1,1);
+  // ok(map.canBuildRoad(0,hexLoc1,"N",false), "True");
+  // ok(!map.canBuildRoad(0,hexLoc1,"S",false), "Failure Test: no nearby road");
+  // ok(map.canBuildRoad(0,hexLoc1,"S",true), "True: setup near settlement");
+  // var hexLoc2 = new catan.models.map.HexLocation(0,0);
+  // ok(!map.canBuildRoad(0,hexLoc2,"N",true), "False: setup not near settlement");
+  // ok(!map.canBuildRoad(0,hexLoc2,"SE",false), "False: only enemy road nearby");
+  // ok(!map.canBuildRoad(0,hexLoc2,"S",false), "False: occupied");
 
-    //equal(s, null, "failed" );
-  equal(1,1, "successed");
-  //});
+  ok(clientModel.canPlaceRoad(hexLoc1, "N"), "Can indeed place a road, good job team!");
 
 });
 
