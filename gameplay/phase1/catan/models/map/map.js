@@ -140,7 +140,7 @@ catan.models.map.Map = (function() {
   @param {String} dir Direction which indicates which edge the user is trying to build on.
     
   */
-  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir, isSetupPhase){
+  Map.prototype.canBuildRoad = function(playerId, hexLoc, dir, isSetupPhase, otherHexLoc, otherDir){
     
     var buildEdge = this.hexGrid.getEdge(hexLoc, dir);
     if(buildEdge){ //make sure it is a valid edge and not in the ocean
@@ -155,6 +155,12 @@ catan.models.map.Map = (function() {
             }
           }
         }else{
+          //check if the other edge passed in is adjacent
+          if(this.hexGrid.areEdgesAdj(hexLoc, dir,otherHexLoc, otherDir)){
+            return true;
+          }
+          
+        
           //Check if adjacent edges have roads owned by that player
           var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
           for(var i=0; i< adjEdges.length; i++){
@@ -169,6 +175,17 @@ catan.models.map.Map = (function() {
   };
   
   Map.prototype.canPlayRoadBuilder = function(playerId, hexLoc, dir, hexLoc2, dir2){
+    var isSuccess1 = this.canBuildRoad(playerId, hexLoc, dir, false);
+    var isSuccess2 = this.canBuildRoad(playerId, hexLoc2, dir2, false);
+    if(isSuccess1 && isSuccess2){
+      return true;
+    }else if(isSuccess1 && !isSuccess2){
+      return this.canBuildRoad(playerId, hexLoc2, dir2, false, hexLoc, dir);
+    }else if(!isSuccess1 && isSuccess2){
+      return this.canBuildRoad(playerId, hexLoc, dir, false, hexLoc2, dir2);
+    }else{
+      return false;
+    }
   };
   
   /**
