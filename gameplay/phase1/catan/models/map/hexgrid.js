@@ -83,13 +83,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
     //check if surrounded by water
     if(!hex.isLand()){
-      var dirnum = catan.models.map.EdgeDirection(dir);
+      var dirnum = catan.models.map.EdgeDirection[dir];
       var neighborloc = hexLoc.getNeighborLocation(dir);
       var neighborhex = this.getHex(neighborloc);
       if(!neighborhex){
         return null;
       }
-      if(!neighbothex.isLand()){
+      if(!neighborhex.isLand()){
         return null;
       }
     }
@@ -229,10 +229,10 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
   HexGrid.prototype.areEdgesAdj = function(hexLoc, dir, otherHexLoc, otherDir){
     var dirnum = catan.models.map.EdgeDirection[dir];
     var otherdirnum = catan.models.map.EdgeDirection[otherDir];
-    var cw = nextDirectionClockWise(dirnum);
+    var cw = nextDirectionClockwise(dirnum);
     var ccw = nextDirectionCounterClockwise(dirnum);
     //same hex
-    if(hexLoc.Equals(otherHexLoc) && (otherdirnum == cw || otherdirnum == ccw)){
+    if(hexLoc.equals(otherHexLoc) && (otherdirnum == cw || otherdirnum == ccw)){
       return true;      
     }
     else{
@@ -241,7 +241,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
       var neighbor = hexLoc.getNeighborLocation(dir);
       var neighborcw = hexLoc.getNeighborLocationNum(cw);
       var neighborccw = hexLoc.getNeighborLocationNum(ccw);
-      if(otherHexLoc.Equals(neighbor)){
+      if(otherHexLoc.equals(neighbor)){
         var oppdir = getOppositeDirection(dirnum);
         var ocw = nextDirectionClockwise(oppdir);
         var occw = nextDirectionCounterClockwise(oppdir);
@@ -249,14 +249,14 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
           return true;
         }
       }
-      else if (otherHexLoc.Equals(neighborcw)){
+      else if (otherHexLoc.equals(neighborcw)){
         var oppdir = getOppositeDirection(cw);
         var ocw = nextDirectionClockwise(oppdir);
         if(otherdirnum == oppdir || otherdirnum == ocw){
           return true;
         }
       }
-      else if (otherHexLoc.Equals(neighborccw)){
+      else if (otherHexLoc.equals(neighborccw)){
         var oppdir = getOppositeDirection(ccw);
         var occw = nextDirectionCounterClockwise(oppdir);
         if(otherdirnum == oppdir || otherdirnum == occw){

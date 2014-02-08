@@ -156,10 +156,11 @@ catan.models.map.Map = (function() {
           }
         }else{
           //check if the other edge passed in is adjacent
-          if(this.hexGrid.areEdgesAdj(hexLoc, dir,otherHexLoc, otherDir)){
-            return true;
+          if(otherHexLoc && otherDir){
+            if(this.hexGrid.areEdgesAdj(hexLoc, dir,otherHexLoc, otherDir)){
+             return true;
+            }
           }
-          
         
           //Check if adjacent edges have roads owned by that player
           var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
