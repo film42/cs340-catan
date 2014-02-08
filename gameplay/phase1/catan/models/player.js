@@ -74,19 +74,19 @@ catan.models.Player = (function() {
   //Here are the play dev card functions. Need to document this later
   
   Player.prototype.canPlayYearOfPlenty= function(){
-    return this.oldDevCards.yearOfPlenty > 1 && this.canPlayDevCard;
+    return this.oldDevCards.yearOfPlenty > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlayRoadBuilding = function(){
-    return this.oldDevCards.roadBuilding > 1 && this.canPlayDevCard;
+    return this.oldDevCards.roadBuilding > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlaySoldier = function(){
-    return this.oldDevCards.soldier > 1 && this.canPlayDevCard;
+    return this.oldDevCards.soldier > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlayMonument = function(){
-    return this.oldDevCards.monument > 1 && this.canPlayDevCard;
+    return this.oldDevCards.monument > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlayMonopoly = function(){
-    return this.oldDevCards.monopoly > 1 && this.canPlayDevCard;
+    return this.oldDevCards.monopoly > 1 && this.canPlayDevCard();
   }
   
   /**
@@ -180,7 +180,14 @@ catan.models.Player = (function() {
   Player.prototype.hasMoreThan7Cards = function() {
     return this.resources.getTotalCount() > 7;
   };
-
+  
+  /**
+    This functions is used to see if a player can be robbed.
+  */
+  Player.prototype.hasNoCards = function(){
+    return this.resources.getTotalCount() <= 0;
+  };
+  
   /**
     
       Checks with the internal data to find out if the player has the given cards
@@ -211,14 +218,16 @@ catan.models.Player = (function() {
    * This is a getter that wraps up all of the resources in a single object (without the methods of resourceList)
    */
   Player.prototype.getResources = function() {
-    var resourcesOut = { 
+    //just pass out a ResourceList
+    return this.resource;
+    /* var resourcesOut = { 
         "brick" : this.resources.brick,
         "ore" : this.resources.ore,
         "sheep" : this.resources.sheep,
         "wheat" : this.resources.wheat,
         "wood" : this.resources.wood
     };
-    return resourcesOut;
+    return resourcesOut; */
   }
 
   return Player;

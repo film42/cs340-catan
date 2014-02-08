@@ -3,7 +3,7 @@ var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
-test("map.CanBuildSettlement",function(){
+test("Map.CanBuildSettlement",function(){
   if(catan.models)
     console.log("good");
   else
@@ -67,6 +67,19 @@ test("Map.canMaritimeTrade",function(){
   ok(!map.canMaritimeTrade(0,resources), "False: wrong resource");
   resources.setResourceListItems(0,0,0,0,4);
   ok(map.canMaritimeTrade(0,resources), "True: 4:1");
+});
+
+test("Map.canPlaceRobber", function(){
+  map = new catan.models.map.Map(modelJson.map);
+  var hexLoc = new catan.models.map.HexLocation(1,1);
+  ok( map.canPlaceRobber(hexLoc) ,"Success");
+  var hexLoc = new catan.models.map.HexLocation(1,-1);
+  ok(!map.canPlaceRobber(hexLoc) , "Failure: Replace in same Hex");
+  hexLoc = new catan.models.map.HexLocation(3,0);
+  ok(!map.canPlaceRobber(hexLoc)  , "Failure: Ocean Hex");
+  hexLoc = new catan.models.map.HexLocation(4,0);
+  ok(!map.canPlaceRobber(hexLoc)  , "Failure: non-existent Hex");
+
 });
 
 

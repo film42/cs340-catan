@@ -227,18 +227,17 @@ catan.models.map.Map = (function() {
       if(portVertex && portVertex.isOccupied() && portVertex.getValue().getOwnerID() == playerId){
         return true;
       }
-      
     }
     return false;
   };
 
   
-  Map.prototype.canPlaceRobber = function(newLoc, oldLoc){
-    if(newLoc.x == oldLoc.x && newLoc.y == oldLoc.y){
+  Map.prototype.canPlaceRobber = function(newLoc){
+    if(newLoc.x == this.robber.x && newLoc.y == this.robber.y){
       return false;
     }
     
-    if(this.hexGrid.isLand(newLoc)){
+    if(this.hexGrid.getHex(newLoc) && this.hexGrid.getHex(newLoc).isLand()){
       return true;
     }
     return false;
