@@ -145,7 +145,7 @@ catan.models.map.Map = (function() {
     var buildEdge = this.hexGrid.getEdge(hexLoc, dir);
     if(buildEdge){ //make sure it is a valid edge and not in the ocean
       //Check if edge already has a road
-      if(buildEdge.isOccupied){
+      if(!buildEdge.isOccupied()){
         //setup phase logic check for a adj settlement owned by that player
         if(isSetupPhase){
           var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
@@ -167,6 +167,9 @@ catan.models.map.Map = (function() {
     }
     return false;
   };
+  
+  Map.prototype.canPlayRoadBuilder = function(playerId, hexLoc, dir, hexLoc2, dir2){
+  
   
   /**
   <pre>
@@ -242,6 +245,15 @@ catan.models.map.Map = (function() {
     }
     return false;
   }
+  
+  Map.prototype.canRobPlayer = function(playerId, hexLoc){
+    var robVertices = this.hexGrid.getHex(hexLoc).getVertices();
+    for(var i=0; i<robVertices.length; i++){
+      if(robVertices[i].isOccupied() && robVertices[i].getValue().getOwnerID() == playerId){
+        return true;
+      }
+    }
+  };
   
   
   /**
