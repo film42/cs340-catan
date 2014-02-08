@@ -138,11 +138,30 @@ test("turn", function(){
     
   equal(s.getCurrentTurn(),turnTracker.currentTurn,  "successed in getCurrentTurn()");
   equal(s.getPhase(), turnTracker.status, "successed in getPhase()");
-  ok(s.isPlayingPhase() == true, "successed in isPlayingPhase()");
-  ok(s.isDiscardingPhase() == false, "successed in isDiscardingPhase()");
-  ok(s.isRollingPhase() == false, "successed in isRollingPhase");
-  ok(s.isRobbingPhase() == false, "successed in isRobbing()");
 
+  ok(s.isPlayingPhase() == true, "true in isPlayingPhase()");
+  ok(s.isDiscardingPhase() == false, "false isDiscardingPhase()");
+  ok(s.isRollingPhase() == false, "false in isRollingPhase");
+  ok(s.isRobbingPhase() == false, "false in isRobbing()");
+  
+  s.setPhase("rolling");
+  ok(s.isRollingPhase() == true, "true in isRollingPhase");
+  ok(s.isPlayingPhase() == false, "false in isPlayingPhase()");
+  ok(s.isDiscardingPhase() == false, "false in isDiscardingPhase()");
+  ok(s.isRobbingPhase() == false, "false in isRobbing()");
+
+  s.setPhase("discarding");
+  ok(s.isDiscardingPhase() == true, "true in isDiscardingPhase()");
+  ok(s.isPlayingPhase() == false, "false in isPlayingPhase()");
+  ok(s.isRollingPhase() == false, "false in isRollingPhase");
+  ok(s.isRobbingPhase() == false, "false isRobbing()");
+
+  s.setPhase("rolling");
+  ok(s.isRollingPhase() == true, "true in isRollingPhase");
+  ok(s.isPlayingPhase() == false, "false in isPlayingPhase()");
+  ok(s.isDiscardingPhase() == false ,"false in isDiscardingPhase()");
+  ok(s.isRobbingPhase() == false, "false isRobbing()");
+  
   start();
 
   });
