@@ -145,7 +145,9 @@ catan.models.ClientModel = (function() {
       
     @return {TradeOffer} the TradeOffer model
   */
-  ClientModel.prototype.getTradeOffer = function() {};
+  ClientModel.prototype.getTradeOffer = function() {
+    return this._tradeOffer;
+  };
 
   /**
     Get the Map model
