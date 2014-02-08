@@ -30,19 +30,35 @@ test("edge.isOccupied", function(){
 });
 
 test("hex.getLocation", function(){
-
+  var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
+  var location = hex.getLocation();
+  ok(location.getX() == 0 && location.getY() == 0, "[3][3] in Json corresponds to x:0 y:0 on actual map");
 });
 
 test("hex.getEdge", function(){
-
-});
-
-test("hex.getLocationNum", function(){
-
+  var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
+  var edge = hex.getEdge("S");
+  ok(edge.getValue().getOwnerID() == 2, "Got south edge that belongs to player 2  at (0,0)");
+ 
 });
 
 test("hex.getEdgeNum", function(){
+  var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
+  var edgenum = hex.getEdgeNum(4);
+  ok(edgenum.getValue().getOwnerID() == 2, "Got 4th(=South) edge that belong to player 2  at (0,0)")
+});
 
+test("hex.getVertex", function(){
+  var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
+  var vertex = hex.getVertex("SW");
+  ok(vertex.getValue().getOwnerID() == 2, "Got southwest vertex that belongs to player 2  at (0,0)");
+ 
+});
+
+test("hex.getVertexNum", function(){
+  var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
+  var vertexnum = hex.getVertexNum(5);
+  ok(vertexnum.getValue().getOwnerID() == 2, "Got 5th(=Southwest) vertex that belong to player 2 at (0,0)")
 });
 
 test("hexgrid.getHex", function(){
