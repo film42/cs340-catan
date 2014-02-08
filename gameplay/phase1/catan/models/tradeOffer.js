@@ -29,10 +29,9 @@ catan.models.TradeOffer = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function TradeOffer(json) {
-    debugger
-    senderID = json.senderID;
-    receiverID = json.receiverID;
-    resources = json.resources;
+    senderID = json.sender;
+    receiverID = json.receiver;
+    resources = new cantan.models.ResourceList(json.offer);
   }
 
   /**
@@ -112,7 +111,7 @@ catan.models.TradeOffer = (function() {
     if(this.resources.getWheat() < 0)
       wheat = -this.resources.getWheat();
   
-    var ret = new catan.models.ResourceList({});s
+    var ret = new catan.models.ResourceList({});
     ret.setResourceListItems(brick, ore, sheep, wheat, wood);
     return ret;
   };

@@ -97,15 +97,15 @@ test("Map.canMaritimeTrade",function(){
   //and then using the setResourceListItems function to init.
   var resources = new catan.models.ResourceList({});
   resources.setResourceListItems(0,0,0,2,0);
-  var test1 = map.canMaritimeTrade(0,resources);
+  var test1 = map.canMaritimeTrade(0,2,"Wheat");
   console.log(test1);
   ok(test1, "True: Wheat Trade");
   resources.setResourceListItems(0,0,0,3,0);
-  ok(!map.canMaritimeTrade(2,resources), "False: no 3:1 port");
+  ok(!map.canMaritimeTrade(2,3,"Wheat"), "False: no 3:1 port");
   resources.setResourceListItems(0,0,0,0,2);
-  ok(!map.canMaritimeTrade(0,resources), "False: wrong resource");
+  ok(!map.canMaritimeTrade(0,2,"Wood"), "False: wrong resource");
   resources.setResourceListItems(0,0,0,0,4);
-  ok(map.canMaritimeTrade(0,resources), "True: 4:1");
+  ok(map.canMaritimeTrade(0,4), "True: 4:1");
 });
 
 test("Map.canPlaceRobber", function(){

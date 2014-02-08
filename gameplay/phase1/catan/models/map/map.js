@@ -200,36 +200,8 @@ catan.models.map.Map = (function() {
   @param {resourceList} cardsTraded - cards the client wants to trade in
     
   */
-  Map.prototype.canMaritimeTrade = function(playerId, cardsTraded){
-    var cardType = ""; //string
-    var ratio;    //int
+  Map.prototype.canMaritimeTrade = function(playerId, ratio, cardType){
     var portVertices;
-    //console.log(cardsTraded);
-    //find the nonzero resource in cardsTraded
-    if(cardsTraded.getBrickCount()){
-      cardType = "Brick";
-      ratio = cardsTraded.getBrickCount();
-      
-    }else if(cardsTraded.getOreCount()){
-      cardType = "Ore";
-      ratio = cardsTraded.getOreCount();
-      
-    }else if(cardsTraded.getSheepCount()){
-      cardType = "Sheep";
-      ratio = cardsTraded.getSheepCount();
-      
-    }else if(cardsTraded.getWheatCount()){
-      cardType = "Wheat";
-      ratio = cardsTraded.getWheatCount();
-      
-    }else if(cardsTraded.getWoodCount()){
-      cardType = "Wood";
-      ratio = cardsTraded.getWoodCount();
-    } else{ //no values given for resources
-      return false;
-    }
-    
-    
     //check if it is a 4:1 trade
     if(ratio == 4){
       return true;

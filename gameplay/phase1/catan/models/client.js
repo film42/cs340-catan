@@ -46,7 +46,7 @@ catan.models.ClientModel = (function() {
     this._map = new catan.models.map.Map(json.map);
     this._turn = new catan.models.Turn(json.turnTracker);
     this._chat = new catan.models.chat.Chat(json.chat);
-    this._tradeOffer = new catan.models.TradeOffer(json.tradeOffer) || null;
+    this._tradeOffer = json.tradeOffer ? new catan.models.TradeOffer(json.tradeOffer) : null;
     // Using the collection map function, it's awesome,
     // you it just may not be super familiar to everyone.
     this._players = json.players.map(function(player) {
