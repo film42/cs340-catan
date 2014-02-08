@@ -144,8 +144,7 @@ test("Player Init", function(){
      equal(sam.oldDevCards, samjson.oldDevCards, "player.oldDevCards was initialized correctly");
      equal(sam.orderNumber, samjson.orderNumber, "player.coorderNumberlor was initialized correctly"); 
      equal(sam.playedDevCard, samjson.playedDevCard, "player.playedDevCard was initialized correctly");
-     equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");   
-     deepEqual(sam.getResources(), samjson.resources, "player.resources was initialized correctly");   
+     equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");     
 });
 test("Player: Dev Card Tests", function(){
      // Method Unit Testing

@@ -68,7 +68,7 @@ catan.models.Player = (function() {
     POST: The method returns whether the user can use a dev card.  
   */
   Player.prototype.canPlayDevCard = function(){
-    return this.playedDevCard;
+    return !this.playedDevCard;
   };
   
   //Here are the play dev card functions. Need to document this later
@@ -83,7 +83,7 @@ catan.models.Player = (function() {
     return this.oldDevCards.soldier > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlayMonument = function(){
-    return this.oldDevCards.monument > 1 && this.canPlayDevCard();
+    return this.newDevCards.monument > 1 && this.canPlayDevCard();
   }
   Player.prototype.canPlayMonopoly = function(){
     return this.oldDevCards.monopoly > 1 && this.canPlayDevCard();
@@ -219,7 +219,7 @@ catan.models.Player = (function() {
    */
   Player.prototype.getResources = function() {
     //just pass out a ResourceList
-    return this.resource;
+    return this.resources;
     /* var resourcesOut = { 
         "brick" : this.resources.brick,
         "ore" : this.resources.ore,
