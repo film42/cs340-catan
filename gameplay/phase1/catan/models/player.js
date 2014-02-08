@@ -71,7 +71,23 @@ catan.models.Player = (function() {
     return this.playedDevCard;
   };
   
+  //Here are the play dev card functions. Need to document this later
   
+  Player.prototype.canPlayYearOfPlenty= function(){
+    return this.oldDevCards.yearOfPlenty > 1 && this.canPlayDevCard;
+  }
+  Player.prototype.canPlayRoadBuilding = function(){
+    return this.oldDevCards.roadBuilding > 1 && this.canPlayDevCard;
+  }
+  Player.prototype.canPlaySoldier = function(){
+    return this.oldDevCards.soldier > 1 && this.canPlayDevCard;
+  }
+  Player.prototype.canPlayMonument = function(){
+    return this.oldDevCards.monument > 1 && this.canPlayDevCard;
+  }
+  Player.prototype.canPlayMonopoly = function(){
+    return this.oldDevCards.monopoly > 1 && this.canPlayDevCard;
+  }
   
   /**
     Checks with the internal data to find out if it can buy a dev card.
