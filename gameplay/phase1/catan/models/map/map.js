@@ -169,7 +169,7 @@ catan.models.map.Map = (function() {
   };
   
   Map.prototype.canPlayRoadBuilder = function(playerId, hexLoc, dir, hexLoc2, dir2){
-  
+  };
   
   /**
   <pre>
