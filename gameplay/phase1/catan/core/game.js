@@ -36,7 +36,7 @@ catan.core.Game = (function() {
   /**
     Add an observer to the Game for updates
 
-    @param {Observer} observer The observer which will be called by Game
+    @param {function} observer The function (closure) that will be called when updates happen
       
     @return {void}
   */
