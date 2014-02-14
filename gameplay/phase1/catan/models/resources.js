@@ -51,7 +51,13 @@ catan.models.ResourceList = (function() {
     this.wheat = wh;
     this.wood = wo;
   }
-  
+  /**
+    @returns an array of the resources in the order needed by the controllers. 
+  */
+  ResourseList.prototype.getResourceArray = function(){
+    return [this.wood,this.brick,this.sheep, this.wheat, this.ore];
+  };
+
   /**
   Gets the quantity of Brick resources in the Resources.
 

@@ -20,23 +20,63 @@ catan.discard.Controller = (function discard_namespace(){
      * @extends misc.BaseController
      * @param{discard.DiscardView} view
      * @param{misc.WaitOverlay} waitingView
-     * @param{models.ClientModel} clientModel
+     * @param{models.Game} game
      */
 	var DiscardController = (function DiscardController_Class(){
 			
-		function DiscardController(view, waitingView, clientModel){
+		function DiscardController(view, waitingView, game){
         
-            Controller.call(this,view,clientModel);
+            Controller.call(this,view,game);
 			
             view.setController(this);
             
             waitingView.setController(this);
             this.setWaitingView(waitingView);
+            this.state = false;
 		}
 
 		core.forceClassInherit(DiscardController,Controller);
 
 		core.defineProperty(DiscardController.prototype,"waitingView");
+		core.defineProperty(DiscardController.prototype,"selected");
+		core.defineProperty(DiscardController.prototype,"numToDiscard");
+		core.defineProperty(DiscardController.prototype,"state");
+
+		/**
+		This is the callback function passed into the game in order to update
+		the views with the new model data.
+		*/
+		DiscardController.prototype.onUpdatedModel = function(){
+			//check if already displayed
+			if(this.state)
+				return;
+			var client = this.getGame().getClientModel();
+			if(!client.getTurnTracker().isDiscardPhase()){
+				return;
+			}
+			this.state = true;
+			var curPlayer = client.getCurrentPlayer();
+			if(curPlayer.hasMoreThan7Cards()){
+				var resources = curPlayer.getResources().getResourceArray();
+				//catan.definitions
+				//ResourceTypes: ["wood","brick","sheep","wheat","ore"]
+				var sum = 0;
+				for(var i=0; i< 5; i++){
+					this.waitingViewset.setResourceMaxAmount(
+						catan.definitions.ResourceTypes[i],resources[i]);
+					this.waitingView.setResourceAmount(catan.definitions.ResourceTypes[i], 0);
+					this.waitingView.setResourceAmountChangeEnabled(
+						catan.definitions.ResourceTypes[i], resources[i] > 0, false);
+					sum += resources[i];
+				}
+				this.numToDiscard = sum/2
+				this.waitingView.setStateMessage("0/" + this.numToDiscard);
+				this.waitingView.setDiscardButtonEnabled(false);
+				this.selected = {"wood"=0,"brick"=0,"wool" =0,"wheat"=0,"ore"=0};
+				this.waitingView.showModal();
+			}
+		
+		};
 
 		/**
 		 Called by the view when the player clicks the discard button.
@@ -45,6 +85,13 @@ catan.discard.Controller = (function discard_namespace(){
 		 @return void
 		 */	
 		DiscardController.prototype.discard = function(){
+			var resourceList = new catan.models.ResourceList({});
+			resourceList.setResourceListItems(selected.brick, selected.ore, 
+							selected.sheep, selected.wheat, selected.wood);
+			this.getGame().discardCards(resourceList, function(){
+				this.state = false;
+				this.waitingView.closeModal();
+			});
 		}
         
 		/**
@@ -54,8 +101,27 @@ catan.discard.Controller = (function discard_namespace(){
 		 @return void
 		 */
 		DiscardController.prototype.increaseAmount = function(resource){
+			this.selected[resource]++;
+			this.waitingView.setResourceAmount(resource, this.selected[resource]);
+			var sum = 0;
+			for(sel in selected){
+				sum += selected[sum];
+			}
+			if(this.numToDiscard <= sum){
+				disableAllIncrease();
+				this.waitingView.setDiscardButtonEnabled(true);
+			}else{
+				var decrease = false;
+				if(this.selected[resource] > 0){
+					decrease = true;
+				}
+				var increase = canIncrease(resource);
+				this.waitingView.setResourceAmountChangeEnabled(resource, increase, decrease);
+			}
+			this.waitingView.setStateMessage(""+sum+"/" + this.numToDiscard);
 		}
         
+
 		/**
 		 Called by the view when the player decreases the amount to discard for a single resource.
 		 @method decreaseAmount
@@ -63,8 +129,64 @@ catan.discard.Controller = (function discard_namespace(){
 		 @return void
 		 */
 		DiscardController.prototype.decreaseAmount = function(resource){
+			this.waitingView.setDiscardButtonEnabled(true);
+			this.selected[resource]--;
+			this.waitingView.setResourceAmount(resource, this.selected[resource]);
+			var sum = 0;
+			for(sel in selected){
+				sum += selected[sum];
+			}
+			//if was just at maximum, then re-enable all the resources
+			if(this.numToDiscard <= sum +1){
+				enableAllIncrease();
+			}
+			var decrease = false;
+			if(this.selected[resource] > 0){
+				decrease = true;
+			}
+			var increase = canIncrease();
+			this.waitingView.setResourceAmountChangeEnabled(sel, increase, decrease);
+
+			this.waitingView.setStateMessage(""+sum+"/" + this.numToDiscard);
+
+		};
+
+		/**
+			Used when you hit the number of cards you need to discard.
+        */
+		var disableAllIncrease = function(){
+			for(sel in selected){
+				var decrease = false;
+				if(this.selected[resource] > 0){
+					decrease = true;
+				}
+				this.waitingView.setResourceAmountChangeEnabled(sel, false, decrease);
+			}
 		}
-		
+
+		var enableAllIncrease = function(){
+			for(sel in selected){
+				var decrease = false;
+				if(this.selected[resource] > 0){
+					decrease = true;
+				}
+				var increase = canIncrease(resource);
+				this.waitingView.setResourceAmountChangeEnabled(sel, increase, decrease);
+			}
+		};
+
+		/**
+		private 
+		Used to determine if the function can increase
+		@return {boolean} whether or not the resourse can be increased
+		*/
+		var canIncrease = function(resouce){
+			var client = this.getGame().getClientModel();
+			var playerResources = client.getCurrentPlayer().getResourceArray();
+			return playerResources[catan.definitions.ResourceEnum[resource]] > 0 &&
+				playerResources[catan.definitions.ResourceEnum[resource]] > this.selected[resource];
+		};
+
 		return DiscardController;
 	}());
 	

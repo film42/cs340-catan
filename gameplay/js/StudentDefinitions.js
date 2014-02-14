@@ -6,6 +6,7 @@ var catan = catan||{};
 catan.definitions = {
 	//resources
 	ResourceTypes: ["wood","brick","sheep","wheat","ore"],
+	ResourceEnum: ["wood"=0,"brick"=1,"wool" =2,"wheat"=3,"ore"=4],
 	
 	HexTypes: ["desert","water"],//and each of the resourceTypes
 	WATER_HEX: "water",
