@@ -29,7 +29,31 @@ catan.core.Game = (function() {
   function Game(url) {
     this.model = {};
     this.proxy = new catan.proxy.ClientProxy();
+    this.observers = [];
   }
+
+
+  /**
+    Add an observer to the Game for updates
+
+    @param {Observer} observer The observer which will be called by Game
+      
+    @return {void}
+  */
+  Game.prototype.addObserver = function(obs) {
+    this.observers.push(obs);
+  };
+
+  /**
+    Trigger all observers. A quick way to fire changes across the game.
+      
+    @return {void}
+  */
+  Game.prototype.triggerObservers = function() {
+    this.observers.forEach(function(obs) {
+      obs();
+    });
+  };
 
   /**
     INIT Game method tells the proxy to get a client model, refreshUI, and then established the 2000ms persistence loop with the server.
