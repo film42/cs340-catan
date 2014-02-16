@@ -33,8 +33,11 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		};
         
 		DomesticController.prototype = core.inherit(Controller.prototype);
-         
-         
+		core.defineProperty(DomesticController.prototype, "resourceToSend");//int (Enum of ResourceEnum)
+		core.defineProperty(DomesticController.prototype, "resourceToReceive");//int (Enum of ResourceEnum)
+		core.defineProperty(DomesticController.prototype, "otherPlayer");//int (PlayerID)
+		core.defineProperty(DomesticController.prototype, "receiveQty");//int
+		core.defineProperty(DomesticController.prototype, "sendQty");//int
 		/******** Methods called by the Domestic View *********/
         
         /**
@@ -43,6 +46,9 @@ catan.trade.domestic.Controller= (function trade_namespace(){
         * @return void
         */
 		DomesticController.prototype.setResourceToSend = function(resource){
+		  // Make sure that we aren't setting the send and receive to the same resource
+		  if (!this.resourceToReceive === resource)
+		    this.resourceToSend = resource; 
 		};
         
 		/**
@@ -51,6 +57,8 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		 * @return void
 		 */
 		 DomesticController.prototype.setResourceToReceive = function(resource){
+	    if (!this.resourceToSend === resource)
+	        this.resourceToReceive = resource;
 		};
         
 		/**
@@ -59,6 +67,10 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		  * @return void
 		  */
 		DomesticController.prototype.unsetResource = function(resource){
+      if (!this.resourceToReceive === resource)
+        this.resourceToRecieve = "null";
+      if (!this.resourceToSend === resource)
+        this.resourceToSend = "null";
 		};
         
 		/**
@@ -67,6 +79,7 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		 * @return void
 		 */
 		DomesticController.prototype.setPlayerToTradeWith = function(playerNumber){
+		  this.otherPlayer = playerNumber;
 		};
         
 		/**
@@ -76,6 +89,10 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		* @return void
 		*/
 		DomesticController.prototype.increaseResourceAmount = function(resource){
+		  if (!this.resourceToReceive === resource)
+        this.receiveQty++;
+      if (!this.resourceToSend === resource)
+        this.sendQty++;
 		};
         
 		/**
@@ -85,6 +102,10 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		 * @return void
 		 */
 		DomesticController.prototype.decreaseResourceAmount = function(resource){
+      if (!this.resourceToReceive === resource)
+        this.receiveQty--;
+      if (!this.resourceToSend === resource)
+        this.sendQty--;
 		};
         
 		/**
@@ -93,6 +114,43 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		  * @return void
 		  */
 		DomesticController.prototype.sendTradeOffer = function(){
+		  //prepare our trade offer (in the form of a ResourceList)
+		  var brick = 0;
+	    var sheep = 0;
+	    var wheat = 0;
+	    var ore   = 0;
+	    var wood  = 0;
+	    
+	    if(this.resourceToReceive === "brick")
+	      brick = this.recieveQty;
+	    else if (this.resourceToSend === "brick")
+	      brick = this.sendQty;
+	    
+	    if(this.resourceToReceive === "sheep")
+        sheep = this.recieveQty;
+      else if (this.resourceToSend === "sheep")
+        sheep = this.sendQty;
+      
+	    if(this.resourceToReceive === "wheat")
+        wheat = this.recieveQty;
+      else if (this.resourceToSend === "wheat")
+        wheat = this.sendQty;
+      
+	    if(this.resourceToReceive === "ore")
+        ore = this.recieveQty;
+      else if (this.resourceToSend === "ore")
+        ore = this.sendQty;
+      
+	    if(this.resourceToReceive === "wood")
+        wood = this.recieveQty;
+      else if (this.resourceToSend === "wood")
+        wood = this.sendQty;
+	    
+	    var game = this.getGame();
+	    var list = new catan.models.ResourceList({});
+      list.setResourceListItems(brick, ore, sheep, wheat, wood);
+      
+		  game.offerTrade(this.otherPlayer, list, onUpdateModel);
 		};
         
         
@@ -105,8 +163,20 @@ catan.trade.domestic.Controller= (function trade_namespace(){
         * @return void
 		*/
 		DomesticController.prototype.acceptTrade = function(willAccept){
+		  this.getGame().acceptTrade(willAccept,onUpdateModel);
 		};
             
+		DomesticController.prototype.onUpdateModel(err){
+		  if (err){
+		    console.log(err);
+		    return;//The trade failed somehow
+		  }
+		  console.log("The trade was successful");
+		  // Success (not sure what goes here that doesn't belong in the acceptTrade())
+		  // this.acceptTrade(true);
+		}
+		
+		
 		return DomesticController;
     }());
 			
