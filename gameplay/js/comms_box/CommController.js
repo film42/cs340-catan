@@ -26,6 +26,7 @@ catan.comm.Controller = (function () {
 		
 		function BaseCommController(logView, model){
 			Controller.call(this,logView,model);
+      
 		}
 		
 		return BaseCommController;
@@ -34,7 +35,7 @@ catan.comm.Controller = (function () {
     
 	var LogController = (function LogController_Class(){
 
-        LogController.prototype = core.inherit(BaseCommController.prototype);
+    LogController.prototype = core.inherit(BaseCommController.prototype);
 		LogController.prototype.constructor = LogController;
 
 		/**
@@ -48,6 +49,11 @@ catan.comm.Controller = (function () {
 		function LogController(logView,model){
 			BaseCommController.call(this,logView,model);
 		}
+
+		LogController.prototype.onModelUpdate = function(){
+     var logLines = this.getGame().getClientModel().getLog().getMessages();
+     this.view.resetLines(logLines);
+    }
         
 		return LogController;
 	}());
@@ -55,7 +61,7 @@ catan.comm.Controller = (function () {
     
 	var ChatController = (function ChatController_Class(){
 
-        ChatController.prototype = core.inherit(BaseCommController.prototype);
+    ChatController.prototype = core.inherit(BaseCommController.prototype);
 		ChatController.prototype.constructor = ChatController;
 
 		/**
@@ -70,12 +76,22 @@ catan.comm.Controller = (function () {
 			BaseCommController.call(this,chatView,model);
 		}
         
+    /**
+    This is the callback function passed into the game in order to update
+    the views with the new model data.
+    */
+    ChatController.prototype.onModelUpdate = function(){
+     var chatLines = this.getGame().getClientModel().getChat().getMessages();
+     this.view.resetLines(chatLines);
+    }
+
 		/**
 		Called by the view whenever input is submitted
 		@method addLine
 		@param {String} lineContents The contents of the submitted string
 		**/
 		ChatController.prototype.addLine = function(lineContents){
+		  this.getGame().getProxy().sendChat(lineContents, callback);
 		};
 		
 		return ChatController;
