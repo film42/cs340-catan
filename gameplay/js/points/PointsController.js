@@ -22,12 +22,21 @@ catan.points.Controller = (function VPController_Class(){
 		@extends misc.BaseController
 		@param {points.View} view
 		@param {misc.GameFinishedView} gameFinishedView
-		@param {models.ClientModel} clientModel
+		@param {models.Game} game
 	*/
-	function PointController(view, gameFinishedView, clientModel){
+	function PointController(view, gameFinishedView, game){
 		this.setGameFinishedView(gameFinishedView);
-		Controller.call(this,view,clientModel);
+		Controller.call(this,view,game);
+		
+		gameFinishedView.setController(this);
+		view.setPoints(game.getPoints());
+		if (view.getPoints() > view.MAX_POINTS){
+		  //display the end-game view
+		  
+		}
 	}
+
+	
 	
 	return PointController;	
 }());
