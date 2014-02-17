@@ -106,8 +106,8 @@
     
     <title>Settlers Setup</title>
   </head>
-    <!-- <body onload = 'game = catan.client.Client.getPlayable()'> -->
-    <body onload = 'game = catan.client.Client.getPlayable()'>
+    <!-- <body onload='game=catan.client.Client.getPlayable()'> -->
+    <body onload='game=catan.client.Client.getPlayable()'>
          <div style="display:none" class="map-view-dom-elements">
             <img src="../images/land/water.png">
             <img src="../images/land/desert.gif">
@@ -135,41 +135,41 @@
             <img src="../images/ports/port_ore.png">
             <img src="../images/ports/port_three.png">
         </div>
-    <div class = "myrow header no-overflow">
-      <div class = "mycol header title" id = "title-pane">CS 340: Settlers Setup</div>
-      <div class = "mycol header" id = "costs-pane"></div>
+    <div class="myrow header no-overflow">
+      <div class="mycol header title" id="title-pane">CS 340: Settlers Setup</div>
+      <div class="mycol header" id="costs-pane"></div>
     </div> 
-    <div class ="myrow body">
-      <div class = "mycol" id ="left-pane">
+    <div class="myrow body">
+      <div class="mycol" id="left-pane">
         <div id="tabs" class="tabbable tabs-top">
           <ul class="nav nav-tabs">
             <li class="active top-tab" id="log-tab">
               <a href="#log-pane" data-toggle="tab" id="log">Log<span class="badge yellow"></span></a>
               <script>
                $(function(){
-                 // logView = new catan.comm.View.LogView();
+                 // logView=new catan.comm.View.LogView();
                });
               </script> 
             </li>
           </ul>
         </div>
         <div id="side-bar" class="myrow tab-content below-tabs">
-          <div id="log-pane" class ="tab-pane v-filler h-filler active"></div>
+          <div id="log-pane" class="tab-pane v-filler h-filler active"></div>
         </div>
-        <div id = "turn-tracker-pane" class = "myrow"></div>
+        <div id="turn-tracker-pane" class="myrow"></div>
         <script>
           $(function(){
-            // var game = new catan.core.Game()
-            // var turnTrackerView = new catan.turntracker.View();
-            // turnTrackerController = new TurnTracker:catan.turntracker.Controller(turnTrackerView, );
-            // var turnTrackerController = new catan.turntracker.Controller(turnTrackerView, game);
+            // var game=new catan.core.Game()
+            // var turnTrackerView=new catan.turntracker.View();
+            // turnTrackerController=new TurnTracker:catan.turntracker.Controller(turnTrackerView, );
+            // var turnTrackerController=new catan.turntracker.Controller(turnTrackerView, game);
             // turnTrackerView.buildView();
             // turnTrackerView.showModal();
           });
         </script> 
       </div>
-      <div class = "mycol" id ="middle-pane">
-        <div id=tabs2 class="tabbable tabs-top myrow">
+      <div class="mycol" id="middle-pane">
+        <div id="tabs2" class="tabbable tabs-top myrow">
           <ul class="nav nav-tabs" id="main-tab-set">
             <li class="active top-tab">
               <a href="#map-pane" data-toggle="tab" id="map">Game Map</a>
