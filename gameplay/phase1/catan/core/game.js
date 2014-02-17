@@ -82,14 +82,11 @@ catan.core.Game = (function() {
     // Refresh every 2000 seconds
     setInterval(function() {
       self.proxy.getModel(function(err, resp) {
-        if(err) return callback(err);
-
         // Override the model as we update.
         // This could give us some collisions.
         self.model = new catan.models.ClientModel(id, resp);
         // self.refreshUI();
         self.triggerObservers();
-        callback(err);
       });
     }, 2000);
   };

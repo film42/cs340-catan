@@ -47,7 +47,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
         view.initializePlayer(id, name, color);
 
       });
-
+      
       game.addObserver(this, this.onUpdatedModel);
     }
 
