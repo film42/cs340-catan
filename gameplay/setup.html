@@ -113,16 +113,30 @@
 				<div id=tabs class="tabbable tabs-top"><ul class="nav nav-tabs">
 					<li class="active top-tab" id="log-tab">
 						<a href="#log-pane" data-toggle="tab" id="log">Log<span class="badge yellow"></span></a>
+            <script>
+             $(function(){
+               logView = new catan.comm.View.LogView();
+             });
+            </script> 
 					</li>
                 </ul></div>
 				<div id="side-bar" class="myrow tab-content below-tabs">
 					<div id="log-pane" class ="tab-pane v-filler h-filler active"></div>
 				</div>
 				<div id = "turn-tracker-pane" class = "myrow"></div>
+        <script>
+         $(function(){
+             turnTrackerView = new catan.turntracker.View();
+             turnTrackerController = new TurnTracker:catan.turntracker.Controller(turnTrackerView, );
+             turnTrackerView.buildView();
+             turnTrackerView.showModal();
+           });
+        </script> 
 			</div>
 			<div class = "mycol" id ="middle-pane">
 				<div id=tabs2 class="tabbable tabs-top myrow"><ul class="nav nav-tabs" id="main-tab-set">
-					<li class="active top-tab"><a href="#map-pane" data-toggle="tab" id=map >Game Map</a></li>
+					<li class="active top-tab"><a href="#map-pane" data-toggle="tab" id=map >Game Map</a></li>  
+
                 </ul></div>
                 <div class="myrow below-tabs" id=right-area>
 					<div id="main-area" class="mycol tab-content scroll-y">
