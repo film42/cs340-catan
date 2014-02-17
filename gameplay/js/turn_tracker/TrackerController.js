@@ -66,7 +66,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
         var Update = {
           playerIndex: player.getId(),
           // TODO: Fix the Score
-          score: -10000,
+          score: player.getPoints(),
           // This is where we select the current active user
           highlight: (player.getId() == turnPlayerId),
           largestArmy: player.getLargestArmy(),
