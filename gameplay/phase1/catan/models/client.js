@@ -474,9 +474,8 @@ catan.models.ClientModel = (function() {
   };
   
   ClientModel.prototype.isMyTurn = function(){
-    var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var status = isPlayPhase && turnPlayerId == this._currentUserId;
+    var status = turnPlayerId == this._currentUserId;
     return status;
   };
   
