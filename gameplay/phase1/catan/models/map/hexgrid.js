@@ -73,6 +73,10 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
   }
 
+  HexGrid.prototype.getHexArray = function(){
+    return this.hexes;
+  }
+
   /**
   Gets the Vertex in the dir direction on the Hex determined by the HexLocation
 

@@ -13,6 +13,8 @@ catan.models.map = catan.models.map || {};
   @class EdgeDirection
   */
  catan.models.map.EdgeDirection = core.numberEnumeration(["NW","N","NE","SE","S","SW"]);
+
+ catan.models.map.EdgeDirectionNum = ["NW","N", "NE", "SE", "S", "SW"];
     
   /**
   These are simply a copy of EdgeDirections. They can be fed to a hexgrid.HexLocation to get 
@@ -30,5 +32,7 @@ catan.models.map = catan.models.map || {};
   @class VertexDirection
   */
   catan.models.map.VertexDirection = core.numberEnumeration(["W","NW","NE","E","SE","SW"]);
+  catan.models.map.VertexDirectionNum = ["W","NW","NE","E","SE","SW"];
+
     
    

@@ -190,6 +190,9 @@ catan.models.map.Hex = (function CatanHex_Class(){
   */
   Hex.prototype.getLandType = function(){
     if(this.island){
+      if(!this.landtype){
+        return "desert";
+      }
       return this.landtype
     }
     else{

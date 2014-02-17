@@ -9,16 +9,16 @@ catan.map = catan.map || {};
 
 catan.map.Controller = (function catan_controller_namespace() {
 	
-    var EdgeLoc = catan.map.View.EdgeLoc;
+  var EdgeLoc = catan.map.View.EdgeLoc;
 	var VertexLoc = catan.map.View.VertexLoc;
 	var PortLoc = catan.map.View.PortLoc;
     
-	var HexLocation = catan.models.hexgrid.HexLocation;
+	/*var HexLocation = catan.models.hexgrid.HexLocation;
 	var VertexLocation = catan.models.hexgrid.VertexLocation;
 	var EdgeLocation= catan.models.hexgrid.EdgeLocation;
 	var VertexDirection = catan.models.hexgrid.VertexDirection;
 	var EdgeDirection= catan.models.hexgrid.EdgeDirection;   
-
+	*/
 	var MapController = (function main_controller_class() {
     
  		core.forceClassInherit(MapController,catan.core.BaseController);
@@ -35,10 +35,95 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @param {RobberOverlay} robView - The robber overlay to be used when the robber is being placed.  This is undefined for the setup round.
 		 */
 		function MapController(view, modalView, model, robView){
-			catan.core.BaseController.call(this,view,model);
+			catan.core.BaseController.call(this,view,model.getModel());
 			this.setModalView(modalView);
 			this.setRobView(robView);
+			this.populateHexes();
+			this.populateNumbers();
+			this.populatePieces();
 		}
+
+
+
+		MapController.prototype.populateHexes = function populateHexes(){
+			var map = this.ClientModel.getMap(); //do we have a game or a model here? getModel() if need be
+			var hexgrid = map.getHexGrid(); 
+			var hexes = hexgrid.getHexArray();
+			for (var i = 0; i < hexes.length; i++){
+				for(var j = 0; j < hexes[i].length; j++){
+					var loc = hexes[i][j].getLocation();
+					this.View.addHex({x:loc.getX(), y:loc.getY()}, hexes[i][j].getLandType().toLowerCase());
+				}
+			}
+		}
+
+		MapController.prototype.populatePorts = function populatePorts(){
+			var map = this.ClientModel.getMap();
+			var ports = map.getPorts();
+			for(var i = 0; i < ports.length; i++){
+				var loc = ports[i].getLocation();
+				var portloc = new catan.map.View.PortLoc(loc.getX(), loc.getY(), catan.models.map.HexDirection[ports[i].orientation]);
+				this.View.addPort(portloc, ports[i].getType());
+			}
+		}
+
+		MapController.prototype.populateNumbers = function populateNumbers(){
+			var map = this.ClientModel.getMap();
+			var numbers = map.getNumbers();
+			for (var number in numbers){
+				var num = numbers[number];
+				for (var loc in num){
+					this.View.addNumber(num[loc], number);
+				}
+			}
+		}
+
+		MapController.prototype.populatePieces = function populatePieces(){
+			var map = this.ClientModel.getMap();
+			
+			//placeRobber
+			var robber = map.getRobber();
+			this.View.placeRobber({x:robber.getX(), y: robber.getY()});
+
+			//populate pieces on hexes
+			var hexes = map.getHexGrid().getHexArray();
+			for(var i = 0; i < hexes.length; i++){
+				for(var j = 0; j < hexes[i].length; j++){
+					this.populateEdges(hexes[i][j]);
+					this.populateVertexes(hexes[i][j]);
+				}
+			}
+		}
+
+		MapController.prototype.populateEdges = function populateEdges(hex){
+			var hexloc = hex.getLocation();
+			var players = this.ClientModel.getPlayers();
+			//edges 3-5 because MapView only accepts "SE", "SW" and "S". This is to to prevent overlap
+			for (var i = 3; i <= 5; i++){
+				var edge = hex.getEdgeNum(i);
+				if(edge.isOccupied()){
+					var edgeloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), catan.models.map.EdgeDirectionNum[i]);
+					this.View.placeRoad(edgeloc, players[edge.getValue().getOwnerID()].getColor());
+				}
+			}
+		}
+
+		MapController.prototype.populateVertexes = function populateVertexes(hex){
+			var hexloc = hex.getLocation();
+			var players = this.ClientModel.getPlayers();
+			//only do east as any vertex will be east of some hex. This prevents multiple placements.
+			var vertex = hex.getVertex("E");
+			if(vertex.isOccupied()){
+				var vertexloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), "E");
+				if(vertex.getValue().getBuildSite() == 1){
+					this.View.placeSettlement(vertexloc, players[vertex.getValue().getOwnerID()].getColor());
+				}
+				else if(vertex.getValue().getBuildSite() == 2){
+					this.View.placeCity(vertexloc, players[vertex.getValue().getOwnerID()].getColor());					
+				}
+			}
+		}
+
         
         /**
 		 This method is called by the Rob View when a player to rob is selected via a button click.
@@ -50,7 +135,7 @@ catan.map.Controller = (function catan_controller_namespace() {
         
         /**
 		 * Starts the robber movement on the map. The map should pop out and the player should be able
-         * move the robber.  This is called when the user plays a "solider" development card.
+         * move the robber.  This is called when the user plays a "soldier" development card.
 		 * @method doSoldierAction
 		 * @return void
 		**/		
@@ -76,6 +161,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @return void
 		**/	
 		MapController.prototype.startMove = function (pieceType,free,disconnected){
+			//what to do with free and disconnected?
+			this.modalView.showModal(pieceType);
 		};
         
 		/**
@@ -85,6 +172,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @return void
 		 * */
 		MapController.prototype.cancelMove = function(){
+			this.modalView.closeModal();
 		}
 
 		/**
@@ -98,6 +186,22 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 @return {boolean} Whether or not the given piece can be placed at the current location.
 		*/
 		MapController.prototype.onDrag = function (loc, type) {
+			var map = this.ClientModel.getMap();
+			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
+			switch(type){
+				case "robber":
+					return map.canPlaceRobber(hexloc);
+					break;
+				case "road":
+					return this.ClientModel.canPlaceRoad(hexloc, loc.getDir());
+					break;
+				case "settlement":
+					return this.ClientModel.canPlaceSettlement(hexloc, loc.getDir());
+					break;
+				case "city":
+					return this.ClientModel.canPlaceCity(hexloc, loc.getDir());
+					break;
+			}
 		};
 
 		/**
@@ -109,6 +213,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 @method onDrop
 		*/
 		MapController.prototype.onDrop = function (loc, type) {
+
 		};
         
 		return MapController;
