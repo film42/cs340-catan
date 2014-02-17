@@ -33,6 +33,9 @@ catan.discard.Controller = (function discard_namespace(){
             waitingView.setController(this);
             this.setWaitingView(waitingView);
             this.state = false;
+
+            game.addObserver(onUpdatedModel);
+
 		}
 
 		core.forceClassInherit(DiscardController,Controller);
@@ -46,14 +49,17 @@ catan.discard.Controller = (function discard_namespace(){
 		This is the callback function passed into the game in order to update
 		the views with the new model data.
 		*/
-		DiscardController.prototype.onUpdatedModel = function(){
+		var onUpdatedModel = function(){
 			//check if already displayed
-			if(this.state)
-				return;
+			
 			var client = this.getGame().getClientModel();
 			if(!client.getTurnTracker().isDiscardPhase()){
+				this.view.closeModal();
+				this.waitingView.closeModal();
 				return;
 			}
+			if(this.state)
+				return;
 			this.state = true;
 			var curPlayer = client.getCurrentPlayer();
 			if(curPlayer.hasMoreThan7Cards()){
@@ -62,17 +68,19 @@ catan.discard.Controller = (function discard_namespace(){
 				//ResourceTypes: ["wood","brick","sheep","wheat","ore"]
 				var sum = 0;
 				for(var i=0; i< 5; i++){
-					this.waitingViewset.setResourceMaxAmount(
+					this.view.setResourceMaxAmount(
 						catan.definitions.ResourceTypes[i],resources[i]);
-					this.waitingView.setResourceAmount(catan.definitions.ResourceTypes[i], 0);
-					this.waitingView.setResourceAmountChangeEnabled(
+					this.view.setResourceAmount(catan.definitions.ResourceTypes[i], 0);
+					this.view.setResourceAmountChangeEnabled(
 						catan.definitions.ResourceTypes[i], resources[i] > 0, false);
 					sum += resources[i];
 				}
 				this.numToDiscard = sum/2
-				this.waitingView.setStateMessage("0/" + this.numToDiscard);
-				this.waitingView.setDiscardButtonEnabled(false);
+				this.view.setStateMessage("0/" + this.numToDiscard);
+				this.view.setDiscardButtonEnabled(false);
 				this.selected = {"wood"=0,"brick"=0,"wool" =0,"wheat"=0,"ore"=0};
+				this.view.showModal();
+			}else{
 				this.waitingView.showModal();
 			}
 		
@@ -90,7 +98,7 @@ catan.discard.Controller = (function discard_namespace(){
 							selected.sheep, selected.wheat, selected.wood);
 			this.getGame().discardCards(resourceList, function(){
 				this.state = false;
-				this.waitingView.closeModal();
+				this.view.closeModal();
 			});
 		}
         
@@ -102,23 +110,23 @@ catan.discard.Controller = (function discard_namespace(){
 		 */
 		DiscardController.prototype.increaseAmount = function(resource){
 			this.selected[resource]++;
-			this.waitingView.setResourceAmount(resource, this.selected[resource]);
+			this.view.setResourceAmount(resource, this.selected[resource]);
 			var sum = 0;
 			for(sel in selected){
 				sum += selected[sum];
 			}
 			if(this.numToDiscard <= sum){
 				disableAllIncrease();
-				this.waitingView.setDiscardButtonEnabled(true);
+				this.view.setDiscardButtonEnabled(true);
 			}else{
 				var decrease = false;
 				if(this.selected[resource] > 0){
 					decrease = true;
 				}
 				var increase = canIncrease(resource);
-				this.waitingView.setResourceAmountChangeEnabled(resource, increase, decrease);
+				this.view.setResourceAmountChangeEnabled(resource, increase, decrease);
 			}
-			this.waitingView.setStateMessage(""+sum+"/" + this.numToDiscard);
+			this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
 		}
         
 
@@ -129,9 +137,9 @@ catan.discard.Controller = (function discard_namespace(){
 		 @return void
 		 */
 		DiscardController.prototype.decreaseAmount = function(resource){
-			this.waitingView.setDiscardButtonEnabled(true);
+			this.view.setDiscardButtonEnabled(true);
 			this.selected[resource]--;
-			this.waitingView.setResourceAmount(resource, this.selected[resource]);
+			this.view.setResourceAmount(resource, this.selected[resource]);
 			var sum = 0;
 			for(sel in selected){
 				sum += selected[sum];
@@ -145,9 +153,9 @@ catan.discard.Controller = (function discard_namespace(){
 				decrease = true;
 			}
 			var increase = canIncrease();
-			this.waitingView.setResourceAmountChangeEnabled(sel, increase, decrease);
+			this.view.setResourceAmountChangeEnabled(sel, increase, decrease);
 
-			this.waitingView.setStateMessage(""+sum+"/" + this.numToDiscard);
+			this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
 
 		};
 
@@ -160,7 +168,7 @@ catan.discard.Controller = (function discard_namespace(){
 				if(this.selected[resource] > 0){
 					decrease = true;
 				}
-				this.waitingView.setResourceAmountChangeEnabled(sel, false, decrease);
+				this.view.setResourceAmountChangeEnabled(sel, false, decrease);
 			}
 		}
 
@@ -171,7 +179,7 @@ catan.discard.Controller = (function discard_namespace(){
 					decrease = true;
 				}
 				var increase = canIncrease(resource);
-				this.waitingView.setResourceAmountChangeEnabled(sel, increase, decrease);
+				this.view.setResourceAmountChangeEnabled(sel, increase, decrease);
 			}
 		};
 
