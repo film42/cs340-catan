@@ -48,7 +48,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
 
       });
 
-      game.addObserver(this.onUpdatedModel);
+      game.addObserver(this, this.onUpdatedModel);
     }
 
     core.forceClassInherit(TurnTrackerController,Controller);
@@ -58,23 +58,24 @@ catan.turntracker.Controller = (function turntracker_namespace() {
 
 
       // 1) Update player changes
-      var turnTracker = mode.getTurn();
+      var turnTracker = model.getTurn();
       var turnPlayerId  = turnTracker.getTurnPlayerId();
       var players = model.getPlayers();
+      var self = this;
       players.forEach(function(player) {
         // Required update blob
         var Update = {
-          playerIndex: player.getId(),
+          playerIndex: player.getPlayerID(),
           // TODO: Fix the Score
           score: player.getPoints(),
           // This is where we select the current active user
-          highlight: (player.getId() == turnPlayerId),
+          highlight: (player.getPlayerID() == turnPlayerId),
           largestArmy: player.getLargestArmy(),
           longestRoad: player.getLongestRoad()
         };
 
         // Send update blob
-        this.view.updatePlayer(Update);
+        self.view.updatePlayer(Update);
       });
 
       // 2) Update Message state (updateStateView)

@@ -33,16 +33,7 @@ catan.core.Game = (function() {
   }
   
   Game.prototype.initFromServer = function(success) {
-    var self = this;
-    this.proxy.getModel(function(err, data) {
-      if(err) {
-        console.log("Could not get model from proxy.");
-      }
-      
-      self.model = new catan.models.ClientModel(self.getCurrentPlayerId(), data);
-      
-      success();
-    });
+    this.startGame(success);
   };
 
 
@@ -53,8 +44,8 @@ catan.core.Game = (function() {
       
     @return {void}
   */
-  Game.prototype.addObserver = function(obs) {
-    this.observers.push(obs);
+  Game.prototype.addObserver = function(context, obs) {
+    this.observers.push( obs.bind(context) );
   };
 
   /**
@@ -81,21 +72,23 @@ catan.core.Game = (function() {
     @return {ClientModel}
   */
   Game.prototype.startGame = function(callback) {
-    this.getState(function(err, resp) {
-      model = new catan.models.ClientModel(resp);
+    var self = this;
+    var id = self.getCurrentPlayerId();
+    this.proxy.getModel(function(err, resp) {
+      self.model = new catan.models.ClientModel(id, resp);
       callback();
     });
 
     // Refresh every 2000 seconds
-    var self = this;
     setInterval(function() {
-      self.proxy.getState(function(err, resp) {
+      self.proxy.getModel(function(err, resp) {
         if(err) return callback(err);
 
         // Override the model as we update.
         // This could give us some collisions.
-        self.model = new catan.models.ClientModel(resp);
-        self.refreshUI();
+        self.model = new catan.models.ClientModel(id, resp);
+        // self.refreshUI();
+        self.triggerObservers();
         callback(err);
       });
     }, 2000);
