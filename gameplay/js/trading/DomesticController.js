@@ -38,6 +38,8 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		core.defineProperty(DomesticController.prototype, "otherPlayer");//int (PlayerID)
 		core.defineProperty(DomesticController.prototype, "receiveQty");//int
 		core.defineProperty(DomesticController.prototype, "sendQty");//int
+		
+		
 		/******** Methods called by the Domestic View *********/
         
         /**
