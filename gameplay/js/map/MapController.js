@@ -38,12 +38,23 @@ catan.map.Controller = (function catan_controller_namespace() {
 			catan.core.BaseController.call(this,view,model.getModel());
 			this.setModalView(modalView);
 			this.setRobView(robView);
-			this.populateHexes();
-			this.populateNumbers();
-			this.populatePieces();
+			this.game = model;
+			this.initFromModel();
+			this.game.addObserver(this, this.updateFromModel);
 		}
 
+		MapController.prototype.initFromModel = function(){
+			this.ClientModel = this.game.getModel();
+			this.populateHexes();
+			this.populatePorts();
+			this.populateNumbers();
+			this.updateFromModel();
+		}
 
+		MapController.prototype.updateFromModel = function(){
+			this.ClientModel = this.game.getModel();
+			this.populatePieces();
+		}
 
 		MapController.prototype.populateHexes = function populateHexes(){
 			var map = this.ClientModel.getMap(); //do we have a game or a model here? getModel() if need be
@@ -63,7 +74,13 @@ catan.map.Controller = (function catan_controller_namespace() {
 			for(var i = 0; i < ports.length; i++){
 				var loc = ports[i].getLocation();
 				var portloc = new catan.map.View.PortLoc(loc.getX(), loc.getY(), catan.models.map.HexDirection[ports[i].orientation]);
-				this.View.addPort(portloc, ports[i].getType());
+				var type = ports[i].getType();
+				if(type){
+					this.View.addPort(portloc, type.toLowerCase());					
+				}
+				else{
+					this.View.addPort(portloc, "three");
+				}
 			}
 		}
 
@@ -163,7 +180,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.startMove = function (pieceType,free,disconnected){
 			//what to do with free and disconnected?
 			this.modalView.showModal(pieceType);
-		};
+		}
         
 		/**
 		 * This method is called from the modal view when the cancel button is pressed. 
@@ -202,7 +219,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 					return this.ClientModel.canPlaceCity(hexloc, loc.getDir());
 					break;
 			}
-		};
+		}
 
 		/**
 		 This method is called when the user clicks the mouse to place a piece.
@@ -213,8 +230,44 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 @method onDrop
 		*/
 		MapController.prototype.onDrop = function (loc, type) {
+			var map = this.ClientModel.getMap();
+			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
 
-		};
+			switch(type){
+				case "robber":
+					if(map.canPlaceRobber(hexloc)){
+
+					}
+					else{
+						return;
+					}
+					break;
+				case "road":
+					if(this.ClientModel.canPlaceRoad(hexloc, loc.getDir())){
+						game.buildRoad(hexloc, loc.getDir(), this.modalView.closeModal());
+					}
+					else{
+						return;
+					}
+					break;
+				case "settlement":
+					if(this.ClientModel.canPlaceSettlement(hexloc, loc.getDir())){
+
+					}
+					else{
+						return;
+					}
+					break;
+				case "city":
+					if(this.ClientModel.canPlaceCity(hexloc, loc.getDir())){
+
+					}
+					else{
+						return;
+					}
+					break;
+			}
+		}
         
 		return MapController;
 	} ());
