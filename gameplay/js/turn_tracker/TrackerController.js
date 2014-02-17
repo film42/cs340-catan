@@ -41,7 +41,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       players.forEach(function(player) {
 
         var color = player.getColor();
-        var id = player.getplayerID();
+        var id = player.getPlayerID();
         var name = player.getName();
 
         view.initializePlayer(id, name, color);
