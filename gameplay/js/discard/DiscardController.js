@@ -33,8 +33,10 @@ catan.discard.Controller = (function discard_namespace(){
       waitingView.setController(this);
       this.setWaitingView(waitingView);
       this.state = false;
+      this.game = game;
+      this.view = view;
 
-      game.addObserver(this, onUpdatedModel);
+      this.game.addObserver(this, onUpdatedModel);
 
     }
 
@@ -52,8 +54,8 @@ catan.discard.Controller = (function discard_namespace(){
     var onUpdatedModel = function(){
       //check if already displayed
       
-      var client = this.getGame().getClientModel();
-      if(!client.getTurnTracker().isDiscardPhase()){
+      var client = this.game.getModel();
+      if(!client.getTurn().isDiscardingPhase()){
         this.view.closeModal();
         this.waitingView.closeModal();
         return;
@@ -61,7 +63,7 @@ catan.discard.Controller = (function discard_namespace(){
       if(this.state)
         return;
       this.state = true;
-      var curPlayer = client.getCurrentPlayer();
+      var curPlayer = this.game.getCurrentPlayer();
       if(curPlayer.hasMoreThan7Cards()){
         var resources = curPlayer.getResources().getResourceArray();
         //catan.definitions

@@ -53,7 +53,7 @@ catan.resources.Controller = (function resources_namespace() {
      */
     ResourceBarController.prototype.onUpdateModel = function() {
       var player = this.game.getCurrentPlayer();
-      var cards = player.getNewDevCards();
+      var cards = player.getResources();
 
       // Update new rescource list
       this.view.updateAmount("wood", cards.getWoodCount());
