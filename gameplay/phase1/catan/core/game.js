@@ -244,12 +244,12 @@ catan.core.Game = (function() {
     </pre>
      
     @method maritimeTrade
-    @param {resourceList} cardTraded cards the client wants to trade in
-    @param {resourceList} cardRecieved cards the client will recieve
+    @param {string} cardTraded cards the client wants to trade in
+    @param {string} cardRecieved cards the client will recieve
   */
   Game.prototype.maritimeTrade = function(cardTraded, cardRecieved, ratio, callback) {
     var playerId = this.getCurrentPlayerId();
-    var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, rato, cardRecieved);
+    var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, ratio, cardRecieved);
 
     if(!canMaritimeTrade) return callback({error: "Cannot maritime trade!"});
 

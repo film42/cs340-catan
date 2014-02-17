@@ -345,16 +345,18 @@ catan.models.ClientModel = (function() {
     </pre>
      
     @method canMaritimeTrade
-    @param {resourceList} cardsTraded - cards the client wants to trade in
+    @param 
   */
-  ClientModel.prototype.canMaritimeTrade = function(cardsTraded) {
+  ClientModel.prototype.canMaritimeTrade = function(typeToGive, ratio, typeToGet) {
     var player = this.getPlayerWithId(this._currentUserId);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var canMaritimeTrade = this.map.canMaritimeTrade(this._currentUserId,cardsTraded);
+    var canMaritimeTrade = this.map.canMaritimeTrade(this._currentUserId, ratio, typeToGive);
     var canAffordTrade = player.canAffordToOfferTrade(cardsTraded);
+    var bankCanAfford = this._bank[typeToGet] > 0;
     
-    var status = isPlayPhase && turnPlayerId == this._currentUserId && canMaritimeTrade && canAffordTrades;
+    var status = isPlayPhase && turnPlayerId == this._currentUserId &&
+                 canMaritimeTrade && canAffordTrades && bankCanAfford;
     return status;
   };
   
