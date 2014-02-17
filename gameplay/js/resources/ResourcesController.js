@@ -39,7 +39,7 @@ catan.resources.Controller = (function resources_namespace() {
       this.view = view;
       this.game = game;
 
-      this.game.addObserver(this.onUpdateModel);
+      this.game.addObserver(this, this.onUpdateModel);
     }
 
     core.forceClassInherit(ResourceBarController,Controller);

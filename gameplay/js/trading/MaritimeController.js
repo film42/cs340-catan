@@ -30,7 +30,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
       this.game = game;
 
-      this.game.addObserver(OnUpdatedModel);
+      this.game.addObserver(this, OnUpdatedModel);
       state = selGiveState;
     }
 

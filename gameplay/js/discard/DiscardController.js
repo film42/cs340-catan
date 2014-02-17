@@ -34,7 +34,7 @@ catan.discard.Controller = (function discard_namespace(){
       this.setWaitingView(waitingView);
       this.state = false;
 
-      game.addObserver(onUpdatedModel);
+      game.addObserver(this, onUpdatedModel);
 
     }
 
