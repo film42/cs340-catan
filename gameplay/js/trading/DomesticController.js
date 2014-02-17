@@ -168,7 +168,7 @@ catan.trade.domestic.Controller= (function trade_namespace(){
 		  this.getGame().acceptTrade(willAccept,onUpdateModel);
 		};
             
-		DomesticController.prototype.onUpdateModel(err){
+		DomesticController.prototype.onUpdateModel = function(err){
 		  if (err){
 		    console.log(err);
 		    return;//The trade failed somehow
