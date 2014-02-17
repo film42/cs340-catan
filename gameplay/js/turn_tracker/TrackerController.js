@@ -55,10 +55,11 @@ catan.turntracker.Controller = (function turntracker_namespace() {
     TurnTrackerController.prototype.onUpdatedModel = function() {
       var model = this.game.getModel();
 
+
       // 1) Update player changes
       var turnTracker = mode.getTurn();
       var turnPlayerId  = turnTracker.getTurnPlayerId();
-      var players = this.game.getPlayers();
+      var players = model.getPlayers();
       players.forEach(function(player) {
         // Required update blob
         var Update = {
