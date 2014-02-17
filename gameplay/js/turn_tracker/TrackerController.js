@@ -36,7 +36,8 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       view.setClientColor(currentPlayer.getColor());
 
       // Init all the players
-      var players = game.getPlayers();
+      var model = game.getModel();
+      var players = model.getPlayers();
       players.forEach(function(player) {
 
         var color = player.getColor();

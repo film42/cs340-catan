@@ -33,12 +33,13 @@ catan.resources.Controller = (function resources_namespace() {
      @param{models.ClientModel} clientModel The client model
      @param{Object} actions The actions to take for each user input. The value of actions.elem_name is a function that is called when the specific element is selected (accessed by calling actions["elem_name"]).  The valid element names are defined in StudentDefinitions.js
         */
-    function ResourceBarController(view,clientModel,actions){
+    function ResourceBarController(view,game,actions){
       this.setActions(actions);
-      Controller.call(this,view,clientModel);
+      Controller.call(this,view,game);
       this.view = view;
+      this.game = game;
 
-      game.addObserver(this.onUpdateModel);
+      this.game.addObserver(this.onUpdateModel);
     }
 
     core.forceClassInherit(ResourceBarController,Controller);
@@ -51,7 +52,7 @@ catan.resources.Controller = (function resources_namespace() {
      *  Observer Callback
      */
     ResourceBarController.prototype.onUpdateModel = function() {
-      var player = game.getCurrentPlayer();
+      var player = this.game.getCurrentPlayer();
       var cards = player.getNewDevCards();
 
       // Update new rescource list
