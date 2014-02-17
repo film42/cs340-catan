@@ -213,7 +213,7 @@ catan.client = (function Client_NameSpace(){
         }
         
 		function CatanGame(){
-			this.setClientModel(new ClientModel(getClientIDFromCookie()));
+			this.setClientModel(new catan.core.Game());
 		}        
         
         // called when the dom is loaded
