@@ -54,7 +54,7 @@ catan.models.ResourceList = (function() {
   /**
     @returns an array of the resources in the order needed by the controllers. 
   */
-  ResourseList.prototype.getResourceArray = function(){
+  ResourceList.prototype.getResourceArray = function(){
     return [this.wood,this.brick,this.sheep, this.wheat, this.ore];
   };
 

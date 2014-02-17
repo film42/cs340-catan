@@ -17,18 +17,19 @@ catan.turntracker.Controller = (function turntracker_namespace() {
     @class TurnTrackerController 
     @extends misc.BaseController
     @param {turntracker.View} view The view for this object to control.
-    @param {models.ClientModel} clientModel The clientModel for this object to control.
+    @param {core.Game} game The game for this object to control.
     @constructor
   **/
   var TurnTrackerController = (function TurnTrackerController_Class(){
   
-    function TurnTrackerController(view, clientModel){
-      Controller.call(this,view,clientModel);
+    function TurnTrackerController(view, game){
+      Controller.call(this,view,game);
       // TODO: This constructor should configure its view by calling view.setClientColor and view.initializePlayer
       // NOTE: The view.updateViewState and view.updatePlayer will not work if called from here.  Instead, these
       //          methods should be called later each time the client model is updated from the server.
 
       this.view = view;
+      this.game = game;
 
       // Set local player color
       var currentPlayer = game.getCurrentPlayer();
@@ -52,12 +53,12 @@ catan.turntracker.Controller = (function turntracker_namespace() {
     core.forceClassInherit(TurnTrackerController,Controller);
 
     TurnTrackerController.prototype.onUpdatedModel = function() {
-      var model = game.getModel();
+      var model = this.game.getModel();
 
       // 1) Update player changes
       var turnTracker = mode.getTurn();
       var turnPlayerId  = turnTracker.getTurnPlayerId();
-      var players = game.getPlayers();
+      var players = this.game.getPlayers();
       players.forEach(function(player) {
         // Required update blob
         var Update = {
