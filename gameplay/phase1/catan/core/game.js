@@ -31,6 +31,19 @@ catan.core.Game = (function() {
     this.proxy = new catan.proxy.ClientProxy();
     this.observers = [];
   }
+  
+  Game.prototype.initFromServer = function(success) {
+    var self = this;
+    this.proxy.getModel(function(err, data) {
+      if(err) {
+        console.log("Could not get model from proxy.");
+      }
+      
+      self.model = new catan.models.ClientModel(self.getCurrentPlayerId(), data);
+      
+      success();
+    });
+  };
 
 
   /**
@@ -142,7 +155,7 @@ catan.core.Game = (function() {
     @return {integer}
   */
   Game.prototype.getCurrentPlayerId = function() {
-    return $.cookie('catan.user');
+    return JSON.parse(decodeURIComponent(Cookies.get("catan.user"))).playerID;
   };
 
   /**
@@ -157,7 +170,7 @@ catan.core.Game = (function() {
   */
   Game.prototype.getCurrentPlayer = function() {
     var currentUserId = this.getCurrentPlayerId();
-    return this.model.getCurrentPlayerWithId(currentUserId);
+    return this.model.getPlayerWithId(currentUserId);
   };
 
 
