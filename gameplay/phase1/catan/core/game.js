@@ -99,7 +99,9 @@ catan.core.Game = (function() {
       
     @return {ClientModel}
   */
-  Game.prototype.refreshUI = function(callback) {};
+  Game.prototype.refreshUI = function(callback) {
+    this.triggerObservers();
+  };
 
   /**
     Get the model that's hooked up to this GAME class

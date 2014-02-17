@@ -50,7 +50,7 @@ catan.comm.Controller = (function () {
 			BaseCommController.call(this,logView,model);
 		}
 
-		Log.Controller.prototype.onModelUpdate = function(){
+		LogController.prototype.onModelUpdate = function(){
      var logLines = this.getGame().getClientModel().getLog().getMessages();
      this.view.resetLines(logLines);
     }
@@ -80,7 +80,7 @@ catan.comm.Controller = (function () {
     This is the callback function passed into the game in order to update
     the views with the new model data.
     */
-    Chat.Controller.prototype.onModelUpdate = function(){
+    ChatController.prototype.onModelUpdate = function(){
      var chatLines = this.getGame().getClientModel().getChat().getMessages();
      this.view.resetLines(chatLines);
     }

@@ -76,24 +76,24 @@ catan.roll.Controller = (function roll_namespace(){
 			this.resultView.showModal();
 		};
 
-    function rollingDice()
-    {
+    function rollingDice(){
+    
      // Set the length of the timer, in seconds
      this.secs = 3;
      StopTimer();
      StartTimer();
     }
 
-   function StopTimer()
-   {
+   function StopTimer(){
+   
      if(this.rollInterval)
         clearTimeout(timerID);
      this.rollInterval = false;
    }
 
 
-function StartTimer()
-{
+function StartTimer(){
+
    if (secs==0)
     {
     	 this.rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();
@@ -104,7 +104,7 @@ function StartTimer()
         self.status = secs;
         secs = secs - 1;
         this.rollInterval = true;
-        timerID = self.setTimeout("StartTheTimer()", 1000)
+        timerID = self.setTimeout("StartTheTimer()", 1000);
     }
 }
 
@@ -112,7 +112,7 @@ function StartTimer()
 			if rooling 7 and activating the robber, each player with more than 7 resource cards, must 
 			choose to and discard half of them.
     */
-		var discardResource() == function(){
+		var discardResource = function(){
 			var discardView = new catan.discard.View();
 			this.currentView = discardView;
 			discardView.showModal();	
@@ -121,7 +121,7 @@ function StartTimer()
    /**
 		 Move the robber to the number token of any other terrain hex( or to the desert hex). 
     */
-		var moveRobber() == function(){
+		var moveRobber = function(){
       this.currentView.closeModal();
 			var robView = new catan.views.overlays.RobOverlay();
 			this.currentView = robView();
@@ -132,7 +132,7 @@ function StartTimer()
    /**
 		 steal 1 resource card at the random from a player who has settlement or city adjacent to this new hex. 
     */
-		var stealresource() == function(){
+		var stealresource = function(){
 
 			
 		};
