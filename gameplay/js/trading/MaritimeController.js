@@ -26,7 +26,9 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     @param {models.ClientModel} clientModel
     */
     function MaritimeController(view,game){
-      Controller.call(this,view,clientModel);
+      Controller.call(this,view,game);
+
+      this.game = game;
 
       this.game.addObserver(OnUpdatedModel);
       state = selGiveState;
