@@ -16,6 +16,7 @@ catan.models.Player = (function() {
   var playedDevCard;
   var playerID;
   var resources;
+  var points;
   /**
     @author Steve Allred
     The Player class contains information about a player and has methods that query the state of the player.
@@ -63,6 +64,7 @@ catan.models.Player = (function() {
     this.playedDevCard = data.playedDevCard;
     this.playerID = data.playerID;
     this.resources = new catan.models.ResourceList(data.resources);
+    this.points = data.victoryPoints;
   }
   //Getters
   Player.prototype.getCities = function(){
@@ -104,9 +106,13 @@ catan.models.Player = (function() {
   Player.prototype.getPlayedDevCard = function(){
     return this.playedDevCard;
   };
-  Player.prototype.getplayerID = function(){
+  Player.prototype.getPlayerID = function(){
     return this.playerID;
   };
+  Player.prototype.getPoints = function(){
+    return this.points;
+  };
+  
   
   
   /**
