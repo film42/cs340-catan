@@ -33,7 +33,7 @@ catan.setup.Controller = (function(){
       var currentPlayer = client.getPlayerWithId(currentPlayerID);
 
       if (turnTracer.isSetupPhase){
-        if (currentPlayer.getRoads() == 0  || (currentPlayer.getRoads == 1 && currentPlayer.getSettlements() == 1){
+        if (currentPlayer.getRoads() == 0  || (currentPlayer.getRoads == 1 && currentPlayer.getSettlements() == 1)){
           this.mapController.startMove("road", true, true);
         }
         else if ((currentPlayer.getRoads() == 1 && currentPlayer.getSettlements() == 0) ||

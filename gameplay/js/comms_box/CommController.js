@@ -24,8 +24,11 @@ catan.comm.Controller = (function () {
     BaseCommController.prototype = core.inherit(Controller.prototype);
     BaseCommController.prototype.contructor = BaseCommController;
     
-    function BaseCommController(logView, model){
-      Controller.call(this,logView,model);
+    function BaseCommController(logView, game){
+      Controller.call(this,logView,game);
+      this.game = game;
+      this.view = logView;
+      this.game.addObserver(this, this.onModelUpdate);
       
     }
     
@@ -47,7 +50,11 @@ catan.comm.Controller = (function () {
     @param {models.ClientModel} model The view for this object to control.
     **/
     function LogController(logView,model){
-      BaseCommController.call(this,logView,model);
+      BaseCommController.call(this,logView,game);
+      this.game = game;
+      this.view = LogView;
+
+      this.game.addObserver(this, this.onModelUpdate);
     }
 
     LogController.prototype.onModelUpdate = function(){
