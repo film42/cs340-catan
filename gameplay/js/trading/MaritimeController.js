@@ -30,8 +30,9 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
       this.game = game;
 
-      this.game.addObserver(this, OnUpdatedModel);
-      state = selGiveState;
+      // TODO: This needs to be worked on so THIS is preserved.
+      // this.game.addObserver(this, OnUpdatedModel);
+      this.state = selGiveState;
     }
 
     MaritimeController.prototype = core.inherit(Controller.prototype);
@@ -65,11 +66,11 @@ catan.trade.maritime.Controller = (function trade_namespace(){
         this.view.selectGiveOption(resource, ratios[resource]);
         this.view.hideGiveOptions();
         if(!typeToGet){
-          state = selGetState;
-          state.OnUpdatedModel();
+          this.state = selGetState;
+          this.state.OnUpdatedModel();
         }else{
-          state = acceptState;
-          state.OnUpdatedModel();
+          this.state = acceptState;
+          this.state.OnUpdatedModel();
           this.view.enableTradeButton(true);
         }
       },
@@ -134,8 +135,8 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       unsetGetValue : function(){
         typeToGet = undefined;
         this.view.enableTradeButton(false);
-        state = selGetState;
-        state.OnUpdatedModel();
+        this.state = selGetState;
+        this.state.OnUpdatedModel();
       },
       OnUpdatedModel: function(){
         handleTurn();
@@ -146,13 +147,13 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
     var unsetGiveValueFromState = function(){
       typeToGive = undefined;
-      state = selGiveState;
-      state.OnUpdatedModel();
+      this.state = selGiveState;
+      this.state.OnUpdatedModel();
       this.view.enableTradeButton(false);
     };
 
     var handleTurn = function(){
-      if(!this.game.getClientModel().isMyTurn()){
+      if(!this.game.getModel().isMyTurn()){
         this.view.hideGiveOptions();
         this.view.hideGetOptions();
         this.view.setMessage("It is not your turn");
@@ -189,8 +190,9 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
 
     var OnUpdatedModel = function(){
-      if(state.OnUpdatedModel)
-        state.OnUpdatedModel();
+      if(this.state.OnUpdatedModel) {
+        this.state.OnUpdatedModel(this);
+      }
     };
 
     /**
