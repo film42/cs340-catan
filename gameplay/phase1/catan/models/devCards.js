@@ -31,18 +31,16 @@ catan.models.DevCards = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function DevCards(json) {
-    console.log("dev cards init");
-    console.log(json);
     this.setIndividualValues(json.monopoly, json.monument, json.roadBuilding, json.soldier, json.yearOfPlenty);
     return this;
-  };
+  }
   
   DevCards.prototype.setIndividualValues = function(mono, monu, road, sold, year){
-    this.monopoly = mono;    
-    this.monument = monu;     
+    this.monopoly = mono;
+    this.monument = monu;
     this.roadBuilding = road;
-    this.soldier = sold;      
-    this.yearOfPlenty = year; 
+    this.soldier = sold;
+    this.yearOfPlenty = year;
   };
   /**
   Gets the Monopoly card count.
@@ -51,7 +49,7 @@ catan.models.DevCards = (function() {
     @return an integer of the desired property
   */
   DevCards.prototype.getMonopolyCount = function() {
-      return this.monopoly;
+    return this.monopoly;
   };
   /**
   Gets the Monument card count.
@@ -60,7 +58,7 @@ catan.models.DevCards = (function() {
     @return an integer of the desired property
   */
   DevCards.prototype.getMonumentCount = function() {
-      return this.monument;
+    return this.monument;
   };
   /**
   Gets the roadBuilding card count.
@@ -69,7 +67,7 @@ catan.models.DevCards = (function() {
     @return an integer of the desired property
   */
   DevCards.prototype.getRoadBuildingCount = function() {
-      return this.roadBuilding;
+    return this.roadBuilding;
   };
   /**
   Gets the Soldier card count.
@@ -78,7 +76,7 @@ catan.models.DevCards = (function() {
     @return an integer of the desired property
   */
   DevCards.prototype.getSoldierCount = function() {
-      return this.soldier;
+    return this.soldier;
   };
   /**
   Gets the year of plenty card count.
@@ -87,24 +85,23 @@ catan.models.DevCards = (function() {
     @return an integer of the desired property
   */
   DevCards.prototype.getYearOfPlentyCount = function() {
-      return this.yearOfPlenty;
+    return this.yearOfPlenty;
   };
   /**
    * Checks to see if this devCard list has at least the amount in the new devCardList.
    * @return true if this devCard List has at least the same as the number of resources in the passed in devCardList, false otherwise
    */
   DevCards.prototype.hasAtLeast = function(devCards) {
-      return !(this.monopoly < devCards.monopoly || this.monument < devCards.monument || this.roadBuilding < devCards.roadBuilding || this.soldier < devCards.soldier || this.yearOfPlenty < devCards.yearOfPlenty);
-  }
+    return !(this.monopoly < devCards.monopoly || this.monument < devCards.monument || this.roadBuilding < devCards.roadBuilding || this.soldier < devCards.soldier || this.yearOfPlenty < devCards.yearOfPlenty);
+  };
 
   /**
    * Checks to see if this resource list has at least the amount in the new resourceList.
    * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
    */
   DevCards.prototype.getTotalCount = function() {
-      return this.getMonopolyCount() + this.getMonumentCount() + this.getRoadBuildingCount() + this.getSoldierCount() + this.getYearOfPlentyCount();
-  }
-  
+    return this.getMonopolyCount() + this.getMonumentCount() + this.getRoadBuildingCount() + this.getSoldierCount() + this.getYearOfPlentyCount();
+  };
   
   return DevCards;
 })();
