@@ -23,7 +23,7 @@ catan.models.chat.Log = (function() {
     this.messages = [];
    
     for (var i = 0, len = json.lines.length; i < len; i++){
-      this.addMessage(json.lines[i].source, json.lines[i].message);
+      this.addMessage(json.lines[i]);
     }
   }
   
@@ -43,16 +43,14 @@ catan.models.chat.Log = (function() {
   /**
     Add a message object to array of messages
     <pre>
-      PRE: source which is user's name is not be empty
-      PRE: message should be not empty
-      POST message object is added to messages array
-    </pre>
+      PRE: line, json object include source, message and className
+   </pre>
 
     @method addMessage
     @param {object} message object which contain message and source 
   */
-  Log.prototype.addMessage = function (source, message) {
-    this.messages.push(new catan.models.chat.Message(source, message));
+  Log.prototype.addMessage = function (line) {
+    this.messages.push(new catan.models.chat.Message(line));
   };
     
   /**

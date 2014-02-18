@@ -15,19 +15,20 @@ catan.models.chat.Message = (function() {
     Constructor Specification:
         PRE: !isNaN(messasge)
         PRE: !isNaN(source)
-        POST: getMessage() == message
-        POST: getSource() == source
+        POST: getMessage() == message - log message
+        POST: getSource() == source - player's name
+        POST: getClassName()  = className -player'scolor
     </pre>
 
     @class Message
     @constructor
     
-    @param {String} message The chat message 
-    @param {String} source The player name attached to message
-  */
-  function Message(source,message) {
-    this.source = source;
-    this.message = message;  
+    @param {object} line object incuse source, message and class name.
+ */
+  function Message(line) {
+    this.source = line.source;
+    this.message = line.message;  
+    this.className= line.className
   }
   
   /**
@@ -55,6 +56,19 @@ catan.models.chat.Message = (function() {
   */
   Message.prototype.getSource = function() {
     return this.source;
+  };
+
+  /**
+    Returns the className, the player's color 
+    <pre>
+    PRE: None
+    </pre>
+     
+    @method getClassName
+    @return {String } className  
+  */
+  Message.prototype.getClassName = function() {
+    return this.className;
   };
   
   return Message;
