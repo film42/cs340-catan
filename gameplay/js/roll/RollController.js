@@ -26,15 +26,23 @@ catan.roll.Controller = (function roll_namespace(){
  
 		core.defineProperty(RollController.prototype,"rollResultView");
 		
-		function RollController(view,resultView, clientModel){
+		function RollController(view,resultView, game){
 			this.setRollResultView(resultView);
-			Controller.call(this,view,clientModel);
+			Controller.call(this,view,game);
+
+      this.game = game;
+      this.view = view;
+      this.resultView = resultView;
+
+      this.game.addObserver(this, this.rollDice);
+
 			this.rollInterval = false;
 			this.showRollResult = false;
 			this.rolledNumber = 0; 
 			this.currentView = view;
 			this.secs = 3;
 			this.timerID = null;
+      this.view.showModal();
 		};
         
 		/**
@@ -45,8 +53,9 @@ catan.roll.Controller = (function roll_namespace(){
 		RollController.prototype.closeResult = function(){
        this.resultView.closeModal();
        this.showRollResult = false;
-       var playerId = this.getGame().getCurrentPlayerId;
- 			 this.getGame().getProxy().rollNumber(playerId, this.rolledNumber, callback);
+
+       var playerId = this.game.getCurrentPlayerId;
+ 			 this.game.getProxy().rollNumber(playerId, this.rolledNumber, function() {});
 
        if (this.rolledNumber == 7){
           discardResource();   // other player
@@ -64,47 +73,56 @@ catan.roll.Controller = (function roll_namespace(){
 		 * @return void
 		**/
 		RollController.prototype.rollDice = function(){
+      
+      var turn =  this.game.getModel().getTurn();
+      if (!turn.isRollingPhase())
+        return;
 
-			rollingDice();
-	    this.resultView.setAmount(rolledNumber);
-			if (this.showRollResult == true)
-				return;
-			this.showRollResult = true;
+      var canRoll = this.game.getModel().canRoll();
+      if(!canRoll) 
+         return;
 
-			this.resultView.generateBody();
-			this.resultView.generateFooter();
+     if (this.showRollResult == true)
+        return;
+      
+      this.showRollResult = true;
+
+			//this.rollingDice();
+			this.view.closeModal();
+      this.resultView.setAmount(this.rolledNumber);
 			this.resultView.showModal();
+
 		};
 
-    function rollingDice(){
+    RollController.prototype.rollingDice = function(){
     
      // Set the length of the timer, in seconds
      this.secs = 3;
-     StopTimer();
-     StartTimer();
+     this.StopTimer();
+     this.StartTimer();
     }
 
-   function StopTimer(){
+   RollController.prototype.StopTimer = function(){
    
      if(this.rollInterval)
-        clearTimeout(timerID);
+        clearTimeout(this.timerID);
      this.rollInterval = false;
    }
 
 
-function StartTimer(){
+  RollController.prototype.StartTimer = function(){
 
-   if (secs==0)
+   if (this.secs==0)
     {
     	 this.rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();
-       StopTimer();
+       this.StopTimer();
     }
     else
     {
-        self.status = secs;
-        secs = secs - 1;
+        self.status = this.secs;
+        this.secs = this.secs - 1;
         this.rollInterval = true;
-        timerID = self.setTimeout("StartTheTimer()", 1000);
+        this.timerID = self.setTimeout(this.StartTimer(), 1000);
     }
 }
 

@@ -49,16 +49,16 @@ catan.comm.Controller = (function () {
     @param {comm.LogView} logView The view for this object to control.
     @param {models.ClientModel} model The view for this object to control.
     **/
-    function LogController(logView,model){
+    function LogController(logView,game){
       BaseCommController.call(this,logView,game);
       this.game = game;
-      this.view = LogView;
+      this.view = logView;
 
       this.game.addObserver(this, this.onModelUpdate);
     }
 
     LogController.prototype.onModelUpdate = function(){
-     var logLines = this.getGame().getClientModel().getLog().getMessages();
+     var logLines = this.game.getModel().getLog().getMessages();
      this.view.resetLines(logLines);
     };
         
