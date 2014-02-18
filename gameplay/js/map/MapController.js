@@ -131,7 +131,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			//only do east as any vertex will be east of some hex. This prevents multiple placements.
 			var vertex = hex.getVertex("E");
 			if(vertex.isOccupied()){
-				var vertexloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), "E");
+				var vertexloc = new catan.map.View.VertexLoc(hexloc.getX(), hexloc.getY(), "E");
 				if(vertex.getValue().getBuildSite() == 1){
 					this.View.placeSettlement(vertexloc, players[vertex.getValue().getOwnerID()].getColor());
 				}
