@@ -121,6 +121,19 @@ catan.models.ClientModel = (function() {
     return this._chat;
   };
 
+/**
+    Get the Log model, which contains all the logs from the game
+
+    <pre>
+    PRE: None
+    POST: Returns a Log model
+    </pre>
+      
+    @return {Log} the log
+  */
+  ClientModel.prototype.getLog= function() {
+    return this._log;
+  };
   /**
     Get the current Turn model, the current Turn state
 

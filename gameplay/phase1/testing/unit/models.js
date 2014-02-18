@@ -66,11 +66,13 @@ test("chat", function(){
     "lines": [
       {
         "source": "Sam",
-        "message": "Sam built a road"
+        "message": "Sam built a road",
+        "className": "red"
       },
       {
         "source": "Brooke",
-        "message": "Brooke built a settlement"
+        "message": "Brooke built a settlement",
+        "className": "green"
       }
       
     ]
@@ -92,7 +94,8 @@ test("log", function(){
     "lines": [
       {
         "source": "Sam",
-        "message": "Sam built a road"
+        "message": "Sam built a road",
+        "className": "green"
       },
       {
         "source": "Sam",
