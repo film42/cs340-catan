@@ -244,7 +244,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "road":
 					if(this.ClientModel.canPlaceRoad(hexloc, loc.getDir())){
-						game.buildRoad(hexloc, loc.getDir(), this.modalView.closeModal());
+						this.game.buildRoad(hexloc, loc.getDir(), this.modalView.closeModal());
 					}
 					else{
 						return;
