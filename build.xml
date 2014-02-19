@@ -14,6 +14,8 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
+    <!-- javascript source Folder -->
+    <property name="javascript.dir" value="${web.arg}/js"/>
 
 	<!-- TARGETS -->
 	<!-- ******* -->
