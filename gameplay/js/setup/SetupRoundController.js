@@ -25,13 +25,14 @@ catan.setup.Controller = (function(){
       
       this.mapController = mapController;
       this.game = game;
-      this.round = 1;
+      this.state = Waiting;
 
       Controller.call(this,undefined,game);
       this.game.addObserver(this, this.onUpdate);
    };
         
    core.forceClassInherit(SetupRoundController,Controller);
+   core.defineProperty(SetupRoundController.prototype, "state");
   /**
   setup road and setlement in setup phase.
   <pre>
@@ -53,8 +54,6 @@ catan.setup.Controller = (function(){
     if(currentPlayer.getSettlements() < 2){
       this.mapController.startMove("settlement", true, true);
     }
-    //keep track of round 
-    this.round++;
   };
   /**
     This is the callback function passed into the game in order to update
@@ -71,27 +70,83 @@ catan.setup.Controller = (function(){
     
     var turnTracker = this.game.getModel().getTurn(); 
 
-    //console.log( turnTracker.getTurnPlayerId() + "=" + this.game.getCurrentPlayerId());
-    //check if my turn
-    if(turnTracker.getTurnPlayerId() != this.game.getCurrentPlayerId())
-      return;
-    
-    //console.log("is setupPhase " + turnTracker.isSetupPhase())
-    
-    //check if setup phase
-    //if (!turnTracker.isSetupPhase())
-    //  return;
-    
-    //if it alread has two rounds, the setup is finished
-    if (this.round > 2){
+    if (!turnTracker.isFirstSetup() && !turnTracker.isSecondSetup()){
       window.location = "/catan.html";
       return;
     }
 
-    this.setupRound();
+    if(this.state.onUpdateModel)
+      this.state.onUpdateModel(this);
+
+
+
+    //console.log( turnTracker.getTurnPlayerId() + "=" + this.game.getCurrentPlayerId());
+    //check if my turn
+    
+    
+    //if it alread has two rounds, the setup is finished
     
   };
-      
+    
+    /**
+      SetupRound State Classes
+      A. c: Checks if is my turn and setupRound, then set state to BuildRoad
+      D. BuildSettlement: Initiate build settlement, set state to WaitForSettlement
+      E. WaitForSettlement: checks original settlement count against new settlement count, 
+                            if different then set to FinishTurn.
+      D. BuildRoad: Initiate Build road, set state to WaitForRoad
+      E. WaitForRoad: checks original road count against new Road count, if different then set to FinishTurn
+      F. FinishTurn: calls this.game.FinishTurn() and sets state to Settlement
+    */
+    var Waiting = {
+      onUpdateModel: function(controller){
+        var turnTracker = controller.game.getModel().getTurn();
+        if(turnTracker.getTurnPlayerId() != controller.game.getCurrentPlayerId())
+          return;
+        //console.log("is setupPhase " + turnTracker.isSetupPhase())
+        
+        //check if setup phase
+        if (turnTracker.isFirstSetup() || turnTracker.isSecondSetup()){
+          curDisplayed = true;
+          controller.setState(BuildSettlement);
+          if(controller.getState().execute)
+            controller.getState().execute(controller);
+          else{
+            alert("THIS SHOULD NEVER HAPPEN");
+          }
+        }else{
+          return
+        }
+      }
+    };
+    var BuildSettlement = {
+      execute: function(controller){
+
+      }
+    };
+    var WaitForSettlement = {
+      onUpdateModel: function(){
+
+      }
+    };
+    var BuildRoad = {
+      execute: function(){
+
+      }
+    };
+    var WaitForRoad = {
+      onUpdateModel: function(){
+
+      }
+    };
+    var FinishTurn = {
+      execute: function(){
+
+      }
+    };
+    
+
+
     return SetupRoundController;
   }());
     
