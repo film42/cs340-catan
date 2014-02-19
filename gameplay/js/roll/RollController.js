@@ -39,7 +39,11 @@ catan.roll.Controller = (function roll_namespace(){
       this.game.addObserver(this, this.onUpdate);
      
 		};
-        
+    /**
+    * This method will begin to roll phase only if current user is in isRollingPhase() 
+    * @method onUpdate
+    * @return void
+    **/
     RollController.prototype.onUpdate = function(){
       //check flag if already displaying
       if(this.displayFlag)
@@ -57,9 +61,9 @@ catan.roll.Controller = (function roll_namespace(){
       this.displayFlag = true;
       //display view
       this.getView().showModal();
-      //startTimer
-      this.initTimer();
+      
     }
+
 		/**
 		 * This is called from the roll result view.  It should close the roll result view and allow the game to continue.
 		 * @method closeResult
@@ -76,53 +80,77 @@ catan.roll.Controller = (function roll_namespace(){
 		 * @return void
 		**/
 		RollController.prototype.rollDice = function(){
-      //stop timer
-      this.StopTimer();
+      // init timer
+      this.initTimer();
+      //start roll
+      this.startRoll();
+      this.timerStarted = true;   
+		};
+
+    /**
+     * This method is called after finishing dice roll
+     * @method finishedRoll
+     * @return void
+    **/
+    RollController.prototype.finishedRoll = function(){
+      //stop time
+      this.stopTimer();
+      this.timeStarted = false;
+
       //calculate result
-      var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();
-      
+      var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
       //hide view modal
-			this.getView().closeModal();
+      this.getView().closeModal();
       //set result modal message
       this.rollResultView.setAmount(rolledNumber);
       //show result modal
-			this.rollResultView.showModal();
+      this.rollResultView.showModal();
       //send the server request
       this.game.rollDice(rolledNumber, function() {});
-
-		};
-
+    };
+    /**
+     * This method set the length of timer to 3 seconds
+     * @method initTimer
+     * @return void
+    **/
     RollController.prototype.initTimer = function(){
      // Set the length of the timer, in seconds
-     this.secs = 15;
-     this.StopTimer();
-     this.StartTimer();
+     this.secs = 3;
+     this.stopTimer();
     }
 
-   RollController.prototype.StopTimer = function(){
-   
+   /**
+    * This method clear timeout
+    * @method stopTimer
+    * @return void
+    **/
+   RollController.prototype.stopTimer = function(){ 
      if(this.timerStarted)
         clearTimeout(this.timerID);
-     this.timerStarted = false;
    }
 
-
-  RollController.prototype.StartTimer = function(){
-
-   if (this.secs==0)
-    {
-    	 this.rollDice();
-    }
-    else
-    {
+  /**
+  * This method automatically start to roll time for 3 seconds 
+  * @method startRoll
+  * @return void
+  **/
+  RollController.prototype.startRoll = function(){
+      var that = this;
       this.getView().changeMessage("Click roll. Auto Rolling in " + this.secs + " seconds");
-      self.status = this.secs;
+     
       this.secs = this.secs - 1;
-      this.rollInterval = true;
-      this.timerID = self.setTimeout(this.StartTimer(), 1000);
-    }
-}
-		
+      
+      var rolling = function(){
+        that.startRoll();
+      }
+
+      if (this.secs==0){
+        this.finishedRoll();
+      }
+      else{  
+        this.timerID = window.setTimeout(rolling, 1000);
+      } 
+  }	
 		return RollController;
 	}());
 	
