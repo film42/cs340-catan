@@ -61,7 +61,11 @@ catan.roll.Controller = (function roll_namespace(){
       this.displayFlag = true;
       //display view
       this.getView().showModal();
-      
+      // init timer
+      this.initTimer();
+      //start roll
+      this.startTimer();
+      this.timerStarted = true;
     }
 
 		/**
@@ -80,11 +84,7 @@ catan.roll.Controller = (function roll_namespace(){
 		 * @return void
 		**/
 		RollController.prototype.rollDice = function(){
-      // init timer
-      this.initTimer();
-      //start roll
-      this.startRoll();
-      this.timerStarted = true;   
+	         
 		};
 
     /**
@@ -115,7 +115,7 @@ catan.roll.Controller = (function roll_namespace(){
     **/
     RollController.prototype.initTimer = function(){
      // Set the length of the timer, in seconds
-     this.secs = 3;
+     this.secs = 10;
      this.stopTimer();
     }
 
@@ -134,21 +134,21 @@ catan.roll.Controller = (function roll_namespace(){
   * @method startRoll
   * @return void
   **/
-  RollController.prototype.startRoll = function(){
+  RollController.prototype.startTimer = function(){
       var that = this;
       this.getView().changeMessage("Click roll. Auto Rolling in " + this.secs + " seconds");
      
       this.secs = this.secs - 1;
       
-      var rolling = function(){
-        that.startRoll();
+      var timer = function(){
+        that.startTimer();
       }
 
       if (this.secs==0){
         this.finishedRoll();
       }
       else{  
-        this.timerID = window.setTimeout(rolling, 1000);
+        this.timerID = window.setTimeout(timer, 1000);
       } 
   }	
 		return RollController;
