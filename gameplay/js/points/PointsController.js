@@ -36,8 +36,6 @@ catan.points.Controller = (function VPController_Class(){
       //display the end-game view
       gameFinishedView.showModal();
     }
-    
-    console.log("PointController Constructor Called");
   }
 
   
