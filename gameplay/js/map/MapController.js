@@ -128,17 +128,24 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.populateVertexes = function populateVertexes(hex){
 			var hexloc = hex.getLocation();
 			var players = this.ClientModel.getPlayers();
-			//only do east as any vertex will be east of some hex. This prevents multiple placements.
-			var vertex = hex.getVertex("E");
-			if(vertex.isOccupied()){
-				var vertexloc = new catan.map.View.VertexLoc(hexloc.getX(), hexloc.getY(), "E");
-				if(vertex.getValue().getBuildSite() == 1){
-					this.View.placeSettlement(vertexloc, players[vertex.getValue().getOwnerID()].getColor());
-				}
-				else if(vertex.getValue().getBuildSite() == 2){
-					this.View.placeCity(vertexloc, players[vertex.getValue().getOwnerID()].getColor());					
+			//only do east and west as any vertex will be east or west of some hex. This prevents multiple placements.
+
+			var popVer = function(self, dir){
+				var vertex = hex.getVertex(dir);
+				if(vertex.isOccupied()){
+					var vertexloc = new catan.map.View.VertexLoc(hexloc.getX(), hexloc.getY(), dir);
+					if(vertex.getValue().getBuildSite() == 1){
+						self.View.placeSettlement(vertexloc, players[vertex.getValue().getOwnerID()].getColor());
+					}
+					else if(vertex.getValue().getBuildSite() == 2){
+						self.View.placeCity(vertexloc, players[vertex.getValue().getOwnerID()].getColor());					
+					}
 				}
 			}
+
+			popVer(this, "E");
+			popVer(this, "W");
+
 		}
 
         
