@@ -180,6 +180,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.startMove = function (pieceType,free,disconnected){
 			//what to do with free and disconnected?
 			this.modalView.showModal(pieceType);
+			this.View.startDrop(pieceType, this.game.getCurrentPlayer().getColor());
 		}
         
 		/**
@@ -190,6 +191,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * */
 		MapController.prototype.cancelMove = function(){
 			this.modalView.closeModal();
+			this.View.cancelDrop();
 		}
 
 		/**
