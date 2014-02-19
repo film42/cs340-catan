@@ -63,29 +63,35 @@ catan.resources.Controller = (function resources_namespace() {
       this.view.updateAmount("ore", cards.getOreCount());
 
       // Update new Buyables list
+      this.view.updateAmount(ROAD, player.getRoads());
+      this.view.updateAmount(SETTLEMENT, player.getSettlements());
+      this.view.updateAmount(CITY, player.getCities());
+      this.view.updateAmount(ARMY, player.getSettlements());
+
+      // Activating buttons
       if(player.canAffordToBuyRoad())
-        this.view.updateAmount(ROAD, 1);
-      else this.view.updateAmount(ROAD, 0);
+        this.view.setActionEnabled(ROAD, true);
+      else this.view.setActionEnabled(ROAD, false);
 
       if(player.canAffordToBuySettlement())
-        this.view.updateAmount(SETTLEMENT, 1);
-      else this.view.updateAmount(SETTLEMENT, 0);
+        this.view.setActionEnabled(SETTLEMENT, true);
+      else this.view.setActionEnabled(SETTLEMENT, false);
 
       if(player.canAffordToBuyCity())
-        this.view.updateAmount(CITY, 1);
-      else this.view.updateAmount(CITY, 0);
+        this.view.setActionEnabled(CITY, true);
+      else this.view.setActionEnabled(CITY, false);
 
       if(player.canAffordToBuyDevCard())
-        this.view.updateAmount(BUY_CARD, 1);
-      else this.view.updateAmount(BUY_CARD, 0);
+        this.view.setActionEnabled(BUY_CARD, true);
+      else this.view.setActionEnabled(BUY_CARD, false);
 
       if(player.canPlayDevCard())
-        this.view.updateAmount(PLAY_CARD, 1);
-      else this.view.updateAmount(PLAY_CARD, 0);
+        this.view.setActionEnabled(PLAY_CARD, true);
+      else this.view.setActionEnabled(PLAY_CARD, false);
 
       if(player.canPlaySoldier())
-        this.view.updateAmount(ARMY, 1);
-      else this.view.updateAmount(ARMY, 0);
+        this.view.setActionEnabled(ARMY, true);
+      else this.view.setActionEnabled(ARMY, false);
     };
 
     /**

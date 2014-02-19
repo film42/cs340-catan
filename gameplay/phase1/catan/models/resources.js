@@ -42,16 +42,6 @@ catan.models.ResourceList = (function() {
   }
 
   /**
-   * Initializes a ResourceList to the values passed in the correct order.
-   */
-  ResourceList.prototype.setResourceListItems = function(br, or, sh, wh, wo) {
-    this.brick = br;
-    this.ore = or;
-    this.sheep = sh;
-    this.wheat = wh;
-    this.wood = wo;
-  }
-  /**
     @returns an array of the resources in the order needed by the controllers. 
   */
   ResourceList.prototype.getResourceArray = function(){
