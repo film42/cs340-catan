@@ -466,7 +466,7 @@ catan.core.Game = (function() {
   */
   Game.prototype.playMonopoly = function(resource, callback) {
     var playerId = this.getCurrentPlayerId();
-    var canPlayMonopoly = this.client.canPlayMonopoly();
+    var canPlayMonopoly = this.model.canPlayMonopoly();
 
     if(!canPlayMonopoly) return callback({ error: "Cannot play Monopoly!" });
 
@@ -487,7 +487,7 @@ catan.core.Game = (function() {
   */
   Game.prototype.playMonument = function(callback) {
     var playerId = this.getCurrentPlayerId();
-    var canPlayMonument = this.client.canPlayMonument();
+    var canPlayMonument = this.model.canPlayMonument();
 
     if(!canPlayMonument) return callback({ error: "Cannot play Monument!" });
 
@@ -505,16 +505,13 @@ catan.core.Game = (function() {
     @method rollDice
     @return {function(err)} callback
   */
-  Game.prototype.rollDice = function(callback) {
+  Game.prototype.rollDice = function(rollAmount, callback) {
     var playerId = this.getCurrentPlayerId();
-    var canRoll = this.client.canRoll();
+    var canRoll = this.model.canRoll();
 
     if(!canRoll) return callback({ error: "Cannot roll, it's not your turn!" });
 
-    var number1 = catan.util.dice.rollDie();
-    var number2 = catan.util.dice.rollDie();
-
-    this.proxy.rollNumber(playerId, number1 + number2, callback);
+    this.proxy.rollNumber(playerId, rollAmount, callback);
   };
 
   /**
