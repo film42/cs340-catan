@@ -19,34 +19,78 @@ catan.setup.Controller = (function(){
     @param {map.MapController} mapController
   */
   var SetupRoundController = (function (){
+
     
     var SetupRoundController = function (game, mapController){
+      
       this.mapController = mapController;
-      this.clientModel = clientModel;
-      
-       
-      Controller.call(this,undefined,game);
-      
-      var currentPlayerID = game.getCurrentPlayer();
-      var client = game.getClientModel();
-      var turnTracker = client.getTurn();
-      var currentPlayer = client.getPlayerWithId(currentPlayerID);
+      this.game = game;
+      this.round = 1;
 
-      if (turnTracer.isSetupPhase){
-        if (currentPlayer.getRoads() == 0  || (currentPlayer.getRoads == 1 && currentPlayer.getSettlements() == 1)){
-          this.mapController.startMove("road", true, true);
-        }
-        else if ((currentPlayer.getRoads() == 1 && currentPlayer.getSettlements() == 0) ||
-                 (currentPlayer.getRoads() == 2 && currentPlayer.getSettlements() == 1)){
-          this.mapController.startMove("settlement", true, true);
-        }
-    }
-    else{
-         window.location("catan.html");
-       }
+      Controller.call(this,undefined,game);
+      this.game.addObserver(this, this.onUpdate);
    };
         
    core.forceClassInherit(SetupRoundController,Controller);
+  /**
+  setup road and setlement in setup phase.
+  <pre>
+    PRE: Less than two roads and two setlement
+    POST: build one more road and one more setlement
+  </pre>      
+    @return {void}
+  */
+  SetupRoundController.prototype.setupRound = function(){
+   
+    var client = this.game.getModel();
+    var currentPlayer = client.getPlayerWithId(this.game.getCurrentPlayerId());
+    
+
+    if (currentPlayer.getRoads() < 2){
+       this.mapController.startMove("road", true, true);
+    }
+
+    if(currentPlayer.getSettlements() < 2){
+      this.mapController.startMove("settlement", true, true);
+    }
+    //keep track of round 
+    this.round++;
+  };
+  /**
+    This is the callback function passed into the game in order to update
+    <pre>
+    PRE: current player's turn
+    PRE: is in setup phase
+    PRE: is less then two round
+    POST: set up two rounds(eatch round has one road and one setlement)
+    POST: forward to Cantan.html if finished setup two rounds. 
+    </pre>
+    @return {None}
+    */
+  SetupRoundController.prototype.onUpdate = function(){
+    
+    var turnTracker = this.game.getModel().getTurn(); 
+
+    //console.log( turnTracker.getTurnPlayerId() + "=" + this.game.getCurrentPlayerId());
+    //check if my turn
+    if(turnTracker.getTurnPlayerId() != this.game.getCurrentPlayerId())
+      return;
+    
+    //console.log("is setupPhase " + turnTracker.isSetupPhase())
+    
+    //check if setup phase
+    //if (!turnTracker.isSetupPhase())
+    //  return;
+    
+    //if it alread has two rounds, the setup is finished
+    if (this.round > 2){
+      window.location = "/catan.html";
+      return;
+    }
+
+    this.setupRound();
+    
+  };
       
     return SetupRoundController;
   }());
