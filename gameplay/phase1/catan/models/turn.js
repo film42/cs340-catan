@@ -7,7 +7,8 @@ catan.models.Turn = (function() {
     Rolling: "rolling",
     Discarding: "discarding",
     Robbing: "robbing",
-    Setup: "setup"
+    FirstRound: "FirstRound",
+    SecondRound: "SecondRound"
   };
 
   /**
@@ -90,13 +91,26 @@ catan.models.Turn = (function() {
   };
 
   /**
-  Returns ture if the phase is setup phase otherwise, false.
+  Returns ture if the phase is in 1st setup phase otherwise, false.
 
   @method isSetupPhase
   @return {boolean} true or false
   */
-  Turn.prototype.isSetupPhase = function() {
-    if (this.phase.toLowerCase() == phases.Setup)
+  Turn.prototype.isFirstSetup = function() {
+    if (this.phase.toLowerCase() == phases.FirstRound)
+      return true;
+    else
+      return false;
+  };
+
+  /**
+  Returns ture if the phase is in 2ns setup phase otherwise, false.
+
+  @method isSetupPhase
+  @return {boolean} true or false
+  */
+  Turn.prototype.isSecondSetup = function() {
+    if (this.phase.toLowerCase() == phases.SecondRound)
       return true;
     else
       return false;

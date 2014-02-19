@@ -28,7 +28,7 @@ catan.models.chat.Message = (function() {
   function Message(line) {
     this.source = line.source;
     this.message = line.message;  
- //   this.className= line.className
+    this.className = line.className;
   }
   
   /**
@@ -68,7 +68,7 @@ catan.models.chat.Message = (function() {
     @return {String } className  
   */
   Message.prototype.getClassName = function() {
-   // return this.className;
+    return this.className;
   };
   
   return Message;

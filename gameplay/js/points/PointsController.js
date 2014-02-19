@@ -25,18 +25,17 @@ catan.points.Controller = (function VPController_Class(){
     @param {models.Game} game
   */
   function PointController(view, gameFinishedView, game){
-    this.setGameFinishedView(gameFinishedView);
     Controller.call(this,view,game);
-    
+    if (!gameFinishedView) // undefined if in setup controller
+      return;
+    this.setGameFinishedView(gameFinishedView);
     gameFinishedView.setController(this);
     var player = game.getCurrentPlayer();
     view.setPoints(player.getPoints());
     if (view.getTotalPoints() > view.MAX_POINTS){
       //display the end-game view
-      
+      gameFinishedView.showModal();
     }
-    
-    console.log("PointController Constructor Called");
   }
 
   

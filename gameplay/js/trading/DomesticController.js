@@ -48,8 +48,9 @@ catan.trade.domestic.Controller= (function trade_namespace(){
         * @return void
         */
 		DomesticController.prototype.setResourceToSend = function(resource){
+		  console.log(this);
 		  // Make sure that we aren't setting the send and receive to the same resource
-		  if (!this.resourceToReceive === resource)
+		  if (!(this.resourceToReceive === resource))
 		    this.resourceToSend = resource; 
 		};
         

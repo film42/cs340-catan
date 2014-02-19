@@ -25,46 +25,57 @@ catan.roll.Controller = (function roll_namespace(){
 		core.forceClassInherit(RollController,Controller);
  
 		core.defineProperty(RollController.prototype,"rollResultView");
+    core.defineProperty(RollController.prototype,"displayFlag");
+    core.defineProperty(RollController.prototype,"game");
 		
 		function RollController(view,resultView, game){
 			this.setRollResultView(resultView);
 			Controller.call(this,view,game);
 
       this.game = game;
-      this.view = view;
-      this.resultView = resultView;
-
-      this.game.addObserver(this, this.rollDice);
-
-			this.rollInterval = false;
-			this.showRollResult = false;
-			this.rolledNumber = 0; 
-			this.currentView = view;
-			this.secs = 3;
+      this.displayFlag = false;
+			this.timerStarted = false;
 			this.timerID = null;
-      this.view.showModal();
+      this.game.addObserver(this, this.onUpdate);
+     
 		};
-        
+    /**
+    * This method will begin to roll phase only if current user is in isRollingPhase() 
+    * @method onUpdate
+    * @return void
+    **/
+    RollController.prototype.onUpdate = function(){
+      //check flag if already displaying
+      if(this.displayFlag)
+        return;
+      //check if my turn
+      var turnTracker = this.game.getModel().getTurn();
+     // console.log("Turn:"+turnTracker.getTurnPlayerId());
+      //console.log("playerId:" + this.game.getCurrentPlayerId());
+      if(turnTracker.getTurnPlayerId() != this.game.getCurrentPlayerId())
+        return;
+      //check if roll phase
+      if(!turnTracker.isRollingPhase())
+        return;
+      //set flag to true
+      this.displayFlag = true;
+      //display view
+      this.getView().showModal();
+      // init timer
+      this.initTimer();
+      //start roll
+      this.startTimer();
+      this.timerStarted = true;
+    }
+
 		/**
 		 * This is called from the roll result view.  It should close the roll result view and allow the game to continue.
 		 * @method closeResult
 		 * @return void
 		**/
 		RollController.prototype.closeResult = function(){
-       this.resultView.closeModal();
-       this.showRollResult = false;
-
-       var playerId = this.game.getCurrentPlayerId;
- 			 this.game.getProxy().rollNumber(playerId, this.rolledNumber, function() {});
-
-       if (this.rolledNumber == 7){
-          discardResource();   // other player
-          moveRobber();  //roller move robber
-          stealResouce(); // roller steal resource
-       }
-       else{
-       	 // continue the game;
-       }   
+       this.rollResultView.closeModal();
+       this.displayFlag = false;
 		}
 		
 		/**
@@ -73,88 +84,73 @@ catan.roll.Controller = (function roll_namespace(){
 		 * @return void
 		**/
 		RollController.prototype.rollDice = function(){
-      
-      var turn =  this.game.getModel().getTurn();
-      if (!turn.isRollingPhase())
-        return;
-
-      var canRoll = this.game.getModel().canRoll();
-      if(!canRoll) 
-         return;
-
-     if (this.showRollResult == true)
-        return;
-      
-      this.showRollResult = true;
-
-			//this.rollingDice();
-			this.view.closeModal();
-      this.resultView.setAmount(this.rolledNumber);
-			this.resultView.showModal();
-
+	         
 		};
 
-    RollController.prototype.rollingDice = function(){
-    
+    /**
+     * This method is called after finishing dice roll
+     * @method finishedRoll
+     * @return void
+    **/
+    RollController.prototype.finishedRoll = function(){
+      //stop time
+      this.stopTimer();
+      this.timeStarted = false;
+
+      //calculate result
+      var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
+      //hide view modal
+      this.getView().closeModal();
+      //set result modal message
+      this.rollResultView.setAmount(rolledNumber);
+      //show result modal
+      this.rollResultView.showModal();
+      //send the server request
+      this.game.rollDice(rolledNumber, function() {});
+    };
+    /**
+     * This method set the length of timer to 3 seconds
+     * @method initTimer
+     * @return void
+    **/
+    RollController.prototype.initTimer = function(){
      // Set the length of the timer, in seconds
-     this.secs = 3;
-     this.StopTimer();
-     this.StartTimer();
+     this.secs = 10;
+     this.stopTimer();
     }
 
-   RollController.prototype.StopTimer = function(){
-   
-     if(this.rollInterval)
+   /**
+    * This method clear timeout
+    * @method stopTimer
+    * @return void
+    **/
+   RollController.prototype.stopTimer = function(){ 
+     if(this.timerStarted)
         clearTimeout(this.timerID);
-     this.rollInterval = false;
    }
 
+  /**
+  * This method automatically start to roll time for 3 seconds 
+  * @method startRoll
+  * @return void
+  **/
+  RollController.prototype.startTimer = function(){
+      var that = this;
+      this.getView().changeMessage("Click roll. Auto Rolling in " + this.secs + " seconds");
+     
+      this.secs = this.secs - 1;
+      
+      var timer = function(){
+        that.startTimer();
+      }
 
-  RollController.prototype.StartTimer = function(){
-
-   if (this.secs==0)
-    {
-    	 this.rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();
-       this.StopTimer();
-    }
-    else
-    {
-        self.status = this.secs;
-        this.secs = this.secs - 1;
-        this.rollInterval = true;
-        this.timerID = self.setTimeout(this.StartTimer(), 1000);
-    }
-}
-
-		/**
-			if rooling 7 and activating the robber, each player with more than 7 resource cards, must 
-			choose to and discard half of them.
-    */
-		var discardResource = function(){
-			var discardView = new catan.discard.View();
-			this.currentView = discardView;
-			discardView.showModal();	
-		};
-
-   /**
-		 Move the robber to the number token of any other terrain hex( or to the desert hex). 
-    */
-		var moveRobber = function(){
-      this.currentView.closeModal();
-			var robView = new catan.views.overlays.RobOverlay();
-			this.currentView = robView();
-			robView.showMode();
-			
-		};
-
-   /**
-		 steal 1 resource card at the random from a player who has settlement or city adjacent to this new hex. 
-    */
-		var stealresource = function(){
-
-			
-		};
-		
+      if (this.secs==0){
+        this.finishedRoll();
+      }
+      else{  
+        this.timerID = window.setTimeout(timer, 1000);
+      } 
+  }	
 		return RollController;
 	}());
 	

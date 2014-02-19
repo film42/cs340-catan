@@ -59,6 +59,16 @@ catan.comm.Controller = (function () {
 
     LogController.prototype.onModelUpdate = function(){
      var logLines = this.game.getModel().getLog().getMessages();
+     var players = this.game.getModel().getPlayers();
+     for(var i= 0; i< logLines.length; i++){
+        var source = logLines[i].source;
+        for(var j=0; j< players.length; j++){
+          if(players[j].getName() == source){
+            logLines[i].className = players[j].getColor();
+            break;
+          }
+        }
+     }
      this.view.resetLines(logLines);
     };
         
@@ -94,6 +104,16 @@ catan.comm.Controller = (function () {
     */
     ChatController.prototype.onModelUpdate = function(){
      var chatLines = this.game.getModel().getChat().getMessages();
+     var players = this.game.getModel().getPlayers();
+     for(var i= 0; i< chatLines.length; i++){
+        var source = chatLines[i].source;
+        for(var j=0; j< players.length; j++){
+          if(players[j].getName() == source){
+            chatLines[i].className = players[j].getColor();
+            break;
+          }
+        }
+     }
      this.view.resetLines(chatLines);
     };
 
