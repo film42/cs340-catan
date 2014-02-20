@@ -90,6 +90,9 @@ catan.models.Turn = (function() {
       return false;
   };
 
+  Turn.prototype.isSetupPhase = function(){
+    return this.isFirstSetup() || this.isSecondSetup();
+  }
   /**
   Returns ture if the phase is in 1st setup phase otherwise, false.
 
