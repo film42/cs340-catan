@@ -84,19 +84,8 @@ catan.roll.Controller = (function roll_namespace(){
 		 * @return void
 		**/
 		RollController.prototype.rollDice = function(){
-	         
-		};
-
-    /**
-     * This method is called after finishing dice roll
-     * @method finishedRoll
-     * @return void
-    **/
-    RollController.prototype.finishedRoll = function(){
-      //stop time
-      this.stopTimer();
-      this.timeStarted = false;
-
+	    this.stopTimer();
+      
       //calculate result
       var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
       //hide view modal
@@ -106,8 +95,8 @@ catan.roll.Controller = (function roll_namespace(){
       //show result modal
       this.rollResultView.showModal();
       //send the server request
-      this.game.rollDice(rolledNumber, function() {});
-    };
+      this.game.rollDice(rolledNumber, function() {});   
+		};
     /**
      * This method set the length of timer to 3 seconds
      * @method initTimer
@@ -127,6 +116,7 @@ catan.roll.Controller = (function roll_namespace(){
    RollController.prototype.stopTimer = function(){ 
      if(this.timerStarted)
         clearTimeout(this.timerID);
+	   this.timeStarted = false;
    }
 
   /**
@@ -145,8 +135,9 @@ catan.roll.Controller = (function roll_namespace(){
       }
 
       if (this.secs==0){
-        this.finishedRoll();
-      }
+        this.stopTimer();
+		    this.rollDice();
+	    }
       else{  
         this.timerID = window.setTimeout(timer, 1000);
       } 
