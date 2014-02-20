@@ -24,14 +24,36 @@ catan.devCards.Controller = (function(){
      * @extends misc.BaseController
      * @param {devCards.DevCardView} view
      * @param {devCards.BuyCardView} buyView
-     * @param {models.ClientModel} clientModel
+     * @param {models.game} game
      * @param {function} soldierAction
      * @param {function} roadAction
      */
-    function DevCardController(view, buyView, clientModel, soldierAction, roadAction){
-      Controller.call(this,view,clientModel);
+    function DevCardController(view, buyView, game, soldierAction, roadAction){
+      Controller.call(this,view,game);
       this.setBuyView(buyView);
+      this.view = view;
+      this.buyView = buyView;
+      this.game = game;
+      this.roadAction = roadAction;
+      this.soldierAction = soldierAction;
+
+      this.game.addObserver(this, this.onUpdateModel);
     }
+
+    DevCardController.prototype.setLegalActions = function(){
+      var model = this.game.getModel();
+      var player = this.game.getCurrentPlayer();
+
+      this.view.setCardEnabled("soldier",      player.canPlaySoldier());
+      this.view.setCardEnabled("yearOfPlenty", player.canPlayYearOfPlenty());
+      this.view.setCardEnabled("monopoly",     player.canPlayMonopoly());
+      this.view.setCardEnabled("roadBuilding", player.canPlayRoadBuilding());
+      this.view.setCardEnabled("monument",     player.canPlayMonument());
+    };
+
+    DevCardController.prototype.onUpdateModel = function(){
+        this.setLegalActions();
+    };
     
     /**
      * Called when the player buys a development card
@@ -39,7 +61,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.buyCard = function(){
-      game.buyDevelopmentCard(function() {});
+      this.game.buyDevelopmentCard(function() {});
     };
         
     /**
@@ -50,7 +72,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.useYearOfPlenty = function(resource1, resource2){
-      game.playYearOfPlenty(resource1, resource2, function() {});
+      this.game.playYearOfPlenty(resource1, resource2, function() {});
     };
         
     /**
@@ -60,7 +82,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.useMonopoly = function(resource){
-      game.playMonopoly(resource, function() {});
+      this.game.playMonopoly(resource, function() {});
     };
         
     /**
@@ -69,7 +91,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.useMonument = function(){
-      game.playMonument(function() {});
+      this.game.playMonument(function() {});
     };
         
     /**
@@ -78,7 +100,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.useSoldier = function(){
-      game.playSoldier(function() {});
+      this.soldierAction();
     };
         
     /**
@@ -87,8 +109,7 @@ catan.devCards.Controller = (function(){
      * @return void
      */
     DevCardController.prototype.useRoadBuild = function(resource){
-      // FIX FIX FIX FIX
-      game.playRoadBuilding();
+      this.roadAction();
     };
 
     return DevCardController;
