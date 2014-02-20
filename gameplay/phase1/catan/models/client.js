@@ -491,6 +491,17 @@ catan.models.ClientModel = (function() {
     var status = turnPlayerId == this._currentUserId;
     return status;
   };
+
+
+  ClientModel.prototype.getRoadCount = function(){
+    var player = this.getPlayerWithId(this._currentUserId);
+    return player.getRoads();
+  }
+
+  ClientModel.prototype.getSettlementCount = function(){
+    var player = this.getPlayerWithId(this._currentUserId);
+    return player.getSettlements();
+  }
   
   return ClientModel;
 })();

@@ -7,8 +7,8 @@ catan.models.Turn = (function() {
     Rolling: "rolling",
     Discarding: "discarding",
     Robbing: "robbing",
-    FirstRound: "FirstRound",
-    SecondRound: "SecondRound"
+    FirstRound: "firstround",
+    SecondRound: "secondround"
   };
 
   /**

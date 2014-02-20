@@ -33,6 +33,8 @@ catan.setup.Controller = (function(){
         
    core.forceClassInherit(SetupRoundController,Controller);
    core.defineProperty(SetupRoundController.prototype, "state");
+   core.defineProperty(SetupRoundController.prototype, "numOfRoads");
+   core.defineProperty(SetupRoundController.prototype, "numOfSettlements");
   /**
   setup road and setlement in setup phase.
   <pre>
@@ -69,23 +71,15 @@ catan.setup.Controller = (function(){
   SetupRoundController.prototype.onUpdate = function(){
     
     var turnTracker = this.game.getModel().getTurn(); 
-
+    console.log(turnTracker);
     if (!turnTracker.isFirstSetup() && !turnTracker.isSecondSetup()){
-      window.location = "/catan.html";
+      console.log("Trying to change pages");
+      //window.location = "/catan.html";
       return;
     }
 
     if(this.state.onUpdateModel)
       this.state.onUpdateModel(this);
-
-
-
-    //console.log( turnTracker.getTurnPlayerId() + "=" + this.game.getCurrentPlayerId());
-    //check if my turn
-    
-    
-    //if it alread has two rounds, the setup is finished
-    
   };
     
     /**
@@ -106,42 +100,64 @@ catan.setup.Controller = (function(){
         //console.log("is setupPhase " + turnTracker.isSetupPhase())
         
         //check if setup phase
-        if (turnTracker.isFirstSetup() || turnTracker.isSecondSetup()){
-          curDisplayed = true;
-          controller.setState(BuildSettlement);
-          if(controller.getState().execute)
-            controller.getState().execute(controller);
-          else{
-            alert("THIS SHOULD NEVER HAPPEN");
-          }
-        }else{
-          return
-        }
+        if (!turnTracker.isFirstSetup() && !turnTracker.isSecondSetup())
+           return;
+
+        var client = controller.game.getModel();
+        var currentPlayer = client.getPlayerWithId(controller.game.getCurrentPlayerId());
+        controller.setState(BuildSettlement);
+
+        if(controller.getState().execute)
+          controller.getState().execute(controller);
       }
     };
     var BuildSettlement = {
-      execute: function(controller){
-
-      }
+      execute: function(controller){ 
+         controller.mapController.startMove("settlement", true, true);
+         controller.setNumOfSettlements(controller.game.getModel().getSettlementCount());
+         controller.state = WaitForSettlement;
+       }
     };
+
     var WaitForSettlement = {
-      onUpdateModel: function(){
-
+      onUpdateModel: function(controller){
+        var updatedSettlementCount = controller.game.getModel().getSettlementCount();
+        //this is hacky... wish they gave us a better way.
+        //checks if the number of settlements has changed before going on.
+        if(controller.getNumOfSettlements() > updatedSettlementCount){
+          controller.setNumOfSettlements(0);
+          controller.setState(BuildRoad);
+          if(controller.getState().execute){
+            controller.getState().execute();
+          }
+        }
       }
     };
-    var BuildRoad = {
-      execute: function(){
 
+    var BuildRoad = {
+      execute: function(controller){
+      controller.mapController.startMove("roads", true, true);
+      controller.setNumOfRoads(controller.game.getModel().getRoadCount());
+      controller.state = WaitForRoad;
       }
     };
     var WaitForRoad = {
-      onUpdateModel: function(){
-
+      onUpdateModel: function(controller){
+        var updatedRoadCount = controller.game.getModel().getRoadCount();
+        if(controller.getNumOfRoads() > updatedRoadCount){
+          controller.setNumOfRoads(0);
+          controller.setState(FinishTurn);
+          if(controller.getState().execute){
+            controller.getState().execute();
+          }
+        }
       }
     };
     var FinishTurn = {
-      execute: function(){
-
+      execute: function(controller){
+        controller.game.finishTurn(function(){
+          controller.setState(Waiting);
+        });
       }
     };
     
