@@ -325,7 +325,7 @@ catan.core.Game = (function() {
   */
   Game.prototype.buildSettlement = function(location, direction, callback) {
     var playerId = this.getCurrentPlayerId();
-    var canBuildSettlement = this.model.canBuildSettlement(location, direction);
+    var canBuildSettlement = this.model.canPlaceSettlement(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
     if(!canBuildSettlement) return callback({error: "Cannot build settlement!"});
