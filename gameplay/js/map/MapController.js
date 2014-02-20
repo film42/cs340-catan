@@ -164,6 +164,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @return void
 		**/		
 		MapController.prototype.doSoldierAction = function(){    
+			this.modalView.showModal("robber");
+			this.View.startDrop("robber");
 		}
         
 		/**
@@ -214,7 +216,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.onDrag = function (loc, type) {
 			var map = this.ClientModel.getMap();
 			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
-			switch(type){
+			switch(type.type){ //THIS IS WRONG ACCORDING TO THE GIVEN METHOD DOC, BUT THE VIEW IS GIVING WRONG INPUT....ARRGGHHH
 				case "robber":
 					return map.canPlaceRobber(hexloc);
 					break;
@@ -242,10 +244,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 			var map = this.ClientModel.getMap();
 			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
 
-			switch(type){
+			switch(type.type){
 				case "robber":
 					if(map.canPlaceRobber(hexloc)){
-
+						this.robView.showModal();
 					}
 					else{
 						return;
@@ -261,7 +263,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "settlement":
 					if(this.ClientModel.canPlaceSettlement(hexloc, loc.getDir())){
-
+						this.game.buildSettlement(hexloc, loc.getDir(), this.modalView.closeModal());
+						return;
 					}
 					else{
 						return;
@@ -269,7 +272,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "city":
 					if(this.ClientModel.canPlaceCity(hexloc, loc.getDir())){
-
+						this.game.buildCity(hexloc, loc.getDir(), this.modalView.closeModal());
 					}
 					else{
 						return;
