@@ -54,6 +54,7 @@ catan.resources.Controller = (function resources_namespace() {
     ResourceBarController.prototype.onUpdateModel = function() {
       var player = this.game.getCurrentPlayer();
       var cards = player.getResources();
+      var model = this.game.getModel();
 
       // Update new rescource list
       this.view.updateAmount("wood", cards.getWoodCount());
@@ -69,27 +70,27 @@ catan.resources.Controller = (function resources_namespace() {
       this.view.updateAmount(ARMY, player.getSettlements());
 
       // Activating buttons
-      if(player.canAffordToBuyRoad())
+      if(player.canAffordToBuyRoad() && !model.isMyTurn())
         this.view.setActionEnabled(ROAD, true);
       else this.view.setActionEnabled(ROAD, false);
 
-      if(player.canAffordToBuySettlement())
+      if(player.canAffordToBuySettlement() && !model.isMyTurn())
         this.view.setActionEnabled(SETTLEMENT, true);
       else this.view.setActionEnabled(SETTLEMENT, false);
 
-      if(player.canAffordToBuyCity())
+      if(player.canAffordToBuyCity() && !model.isMyTurn())
         this.view.setActionEnabled(CITY, true);
       else this.view.setActionEnabled(CITY, false);
 
-      if(player.canAffordToBuyDevCard())
+      if(player.canAffordToBuyDevCard() && !model.isMyTurn())
         this.view.setActionEnabled(BUY_CARD, true);
       else this.view.setActionEnabled(BUY_CARD, false);
 
-      if(player.canPlayDevCard())
+      if(player.canPlayDevCard() && !model.isMyTurn())
         this.view.setActionEnabled(PLAY_CARD, true);
       else this.view.setActionEnabled(PLAY_CARD, false);
 
-      if(player.canPlaySoldier())
+      if(player.canPlaySoldier() && !model.isMyTurn())
         this.view.setActionEnabled(ARMY, true);
       else this.view.setActionEnabled(ARMY, false);
     };
