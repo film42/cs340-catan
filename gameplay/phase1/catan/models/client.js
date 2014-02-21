@@ -339,7 +339,7 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceCity = function(location) {
+  ClientModel.prototype.canPlaceCity = function(location, direction) {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isPlayPhase = this._turn.isPlayingPhase();
