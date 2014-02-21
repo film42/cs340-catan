@@ -89,6 +89,7 @@ catan.roll.Controller = (function roll_namespace(){
       
       //calculate result
       var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
+      rolledNumber = 4;
       //hide view modal
       this.getView().closeModal();
       //set result modal message

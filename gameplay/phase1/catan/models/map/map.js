@@ -123,7 +123,7 @@ catan.models.map.Map = (function() {
     //check if there is a settlement at the given vertex
     var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
     if(buildVertex){
-      if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/ && build.Vertex.getValue().getOwnerID() == playerID){
+      if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/ && buildVertex.getValue().getOwnerID() == playerId){
         return true;
       }
     }
