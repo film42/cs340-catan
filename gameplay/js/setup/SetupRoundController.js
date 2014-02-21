@@ -96,7 +96,9 @@ catan.setup.Controller = (function(){
     var Waiting = {
       onUpdateModel: function(controller){
         var turnTracker = controller.game.getModel().getTurn();
-        if(turnTracker.getTurnPlayerId() != controller.game.getCurrentPlayerId())
+        var me = controller.game.getCurrentPlayerId();
+        var turn = turnTracker.getTurnPlayerId();
+        if(!controller.game.getModel().isMyTurn())
           return;
         //console.log("is setupPhase " + turnTracker.isSetupPhase())
         

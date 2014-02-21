@@ -302,14 +302,13 @@ catan.models.ClientModel = (function() {
 
     var isSetupPhase = this._turn.isSetupPhase();
     var isPlayPhase = this._turn.isPlayingPhase();
-    var turnPlayerId = this._turn.getTurnPlayerId();
     var canPlaceSettlement = this._map.canBuildSettlement(this._currentUserId, location, direction, isSetupPhase);
 
     var canAffordToBuySettlement = player.canAffordToBuySettlement();
 
     // Can build road logic
     var status = isSetupPhase || isPlayPhase;
-    status = status && canPlaceSettlement && turnPlayerId == this._currentUserId;
+    status = status && canPlaceSettlement && this.isMyTurn();
     if(!isSetupPhase) {
       status = status && canAffordToBuySettlement;
     }
@@ -488,7 +487,7 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.isMyTurn = function(){
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var status = turnPlayerId == this._currentUserId;
+    var status = turnPlayerId == this.getPlayerWithId(this._currentUserId).getOrderNumber();
     return status;
   };
 
