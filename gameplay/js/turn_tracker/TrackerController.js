@@ -62,14 +62,14 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       var turnPlayerId  = turnTracker.getTurnPlayerId();
       var players = model.getPlayers();
       var self = this;
-      players.forEach(function(player) {
+      players.forEach(function(player, index) {
         // Required update blob
         var Update = {
           playerIndex: player.getPlayerID(),
           // TODO: Fix the Score
           score: player.getPoints(),
           // This is where we select the current active user
-          highlight: (player.getPlayerID() == turnPlayerId),
+          highlight: (index == turnPlayerId),
           largestArmy: player.getLargestArmy(),
           longestRoad: player.getLongestRoad()
         };

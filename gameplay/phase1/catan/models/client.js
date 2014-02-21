@@ -231,13 +231,7 @@ catan.models.ClientModel = (function() {
     @return {Player}
   */
   ClientModel.prototype.getPlayerWithId = function(playerId) {
-    // Filter is another great method to clean up for loops
-    var results = this._players.filter(function(p) {
-      // Add to results if expression is true
-      return p.playerID == playerId;
-    });
-    // Return the first result, or null
-    return results[0] || null;
+    return this._players[playerId];
   };
 
   //
