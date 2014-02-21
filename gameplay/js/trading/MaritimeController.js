@@ -84,7 +84,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
             var ratio = controller.canTrade(types[i]);
             if(ratio > 0){
               controller.ratios[types[i]] = ratio;
-              canTradeResources.append(types[i]);
+              canTradeResources.push(types[i]);
             }
           }
           if(canTradeResources.length > 0){

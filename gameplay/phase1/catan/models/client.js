@@ -440,7 +440,7 @@ catan.models.ClientModel = (function() {
     @method canDiscardCard
     @param {resourceList} cardsDiscarded -the cards to be discarded
   */
-  ClientModel.prototype.canDiscardCard = function(cardsDiscarded) {
+  ClientModel.prototype.canDiscardCards = function(cardsDiscarded) {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
     return player.canDiscardCards(cardsDiscarded);
   };

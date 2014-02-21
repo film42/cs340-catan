@@ -35,7 +35,6 @@ catan.discard.Controller = (function discard_namespace(){
       this.state = false;
       this.game = game;
       this.view = view;
-
       this.game.addObserver(this, onUpdatedModel);
 
     }
@@ -58,6 +57,7 @@ catan.discard.Controller = (function discard_namespace(){
       
       var client = this.game.getModel();
       if(!client.getTurn().isDiscardingPhase()){
+        this.state = false;
         this.view.closeModal();
         this.waitingView.closeModal();
         return;
@@ -65,6 +65,7 @@ catan.discard.Controller = (function discard_namespace(){
       if(this.state)
         return;
       this.state = true;
+
       var curPlayer = this.game.getCurrentPlayer();
       if(curPlayer.hasMoreThan7Cards()){
         var resources = curPlayer.getResources().getResourceArray();
@@ -98,12 +99,10 @@ catan.discard.Controller = (function discard_namespace(){
      @return void
      */
     DiscardController.prototype.discard = function(){
-      var resourceList = new catan.models.ResourceList({});
-      resourceList.setResourceListItems(this.selected.brick, this.selected.ore,
-              this.selected.sheep, this.selected.wheat, this.selected.wood);
-      this.getGame().discardCards(resourceList, function(){
-        this.state = false;
-        this.view.closeModal();
+      var resourceList = new catan.models.ResourceList(this.selected);
+      that = this;
+      this.game.discardCards(resourceList, function(){
+        that.view.closeModal();
       });
     };
         
