@@ -372,7 +372,7 @@ catan.core.Game = (function() {
     @method buildCity
     @return {function(err)} callback
   */
-  Game.prototype.buildCity = function(location, callback) {
+  Game.prototype.buildCity = function(location, direction, callback) {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerOrder();
