@@ -35,6 +35,7 @@ catan.setup.Controller = (function(){
    core.defineProperty(SetupRoundController.prototype, "state");
    core.defineProperty(SetupRoundController.prototype, "numOfRoads");
    core.defineProperty(SetupRoundController.prototype, "numOfSettlements");
+    core.defineProperty(SetupRoundController.prototype, "mapController");
   /**
   setup road and setlement in setup phase.
   <pre>
@@ -71,10 +72,10 @@ catan.setup.Controller = (function(){
   SetupRoundController.prototype.onUpdate = function(){
     
     var turnTracker = this.game.getModel().getTurn(); 
-    console.log(turnTracker);
+    //console.log(turnTracker);
     if (!turnTracker.isFirstSetup() && !turnTracker.isSecondSetup()){
-      console.log("Trying to change pages");
-      //window.location = "/catan.html";
+      //console.log("Trying to change pages");
+      window.location = "/catan.html";
       return;
     }
 
@@ -128,7 +129,7 @@ catan.setup.Controller = (function(){
           controller.setNumOfSettlements(0);
           controller.setState(BuildRoad);
           if(controller.getState().execute){
-            controller.getState().execute();
+            controller.getState().execute(controller);
           }
         }
       }
@@ -136,8 +137,8 @@ catan.setup.Controller = (function(){
 
     var BuildRoad = {
       execute: function(controller){
-      controller.mapController.startMove("roads", true, true);
-      controller.setNumOfRoads(controller.game.getModel().getRoadCount());
+      controller.mapController.startMove("road", true, true);
+	  controller.setNumOfRoads(controller.game.getModel().getRoadCount());
       controller.state = WaitForRoad;
       }
     };
@@ -148,7 +149,7 @@ catan.setup.Controller = (function(){
           controller.setNumOfRoads(0);
           controller.setState(FinishTurn);
           if(controller.getState().execute){
-            controller.getState().execute();
+            controller.getState().execute(controller);
           }
         }
       }

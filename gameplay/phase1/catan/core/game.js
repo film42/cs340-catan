@@ -315,7 +315,7 @@ catan.core.Game = (function() {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerId();
-    var canBuildRoad = this.model.canBuildRoad(location, direction);
+    var canBuildRoad = this.model.canPlaceRoad(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
     if(!canBuildRoad) return callback({error: "Cannot build Road!"});
@@ -343,7 +343,7 @@ catan.core.Game = (function() {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerId();
-    var canBuildSettlement = this.model.canBuildSettlement(location, direction);
+    var canBuildSettlement = this.model.canPlaceSettlement(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
     if(!canBuildSettlement) return callback({error: "Cannot build settlement!"});
@@ -369,7 +369,7 @@ catan.core.Game = (function() {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerId();
-    var canBuildCity = this.model.canBuildCity(location, direction);
+    var canBuildCity = this.model.canPlaceCity(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
     if(!canBuildCity) return callback({error: "Cannot build city!"});
