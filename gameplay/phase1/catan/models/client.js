@@ -495,12 +495,12 @@ catan.models.ClientModel = (function() {
   ClientModel.prototype.getRoadCount = function(){
     var player = this.getPlayerWithId(this._currentUserId);
     return player.getRoads();
-  }
+  };
 
   ClientModel.prototype.getSettlementCount = function(){
     var player = this.getPlayerWithId(this._currentUserId);
     return player.getSettlements();
-  }
+  };
   
   return ClientModel;
 })();

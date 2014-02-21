@@ -560,12 +560,15 @@ catan.core.Game = (function() {
   Game.prototype.finishTurn = function(callback) {
     callback = callback || function() {};
     
-    var playerId = this.getCurrentPlayerId();
+    var player = this.getCurrentPlayer();
+    var playerOrder = player.getOrderNumber();
     var isMyTurn = this.model.isMyTurn();
 
     if(!isMyTurn) return callback({ error: "Cannot play finish turn, it's not your turn!" });
 
-    this.proxy.finishTurn(playerId, callback);
+    // debugger;
+
+    this.proxy.finishTurn(playerOrder, callback);
   };
 
   return Game;
