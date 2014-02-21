@@ -72,6 +72,8 @@ catan.core.Game = (function() {
     @return {ClientModel}
   */
   Game.prototype.startGame = function(callback) {
+    callback = callback || function() {};
+
     var self = this;
     var id = self.getCurrentPlayerId();
     this.proxy.getModel(function(err, resp) {
@@ -159,6 +161,8 @@ catan.core.Game = (function() {
     @return {Player}
   */
   Game.prototype.getCurrentPlayer = function() {
+    callback = callback || function() {};
+
     var currentUserId = this.getCurrentPlayerId();
     return this.model.getPlayerWithId(currentUserId);
   };
@@ -185,6 +189,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.sendChat = function(message, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     this.proxy.sendChat(playerId, message, callback);
   };
@@ -204,6 +210,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.acceptTrade = function(status, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canAcceptTrade = this.model.canAcceptTrade();
 
@@ -232,6 +240,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.offerTrade = function(otherPlayerId, offer, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canOfferTrade = this.model.canOfferTrade(offer);
 
@@ -251,6 +261,8 @@ catan.core.Game = (function() {
     @param {string} cardRecieved cards the client will recieve
   */
   Game.prototype.maritimeTrade = function(cardTraded, cardRecieved, ratio, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, ratio, cardRecieved);
 
@@ -274,6 +286,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.discardCards = function(cards, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canDiscard = this.model.canDiscardCards(cards);
 
@@ -298,6 +312,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.buildRoad = function(location, direction, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canBuildRoad = this.model.canBuildRoad(location, direction);
     var free = this.model.getTurn().isSetupPhase();
@@ -324,6 +340,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.buildSettlement = function(location, direction, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canBuildSettlement = this.model.canBuildSettlement(location, direction);
     var free = this.model.getTurn().isSetupPhase();
@@ -348,6 +366,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.buildCity = function(location, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canBuildCity = this.model.canBuildCity(location, direction);
     var free = this.model.getTurn().isSetupPhase();
@@ -369,6 +389,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.buyDevelopmentCard = function(callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canBuyDevelopmentCard = this.model.canBuyDevelopmentCard();
 
@@ -393,6 +415,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.playYearOfPlenty = function(resource1, resource2, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canPlayYearOfPlenty = this.model.canPlayYearOfPlenty(resource1, resource2);
 
@@ -419,6 +443,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.playRoadBuilding = function(location1, direction1, location2, direction2, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canPlayRoadBuilding = this.model.canPlayRoadBuilding(location1, direction1, location2, direction2);
 
@@ -443,6 +469,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.playSoldier = function(victimId, location, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canPlaySoldier = this.model.canPlaySoldier(victimId, location);
 
@@ -465,6 +493,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.playMonopoly = function(resource, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canPlayMonopoly = this.model.canPlayMonopoly();
 
@@ -486,6 +516,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.playMonument = function(callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canPlayMonument = this.model.canPlayMonument();
 
@@ -506,6 +538,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.rollDice = function(rollAmount, callback) {
+    callback = callback || function() {};
+
     var playerId = this.getCurrentPlayerId();
     var canRoll = this.model.canRoll();
 
@@ -526,6 +560,8 @@ catan.core.Game = (function() {
     @return {function(err)} callback
   */
   Game.prototype.finishTurn = function(callback) {
+    callback = callback || function() {};
+    
     var playerId = this.getCurrentPlayerId();
     var isMyTurn = this.model.isMyTurn();
 
