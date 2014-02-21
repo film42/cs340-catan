@@ -47,6 +47,8 @@ catan.discard.Controller = (function discard_namespace(){
     core.defineProperty(DiscardController.prototype,"numToDiscard");
     core.defineProperty(DiscardController.prototype,"state");
 
+    var resourceEnum = {"wood":0,"brick":1,"sheep":2,"wheat":3,"ore":4};
+
     /**
     This is the callback function passed into the game in order to update
     the views with the new model data.
@@ -72,16 +74,17 @@ catan.discard.Controller = (function discard_namespace(){
         for(var i=0; i< 5; i++){
           this.view.setResourceMaxAmount(
             catan.definitions.ResourceTypes[i],resources[i]);
-          this.view.setResourceAmount(catan.definitions.ResourceTypes[i], 0);
+          
           this.view.setResourceAmountChangeEnabled(
             catan.definitions.ResourceTypes[i], resources[i] > 0, false);
+          this.view.setResourceAmount(catan.definitions.ResourceTypes[i], 0);
           sum += resources[i];
         }
-        this.numToDiscard = sum / 2;
-        this.view.setStateMessage("0/" + this.numToDiscard);
+        this.numToDiscard = Math.floor(sum / 2);
         this.view.setDiscardButtonEnabled(false);
-        this.selected = {"wood":0,"brick":0,"wool" :0,"wheat":0,"ore":0};
+        this.selected = {"wood":0,"brick":0,"sheep" :0,"wheat":0,"ore":0};
         this.view.showModal();
+        this.view.setStateMessage("0/" + this.numToDiscard);
       }else{
         this.waitingView.showModal();
       }
@@ -96,8 +99,8 @@ catan.discard.Controller = (function discard_namespace(){
      */
     DiscardController.prototype.discard = function(){
       var resourceList = new catan.models.ResourceList({});
-      resourceList.setResourceListItems(selected.brick, selected.ore,
-              selected.sheep, selected.wheat, selected.wood);
+      resourceList.setResourceListItems(this.selected.brick, this.selected.ore,
+              this.selected.sheep, this.selected.wheat, this.selected.wood);
       this.getGame().discardCards(resourceList, function(){
         this.state = false;
         this.view.closeModal();
@@ -112,22 +115,24 @@ catan.discard.Controller = (function discard_namespace(){
      */
     DiscardController.prototype.increaseAmount = function(resource){
       this.selected[resource]++;
-      this.view.setResourceAmount(resource, this.selected[resource]);
+      
+      //debugger;
       var sum = 0;
-      for(var sel in selected){
-        sum += selected[sum];
+      for(var sel in this.selected){
+        sum += this.selected[sel];
       }
       if(this.numToDiscard <= sum){
-        disableAllIncrease();
+        this.disableAllIncrease();
         this.view.setDiscardButtonEnabled(true);
       }else{
         var decrease = false;
         if(this.selected[resource] > 0){
           decrease = true;
         }
-        var increase = canIncrease(resource);
+        var increase = this.canIncrease(resource);
         this.view.setResourceAmountChangeEnabled(resource, increase, decrease);
       }
+      this.view.setResourceAmount(resource, this.selected[resource]);
       this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
     };
         
@@ -141,22 +146,23 @@ catan.discard.Controller = (function discard_namespace(){
     DiscardController.prototype.decreaseAmount = function(resource){
       this.view.setDiscardButtonEnabled(true);
       this.selected[resource]--;
-      this.view.setResourceAmount(resource, this.selected[resource]);
+      
       var sum = 0;
-      for(var sel in selected){
-        sum += selected[sum];
+      for(var sel in this.selected){
+        sum += this.selected[sel];
       }
       //if was just at maximum, then re-enable all the resources
       if(this.numToDiscard <= sum +1){
-        enableAllIncrease();
+        this.enableAllIncrease();
       }
       var decrease = false;
       if(this.selected[resource] > 0){
         decrease = true;
       }
-      var increase = canIncrease();
-      this.view.setResourceAmountChangeEnabled(sel, increase, decrease);
+      var increase = this.canIncrease(resource);
+      this.view.setResourceAmountChangeEnabled(resource, increase, decrease);
 
+      this.view.setResourceAmount(resource, this.selected[resource]);
       this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
 
     };
@@ -164,24 +170,26 @@ catan.discard.Controller = (function discard_namespace(){
     /**
       Used when you hit the number of cards you need to discard.
         */
-    var disableAllIncrease = function(){
-      for(var sel in selected){
+    DiscardController.prototype.disableAllIncrease = function(){
+      for(var sel in this.selected){
         var decrease = false;
-        if(this.selected[resource] > 0){
+        if(this.selected[sel] > 0){
           decrease = true;
         }
         this.view.setResourceAmountChangeEnabled(sel, false, decrease);
+        this.view.setResourceAmount(sel, this.selected[sel]);
       }
     };
 
-    var enableAllIncrease = function(){
-      for(var sel in selected){
+    DiscardController.prototype.enableAllIncrease = function(){
+      for(var sel in this.selected){
         var decrease = false;
-        if(this.selected[resource] > 0){
+        if(this.selected[sel] > 0){
           decrease = true;
         }
-        var increase = canIncrease(resource);
+        var increase = this.canIncrease(sel);
         this.view.setResourceAmountChangeEnabled(sel, increase, decrease);
+        this.view.setResourceAmount(sel, this.selected[sel]);
       }
     };
 
@@ -190,11 +198,11 @@ catan.discard.Controller = (function discard_namespace(){
     Used to determine if the function can increase
     @return {boolean} whether or not the resourse can be increased
     */
-    var canIncrease = function(resouce){
-      var client = this.getGame().getClientModel();
-      var playerResources = client.getCurrentPlayer().getResourceArray();
-      return playerResources[catan.definitions.ResourceEnum[resource]] > 0 &&
-        playerResources[catan.definitions.ResourceEnum[resource]] > this.selected[resource];
+    DiscardController.prototype.canIncrease = function(resource){
+      var curPlayer = this.game.getCurrentPlayer()
+      var playerResources = curPlayer.getResourceArray();
+      return playerResources[resourceEnum[resource]] > 0 &&
+        playerResources[resourceEnum[resource]] > this.selected[resource];
     };
 
     return DiscardController;

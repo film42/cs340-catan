@@ -309,6 +309,11 @@ catan.models.Player = (function() {
     };
     return resourcesOut; */
   }
-
+  /**
+     @returns an array of the resources in the order needed by the controllers. 
+   */
+  Player.prototype.getResourceArray = function(){
+    return this.resources.getResourceArray();
+  };
   return Player;
 })();

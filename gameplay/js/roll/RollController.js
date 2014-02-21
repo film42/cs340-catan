@@ -52,6 +52,7 @@ catan.roll.Controller = (function roll_namespace(){
       var turnTracker = this.game.getModel().getTurn();
      // console.log("Turn:"+turnTracker.getTurnPlayerId());
       //console.log("playerId:" + this.game.getCurrentPlayerId());
+      //debugger;
       if(this.game.getModel().isMyTurn())
         return;
       //check if roll phase
