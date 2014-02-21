@@ -41,7 +41,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       players.forEach(function(player) {
 
         var color = player.getColor();
-        var id = player.getPlayerID();
+        var id = player.getOrderNumber();
         var name = player.getName();
 
         view.initializePlayer(id, name, color);
@@ -65,7 +65,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       players.forEach(function(player, index) {
         // Required update blob
         var Update = {
-          playerIndex: player.getPlayerID(),
+          playerIndex: player.getOrderNumber(),
           // TODO: Fix the Score
           score: player.getPoints(),
           // This is where we select the current active user
