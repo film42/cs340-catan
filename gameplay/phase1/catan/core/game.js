@@ -150,6 +150,11 @@ catan.core.Game = (function() {
     return JSON.parse(decodeURIComponent(Cookies.get("catan.user"))).playerID;
   };
 
+  Game.prototype.getCurrentPlayerOrder = function() {
+    var id = this.getCurrentPlayerId();
+    return this.model.getPlayerWithId(id).getOrderNumber();
+  };
+
   /**
     Get the current player model
 
@@ -189,7 +194,7 @@ catan.core.Game = (function() {
   Game.prototype.sendChat = function(message, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     this.proxy.sendChat(playerId, message, callback);
   };
 
@@ -210,7 +215,7 @@ catan.core.Game = (function() {
   Game.prototype.acceptTrade = function(status, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canAcceptTrade = this.model.canAcceptTrade();
 
     if(!canAcceptTrade) return callback({error: "Cannot accept trade with these rescources."});
@@ -240,7 +245,7 @@ catan.core.Game = (function() {
   Game.prototype.offerTrade = function(otherPlayerId, offer, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canOfferTrade = this.model.canOfferTrade(offer);
 
     if(!canOfferTrade) return callback({error: "Cannot offer trade!"});
@@ -261,7 +266,7 @@ catan.core.Game = (function() {
   Game.prototype.maritimeTrade = function(cardTraded, cardRecieved, ratio, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canMaritimeTrade = this.model.canMaritimeTrade(cardTraded, ratio, cardRecieved);
 
     if(!canMaritimeTrade) return callback({error: "Cannot maritime trade!"});
@@ -286,7 +291,7 @@ catan.core.Game = (function() {
   Game.prototype.discardCards = function(cards, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canDiscard = this.model.canDiscardCards(cards);
 
     if(!canDiscard) return callback({ error: "Cannot Discard!" });
@@ -312,7 +317,7 @@ catan.core.Game = (function() {
   Game.prototype.buildRoad = function(location, direction, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canBuildRoad = this.model.canPlaceRoad(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
@@ -340,7 +345,7 @@ catan.core.Game = (function() {
   Game.prototype.buildSettlement = function(location, direction, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canBuildSettlement = this.model.canPlaceSettlement(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
@@ -366,7 +371,7 @@ catan.core.Game = (function() {
   Game.prototype.buildCity = function(location, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canBuildCity = this.model.canPlaceCity(location, direction);
     var free = this.model.getTurn().isSetupPhase();
 
@@ -389,7 +394,7 @@ catan.core.Game = (function() {
   Game.prototype.buyDevelopmentCard = function(callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canBuyDevelopmentCard = this.model.canBuyDevelopmentCard();
 
     if(!canBuyDevelopmentCard) return callback({error: "Cannot buy development card!"});
@@ -415,7 +420,7 @@ catan.core.Game = (function() {
   Game.prototype.playYearOfPlenty = function(resource1, resource2, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canPlayYearOfPlenty = this.model.canPlayYearOfPlenty(resource1, resource2);
 
     if(!canPlayYearOfPlenty) return callback({error: "Cannot play year of plenty card!"});
@@ -443,7 +448,7 @@ catan.core.Game = (function() {
   Game.prototype.playRoadBuilding = function(location1, direction1, location2, direction2, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canPlayRoadBuilding = this.model.canPlayRoadBuilding(location1, direction1, location2, direction2);
 
     if(!canPlayRoadBuilding) return callback({error: "Cannot play year of plenty card!"});
@@ -469,7 +474,7 @@ catan.core.Game = (function() {
   Game.prototype.playSoldier = function(victimId, location, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canPlaySoldier = this.model.canPlaySoldier(victimId, location);
 
     if(!canPlaySoldier) return callback({error: "Cannot play soldier!"});
@@ -493,7 +498,7 @@ catan.core.Game = (function() {
   Game.prototype.playMonopoly = function(resource, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canPlayMonopoly = this.model.canPlayMonopoly();
 
     if(!canPlayMonopoly) return callback({ error: "Cannot play Monopoly!" });
@@ -516,7 +521,7 @@ catan.core.Game = (function() {
   Game.prototype.playMonument = function(callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canPlayMonument = this.model.canPlayMonument();
 
     if(!canPlayMonument) return callback({ error: "Cannot play Monument!" });
@@ -538,7 +543,7 @@ catan.core.Game = (function() {
   Game.prototype.rollDice = function(rollAmount, callback) {
     callback = callback || function() {};
 
-    var playerId = this.getCurrentPlayerId();
+    var playerId = this.getCurrentPlayerOrder();
     var canRoll = this.model.canRoll();
 
     if(!canRoll) return callback({ error: "Cannot roll, it's not your turn!" });

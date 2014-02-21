@@ -481,7 +481,7 @@ catan.models.ClientModel = (function() {
   ClientModel.prototype.canRoll = function() {
     var isRollingPhase = this._turn.isRollingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var status = isRollingPhase && turnPlayerId == this._currentUserId;
+    var status = isRollingPhase && this.isMyTurn();
     return status;
   };
   
