@@ -262,7 +262,7 @@ catan.models.map.Map = (function() {
   */
   Map.prototype.findAllXPortVertices = function(type){
     //check if type is valid
-    var validTypes = ["Wood", "Brick", "Sheep", "Wheat", "Ore"];
+    var validTypes = ["wood", "brick", "sheep", "wheat", "ore"];
     if(type){
       var check = false;
       for(var i=0; i<validTypes.length; i++){

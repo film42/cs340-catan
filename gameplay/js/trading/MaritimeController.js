@@ -170,11 +170,11 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     MaritimeController.prototype.canTrade = function(resourceType, has3to1Port){
       var model = this.game.getModel();
       var player = this.game.getCurrentPlayer();
-      var playerId = this.game.getCurrentPlayerId();
+      var playerOrder = this.game.getCurrentPlayerOrder();
       var map = model.getMap();
       var resources = player.getResources();
       if(resources[resourceType] >= 2){
-        if(map.canMaritimeTrade(playerId, 2 ,resourceType))
+        if(map.canMaritimeTrade(playerOrder, 2 ,resourceType))
           return 2;
       }
       if(resources[resourceType] >= 3){
