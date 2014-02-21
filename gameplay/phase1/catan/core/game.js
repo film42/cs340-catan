@@ -161,8 +161,6 @@ catan.core.Game = (function() {
     @return {Player}
   */
   Game.prototype.getCurrentPlayer = function() {
-    callback = callback || function() {};
-
     var currentUserId = this.getCurrentPlayerId();
     return this.model.getPlayerWithId(currentUserId);
   };
