@@ -390,7 +390,7 @@ catan.models.ClientModel = (function() {
     POST: The method returns whether the user can buy a dev card.  
     @method canBuyDevelomentCard
   */
-  ClientModel.prototype.canBuyDevelomentCard = function() {
+  ClientModel.prototype.canBuyDevelopmentCard = function() {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
