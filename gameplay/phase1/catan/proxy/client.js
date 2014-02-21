@@ -309,7 +309,7 @@ catan.proxy.ClientProxy = (function() {
       type: "buildCity",
       playerIndex: playerId,
       vertexLocation: {
-        x: location.getY(),
+        x: location.getX(),
         y: location.getY(),
         direction: direction
       },
