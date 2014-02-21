@@ -255,7 +255,9 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "road":
 					if(this.ClientModel.canPlaceRoad(hexloc, loc.getDir())){
-						this.game.buildRoad(hexloc, loc.getDir(), this.modalView.closeModal());
+						this.game.buildRoad(hexloc, loc.getDir(), function(){});
+						this.modalView.closeModal();
+						return;
 					}
 					else{
 						return;
@@ -263,7 +265,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "settlement":
 					if(this.ClientModel.canPlaceSettlement(hexloc, loc.getDir())){
-						this.game.buildSettlement(hexloc, loc.getDir(), this.modalView.closeModal());
+						this.game.buildSettlement(hexloc, loc.getDir(), function(){});
+						this.modalView.closeModal();
 						return;
 					}
 					else{
@@ -272,7 +275,9 @@ catan.map.Controller = (function catan_controller_namespace() {
 					break;
 				case "city":
 					if(this.ClientModel.canPlaceCity(hexloc, loc.getDir())){
-						this.game.buildCity(hexloc, loc.getDir(), this.modalView.closeModal());
+						this.game.buildCity(hexloc, loc.getDir(), function(){});
+						this.modalView.closeModal();
+						return;
 					}
 					else{
 						return;

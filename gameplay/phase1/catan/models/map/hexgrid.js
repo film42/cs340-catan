@@ -247,7 +247,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       var oppdir = getOppositeDirection(dirnum);
-      var across = neighborhex.getVertexNum(nextDirectionClockwise(oppdir));
+      var across = neighborhex.getVertexNum(nextDirectionCounterClockwise(dirnum));
       if(across){
         vertexes.push(across);
       }
