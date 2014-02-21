@@ -175,7 +175,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     if(neighborhex){
       //var oppdir = ((((dirnum+3)%6)+6)%6);
       var oppdir = getOppositeDirection(dirnum);
-      var across = neighborhex.getEdgeNum(nextDirectionCounterClockwise(oppdir));
+      var across = neighborhex.getEdgeNum(nextDirectionClockwise(oppdir));
       if(across){
         edges.push(across);
       }

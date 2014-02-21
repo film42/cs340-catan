@@ -122,8 +122,10 @@ catan.models.map.Map = (function() {
   Map.prototype.canBuildCity = function(playerId, hexLoc, dir) {
     //check if there is a settlement at the given vertex
     var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
-    if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/){
-      return true;
+    if(buildVertex){
+      if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/ && build.Vertex.getValue().getOwnerID() == playerID){
+        return true;
+      }
     }
     return false;
   };
