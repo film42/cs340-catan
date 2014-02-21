@@ -53,7 +53,7 @@ catan.roll.Controller = (function roll_namespace(){
      // console.log("Turn:"+turnTracker.getTurnPlayerId());
       //console.log("playerId:" + this.game.getCurrentPlayerId());
       //debugger;
-      if(this.game.getModel().isMyTurn())
+      if(!this.game.getModel().isMyTurn())
         return;
       //check if roll phase
       if(!turnTracker.isRollingPhase())
@@ -67,7 +67,7 @@ catan.roll.Controller = (function roll_namespace(){
       //start roll
       this.startTimer();
       this.timerStarted = true;
-    }
+    };
 
 		/**
 		 * This is called from the roll result view.  It should close the roll result view and allow the game to continue.
