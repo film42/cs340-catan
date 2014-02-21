@@ -47,7 +47,7 @@ catan.setup.Controller = (function(){
   SetupRoundController.prototype.setupRound = function(){
    
     var client = this.game.getModel();
-    var currentPlayer = client.getPlayerWithId(this.game.getCurrentPlayerId());
+    var currentPlayer = this.game.getCurrentPlayer();
     
 
     if (currentPlayer.getRoads() < 2){
@@ -96,8 +96,6 @@ catan.setup.Controller = (function(){
     var Waiting = {
       onUpdateModel: function(controller){
         var turnTracker = controller.game.getModel().getTurn();
-        var me = controller.game.getCurrentPlayerId();
-        var turn = turnTracker.getTurnPlayerId();
         if(!controller.game.getModel().isMyTurn())
           return;
         //console.log("is setupPhase " + turnTracker.isSetupPhase())
@@ -107,7 +105,7 @@ catan.setup.Controller = (function(){
            return;
 
         var client = controller.game.getModel();
-        var currentPlayer = client.getPlayerWithId(controller.game.getCurrentPlayerId());
+        var currentPlayer = controller.game.getCurrentPlayer();
         controller.setState(BuildSettlement);
 
         if(controller.getState().execute)

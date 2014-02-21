@@ -75,7 +75,7 @@ catan.core.Game = (function() {
     callback = callback || function() {};
 
     var self = this;
-    var id = self.getCurrentPlayerId();
+    var id = getCurrentPlayerId();
     this.proxy.getModel(function(err, resp) {
       self.model = new catan.models.ClientModel(id, resp);
       callback();
@@ -146,13 +146,12 @@ catan.core.Game = (function() {
       
     @return {integer}
   */
-  Game.prototype.getCurrentPlayerId = function() {
+  var getCurrentPlayerId = function() {
     return JSON.parse(decodeURIComponent(Cookies.get("catan.user"))).playerID;
   };
 
   Game.prototype.getCurrentPlayerOrder = function() {
-    var id = this.getCurrentPlayerId();
-    return this.model.getPlayerWithId(id).getOrderNumber();
+    return this.getCurrentPlayer().getOrderNumber();
   };
 
   /**
@@ -166,8 +165,13 @@ catan.core.Game = (function() {
     @return {Player}
   */
   Game.prototype.getCurrentPlayer = function() {
-    var currentUserId = this.getCurrentPlayerId();
-    return this.model.getPlayerWithId(currentUserId);
+    var currentUserId = getCurrentPlayerId();
+    var results = this.getModel().getPlayers().filter(function(p) {
+      // Add to results if expression is true
+      return p.playerID == currentUserId;
+    });
+
+    return results[0] || null;
   };
 
 

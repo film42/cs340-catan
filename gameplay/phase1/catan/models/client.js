@@ -31,9 +31,6 @@ catan.models.ClientModel = (function() {
     @param {Object} json object from /game/model
   */
   function ClientModel(playerId, json) {
-    // ASK: Do we need the playerId here?
-    this._currentUserId = playerId;
-
    // JSON attribures
     this._biggestArmyId = json.biggestArmy;
     this._longestRoadId = json.longestRoad;
@@ -54,6 +51,16 @@ catan.models.ClientModel = (function() {
       return new catan.models.Player(player);
     });
 
+    //figure out the current players order.
+    var results = this.getPlayers().filter(function(p) {
+      // Add to results if expression is true
+      return p.playerID == playerId;
+    });
+    if(results[0]){
+      this._currentUserOrder = results[0].getOrderNumber();
+    }else{
+      console.error("Bug with playerID");
+    }
     // TODO: Fix the trade offer thing. Not always there it seems.
 
     // This isn't needed, but last item is the implicit return.
@@ -230,11 +237,11 @@ catan.models.ClientModel = (function() {
       
     @return {Player}
   */
-  ClientModel.prototype.getPlayerWithId = function(playerId) {
+  ClientModel.prototype.getPlayerWithOrder = function(playerOrder) {
     // Filter is another great method to clean up for loops
     var results = this._players.filter(function(p) {
       // Add to results if expression is true
-      return p.playerID == playerId;
+      return p.getOrderNumber() == playerOrder;
     });
     // Return the first result, or null
     return results[0] || null;
@@ -262,18 +269,17 @@ catan.models.ClientModel = (function() {
     @return {boolean}
   */
   ClientModel.prototype.canPlaceRoad = function(location, direction) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isSetupPhase = this._turn.isSetupPhase();
     var isPlayPhase = this._turn.isPlayingPhase();
-    var turnPlayerId = this._turn.getTurnPlayerId();
-    var canPlaceRoad = this._map.canBuildRoad(this._currentUserId, location, direction, isSetupPhase);
+    var canPlaceRoad = this._map.canBuildRoad(this._currentUserOrder, location, direction, isSetupPhase);
 
     var canAffordToBuyRoad = player.canAffordToBuyRoad();
 
     // Can build road logic
     var status = isSetupPhase || isPlayPhase;
-    status = status && canPlaceRoad && turnPlayerId == this._currentUserId;
+    status = status && canPlaceRoad && this.isMyTurn();
     if(!isSetupPhase) {
       status = status && canAffordToBuyRoad;
     }
@@ -298,11 +304,11 @@ catan.models.ClientModel = (function() {
     @return {boolean}
   */
   ClientModel.prototype.canPlaceSettlement = function(location, direction) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isSetupPhase = this._turn.isSetupPhase();
     var isPlayPhase = this._turn.isPlayingPhase();
-    var canPlaceSettlement = this._map.canBuildSettlement(this._currentUserId, location, direction, isSetupPhase);
+    var canPlaceSettlement = this._map.canBuildSettlement(this._currentUserOrder, location, direction, isSetupPhase);
 
     var canAffordToBuySettlement = player.canAffordToBuySettlement();
 
@@ -334,17 +340,17 @@ catan.models.ClientModel = (function() {
     @return {boolean}
   */
   ClientModel.prototype.canPlaceCity = function(location) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var canPlaceCity = this._map.canBuildCity(this._currentUserId, location, direction);
+    var canPlaceCity = this._map.canBuildCity(this._currentUserOrder, location, direction);
 
     var canAffordToBuyCity = player.canAffordToBuyCity();
 
     // Can build road logic
     var status = isPlayPhase;
-    status = status && canPlaceCity && turnPlayerId == this._currentUserId;
+    status = status && canPlaceCity && turnPlayerId == this._currentUserOrder;
     status = status && canAffordToBuyCity;
     
     return status;
@@ -360,14 +366,14 @@ catan.models.ClientModel = (function() {
     @param 
   */
   ClientModel.prototype.canMaritimeTrade = function(typeToGive, ratio, typeToGet) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var canMaritimeTrade = this.map.canMaritimeTrade(this._currentUserId, ratio, typeToGive);
+    var canMaritimeTrade = this.map.canMaritimeTrade(this._currentUserOrder, ratio, typeToGive);
     var canAffordTrade = player.canAffordToOfferTrade(cardsTraded);
     var bankCanAfford = this._bank[typeToGet] > 0;
     
-    var status = isPlayPhase && turnPlayerId == this._currentUserId &&
+    var status = isPlayPhase && turnPlayerId == this._currentUserOrder &&
                  canMaritimeTrade && canAffordTrades && bankCanAfford;
     return status;
   };
@@ -380,11 +386,11 @@ catan.models.ClientModel = (function() {
     @method canBuyDevelomentCard
   */
   ClientModel.prototype.canBuyDevelomentCard = function() {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
     var canAfford = player.canAffordToBuyDevCard();
-    var status = isPlayPhase && turnPlayerId == this._currentUserId && canAfford;
+    var status = isPlayPhase && turnPlayerId == this._currentUserOrder && canAfford;
     return status;
   };
   
@@ -398,11 +404,11 @@ catan.models.ClientModel = (function() {
     @param {resourceList} cardsTraded - cards the client wants to trade in
   */
   ClientModel.prototype.canOfferTrade = function(cardsTraded) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
     var canAfford = player.canAffordToOfferTrade(cardsTraded);
-    var status = isPlayPhase && turnPlayerId == this._currentUserId && canAfford;
+    var status = isPlayPhase && turnPlayerId == this._currentUserOrder && canAfford;
     return status;
   };
   
@@ -417,11 +423,11 @@ catan.models.ClientModel = (function() {
   ClientModel.prototype.canAcceptTrade = function() {
     if(this._tradeOffer === null) return false;
 
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
     var canAfford = player.canAcceptTrade(this._tradeOffer.getCardsAskedFor());
-    var status = isPlayPhase && turnPlayerId == this._currentUserId && canAfford;
+    var status = isPlayPhase && turnPlayerId == this._currentUserOrder && canAfford;
     return status;
   };
   
@@ -435,12 +441,12 @@ catan.models.ClientModel = (function() {
     @param {resourceList} cardsDiscarded -the cards to be discarded
   */
   ClientModel.prototype.canDiscardCard = function(cardsDiscarded) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     return player.canDiscardCards(cardsDiscarded);
   };
   
   ClientModel.prototype.canPlayYearOfPlenty = function(resource1, resource2) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var status = this.isMyTurn();
     var status = status && this._bank.hasResource(resource1) && this._bank.hasResource(resource2);
     
@@ -449,8 +455,8 @@ catan.models.ClientModel = (function() {
   
   
   ClientModel.prototype.canPlayRoadBuilding = function(loc1, dir1, loc2, dir2) {
-    var player = this.getPlayerWithId(this._currentUserId);
-    var status = this.isMyTurn() && this._map.canPlayRoadBuilder(this._currentUserId, loc1, dir1, loc2, dir2s);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
+    var status = this.isMyTurn() && this._map.canPlayRoadBuilder(this._currentUserOrder, loc1, dir1, loc2, dir2s);
     return player.canPlayRoadBuilding() && status;
   };
   
@@ -462,18 +468,18 @@ catan.models.ClientModel = (function() {
   };
   
   ClientModel.prototype.canPlaySoldier = function(playerIdToRob, newRobberLoc) {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     return this.canPlayRobber(playerIdToRob, newRobberLoc) && player.canPlaySoldier();
   };
   
   ClientModel.prototype.canPlayMonopoly = function() {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var status = this.isMyTurn();
     return player.canPlayMonopoly() && status;
   };
   
   ClientModel.prototype.canPlayMonument = function() {
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     var status = this.isMyTurn();
     return player.canPlayMonument() && status;
   };
@@ -487,18 +493,18 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.isMyTurn = function(){
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var status = turnPlayerId == this.getPlayerWithId(this._currentUserId).getOrderNumber();
+    var status = turnPlayerId == this._currentUserOrder;
     return status;
   };
 
 
   ClientModel.prototype.getRoadCount = function(){
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     return player.getRoads();
   };
 
   ClientModel.prototype.getSettlementCount = function(){
-    var player = this.getPlayerWithId(this._currentUserId);
+    var player = this.getPlayerWithOrder(this._currentUserOrder);
     return player.getSettlements();
   };
   
