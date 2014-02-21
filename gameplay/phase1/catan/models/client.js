@@ -31,7 +31,12 @@ catan.models.ClientModel = (function() {
     @param {Object} json object from /game/model
   */
   function ClientModel(playerId, json) {
-   // JSON attribures
+    if(!json){
+      alert("Could not find game, Go back to login page");
+      return;
+    }
+
+    // JSON attribures
     this._biggestArmyId = json.biggestArmy;
     this._longestRoadId = json.longestRoad;
     this._winnerId = json.winner;
