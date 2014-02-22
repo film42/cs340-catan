@@ -70,6 +70,8 @@ catan.trade.maritime.Controller = (function trade_namespace(){
           }else{
             this.getView().hideGiveOptions();
             this.getView().hideGetOptions();
+            this.typeToGet = undefined;
+            this.typeToGive = undefined;
             this.getView().setMessage("No trades are possible. Come back later.");
           }
         }
@@ -83,6 +85,10 @@ catan.trade.maritime.Controller = (function trade_namespace(){
             }
           }
           if(canGetResources.length > 0){
+            if(this.typeToGive){ //remove the type giving from the get options
+              var index = canGetResources.indexOf(this.typeToGive);
+              canGetResources.splice(index,1);
+            }
             this.getView().showGetOptions(canGetResources);
           }else{
             this.getView().hideGiveOptions();
@@ -99,7 +105,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     };
 
     /**
-         * Called by the view when the player "undoes" their give selection
+     * Called by the view when the player "undoes" their give selection
      * @method unsetGiveValue
      * @return void
      */
@@ -129,6 +135,8 @@ catan.trade.maritime.Controller = (function trade_namespace(){
      * @return void
      */
     MaritimeController.prototype.setGiveValue = function(resource){
+      if(this.typeToGet == resource) //if you decide you actually want to trade the one you selected
+        this.typeToGet = undefined; //deselect this guy
       this.typeToGive = resource;
       this.getView().selectGiveOption(resource, this.ratios[resource]);
       this.OnUpdatedModel();
@@ -153,126 +161,11 @@ catan.trade.maritime.Controller = (function trade_namespace(){
      */
     MaritimeController.prototype.makeTrade= function(){
       this.game.maritimeTrade(this.typeToGive, this.typeToGet,
-        this.ratios[this.typeToGive],  function(){});
+      this.ratios[this.typeToGive],  function(){});
       this.typeToGet = undefined;
       this.typeToGive = undefined;
       this.OnUpdatedModel();
     };
-
-    
-    /**
-    --------Maritime Trade State Controller--------
-    States:
-      1. GiveSelState
-        a. setGiveValue
-      2. GetSelState
-        a. setGetValue
-        b. unsetGiveValue
-      3. AcceptState
-        a. makeTrade
-        b. unsetGetValue
-        c. unsetGiveValue
-    */
-    /*var selGiveState = {
-      setGiveValue: function(controller, resource){
-        controller.state.OnUpdatedModel(controller);
-        controller.typeToGive = resource;
-        controller.getView().selectGiveOption(resource, controller.ratios[resource]);
-        //controller.getView().hideGiveOptions();
-        if(!controller.typeToGet){
-          controller.state = selGetState;
-          controller.state.OnUpdatedModel(controller);
-        }else{
-          controller.state = acceptState;
-          controller.state.OnUpdatedModel(controller);
-          controller.getView().enableTradeButton(true);
-        }
-      },
-      OnUpdatedModel: function(controller){
-        //console.log("hitting selGiveState.OnUpdatedModel");
-        var types = catan.definitions.ResourceTypes;
-        if(controller.handleTurn()){
-          var canTradeResources = [];
-          controller.ratios = {};
-          for(var i=0; i<types.length; i++){
-            var ratio = controller.canTrade(types[i]);
-            if(ratio > 0){
-              controller.ratios[types[i]] = ratio;
-              canTradeResources.push(types[i]);
-            }
-          }
-          if(canTradeResources.length > 0){
-            controller.getView().showGiveOptions(canTradeResources);
-          }else{
-            controller.getView().hideGiveOptions();
-            controller.getView().hideGetOptions();
-            controller.getView().setMessage("No trades are possible. Come back later.");
-          }
-        }
-      }
-      //leave all other state methods undefined 
-    };
-    var selGetState = {
-      setGetValue : function(controller,resource){
-        controller.typeToGet = resource;
-        //for some reason this has a port amount parameter as well???
-        controller.getView().selectGetOption(resource, 1);
-        controller.state = acceptState;
-        //controller.getView().hideGetOptions();
-        controller.getView().enableTradeButton(true);
-        controller.getView().setMessage("Trade?");
-      },
-      unsetGiveValue: function(controller){
-        controller.unsetGiveValueFromState(controller);
-      },
-      OnUpdatedModel: function(controller){
-        var types = catan.definitions.ResourceTypes;
-        if(controller.handleTurn()){
-          var canGetResources = [];
-          var bankResources = controller.game.getModel().getBank().resources;
-          for(var i=0; i<types.length; i++){
-            if(bankResources[types[i]] > 0){
-              canGetResources.push(types[i]);
-            }
-          }
-          if(canGetResources.length > 0){
-            controller.getView().showGiveOptions(canGetResources);
-            controller.getView().selectGiveOption(controller.typeToGive, controller.ratios[controller.typeToGive]);
-          }else{
-            controller.getView().hideGiveOptions();
-            controller.getView().hideGetOptions();
-            controller.getView().setMessage("The Bank is broke! Someone roll a 7.");
-          }
-        }
-      }
-    };
-    var acceptState = {
-      makeTrade : function(controller){
-        controller.game.maritimeTrade(controller.typeToGive, 
-          controller.ratios[controller.typeToGive], controller.typeToGet);
-      },
-      unsetGiveValue : function(controller){
-        controller.unsetGiveValueFromState(controller);
-      },
-      unsetGetValue : function(controller){
-        controller.typeToGet = undefined;
-        controller.getView().enableTradeButton(false);
-        controller.state = selGetState;
-        controller.state.OnUpdatedModel(controller);
-      },
-      OnUpdatedModel: function(controller){
-        controller.handleTurn();
-        //controller.getView().hideGiveOptions();
-        //controller.getView().hideGetOptions();
-      }
-    };
-
-    MaritimeController.prototype.unsetGiveValueFromState = function(controller){
-      controller.typeToGive = undefined;
-      controller.state = selGiveState;
-      controller.state.OnUpdatedModel(this);
-      controller.getView().enableTradeButton(false);
-    };*/
 
     MaritimeController.prototype.handleTurn = function(){
       if(!this.game.getModel().isMyTurn()){
@@ -308,13 +201,8 @@ catan.trade.maritime.Controller = (function trade_namespace(){
         return 4;
       }
       return -1;
-      
-
     };
-
-
     
-
     return MaritimeController;
   }());
 
