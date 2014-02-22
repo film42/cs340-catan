@@ -151,7 +151,7 @@ catan.proxy.ClientProxy = (function() {
     POST: caller always calls callback
     </pre>
      
-    @method canMaritimeTrade
+    @method maritimeTrade
     @param {integer} playerId The player ID of the current player
     @param {string} inputCardType card type the client wants to trade in
     @param {string} outputCardType card type the client will recieve
@@ -163,8 +163,8 @@ catan.proxy.ClientProxy = (function() {
       type: "maritimeTrade",
       playerIndex: playerId,
       ratio: ratio,
-      inputResource: inputCardType,
-      outputResource: outputCardType
+      inputResource: translateResource(inputCardType),
+      outputResource: translateResource(outputCardType)
     };
 
     this.POST('/moves/maritimeTrade', template, function(data) {
@@ -173,6 +173,24 @@ catan.proxy.ClientProxy = (function() {
       callback(err);
     });
   };
+  /**
+    @method translateResource
+    The server has weird case sensitivity...
+  */
+  var translateResource = function(resource){
+    var type = resource.toLowerCase();
+    if(type == "wood")
+      return "Wood";
+    if(type == "brick")
+      return "Brick";
+    if(type == "sheep")
+      return "Sheep";
+    if(type == "wheat")
+      return "Wheat";
+    if(type == "ore")
+      return "Ore";
+    return undefined;
+  }
 
   /**
     Discard a number of playing cards
