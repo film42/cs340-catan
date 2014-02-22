@@ -372,7 +372,7 @@ catan.core.Game = (function() {
     @method buildCity
     @return {function(err)} callback
   */
-  Game.prototype.buildCity = function(location, callback) {
+  Game.prototype.buildCity = function(location, direction, callback) {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerOrder();
@@ -484,6 +484,32 @@ catan.core.Game = (function() {
     if(!canPlaySoldier) return callback({error: "Cannot play soldier!"});
 
     this.proxy.playSoldier(playerId, victimId, location, callback);
+  };
+
+  /**
+    Rob Player
+    <pre>
+    PRE: Valid victim ID
+    PRE: Valid Location
+    POST: Caller always calls callback
+    </pre>
+
+    @param {integer} victimId The victim who is getting owned by soldier card
+    @param {Location} location2 The second location on which the player wants to place a soldier
+    @param {function} callback The response callback
+     
+    @method robPlayer
+    @return {function(err)} callback
+  */
+  Game.prototype.robPlayer = function(victimId, location, callback) {
+    callback = callback || function() {};
+
+    var playerId = this.getCurrentPlayerOrder();
+    var canPlayRobber = this.model.canPlayRobber(victimId, location);
+
+    if(!canPlayRobber) return callback({error: "Cannot Rob Player!"});
+
+    this.proxy.robPlayer(playerId, victimId, location, callback);
   };
 
   /**

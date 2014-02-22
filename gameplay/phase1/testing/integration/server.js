@@ -179,6 +179,18 @@ test("catan.proxy.ClientProxy.playSoldier", function() {
 });
 
 
+test("catan.proxy.ClientProxy.robPlayer", function() {
+  stop();
+  var proxy = new catan.proxy.ClientProxy();
+  var location = new catan.models.map.HexLocation(-1, -1);
+  proxy.robPlayer(-1, -1, location, function(err) {
+    // Note: There is a bug with the server to accept any bad ID
+    equal(null, err);
+    start();
+  });
+});
+
+
 test("catan.proxy.ClientProxy.playMonopoly", function() {
   stop();
   var proxy = new catan.proxy.ClientProxy();

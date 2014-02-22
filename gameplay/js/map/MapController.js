@@ -39,7 +39,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.setModalView(modalView);
 			this.setRobView(robView);
 			this.game = model;
-			this.initFromModel();
+			this.initialized = false;
+			this.modalOn = false;
+			this.soldier = false;
+			this.robloc = {};
 			this.game.addObserver(this, this.updateFromModel);
 		}
 
@@ -48,12 +51,16 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.populateHexes();
 			this.populatePorts();
 			this.populateNumbers();
-			this.updateFromModel();
 		}
 
 		MapController.prototype.updateFromModel = function(){
+			if(!this.initialized){
+				this.initFromModel();
+				this.initialized = true;
+			}
 			this.ClientModel = this.game.getModel();
 			this.populatePieces();
+			this.doRobberPhase();
 		}
 
 		MapController.prototype.populateHexes = function populateHexes(){
@@ -148,6 +155,13 @@ catan.map.Controller = (function catan_controller_namespace() {
 
 		}
 
+		MapController.prototype.doRobberPhase = function(){
+			if(this.ClientModel.isMyTurn() && this.ClientModel.getTurn().isRobbingPhase() && !this.modalOn){
+				this.modalView.showModal("robber");
+				this.View.startDrop("robber");
+				this.modalOn = true;				
+			}
+		}
         
         /**
 		 This method is called by the Rob View when a player to rob is selected via a button click.
@@ -155,6 +169,18 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 @method robPlayer
 		*/
 		MapController.prototype.robPlayer = function(orderID){
+			if(this.soldier){
+				this.game.playSoldier(orderID, this.robloc, function(){});
+				this.robView.closeModal();
+				this.modalView.closeModal();
+				this.soldier = false;
+			}
+			else{
+				this.game.robPlayer(orderID, this.robloc, function(){});
+				this.robView.closeModal();
+				this.modalView.closeModal();
+
+			}
 		}
         
         /**
@@ -166,6 +192,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.doSoldierAction = function(){    
 			this.modalView.showModal("robber");
 			this.View.startDrop("robber");
+			this.soldier = true;
 		}
         
 		/**
@@ -190,6 +217,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			//what to do with free and disconnected?
 			this.modalView.showModal(pieceType);
 			this.View.startDrop(pieceType, this.game.getCurrentPlayer().getColor());
+			this.modalOn = false;
 		}
         
 		/**
@@ -201,6 +229,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.cancelMove = function(){
 			this.modalView.closeModal();
 			this.View.cancelDrop();
+			this.modalOn = false;
 		}
 
 		/**
@@ -215,7 +244,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		*/
 		MapController.prototype.onDrag = function (loc, type) {
 			var map = this.ClientModel.getMap();
-			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
+			var hexloc = new catan.models.map.HexLocation(loc.x, loc.y);
 			switch(type.type){ //THIS IS WRONG ACCORDING TO THE GIVEN METHOD DOC, BUT THE VIEW IS GIVING WRONG INPUT....ARRGGHHH
 				case "robber":
 					return map.canPlaceRobber(hexloc);
@@ -232,6 +261,27 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		MapController.prototype.populateRobOverlay = function(hexloc){
+			var hex = this.ClientModel.getMap().getHexGrid().getHex(hexloc);
+			var playerInfo = [];
+			for(var i = 0; i < 6; i++){
+				var vertex = hex.getVertexNum(i);
+				if(vertex.isOccupied()){
+					var ownerID = vertex.getValue().getOwnerID();
+					var player = this.ClientModel.getPlayerWithOrder(ownerID);
+					playerInfo[ownerID] = {};
+					playerInfo[ownerID].color = player.getColor();
+					playerInfo[ownerID].name = player.getName();
+					playerInfo[ownerID].playerNum = ownerID;
+					playerInfo[ownerID].cards = player.getResources().getTotalCount();
+				}
+			}
+			var densePI = playerInfo.filter(function(p){
+				return p;
+			});
+			this.robView.setPlayerInfo(densePI);
+		}
+
 		/**
 		 This method is called when the user clicks the mouse to place a piece.
          This method should close the modal and possibly trigger the Rob View.
@@ -242,11 +292,13 @@ catan.map.Controller = (function catan_controller_namespace() {
 		*/
 		MapController.prototype.onDrop = function (loc, type) {
 			var map = this.ClientModel.getMap();
-			var hexloc = new catan.models.map.HexLocation(loc.getX(), loc.getY());
+			var hexloc = new catan.models.map.HexLocation(loc.x, loc.y);
 
 			switch(type.type){
 				case "robber":
-					if(map.canPlaceRobber(hexloc)){
+					if(map.canPlaceRobber(hexloc)){						
+						this.robloc = hexloc;
+						this.populateRobOverlay(hexloc);
 						this.robView.showModal();
 					}
 					else{

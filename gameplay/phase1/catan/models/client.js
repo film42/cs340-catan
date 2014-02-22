@@ -344,7 +344,7 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceCity = function(location) {
+  ClientModel.prototype.canPlaceCity = function(location, direction) {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isPlayPhase = this._turn.isPlayingPhase();
@@ -468,7 +468,7 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.canPlayRobber = function(playerIdToRob, newRobberLoc) {
     var status = this.isMyTurn();
-    status = status && this._map.canRobPlayer(playerIdToRob);
+    status = status && this._map.canRobPlayer(playerIdToRob, newRobberLoc);
     status = status && this._map.canPlaceRobber(newRobberLoc);
     return status;
   };

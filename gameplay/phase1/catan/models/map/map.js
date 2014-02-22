@@ -122,8 +122,10 @@ catan.models.map.Map = (function() {
   Map.prototype.canBuildCity = function(playerId, hexLoc, dir) {
     //check if there is a settlement at the given vertex
     var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
-    if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/){
-      return true;
+    if(buildVertex){
+      if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/ && buildVertex.getValue().getOwnerID() == playerId){
+        return true;
+      }
     }
     return false;
   };
@@ -240,10 +242,13 @@ catan.models.map.Map = (function() {
   }
   
   Map.prototype.canRobPlayer = function(playerId, hexLoc){
-    var robVertices = this.hexGrid.getHex(hexLoc).getVertices();
-    for(var i=0; i<robVertices.length; i++){
-      if(robVertices[i].isOccupied() && robVertices[i].getValue().getOwnerID() == playerId){
-        return true;
+    var hex = this.hexGrid.getHex(hexLoc);
+    for(var i=0; i< 6; i++){
+      var vertex = hex.getVertexNum(i);
+      if(vertex){
+        if(vertex.isOccupied() && vertex.getValue().getOwnerID() == playerId){
+          return true;
+        }
       }
     }
   };

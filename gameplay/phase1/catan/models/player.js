@@ -130,7 +130,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can use Year of Plenty.  
    */
   Player.prototype.canPlayYearOfPlenty= function(){
-    return this.oldDevCards.yearOfPlenty > 1 && this.canPlayDevCard();
+    return this.oldDevCards.yearOfPlenty > 0 && this.canPlayDevCard();
   }
   
   /**
@@ -139,7 +139,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can use Road Building.  
    */
   Player.prototype.canPlayRoadBuilding = function(){
-    return this.oldDevCards.roadBuilding > 1 && this.canPlayDevCard();
+    return this.oldDevCards.roadBuilding > 0 && this.canPlayDevCard();
   }
   
   /**
@@ -148,7 +148,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can play a Soldier card.  
    */
   Player.prototype.canPlaySoldier = function(){
-    return this.oldDevCards.soldier > 1 && this.canPlayDevCard();
+    return this.oldDevCards.soldier > 0 && this.canPlayDevCard();
   }
   
   /**
@@ -157,7 +157,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can play a monument card.  
    */
   Player.prototype.canPlayMonument = function(){
-    return this.newDevCards.monument > 1 && this.canPlayDevCard();
+    return this.newDevCards.monument > 0 && this.canPlayDevCard();
   }
   
   /**
@@ -166,7 +166,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can play monopoly.  
    */
   Player.prototype.canPlayMonopoly = function(){
-    return this.oldDevCards.monopoly > 1 && this.canPlayDevCard();
+    return this.oldDevCards.monopoly > 0 && this.canPlayDevCard();
   }
   
   /**
