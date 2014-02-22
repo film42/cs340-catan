@@ -487,6 +487,27 @@ catan.core.Game = (function() {
   };
 
   /**
+    Rob Player
+    <pre>
+    PRE: Valid victim ID
+    PRE: Valid Location
+    POST: Caller always calls callback
+    </pre>
+
+    @param {integer} victimId The victim who is getting owned by soldier card
+    @param {Location} location2 The second location on which the player wants to place a soldier
+    @param {function} callback The response callback
+     
+    @method robPlayer
+    @return {function(err)} callback
+  */
+  Game.prototype.robPlayer = function(victimId, location, callback) {
+    callback = callback || function() {};
+
+    this.proxy.robPlayer(playerId, victimId, location, callback);
+  };
+
+  /**
     Play a Monopoly card
     <pre>
     PRE: Valid resource card

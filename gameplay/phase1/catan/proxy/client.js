@@ -248,7 +248,6 @@ catan.proxy.ClientProxy = (function() {
     });
   };
 
-
   /**
     Build a settlement at a map Location
     <pre>
@@ -452,6 +451,41 @@ catan.proxy.ClientProxy = (function() {
     };
 
     this.POST('/moves/Soldier', template, function(data) {
+      callback(null);
+    }, function(err) {
+      callback(err);
+    });
+  };
+
+  /**
+    Rob player
+    <pre>
+    PRE: Valid player ID
+    PRE: Valid victim ID
+    PRE: Valid Location
+    POST: Caller always calls callback
+    </pre>
+
+    @param {integer} playerId The player who is using the soldier card
+    @param {integer} victimId The victim who is getting owned by soldier card
+    @param {HexLocation} location The location 
+    @param {function} callback The response callback
+     
+    @method robPlayer
+    @return {function(err)} callback
+  */
+  ClientProxy.prototype.robPlayer = function(playerId, victimId, location, callback) {
+    var template = {
+      type: "robPlayer",
+      playerIndex: playerId,
+      victimIndex: victimId,
+      robberSpot: {
+        x: location.getX(),
+        y: location.getY()
+      }
+    };
+
+    this.POST('/moves/robPlayer', template, function(data) {
       callback(null);
     }, function(err) {
       callback(err);
