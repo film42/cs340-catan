@@ -29,10 +29,11 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       Controller.call(this,view,game);
 
       this.game = game;
-
+      this.init = false;
       // TODO: This needs to be worked on so THIS is preserved.
       this.game.addObserver(this, this.OnUpdatedModel);
-      this.state = selGiveState;
+      
+      //this.state = selGiveState;
     }
 
     MaritimeController.prototype = core.inherit(Controller.prototype);
@@ -42,8 +43,121 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     core.defineProperty(DiscardController.prototype,"typeToGet");
     core.defineProperty(DiscardController.prototype,"giveAmount");
     core.defineProperty(DiscardController.prototype,"typeToGive");
-    core.defineProperty(DiscardController.prototype,"state");
+    core.defineProperty(DiscardController.prototype,"init");
     core.defineProperty(DiscardController.prototype,"ratios");
+
+    MaritimeController.prototype.OnUpdatedModel = function(){
+      if(!this.init){
+        this.getView().hideGiveOptions();
+        this.getView().hideGetOptions();
+      }
+      //handle turn
+      if(this.handleTurn()){
+        //updates if not yet selected give value
+        var types = catan.definitions.ResourceTypes;
+        if(!this.typeToGive){
+          var canTradeResources = [];
+          this.ratios = {};
+          for(var i=0; i<types.length; i++){
+            var ratio = this.canTrade(types[i]);
+            if(ratio > 0){
+              this.ratios[types[i]] = ratio;
+              canTradeResources.push(types[i]);
+            }
+          }
+          if(canTradeResources.length > 0){
+            this.getView().showGiveOptions(canTradeResources);
+          }else{
+            this.getView().hideGiveOptions();
+            this.getView().hideGetOptions();
+            this.getView().setMessage("No trades are possible. Come back later.");
+          }
+        }
+        //updates if not yet selected get value
+        if(!this.typeToGet){
+          var canGetResources = [];
+          var bankResources = this.game.getModel().getBank().resources;
+          for(var i=0; i<types.length; i++){
+            if(bankResources[types[i]] > 0){
+              canGetResources.push(types[i]);
+            }
+          }
+          if(canGetResources.length > 0){
+            this.getView().showGetOptions(canGetResources);
+          }else{
+            this.getView().hideGiveOptions();
+            this.getView().hideGetOptions();
+            this.getView().setMessage("The Bank is broke! Someone roll a 7.");
+          }
+        }
+        if(this.typeToGet && this.typeToGive){
+          this.getView().enableTradeButton(true);
+          this.getView().setMessage("Trade?");
+        }
+      }
+      this.init = true;
+    };
+
+    /**
+         * Called by the view when the player "undoes" their give selection
+     * @method unsetGiveValue
+     * @return void
+     */
+    MaritimeController.prototype.unsetGiveValue = function(){
+      this.typeToGive = undefined;
+      this.OnUpdatedModel(this);
+      this.getView().enableTradeButton(false);
+      this.getView().setMessage("Select Trade Types");
+    };
+        
+    /**
+         * Called by the view when the player "undoes" their get selection
+     * @method unsetGetValue
+     * @return void
+     */
+    MaritimeController.prototype.unsetGetValue = function(){
+      this.typeToGet = undefined;
+      this.getView().enableTradeButton(false);
+      this.OnUpdatedModel();
+      this.getView().setMessage("Select Trade Types");
+    };
+        
+    /**
+         * Called by the view when the player selects which resource to give
+     * @method setGiveValue
+     * @param{String} resource The resource to trade ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    MaritimeController.prototype.setGiveValue = function(resource){
+      this.typeToGive = resource;
+      this.getView().selectGiveOption(resource, this.ratios[resource]);
+      this.OnUpdatedModel();
+    };
+        
+    /**
+         * Called by the view when the player selects which resource to get
+     * @method setGetValue
+     * @param{String} resource The resource to trade ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    MaritimeController.prototype.setGetValue = function(resource){
+      this.typeToGet = resource;
+      //for some reason this has a port amount parameter as well???
+      this.getView().selectGetOption(resource, 1);
+      this.OnUpdatedModel();
+    };
+        
+    /** Called by the view when the player makes the trade
+     * @method makeTrade
+     * @return void
+     */
+    MaritimeController.prototype.makeTrade= function(){
+      this.game.maritimeTrade(this.typeToGive, this.typeToGet,
+        this.ratios[this.typeToGive],  function(){});
+      this.typeToGet = undefined;
+      this.typeToGive = undefined;
+      this.OnUpdatedModel();
+    };
 
     
     /**
@@ -59,19 +173,19 @@ catan.trade.maritime.Controller = (function trade_namespace(){
         b. unsetGetValue
         c. unsetGiveValue
     */
-    var selGiveState = {
-      setGiveValue: function(resource){
-        this.OnUpdatedModel();
-        typeToGive = resource;
-        this.getView().selectGiveOption(resource, this.ratios[resource]);
-        this.getView().hideGiveOptions();
-        if(!typeToGet){
-          this.state = selGetState;
-          this.state.OnUpdatedModel();
+    /*var selGiveState = {
+      setGiveValue: function(controller, resource){
+        controller.state.OnUpdatedModel(controller);
+        controller.typeToGive = resource;
+        controller.getView().selectGiveOption(resource, controller.ratios[resource]);
+        //controller.getView().hideGiveOptions();
+        if(!controller.typeToGet){
+          controller.state = selGetState;
+          controller.state.OnUpdatedModel(controller);
         }else{
-          this.state = acceptState;
-          this.state.OnUpdatedModel();
-          this.getView().enableTradeButton(true);
+          controller.state = acceptState;
+          controller.state.OnUpdatedModel(controller);
+          controller.getView().enableTradeButton(true);
         }
       },
       OnUpdatedModel: function(controller){
@@ -99,27 +213,31 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       //leave all other state methods undefined 
     };
     var selGetState = {
-      setGetValue : function(resource){
-        typeToGet = resource;
+      setGetValue : function(controller,resource){
+        controller.typeToGet = resource;
         //for some reason this has a port amount parameter as well???
-        this.selectGetOption(resource, 1);
-        this.state = acceptState;
-        this.getView().hideGetOptions();
-        this.getView().enableTradeButton(true);
-        this.getView().setMessage("Trade?");
+        controller.getView().selectGetOption(resource, 1);
+        controller.state = acceptState;
+        //controller.getView().hideGetOptions();
+        controller.getView().enableTradeButton(true);
+        controller.getView().setMessage("Trade?");
       },
-      unsetGiveValue: this.unsetGiveValueFromState,
+      unsetGiveValue: function(controller){
+        controller.unsetGiveValueFromState(controller);
+      },
       OnUpdatedModel: function(controller){
         var types = catan.definitions.ResourceTypes;
         if(controller.handleTurn()){
           var canGetResources = [];
+          var bankResources = controller.game.getModel().getBank().resources;
           for(var i=0; i<types.length; i++){
-            if(controller.game.getModel().getBank()[types[i]] > 0){
-              canGetResources.append(types[i]);
+            if(bankResources[types[i]] > 0){
+              canGetResources.push(types[i]);
             }
           }
           if(canGetResources.length > 0){
             controller.getView().showGiveOptions(canGetResources);
+            controller.getView().selectGiveOption(controller.typeToGive, controller.ratios[controller.typeToGive]);
           }else{
             controller.getView().hideGiveOptions();
             controller.getView().hideGetOptions();
@@ -129,34 +247,39 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       }
     };
     var acceptState = {
-      makeTrade : function(){
-        this.game.maritimeTrade(typeToGive, this.ratios[typeToGive], typeToGet);
+      makeTrade : function(controller){
+        controller.game.maritimeTrade(controller.typeToGive, 
+          controller.ratios[controller.typeToGive], controller.typeToGet);
       },
-      unsetGiveValue : this.unsetGiveValueFromState,
-      unsetGetValue : function(){
-        typeToGet = undefined;
-        this.getView().enableTradeButton(false);
-        this.state = selGetState;
-        this.state.OnUpdatedModel();
+      unsetGiveValue : function(controller){
+        controller.unsetGiveValueFromState(controller);
+      },
+      unsetGetValue : function(controller){
+        controller.typeToGet = undefined;
+        controller.getView().enableTradeButton(false);
+        controller.state = selGetState;
+        controller.state.OnUpdatedModel(controller);
       },
       OnUpdatedModel: function(controller){
-        this.handleTurn();
-        this.getView().hideGiveOptions();
-        this.getView().hideGetOptions();
+        controller.handleTurn();
+        //controller.getView().hideGiveOptions();
+        //controller.getView().hideGetOptions();
       }
     };
 
-    MaritimeController.prototype.unsetGiveValueFromState = function(){
-      typeToGive = undefined;
-      this.state = selGiveState;
-      this.state.OnUpdatedModel();
-      this.getView().enableTradeButton(false);
-    };
+    MaritimeController.prototype.unsetGiveValueFromState = function(controller){
+      controller.typeToGive = undefined;
+      controller.state = selGiveState;
+      controller.state.OnUpdatedModel(this);
+      controller.getView().enableTradeButton(false);
+    };*/
 
     MaritimeController.prototype.handleTurn = function(){
       if(!this.game.getModel().isMyTurn()){
         this.getView().hideGiveOptions();
         this.getView().hideGetOptions();
+        this.typeToGive = undefined;
+        this.typeToGet = undefined;
         this.getView().setMessage("It is not your turn");
         return false;
       }
@@ -190,62 +313,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     };
 
 
-    MaritimeController.prototype.OnUpdatedModel = function(){
-      if(this.state.OnUpdatedModel) {
-        this.state.OnUpdatedModel(this);
-      }
-    };
-
-    /**
-         * Called by the view when the player "undoes" their give selection
-     * @method unsetGiveValue
-     * @return void
-     */
-    MaritimeController.prototype.unsetGiveValue = function(){
-      if(state.unsetGiveValue)
-        state.unsetGiveValue();
-    };
-        
-    /**
-         * Called by the view when the player "undoes" their get selection
-     * @method unsetGetValue
-     * @return void
-     */
-    MaritimeController.prototype.unsetGetValue = function(){
-      if(this.state.unsetGetValue)
-        this.state.unsetGetValue();
-    };
-        
-    /**
-         * Called by the view when the player selects which resource to give
-     * @method setGiveValue
-     * @param{String} resource The resource to trade ("wood","brick","sheep","wheat","ore")
-     * @return void
-     */
-    MaritimeController.prototype.setGiveValue = function(resource){
-      if(this.state.setGiveValue)
-        this.state.setGiveValue(resource);
-    };
-        
-    /**
-         * Called by the view when the player selects which resource to get
-     * @method setGetValue
-     * @param{String} resource The resource to trade ("wood","brick","sheep","wheat","ore")
-     * @return void
-     */
-    MaritimeController.prototype.setGetValue = function(resource){
-      if(this.state.setGetValue)
-        this.state.setGetValue(resource);
-    };
-        
-    /** Called by the view when the player makes the trade
-     * @method makeTrade
-     * @return void
-     */
-    MaritimeController.prototype.makeTrade= function(){
-      if(this.state.makeTrade)
-        this.state.makeTrade();
-    };
+    
 
     return MaritimeController;
   }());

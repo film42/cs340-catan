@@ -281,7 +281,8 @@ catan.models.map.Map = (function() {
     var ret =[];
     
     for(var i=0; i<this.ports.length; i++){
-      if(this.ports[i].getType() == type || (!this.ports[i].getType() && !type)){
+      if((this.ports[i].getType() && this.ports[i].getType().toLowerCase() == type)
+            || (!this.ports[i].getType() && !type)){
         var validVertices = this.ports[i].getValidVertices();
         for(var j=0; j<validVertices.length; j++){
           ret[ret.length] = validVertices[j];

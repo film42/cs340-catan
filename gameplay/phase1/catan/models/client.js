@@ -374,12 +374,13 @@ catan.models.ClientModel = (function() {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
     var isPlayPhase = this._turn.isPlayingPhase();
     var turnPlayerId = this._turn.getTurnPlayerId();
-    var canMaritimeTrade = this.map.canMaritimeTrade(this._currentUserOrder, ratio, typeToGive);
-    var canAffordTrade = player.canAffordToOfferTrade(cardsTraded);
-    var bankCanAfford = this._bank[typeToGet] > 0;
+    var canMaritimeTrade = this._map.canMaritimeTrade(this._currentUserOrder, ratio, typeToGive);
+    var resources = player.getResources();
+    var canAffordTrade = resources[typeToGive] >= ratio;
+    var bankCanAfford = this._bank.resources[typeToGet] > 0;
     
     var status = isPlayPhase && turnPlayerId == this._currentUserOrder &&
-                 canMaritimeTrade && canAffordTrades && bankCanAfford;
+                 canMaritimeTrade && canAffordTrade && bankCanAfford;
     return status;
   };
   
