@@ -467,7 +467,7 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.canPlayRobber = function(playerIdToRob, newRobberLoc) {
     var status = this.isMyTurn();
-    status = status && this._map.canRobPlayer(playerIdToRob);
+    status = status && this._map.canRobPlayer(playerIdToRob, newRobberLoc);
     status = status && this._map.canPlaceRobber(newRobberLoc);
     return status;
   };

@@ -41,6 +41,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.game = model;
 			this.initialized = false;
 			this.modalOn = false;
+			this.soldier = false;
+			this.robloc = {};
 			this.game.addObserver(this, this.updateFromModel);
 		}
 
@@ -167,7 +169,18 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 @method robPlayer
 		*/
 		MapController.prototype.robPlayer = function(orderID){
+			if(this.soldier){
+				this.game.playSoldier(orderID, this.robloc, function(){});
+				this.robView.closeModal();
+				this.modalView.closeModal();
+				this.soldier = false;
+			}
+			else{
+				this.game.robPlayer(orderID, this.robloc, function(){});
+				this.robView.closeModal();
+				this.modalView.closeModal();
 
+			}
 		}
         
         /**
@@ -179,6 +192,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.doSoldierAction = function(){    
 			this.modalView.showModal("robber");
 			this.View.startDrop("robber");
+			this.soldier = true;
 		}
         
 		/**
@@ -248,11 +262,24 @@ catan.map.Controller = (function catan_controller_namespace() {
 		}
 
 		MapController.prototype.populateRobOverlay = function(hexloc){
+			var hex = this.ClientModel.getMap().getHexGrid().getHex(hexloc);
+			var playerInfo = [];
 			for(var i = 0; i < 6; i++){
-				var vertex;
+				var vertex = hex.getVertexNum(i);
+				if(vertex.isOccupied()){
+					var ownerID = vertex.getValue().getOwnerID();
+					var player = this.ClientModel.getPlayerWithOrder(ownerID);
+					playerInfo[ownerID] = {};
+					playerInfo[ownerID].color = player.getColor();
+					playerInfo[ownerID].name = player.getName();
+					playerInfo[ownerID].playerNum = ownerID;
+					playerInfo[ownerID].cards = player.getResources().getTotalCount();
+				}
 			}
-			var playerInfo;
-			this.robView.setPlayerInfo(playerInfo);
+			var densePI = playerInfo.filter(function(p){
+				return p;
+			});
+			this.robView.setPlayerInfo(densePI);
 		}
 
 		/**
@@ -269,9 +296,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 
 			switch(type.type){
 				case "robber":
-					if(map.canPlaceRobber(hexloc)){
+					if(map.canPlaceRobber(hexloc)){						
+						this.robloc = hexloc;
+						this.populateRobOverlay(hexloc);
 						this.robView.showModal();
-						//this.populateRobOverlay(hexloc);
 					}
 					else{
 						return;
