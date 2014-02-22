@@ -504,6 +504,11 @@ catan.core.Game = (function() {
   Game.prototype.robPlayer = function(victimId, location, callback) {
     callback = callback || function() {};
 
+    var playerId = this.getCurrentPlayerOrder();
+    var canPlayRobber = this.model.canPlayRobber(victimId, location);
+
+    if(!canPlayRobber) return callback({error: "Cannot Rob Player!"});
+
     this.proxy.robPlayer(playerId, victimId, location, callback);
   };
 
