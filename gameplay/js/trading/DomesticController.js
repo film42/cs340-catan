@@ -1,189 +1,312 @@
 /**
-    This is the namespace for domestic trading
-    @module catan.trade
-    @submodule catan.trade.domestic
-    @namespace domestic
-*/
+ * This is the namespace for domestic trading
+ * 
+ * @module catan.trade
+ * @submodule catan.trade.domestic
+ * @namespace domestic
+ */
 
 var catan = catan || {};
-catan.trade = catan.trade ||{};
-catan.trade.domestic = catan.trade.domestic ||{};
+catan.trade = catan.trade || {};
+catan.trade.domestic = catan.trade.domestic || {};
 
-catan.trade.domestic.Controller= (function trade_namespace(){
+catan.trade.domestic.Controller = (function trade_namespace() {
 
-	var Controller = catan.core.BaseController;
-	var Definitions = catan.definitions;
-	var ResourceTypes = Definitions.ResourceTypes;
+  var Controller = catan.core.BaseController;
+  var Definitions = catan.definitions;
+  var ResourceTypes = Definitions.ResourceTypes;
+  var State;
+  var DomesticController = (function DomesticController_Class() {
+
+    /**
+     * @class DomesticController
+     * @constructor
+     * @extends misc.BaseController
+     * @param {domestic.View}
+     *          view
+     * @param {misc.WaitOverlay}
+     *          waitingView
+     * @param {domestic.AcceptView}
+     *          acceptView
+     * @param {core.Game}
+     *          game
+     */
+    function DomesticController(view, waitingView, acceptView, game) {
+      Controller.call(this, view, game);
+      this.waitingView = waitingView;
+      this.acceptView = acceptView;
+      this.game = game;
+      this.view = view;
+      // Setup player stuff -- Include all players BUT the current player
+      this.player = this.game.getCurrentPlayer();
+      var self = this;
+      var tradeablePlayers = this.game.getModel().getPlayers().filter(function(p) {
+        return p.getOrderNumber() != self.player.getOrderNumber();
+      });
+      view.setPlayers(tradeablePlayers);
+      
+
+
+      // TODO: This needs to be worked on so THIS is preserved.
+      this.game.addObserver(this, this.OnUpdatedModel);
+    };
+    DomesticController.prototype = core.inherit(Controller.prototype);
     
-	var DomesticController = ( function DomesticController_Class() {
-    
-		/** 
-		@class DomesticController
-		@constructor 
-		@extends misc.BaseController
-		@param {domestic.View} view
-		@param {misc.WaitOverlay} waitingView
-		@param {domestic.AcceptView} acceptView
-		@param {models.ClientModel} clientModel
-		*/
-		function DomesticController(view,waitingView,acceptView,clientModel){
-			Controller.call(this,view,clientModel);
-			this.waitingView = waitingView;
-			this.acceptView = acceptView;
-		};
-        
-		DomesticController.prototype = core.inherit(Controller.prototype);
-		core.defineProperty(DomesticController.prototype, "resourceToSend");//int (Enum of ResourceEnum)
-		core.defineProperty(DomesticController.prototype, "resourceToReceive");//int (Enum of ResourceEnum)
-		core.defineProperty(DomesticController.prototype, "otherPlayer");//int (PlayerID)
-		core.defineProperty(DomesticController.prototype, "receiveQty");//int
-		core.defineProperty(DomesticController.prototype, "sendQty");//int
-		
-		
-		/******** Methods called by the Domestic View *********/
-        
-        /**
-        * @method setResourceToSend
-        * @param{String} resource the resource to send ("wood","brick","sheep","wheat","ore")
-        * @return void
-        */
-		DomesticController.prototype.setResourceToSend = function(resource){
-		  console.log(this);
-		  // Make sure that we aren't setting the send and receive to the same resource
-		  if (!(this.resourceToReceive === resource))
-		    this.resourceToSend = resource; 
-		};
-        
-		/**
-		 * @method setResourceToReceive
-		 * @param{String} resource the resource to receive ("wood","brick","sheep","wheat","ore")
-		 * @return void
-		 */
-		 DomesticController.prototype.setResourceToReceive = function(resource){
-	    if (!this.resourceToSend === resource)
-	        this.resourceToReceive = resource;
-		};
-        
-		/**
-		  * @method unsetResource
-		  * @param{String} resource the resource to clear ("wood","brick","sheep","wheat","ore")
-		  * @return void
-		  */
-		DomesticController.prototype.unsetResource = function(resource){
-      if (!this.resourceToReceive === resource)
+    DomesticController.prototype.OnUpdatedModel = function(err){
+      if (err) {
+        console.log(err);
+        return;// The trade failed somehow
+      }
+      
+      if(this.game.model.isMyTurn() && this.game.model.getTurn().isPlayingPhase())
+        this.updateState();
+      else
+        this.view.clearTradeView();
+    };
+
+    core.defineProperty(DomesticController.prototype, "resourceToSend");// int
+    core.defineProperty(DomesticController.prototype, "resourceToReceive");// int
+    core.defineProperty(DomesticController.prototype, "otherPlayer");
+    core.defineProperty(DomesticController.prototype, "receiveQty");// int
+    core.defineProperty(DomesticController.prototype, "sendQty");// int
+
+    /** ****** Methods called by the Domestic View ******** */
+
+    /**
+     * @method setResourceToSend
+     * @param{String} resource the resource to send
+     *                ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    DomesticController.prototype.setResourceToSend = function(resource) {
+      console.log("Setting resource to SEND");
+      var self = this;
+      if (self.sendQty != undefined){
+        this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
+        this.getView().setResourceAmount(self.resourceToSend, undefined);
+      } else if (self.setResourceToReceive == resource){
+        this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
+        this.getView().setResourceAmount(self.resourceToReceive, undefined);
+      }
+      self.sendQty = 0;
+      var quickJson = {};
+      quickJson[resource] = self.sendQty + 1;
+      var shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
+      var shouldDecrease = false; // Can't offer negative numbers
+      this.resourceToSend = resource;
+      this.getView().setResourceAmountChangeEnabled(resource, shouldIncrease,shouldDecrease);
+      this.getView().setResourceAmount(resource, self.sendQty);
+      
+      this.updateState();
+    };
+
+    /**
+     * @method setResourceToReceive
+     * @param{String} resource the resource to receive
+     *                ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    DomesticController.prototype.setResourceToReceive = function(resource) {
+      console.log("Setting resource to RECEIVE");
+      // TODO: figure out how to set other radio buttons to null if they are on RECEIVE
+      var self = this;
+      if (self.receiveQty != undefined){
+        this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
+        this.getView().setResourceAmount(self.resourceToReceive, undefined);
+      } else if (self.setResourceToSend == resource){
+        this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
+        this.getView().setResourceAmount(self.resourceToSend, undefined);
+      }    
+      self.receiveQty = 0;
+      var shouldIncrease = true; // You can demand all you want
+      var shouldDecrease = false; // Can't demand negative numbers
+      this.resourceToReceive = resource;
+      this.getView().setResourceAmountChangeEnabled(resource, shouldIncrease,shouldDecrease);
+      this.getView().setResourceAmount(resource, self.receiveQty);
+      
+      this.updateState();
+    };
+
+    /**
+     * @method unsetResource
+     * @param{String} resource the resource to clear
+     *                ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    DomesticController.prototype.unsetResource = function(resource) {
+      if (this.resourceToReceive == resource){
         this.resourceToRecieve = "null";
-      if (!this.resourceToSend === resource)
+        this.receiveQty = undefined;
+      } else if (this.resourceToSend == resource){
         this.resourceToSend = "null";
-		};
-        
-		/**
-		 * @method setPlayerToTradeWith
-		 * @param{int} playerNumber the player to trade with
-		 * @return void
-		 */
-		DomesticController.prototype.setPlayerToTradeWith = function(playerNumber){
-		  this.otherPlayer = playerNumber;
-		};
-        
-		/**
-		* Increases the amount to send or receive of a resource
-		* @method increaseResourceAmount
-		* @param{String} resource ("wood","brick","sheep","wheat","ore")
-		* @return void
-		*/
-		DomesticController.prototype.increaseResourceAmount = function(resource){
-		  if (!this.resourceToReceive === resource)
+        this.sendQty = undefined;
+      }
+
+      // make it disappear
+      this.getView().setResourceAmountChangeEnabled(resource, false, false);
+      this.getView().setResourceAmount(resource, undefined);
+    };
+
+    /**
+     * @method setPlayerToTradeWith
+     * @param{int} playerNumber the player to trade with
+     * @return void
+     */
+    DomesticController.prototype.setPlayerToTradeWith = function(playerNumber) {
+      if (playerNumber == undefined)
+        playerNumber = 3;// until the player number issue is fixed
+      if (playerNumber != -1)
+        this.otherPlayer = this.ClientModel.getModel().getPlayerWithOrder(playerNumber);
+      else
+        this.otherPlayer = undefined;
+      this.updateState();
+    };
+
+    /**
+     * Increases the amount to send or receive of a resource
+     * 
+     * @method increaseResourceAmount
+     * @param{String} resource ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    DomesticController.prototype.increaseResourceAmount = function(resource) {
+      var shouldDecrease;
+      var shouldIncrease;
+      var amount;
+      var self = this;
+
+      if (this.resourceToReceive == resource) {
         this.receiveQty++;
-      if (!this.resourceToSend === resource)
+        shouldIncrease = true;
+        shouldDecrease = self.receiveQty != 0;
+        amount = self.receiveQty;
+      } else if (this.resourceToSend == resource) {
         this.sendQty++;
-		};
-        
-		/**
-		 * Decreases the amount to send or receive of a resource
-		 * @method decreaseResourceAmount
-		 * @param{String} resource ("wood","brick","sheep","wheat","ore")
-		 * @return void
-		 */
-		DomesticController.prototype.decreaseResourceAmount = function(resource){
-      if (!this.resourceToReceive === resource)
+        var quickJson = {};
+        quickJson[resource] = self.sendQty + 1;
+        shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
+        shouldDecrease = self.sendQty != 0;
+        amount = self.sendQty;
+      } else
+        return;
+
+      this.getView().setResourceAmountChangeEnabled(resource, shouldIncrease,
+          shouldDecrease);
+      this.getView().setResourceAmount(resource, amount);
+    };
+
+    /**
+     * Decreases the amount to send or receive of a resource
+     * 
+     * @method decreaseResourceAmount
+     * @param{String} resource ("wood","brick","sheep","wheat","ore")
+     * @return void
+     */
+    DomesticController.prototype.decreaseResourceAmount = function(resource) {
+      var shouldDecrease;
+      var shouldIncrease;
+      var amount;
+      var self = this;
+      
+      if (this.resourceToReceive == resource) {
         this.receiveQty--;
-      if (!this.resourceToSend === resource)
+        shouldIncrease = true;
+        shouldDecrease = self.receiveQty != 0;
+        amount = self.receiveQty;
+      } else if (this.resourceToSend == resource) {
         this.sendQty--;
-		};
-        
-		/**
-		  * Sends the trade offer to the accepting player
-		  * @method sendTradeOffer
-		  * @return void
-		  */
-		DomesticController.prototype.sendTradeOffer = function(){
-		  //prepare our trade offer (in the form of a ResourceList)
-		  var brick = 0;
-	    var sheep = 0;
-	    var wheat = 0;
-	    var ore   = 0;
-	    var wood  = 0;
-	    
-	    if(this.resourceToReceive === "brick")
-	      brick = this.recieveQty;
-	    else if (this.resourceToSend === "brick")
-	      brick = this.sendQty;
-	    
-	    if(this.resourceToReceive === "sheep")
-        sheep = this.recieveQty;
+        var quickJson = {};
+        quickJson[resource] = self.sendQty + 1;
+        shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
+        shouldDecrease = self.sendQty != 0;
+        amount = self.sendQty;
+      } else
+        return;
+
+      this.getView().setResourceAmountChangeEnabled(resource, shouldIncrease,
+          shouldDecrease);
+      this.getView().setResourceAmount(resource, amount);
+    };
+    
+    DomesticController.prototype.updateState = function(){
+      if (this.resourceToSend == undefined || this.resourceToReceive == undefined){
+        this.getView().setStateMessage("--Select a resource to send and receive--");
+        this.getView().setTradeButtonEnabled(false);
+      } else if (this.otherPlayer == undefined){
+        this.getView().setStateMessage("--Select a player to trade with--");
+        this.getView().setTradeButtonEnabled(false);
+      } else {
+        this.getView().setStateMessage("--TRADE!--");
+        this.getView().setTradeButtonEnabled(true);
+      }
+      
+    };
+
+    /**
+     * Sends the trade offer to the accepting player
+     * 
+     * @method sendTradeOffer
+     * @return void
+     */
+    DomesticController.prototype.sendTradeOffer = function() {
+      // prepare our trade offer (in the form of a ResourceList)
+      var brick = 0;
+      var sheep = 0;
+      var wheat = 0;
+      var ore = 0;
+      var wood = 0;
+
+      if (this.resourceToReceive === "brick")
+        brick = this.receiveQty;
+      else if (this.resourceToSend === "brick")
+        brick = -this.sendQty;
+
+      if (this.resourceToReceive === "sheep")
+        sheep = this.receiveQty;
       else if (this.resourceToSend === "sheep")
-        sheep = this.sendQty;
-      
-	    if(this.resourceToReceive === "wheat")
-        wheat = this.recieveQty;
+        sheep = -this.sendQty;
+
+      if (this.resourceToReceive === "wheat")
+        wheat = this.receiveQty;
       else if (this.resourceToSend === "wheat")
-        wheat = this.sendQty;
-      
-	    if(this.resourceToReceive === "ore")
-        ore = this.recieveQty;
+        wheat = -this.sendQty;
+
+      if (this.resourceToReceive === "ore")
+        ore = this.receiveQty;
       else if (this.resourceToSend === "ore")
-        ore = this.sendQty;
-      
-	    if(this.resourceToReceive === "wood")
-        wood = this.recieveQty;
+        ore = -this.sendQty;
+
+      if (this.resourceToReceive === "wood")
+        wood = this.receiveQty;
       else if (this.resourceToSend === "wood")
-        wood = this.sendQty;
-	    
-	    var game = this.getGame();
-	    var list = new catan.models.ResourceList({});
-      list.setResourceListItems(brick, ore, sheep, wheat, wood);
-      
-		  game.offerTrade(this.otherPlayer, list, onUpdateModel);
-		};
-        
-        
-		/******************* Methods called by the Accept Overlay *************/
-		 
-        /**
-        * Finalizes the trade between players
-        * @method acceptTrade
-        * @param{Boolean} willAccept
-        * @return void
-		*/
-		DomesticController.prototype.acceptTrade = function(willAccept){
-		  this.getGame().acceptTrade(willAccept,onUpdateModel);
-		};
-            
-		DomesticController.prototype.onUpdateModel = function(err){
-		  if (err){
-		    console.log(err);
-		    return;//The trade failed somehow
-		  }
-		  console.log("The trade was successful");
-		  // Success (not sure what goes here that doesn't belong in the acceptTrade())
-		  // this.acceptTrade(true);
-		}
-		
-		
-		return DomesticController;
-    }());
-			
-	return DomesticController;
+        wood = -this.sendQty;
+
+      var list = new catan.models.ResourceList({ 
+        "brick" : brick,
+        "ore" : ore,
+        "sheep" : sheep,
+        "wheat" : wheat,
+        "wood" : wood
+    });
+      this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, this.onUpdatedModel);
+      this.waitingView.showModal();
+    };
+
+    /** ***************** Methods called by the Accept Overlay ************ */
+
+    /**
+     * Finalizes the trade between players
+     * 
+     * @method acceptTrade
+     * @param{Boolean} willAccept
+     * @return void
+     */
+    DomesticController.prototype.acceptTrade = function(willAccept) {
+      this.getGame().acceptTrade(willAccept, onUpdatedModel);
+    };
+
+    return DomesticController;
+  }());
+
+  return DomesticController;
 }());
-
-

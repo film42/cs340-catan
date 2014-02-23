@@ -234,7 +234,7 @@ catan.models.Player = (function() {
     @param {resourceList} cardsTraded - cards the client wants to trade in 
   */
   Player.prototype.canAffordToOfferTrade = function(cardsToGive) {
-    return this.resources.hasAtLeast(cardsToGive.brick, cardsToGive.ore, cardsToGive.sheep, cardsToGive.wheat, cardsToGive.wood);
+    return this.resources.hasAtLeast(cardsToGive.brick < 0 ? -cardsToGive.brick : 0, cardsToGive.ore < 0 ? -cardsToGive.ore : 0, cardsToGive.sheep < 0 ? -cardsToGive.sheep : 0, cardsToGive.wheat < 0 ? -cardsToGive.wheat : 0, cardsToGive.wood < 0 ? -cardsToGive.wood : 0);
   };
 
   /**
