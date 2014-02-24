@@ -103,6 +103,7 @@ catan.discard.Controller = (function discard_namespace(){
       that = this;
       this.game.discardCards(resourceList, function(){
         that.view.closeModal();
+        onUpdatedModel();
       });
     };
         
