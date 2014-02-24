@@ -164,6 +164,11 @@ catan.trade.domestic.View = (function(){
 			this.getSelectorElem().reset();
 		}
 		
+		DomesticView.prototype.clearTradeViewForResource = function(resource){
+      this.getDisplayElems()[resource].resetView();
+      this.getSelectorElem().reset();
+    }
+		
 		//for the chooser element            
                 		
 		var constructChooserResourceOptions = function(resourceType){

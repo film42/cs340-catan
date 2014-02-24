@@ -41,8 +41,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       this.player = this.game.getCurrentPlayer();
       var self = this;
       var tradeablePlayers = this.game.getModel().getPlayers().filter(function(p) {
-        return p.getOrderNumber() != self.player.getOrderNumber();
+        if (p.getOrderNumber() != self.player.getOrderNumber()){
+          p.index = p.getOrderNumber(); // the view expects this
+          return true;
+        }
+        return false;
       });
+      
       view.setPlayers(tradeablePlayers);
       
 
@@ -58,10 +63,15 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         return;// The trade failed somehow
       }
       
-      if(this.game.model.isMyTurn() && this.game.model.getTurn().isPlayingPhase())
+      if(this.game.model.isMyTurn() && this.game.model.getTurn().isPlayingPhase()){
+        this.view.setPlayerSelectionEnabled(true);
+        this.view.setResourceSelectionEnabled(true);
         this.updateState();
-      else
-        this.view.clearTradeView();
+      } else if (!this.game.model.isMyTurn()){
+        this.view.setPlayerSelectionEnabled(false);
+        this.view.setResourceSelectionEnabled(false);
+        this.view.setTradeButtonEnabled(false);
+      }
     };
 
     core.defineProperty(DomesticController.prototype, "resourceToSend");// int
@@ -84,9 +94,11 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       if (self.sendQty != undefined){
         this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
         this.getView().setResourceAmount(self.resourceToSend, undefined);
+        this.getView().clearTradeViewForResource(self.resourceToSend);
       } else if (self.setResourceToReceive == resource){
         this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
         this.getView().setResourceAmount(self.resourceToReceive, undefined);
+        this.getView().clearTradeViewForResource(self.resourceToReceive);
       }
       self.sendQty = 0;
       var quickJson = {};
@@ -113,9 +125,11 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       if (self.receiveQty != undefined){
         this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
         this.getView().setResourceAmount(self.resourceToReceive, undefined);
+        this.getView().clearTradeViewForResource(self.resourceToReceive);
       } else if (self.setResourceToSend == resource){
         this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
         this.getView().setResourceAmount(self.resourceToSend, undefined);
+        this.getView().clearTradeViewForResource(self.resourceToSend);
       }    
       self.receiveQty = 0;
       var shouldIncrease = true; // You can demand all you want
@@ -153,9 +167,9 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      * @return void
      */
     DomesticController.prototype.setPlayerToTradeWith = function(playerNumber) {
-      if (playerNumber == undefined)
-        playerNumber = 3;// until the player number issue is fixed
-      if (playerNumber != -1)
+      if (playerNumber == undefined){
+        playerNumber = undefined;
+      } else if (playerNumber != -1)
         this.otherPlayer = this.ClientModel.getModel().getPlayerWithOrder(playerNumber);
       else
         this.otherPlayer = undefined;
@@ -230,13 +244,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
     
     DomesticController.prototype.updateState = function(){
       if (this.resourceToSend == undefined || this.resourceToReceive == undefined){
-        this.getView().setStateMessage("--Select a resource to send and receive--");
+        this.getView().setStateMessage("Select a resource to send and receive");
         this.getView().setTradeButtonEnabled(false);
       } else if (this.otherPlayer == undefined){
-        this.getView().setStateMessage("--Select a player to trade with--");
+        this.getView().setStateMessage("Select a player to trade with");
         this.getView().setTradeButtonEnabled(false);
       } else {
-        this.getView().setStateMessage("--TRADE!--");
+        this.getView().setStateMessage("TRADE!");
         this.getView().setTradeButtonEnabled(true);
       }
       
