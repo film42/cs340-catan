@@ -43,6 +43,9 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.modalOn = false;
 			this.soldier = false;
 			this.robloc = {};
+			this.roadbuild = false;
+			this.firstroad = false;
+			this.firstroadloc;
 			this.game.addObserver(this, this.updateFromModel);
 		}
 
@@ -180,7 +183,6 @@ catan.map.Controller = (function catan_controller_namespace() {
 				this.soldier = false;
 			}
 			else{
-				debugger;
 				this.game.robPlayer(orderID, this.robloc, function(){});
 				this.robView.closeModal();
 				this.modalView.closeModal();
@@ -207,6 +209,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @return void
 		**/	
 		MapController.prototype.startDoubleRoadBuilding = function(){
+			this.roadbuild = true;
+			this.startMove("road", true, false);
 		}
 		
         
@@ -235,6 +239,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.modalView.closeModal();
 			this.View.cancelDrop();
 			this.modalOn = false;
+			this.roadbuild = false;
+			this.firstroad = false;
 		}
 
 		/**
@@ -255,7 +261,11 @@ catan.map.Controller = (function catan_controller_namespace() {
 					return map.canPlaceRobber(hexloc);
 					break;
 				case "road":
-					return this.ClientModel.canPlaceRoad(hexloc, loc.getDir());
+					if(this.firstroad && this.roadbuild){
+						var hexloc2 = new catan.models.map.HexLocation(this.firstroadloc.x, this.firstroadloc.y);
+						return this.ClientModel.canPlayRoadBuilding(hexloc, loc.getDir(), hexloc2, this.firstroadloc.getDir());
+					}
+					return this.ClientModel.canPlaceRoad(hexloc, loc.getDir(), this.roadbuild);
 					break;
 				case "settlement":
 					return this.ClientModel.canPlaceSettlement(hexloc, loc.getDir());
@@ -274,11 +284,13 @@ catan.map.Controller = (function catan_controller_namespace() {
 				if(vertex.isOccupied()){
 					var ownerID = vertex.getValue().getOwnerID();
 					var player = this.ClientModel.getPlayerWithOrder(ownerID);
-					playerInfo[ownerID] = {};
-					playerInfo[ownerID].color = player.getColor();
-					playerInfo[ownerID].name = player.getName();
-					playerInfo[ownerID].playerNum = ownerID;
-					playerInfo[ownerID].cards = player.getResources().getTotalCount();
+					if(ownerID != this.ClientModel.getCurrentPlayerOrder()){
+						playerInfo[ownerID] = {};
+						playerInfo[ownerID].color = player.getColor();
+						playerInfo[ownerID].name = player.getName();
+						playerInfo[ownerID].playerNum = ownerID;
+						playerInfo[ownerID].cards = player.getResources().getTotalCount();
+					}
 				}
 			}
 			var densePI = playerInfo.filter(function(p){
@@ -311,6 +323,24 @@ catan.map.Controller = (function catan_controller_namespace() {
 					}
 					break;
 				case "road":
+					if(this.roadbuild){
+						if(this.firstroad){
+							var hexloc2 = new catan.models.map.HexLocation(this.firstroadloc.x, this.firstroadloc.y);
+							if(this.ClientModel.canPlayRoadBuilding(hexloc, loc.getDir(), hexloc2, this.firstroadloc.getDir())){
+								this.game.playRoadBuilding(hexloc, loc.getDir(), hexloc2, this.firstroadloc.getDir());
+								this.modalView.closeModal();
+								this.roadbuild = false;
+								this.firstroad = false;
+							}
+						}
+						else{
+							if(this.ClientModel.canPlaceRoad(hexloc, loc.getDir(), true)){
+								this.firstroad = true;
+								this.firstroadloc = loc;
+								this.View.placeRoad(loc,this.game.getCurrentPlayer().getColor());
+							}
+						}
+					}
 					if(this.ClientModel.canPlaceRoad(hexloc, loc.getDir())){
 						this.game.buildRoad(hexloc, loc.getDir(), function(){});
 						this.modalView.closeModal();

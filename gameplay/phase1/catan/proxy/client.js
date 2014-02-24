@@ -462,7 +462,7 @@ catan.proxy.ClientProxy = (function() {
       type: "Soldier",
       playerIndex: playerId,
       victimIndex: victimId,
-      robberSpot: {
+      location: {
         x: location.getX(),
         y: location.getY()
       }
