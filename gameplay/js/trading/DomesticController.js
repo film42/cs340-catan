@@ -101,7 +101,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         this.getView().clearTradeViewForResource(self.resourceToReceive);
       }
       self.sendQty = 0;
-      var quickJson = {};
+      var quickJson = { 
+          "brick" : 0,
+          "ore" : 0,
+          "sheep" : 0,
+          "wheat" : 0,
+          "wood" : 0
+      };
       quickJson[resource] = self.sendQty + 1;
       var shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
       var shouldDecrease = false; // Can't offer negative numbers
@@ -196,7 +202,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         amount = self.receiveQty;
       } else if (this.resourceToSend == resource) {
         this.sendQty++;
-        var quickJson = {};
+        var quickJson = { 
+            "brick" : 0,
+            "ore" : 0,
+            "sheep" : 0,
+            "wheat" : 0,
+            "wood" : 0
+        };
         quickJson[resource] = self.sendQty + 1;
         shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
         shouldDecrease = self.sendQty != 0;
@@ -229,7 +241,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         amount = self.receiveQty;
       } else if (this.resourceToSend == resource) {
         this.sendQty--;
-        var quickJson = {};
+        var quickJson = { 
+            "brick" : 0,
+            "ore" : 0,
+            "sheep" : 0,
+            "wheat" : 0,
+            "wood" : 0
+        };
         quickJson[resource] = self.sendQty + 1;
         shouldIncrease = this.player.hasXResources(new catan.models.ResourceList(quickJson));
         shouldDecrease = self.sendQty != 0;
@@ -302,10 +320,14 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         "wheat" : wheat,
         "wood" : wood
     });
-      this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, this.onUpdatedModel);
+      this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, this.dissappearWaitingModal);
       this.waitingView.showModal();
     };
 
+    DomesticController.prototype.dissappearWaitingModal = function(){
+      this.waitingView.hideModal();
+      this.onUpdatedModel();
+    }
     /** ***************** Methods called by the Accept Overlay ************ */
 
     /**
