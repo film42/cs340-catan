@@ -284,7 +284,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 				if(vertex.isOccupied()){
 					var ownerID = vertex.getValue().getOwnerID();
 					var player = this.ClientModel.getPlayerWithOrder(ownerID);
-					if(ownerID != this.ClientModel.getCurrentPlayerOrder()){
+					if(ownerID != this.game.getCurrentPlayerOrder()){
 						playerInfo[ownerID] = {};
 						playerInfo[ownerID].color = player.getColor();
 						playerInfo[ownerID].name = player.getName();
