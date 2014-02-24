@@ -77,6 +77,8 @@ catan.roll.Controller = (function roll_namespace(){
 		RollController.prototype.closeResult = function(){
        this.rollResultView.closeModal();
        this.displayFlag = false;
+       //resume refreshing the client
+       this.game.resumeRefresh();
 		}
 		
 		/**
@@ -88,7 +90,7 @@ catan.roll.Controller = (function roll_namespace(){
 	    this.stopTimer();
       
       //calculate result
-      var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
+      var rolledNumber = 7;//catan.util.dice.rollDie() + catan.util.dice.rollDie();   
       //hide view modal
       this.getView().closeModal();
       //set result modal message
@@ -96,7 +98,9 @@ catan.roll.Controller = (function roll_namespace(){
       //show result modal
       this.rollResultView.showModal();
       //send the server request
-      this.game.rollDice(rolledNumber, function() {});   
+      this.game.rollDice(rolledNumber, function() {}); 
+      //pause the updates to the client
+      this.game.pauseRefresh();  
 		};
     /**
      * This method set the length of timer to 3 seconds

@@ -155,11 +155,21 @@ catan.models.map.Map = (function() {
         //setup phase logic check for a adj settlement owned by that player
         if(isSetupPhase){
           var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
+          var isNearSettlement = false
           for(var i=0; i <adjVertexes.length; i++){
             if(adjVertexes[i].isOccupied() && adjVertexes[i].getValue().getOwnerID() == playerId){
-              return true;
+              isNearSettlement = true;
             }
           }
+          var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
+          var noAdjRoad = true;
+          for(var i=0; i< adjEdges.length; i++){
+            if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
+              noAdjRoad = false
+            }
+          }
+          return isNearSettlement && noAdjRoad;
+
         }else{
           //check if the other edge passed in is adjacent
           if(otherHexLoc && otherDir){

@@ -30,6 +30,7 @@ catan.core.Game = (function() {
     this.model = {};
     this.proxy = new catan.proxy.ClientProxy();
     this.observers = [];
+    this.pause = false;
   }
   
   Game.prototype.initFromServer = function(success) {
@@ -54,9 +55,11 @@ catan.core.Game = (function() {
     @return {void}
   */
   Game.prototype.triggerObservers = function() {
-    this.observers.forEach(function(obs) {
-      obs();
-    });
+    if(!this.pause){
+      this.observers.forEach(function(obs) {
+        obs();
+      });
+    }
   };
 
   /**
@@ -105,8 +108,18 @@ catan.core.Game = (function() {
     @return {ClientModel}
   */
   Game.prototype.refreshUI = function(callback) {
+    
     this.triggerObservers();
+    
   };
+
+  Game.prototype.pauseRefresh = function(){
+    this.pause = true;
+  }
+
+  Game.prototype.resumeRefresh = function(){
+    this.pause = false;
+  }
 
   /**
     Get the model that's hooked up to this GAME class
