@@ -42,7 +42,11 @@ catan.models.map.Map = (function() {
     //is this the correct way to create a new object?
     //});
     //init robber
-    this.robber = new catan.models.map.HexLocation(mapjson.robber.x, mapjson.robber.y);
+    if(mapjson.robber){
+      this.robber = new catan.models.map.HexLocation(mapjson.robber.x, mapjson.robber.y);
+    }else{
+      console.warn("missing robber information");
+    }
     //init numbers- since this is just a lookup table, so just use the json object from the server
     this.numbers = mapjson.numbers;
     //init radius

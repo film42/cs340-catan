@@ -109,14 +109,25 @@ catan.setup.Controller = (function(){
         controller.setState(BuildSettlement);
 
         if(controller.getState().execute)
-          controller.getState().execute(controller);
+          controller.getState().execute(controller, turnTracker.isFirstSetup());
       }
     };
     var BuildSettlement = {
-      execute: function(controller){ 
-         controller.mapController.startMove("settlement", true, true);
-         controller.setNumOfSettlements(controller.game.getModel().getSettlementCount());
-         controller.state = WaitForSettlement;
+      execute: function(controller, firstRound){
+        //need to check if the settlement has already been built for this round
+        var expectedNum = 5;
+        if(!firstRound){
+          expectedNum = 4;
+        }
+        if(controller.game.getModel().getSettlementCount() < expectedNum){
+          controller.setState(BuildRoad);
+          controller.getState().execute(controller);
+          return;
+        }
+
+        controller.mapController.startMove("settlement", true, true);
+        controller.setNumOfSettlements(controller.game.getModel().getSettlementCount());
+        controller.state = WaitForSettlement;
        }
     };
 
@@ -137,8 +148,20 @@ catan.setup.Controller = (function(){
 
     var BuildRoad = {
       execute: function(controller){
+      //need to check if the settlement has already been built for this round
+      var turnTracker = controller.game.getModel().getTurn();
+      var expectedNum = 15;
+      if(turnTracker.isSecondSetup()){
+        expectedNum = 14;
+      }
+      if(controller.game.getModel().getRoadCount() < expectedNum){
+        controller.setState(FinishTurn);
+        controller.getState().execute(controller);
+        return;
+      }
+
       controller.mapController.startMove("road", true, true);
-	  controller.setNumOfRoads(controller.game.getModel().getRoadCount());
+	    controller.setNumOfRoads(controller.game.getModel().getRoadCount());
       controller.state = WaitForRoad;
       }
     };

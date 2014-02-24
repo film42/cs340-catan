@@ -107,7 +107,11 @@ catan.map.Controller = (function catan_controller_namespace() {
 			
 			//placeRobber
 			var robber = map.getRobber();
-			this.View.placeRobber({x:robber.getX(), y: robber.getY()});
+			if(robber){
+				this.View.placeRobber({x:robber.getX(), y: robber.getY()});
+			}else{
+				console.warn("Trying to read an undefined Robber object");
+			}
 
 			//populate pieces on hexes
 			var hexes = map.getHexGrid().getHexArray();
@@ -176,10 +180,11 @@ catan.map.Controller = (function catan_controller_namespace() {
 				this.soldier = false;
 			}
 			else{
+				debugger;
 				this.game.robPlayer(orderID, this.robloc, function(){});
 				this.robView.closeModal();
 				this.modalView.closeModal();
-
+				this.modalOn = false;
 			}
 		}
         
