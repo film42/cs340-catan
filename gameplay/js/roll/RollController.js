@@ -90,7 +90,7 @@ catan.roll.Controller = (function roll_namespace(){
 	    this.stopTimer();
       
       //calculate result
-      var rolledNumber = 7;//catan.util.dice.rollDie() + catan.util.dice.rollDie();   
+      var rolledNumber = catan.util.dice.rollDie() + catan.util.dice.rollDie();   
       //hide view modal
       this.getView().closeModal();
       //set result modal message
