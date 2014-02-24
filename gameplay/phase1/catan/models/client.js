@@ -273,14 +273,18 @@ catan.models.ClientModel = (function() {
       
     @return {boolean}
   */
-  ClientModel.prototype.canPlaceRoad = function(location, direction) {
+  ClientModel.prototype.canPlaceRoad = function(location, direction, free) {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
 
     var isSetupPhase = this._turn.isSetupPhase();
     var isPlayPhase = this._turn.isPlayingPhase();
     var canPlaceRoad = this._map.canBuildRoad(this._currentUserOrder, location, direction, isSetupPhase);
-
-    var canAffordToBuyRoad = player.canAffordToBuyRoad();
+    if(!free){
+          var canAffordToBuyRoad = player.canAffordToBuyRoad();
+    }
+    else{
+      var canAffordToBuyRoad = true;
+    }
 
     // Can build road logic
     var status = isSetupPhase || isPlayPhase;
