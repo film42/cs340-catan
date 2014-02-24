@@ -31,7 +31,7 @@ catan.models.TradeOffer = (function() {
   function TradeOffer(json) {
     senderID = json.sender;
     receiverID = json.receiver;
-    resources = new cantan.models.ResourceList(json.offer);
+    resources = new catan.models.ResourceList(json.offer);
   }
 
   /**
