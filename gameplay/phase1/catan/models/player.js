@@ -64,6 +64,7 @@ catan.models.Player = (function() {
     this.playedDevCard = data.playedDevCard;
     this.playerID = data.playerID;
     this.resources = new catan.models.ResourceList(data.resources);
+    this.soldiers = data.soldiers;
     this.points = data.victoryPoints;
   }
   //Getters
@@ -111,6 +112,9 @@ catan.models.Player = (function() {
   };
   Player.prototype.getPoints = function(){
     return this.points;
+  };
+  Player.prototype.getSoldierCount = function(){
+    return this.soldiers;
   };
   
   
