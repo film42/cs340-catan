@@ -82,9 +82,9 @@ catan.discard.Controller = (function discard_namespace(){
           sum += resources[i];
         }
         this.numToDiscard = Math.floor(sum / 2);
-        this.view.setDiscardButtonEnabled(false);
         this.selected = {"wood":0,"brick":0,"sheep" :0,"wheat":0,"ore":0};
         this.view.showModal();
+        this.view.setDiscardButtonEnabled(false);
         this.view.setStateMessage("0/" + this.numToDiscard);
       }else{
         this.waitingView.showModal();
@@ -103,7 +103,7 @@ catan.discard.Controller = (function discard_namespace(){
       that = this;
       this.game.discardCards(resourceList, function(){
         that.view.closeModal();
-        onUpdatedModel();
+        this.waitingView.showModal();
       });
     };
         
@@ -131,6 +131,7 @@ catan.discard.Controller = (function discard_namespace(){
         }
         var increase = this.canIncrease(resource);
         this.view.setResourceAmountChangeEnabled(resource, increase, decrease);
+        this.view.setDiscardButtonEnabled(false);
       }
       this.view.setResourceAmount(resource, this.selected[resource]);
       this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
@@ -161,7 +162,7 @@ catan.discard.Controller = (function discard_namespace(){
       }
       var increase = this.canIncrease(resource);
       this.view.setResourceAmountChangeEnabled(resource, increase, decrease);
-
+      this.view.setDiscardButtonEnabled(false);
       this.view.setResourceAmount(resource, this.selected[resource]);
       this.view.setStateMessage(""+sum+"/" + this.numToDiscard);
 
