@@ -166,7 +166,7 @@ catan.models.map.Map = (function() {
               if(vertexNum > 5){
                 vertexNum = 0;
               }
-              settlementdir = catan.models.map.EdgeDirectionNum[vertexNum];
+              settlementdir = catan.models.map.VertexDirectionNum[vertexNum];
               var adjEdges = this.hexGrid.getEdgesFromVertex(hexLoc, settlementdir);
               for(var i=0; i< adjEdges.length; i++){
                 if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
