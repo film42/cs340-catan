@@ -34,6 +34,7 @@ catan.roll.Controller = (function roll_namespace(){
 
       this.game = game;
       this.displayFlag = false;
+      this.serverUpdated = true;
 			this.timerStarted = false;
 			this.timerID = null;
       this.game.addObserver(this, this.onUpdate);
@@ -46,7 +47,7 @@ catan.roll.Controller = (function roll_namespace(){
     **/
     RollController.prototype.onUpdate = function(){
       //check flag if already displaying
-      if(this.displayFlag)
+      if(this.displayFlag || !this.serverUpdated)
         return;
       //check if my turn
       var turnTracker = this.game.getModel().getTurn();
@@ -60,6 +61,7 @@ catan.roll.Controller = (function roll_namespace(){
         return;
       //set flag to true
       this.displayFlag = true;
+      this.serverUpdated = false;
       //display view
       this.getView().showModal();
       // init timer
@@ -98,7 +100,10 @@ catan.roll.Controller = (function roll_namespace(){
       //show result modal
       this.rollResultView.showModal();
       //send the server request
-      this.game.rollDice(rolledNumber, function() {}); 
+      var that = this;
+      this.game.rollDice(rolledNumber, function() {
+        that.serverUpdated = true;
+      }); 
       //pause the updates to the client
       this.game.pauseRefresh();  
 		};
