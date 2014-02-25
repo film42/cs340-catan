@@ -331,6 +331,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 								this.modalView.closeModal();
 								this.roadbuild = false;
 								this.firstroad = false;
+								return;
 							}
 						}
 						else{
@@ -338,6 +339,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 								this.firstroad = true;
 								this.firstroadloc = loc;
 								this.View.placeRoad(loc,this.game.getCurrentPlayer().getColor());
+								this.View.startDrop("road", this.game.getCurrentPlayer().getColor());
+								return;
 							}
 						}
 					}

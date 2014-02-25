@@ -820,8 +820,8 @@ catan.map.View = (function makeMapView(){
 				mousePos = _this.getDragLayer().getParent().getMousePosition();
 				if (_this.makeDragHandler(placeableCallback)(mousePos,_this.getType())){
 					var loc = _this.getTypeDefinition().getTypeLocation(mousePos.x,mousePos.y);
-					placementCallback(loc,_this.getType());
 					_this.finishPlacement(true,loc);
+					placementCallback(loc,_this.getType());
 				}
 			}		
 		}

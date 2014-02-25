@@ -466,7 +466,7 @@ catan.models.ClientModel = (function() {
   
   ClientModel.prototype.canPlayRoadBuilding = function(loc1, dir1, loc2, dir2) {
     var player = this.getPlayerWithOrder(this._currentUserOrder);
-    var status = this.isMyTurn() && this._map.canPlayRoadBuilder(this._currentUserOrder, loc1, dir1, loc2, dir2s);
+    var status = this.isMyTurn() && this._map.canPlayRoadBuilder(this._currentUserOrder, loc1, dir1, loc2, dir2);
     return player.canPlayRoadBuilding() && status;
   };
   
