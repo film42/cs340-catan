@@ -155,19 +155,27 @@ catan.models.map.Map = (function() {
         //setup phase logic check for a adj settlement owned by that player
         if(isSetupPhase){
           var adjVertexes = this.hexGrid.getVertexesFromEdge(hexLoc, dir);
-          var isNearSettlement = false
+          var isNearSettlement = false;
+          var settlementdir = "W";
+          var noAdjRoad = true;
           for(var i=0; i <adjVertexes.length; i++){
             if(adjVertexes[i].isOccupied() && adjVertexes[i].getValue().getOwnerID() == playerId){
               isNearSettlement = true;
+              var edgeNum = catan.models.map.EdgeDirection[dir];
+              var vertexNum = edgeNum + i;
+              if(vertexNum > 5){
+                vertexNum = 0;
+              }
+              settlementdir = catan.models.map.VertexDirectionNum[vertexNum];
+              var adjEdges = this.hexGrid.getEdgesFromVertex(hexLoc, settlementdir);
+              for(var i=0; i< adjEdges.length; i++){
+                if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
+                  noAdjRoad = false
+                }
+              }
             }
           }
-          var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
-          var noAdjRoad = true;
-          for(var i=0; i< adjEdges.length; i++){
-            if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
-              noAdjRoad = false
-            }
-          }
+         
           return isNearSettlement && noAdjRoad;
 
         }else{
