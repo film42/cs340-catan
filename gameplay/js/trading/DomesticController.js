@@ -62,7 +62,7 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         console.log(err);
         return;// The trade failed somehow
       }
-      
+      this.player = this.game.getCurrentPlayer();
       if(this.game.model.isMyTurn() && this.game.model.getTurn().isPlayingPhase()){
         this.view.setPlayerSelectionEnabled(true);
         this.view.setResourceSelectionEnabled(true);
@@ -72,6 +72,80 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         this.view.setResourceSelectionEnabled(false);
         this.view.setTradeButtonEnabled(false);
       }
+      var tradeOffer = this.game.model.getTradeOffer();
+      if(tradeOffer){
+        if(tradeOffer.getSender() == this.player.getOrderNumber()){
+          // we are the sender, please wait
+          this.waitingView.showModal();
+        } else if (tradeOffer.getReceiver() == this.player.getOrderNumber()){
+          // we need to display the trade offer, so let's populate that view.
+          this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()));
+          this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsAskedFor()));
+          var giveResource;
+          var getResource;
+          var giveQty;
+          var getQty;
+          
+          if (tradeOffer.getCardsOffered().getWheatCount() > 0){
+            getQty = tradeOffer.getCardsOffered().getWheatCount();
+            getResource = "wheat";
+          }
+          else if (tradeOffer.getCardsAskedFor().getWheatCount() > 0){
+            giveQty = tradeOffer.getCardsAskedFor().getWheatCount();
+            giveResource = "wheat";
+          }
+          
+          if (tradeOffer.getCardsOffered().getBrickCount() > 0){
+            getQty = tradeOffer.getCardsOffered().getBrickCount();            
+            getResource = "brick";
+          }
+          else if (tradeOffer.getCardsAskedFor().getBrickCount() > 0){
+            giveQty = tradeOffer.getCardsAskedFor().getBrickCount();            
+            giveResource = "brick";
+          }
+          
+          if (tradeOffer.getCardsOffered().getWoodCount() > 0){
+            getQty = tradeOffer.getCardsOffered().getWoodCount();            
+            getResource = "wood";
+          }
+          else if (tradeOffer.getCardsAskedFor().getWoodCount() > 0){
+            giveQty = tradeOffer.getCardsAskedFor().getWoodCount();            
+            giveResource = "wood";
+          }
+          
+          if (tradeOffer.getCardsOffered().getSheepCount() > 0){
+            getQty = tradeOffer.getCardsOffered().getSheepCount();
+            getResource = "sheep";
+          }
+          else if (tradeOffer.getCardsAskedFor().getSheepCount() > 0){
+            giveQty = tradeOffer.getCardsAskedFor().getSheepCount();            
+            giveResource = "sheep";
+          }
+          
+          if (tradeOffer.getCardsOffered().getOreCount() > 0){
+            getQty = tradeOffer.getCardsOffered().getOreCount();
+            getResource = "ore";
+          }
+          else if (tradeOffer.getCardsAskedFor().getOreCount() > 0){
+            giveQty = tradeOffer.getCardsAskedFor().getOreCount();            
+            giveResource = "ore";
+          }
+          
+          this.acceptView.addGiveResource(giveResource, giveQty);
+          this.acceptView.addGetResource(getResource, getQty);
+          
+          this.acceptView.showModal();
+        } else {
+          // we do not care because we're in the trade deal anyway, so there should not be a modal for us
+          this.waitingView.closeModal();
+          this.acceptView.closeModal();
+        }
+      } else {
+        // no active trade
+        this.waitingView.closeModal();
+        this.acceptView.closeModal();
+      }
+          
     };
 
     core.defineProperty(DomesticController.prototype, "resourceToSend");// int
@@ -319,15 +393,12 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         "sheep" : sheep,
         "wheat" : wheat,
         "wood" : wood
-    });
-      this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, this.dissappearWaitingModal);
+      });
+      var self = this;
+      this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, undefined);
       this.waitingView.showModal();
     };
 
-    DomesticController.prototype.dissappearWaitingModal = function(){
-      this.waitingView.hideModal();
-      this.onUpdatedModel();
-    }
     /** ***************** Methods called by the Accept Overlay ************ */
 
     /**
@@ -338,7 +409,7 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      * @return void
      */
     DomesticController.prototype.acceptTrade = function(willAccept) {
-      this.getGame().acceptTrade(willAccept, onUpdatedModel);
+      this.game().acceptTrade(willAccept, onUpdatedModel);
     };
 
     return DomesticController;

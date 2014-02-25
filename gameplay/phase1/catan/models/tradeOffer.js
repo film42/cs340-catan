@@ -3,9 +3,6 @@ catan.models = catan.models || {};
 
 catan.models.TradeOffer = (function() {
 
-  var senderID;//int
-  var receiverID;//int
-  var resources;
   /**
   @author Steve Allred
   A trade offer is a container object that contains values specific to a trade offer.
@@ -29,9 +26,9 @@ catan.models.TradeOffer = (function() {
     @param {JSON} the data containing the initialized objects
 */
   function TradeOffer(json) {
-    senderID = json.sender;
-    receiverID = json.receiver;
-    resources = new catan.models.ResourceList(json.offer);
+    this.senderID = json.sender;
+    this.receiverID = json.receiver;
+    this.resources = new catan.models.ResourceList(json.offer);
   }
 
   /**
@@ -69,23 +66,29 @@ catan.models.TradeOffer = (function() {
     var ore   = 0;
     var wood  = 0;
     
-    if(this.resources.getBrick() > 0)
-      brick = this.resources.getBrick();
+    if(this.resources.getBrickCount() > 0)
+      brick = this.resources.getBrickCount();
     
-    if(this.resources.getWood() > 0)
-      wood = this.resources.getWood();
+    if(this.resources.getWoodCount() > 0)
+      wood = this.resources.getWoodCount();
     
-    if(this.resources.getSheep() > 0)
-      sheep = this.resources.getSheep();
+    if(this.resources.getSheepCount() > 0)
+      sheep = this.resources.getSheepCount();
     
-    if(this.resources.getOre() > 0)
-      ore = this.resources.getOre();
+    if(this.resources.getOreCount() > 0)
+      ore = this.resources.getOreCount();
     
-    if(this.resources.getWheat() > 0)
-      wheat = this.resources.getWheat();
+    if(this.resources.getWheatCount() > 0)
+      wheat = this.resources.getWheatCount();
   
-    var ret = new catan.models.ResourceList({});
-    ret.setResourceListItems(brick, ore, sheep, wheat, wood);
+    var list = new catan.models.ResourceList({ 
+      "brick" : brick,
+      "ore" : ore,
+      "sheep" : sheep,
+      "wheat" : wheat,
+      "wood" : wood
+    });
+    var ret = new catan.models.ResourceList(list);
     return ret;
   };
   
@@ -96,23 +99,29 @@ catan.models.TradeOffer = (function() {
     var ore = 0;
     var wood = 0;
     
-    if(this.resources.getBrick() < 0)
-      brick = -this.resources.getBrick();
+    if(this.resources.getBrickCount() < 0)
+      brick = -this.resources.getBrickCount();
     
-    if(this.resources.getWood() < 0)
-      wood = -this.resources.getWood();
+    if(this.resources.getWoodCount() < 0)
+      wood = -this.resources.getWoodCount();
     
-    if(this.resources.getSheep() < 0)
-      sheep = -this.resources.getSheep();
+    if(this.resources.getSheepCount() < 0)
+      sheep = -this.resources.getSheepCount();
     
-    if(this.resources.getOre() < 0)
-      ore = -this.resources.getOre();
+    if(this.resources.getOreCount() < 0)
+      ore = -this.resources.getOreCount();
     
-    if(this.resources.getWheat() < 0)
-      wheat = -this.resources.getWheat();
+    if(this.resources.getWheatCount() < 0)
+      wheat = -this.resources.getWheatCount();
   
-    var ret = new catan.models.ResourceList({});
-    ret.setResourceListItems(brick, ore, sheep, wheat, wood);
+    var list = new catan.models.ResourceList({ 
+      "brick" : brick,
+      "ore" : ore,
+      "sheep" : sheep,
+      "wheat" : wheat,
+      "wood" : wood
+    });
+    var ret = new catan.models.ResourceList(list);
     return ret;
   };
   

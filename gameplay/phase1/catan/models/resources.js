@@ -103,7 +103,7 @@ catan.models.ResourceList = (function() {
    * @return true if this ResourceList has at least the same as the number of resources in the passed in ResourceList, false otherwise
    */
   ResourceList.prototype.hasAtLeast = function(br, or, sh, wh, wo) {
-      return !(this.brick < br || this.ore < or || this.sheep < sh || this.wheat < wh || this.wood < wo);
+      return this.brick >= br && this.ore >= or && this.sheep >= sh && this.wheat >= wh && this.wood >= wo;
   };
   
   /**
