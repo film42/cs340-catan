@@ -183,7 +183,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     Private function
     checks a given resource to see if the player can trade it.
     */
-    MaritimeController.prototype.canTrade = function(resourceType, has3to1Port){
+    MaritimeController.prototype.canTrade = function(resourceType){
       var model = this.game.getModel();
       var player = this.game.getCurrentPlayer();
       var playerOrder = this.game.getCurrentPlayerOrder();
@@ -194,7 +194,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
           return 2;
       }
       if(resources[resourceType] >= 3){
-        if(has3to1Port)
+        if(map.canMaritimeTrade(playerOrder, 3))
           return 3;
       }
       if(resources[resourceType] >= 4){
