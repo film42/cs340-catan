@@ -50,6 +50,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       if(!this.init){
         this.getView().hideGiveOptions();
         this.getView().hideGetOptions();
+        this.getView().setMessage("Select Trade Types");
       }
       //handle turn
       if(this.handleTurn()){
@@ -68,11 +69,15 @@ catan.trade.maritime.Controller = (function trade_namespace(){
           if(canTradeResources.length > 0){
             this.getView().showGiveOptions(canTradeResources);
           }else{
-            this.getView().hideGiveOptions();
-            this.getView().hideGetOptions();
+            //this.getView().hideGiveOptions();
+            //this.getView().hideGetOptions();
             this.typeToGet = undefined;
             this.typeToGive = undefined;
             this.getView().setMessage("No trades are possible. Come back later.");
+            this.getView().enableTradeButton(false);
+            this.getView().hideGiveOptions();
+            this.getView().hideGetOptions();
+            return;
           }
         }
         //updates if not yet selected get value
@@ -94,6 +99,8 @@ catan.trade.maritime.Controller = (function trade_namespace(){
             this.getView().hideGiveOptions();
             this.getView().hideGetOptions();
             this.getView().setMessage("The Bank is broke! Someone roll a 7.");
+            this.getView().enableTradeButton(false);
+            return;
           }
         }
         if(this.typeToGet && this.typeToGive){
@@ -169,11 +176,14 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
     MaritimeController.prototype.handleTurn = function(){
       if(!this.game.getModel().isMyTurn()){
-        this.getView().hideGiveOptions();
-        this.getView().hideGetOptions();
+        //this.getView().hideGiveOptions();
+        //this.getView().hideGetOptions();
         this.typeToGive = undefined;
         this.typeToGet = undefined;
         this.getView().setMessage("It is not your turn");
+        this.getView().hideGiveOptions();
+        this.getView().enableTradeButton(false);
+        this.getView().hideGetOptions();
         return false;
       }
       return true;

@@ -32,8 +32,8 @@ catan.models.ClientModel = (function() {
   */
   function ClientModel(playerId, json) {
     if(!json){
-      alert("Could not find game, Go back to login page");
-      return;
+      console.error("Could not find game, Go back to login page");
+      return undefined;
     }
 
     // JSON attribures
