@@ -398,6 +398,14 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       var self = this;
       this.game.offerTrade(this.otherPlayer.getOrderNumber(), list, undefined);
       this.waitingView.showModal();
+      
+      //reset the view to where it began
+      this.getView().setTradeButtonEnabled(false);
+      this.getView().clearTradeView();
+      this.resourceToReceive = undefined;
+      this.receiveQty = undefined;
+      this.resourceToSend = undefined;
+      this.sendQty = undefined;
     };
 
     /** ***************** Methods called by the Accept Overlay ************ */

@@ -32,19 +32,20 @@ catan.models.Bank = (function() {
   }
 
   Bank.prototype.hasResource = function(resource){
-    if(resource == "Brick"){
+    var resourceLC = resource.toLowerCase();
+    if(resourceLC == "brick"){
       if(this.getBrickCount() > 0)
         return true;
-    } else if(resource == "Ore"){
+    } else if(resourceLC == "ore"){
       if(this.getOreCount() > 0)
         return true;
-    } else if(resource == "Sheep"){
+    } else if(resourceLC == "sheep"){
       if(this.getSheepCount() > 0)
         return true;
-    } else if(resource == "Wheat"){
+    } else if(resourceLC == "wheat"){
       if(this.getWheatCount() > 0)
         return true;
-    } else if(resource == "Wood"){
+    } else if(resourceLC == "wood"){
       if(this.getWoodCount() > 0)
         return true;
     } 
