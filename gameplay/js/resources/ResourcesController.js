@@ -67,7 +67,7 @@ catan.resources.Controller = (function resources_namespace() {
       this.view.updateAmount(ROAD, player.getRoads());
       this.view.updateAmount(SETTLEMENT, player.getSettlements());
       this.view.updateAmount(CITY, player.getCities());
-      this.view.updateAmount(ARMY, player.getSettlements());
+      this.view.updateAmount(ARMY, player.getSoldierCount());
 
       // Activating buttons
       if(player.canAffordToBuyRoad() && model.isMyTurn())

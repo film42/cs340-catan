@@ -66,20 +66,20 @@ catan.models.TradeOffer = (function() {
     var ore   = 0;
     var wood  = 0;
     
-    if(this.resources.getBrickCount() > 0)
-      brick = this.resources.getBrickCount();
+    if(this.resources.getBrickCount() < 0)
+      brick = -this.resources.getBrickCount();
     
-    if(this.resources.getWoodCount() > 0)
-      wood = this.resources.getWoodCount();
+    if(this.resources.getWoodCount() < 0)
+      wood = -this.resources.getWoodCount();
     
-    if(this.resources.getSheepCount() > 0)
-      sheep = this.resources.getSheepCount();
+    if(this.resources.getSheepCount() < 0)
+      sheep = -this.resources.getSheepCount();
     
-    if(this.resources.getOreCount() > 0)
-      ore = this.resources.getOreCount();
+    if(this.resources.getOreCount() < 0)
+      ore = -this.resources.getOreCount();
     
-    if(this.resources.getWheatCount() > 0)
-      wheat = this.resources.getWheatCount();
+    if(this.resources.getWheatCount() < 0)
+      wheat = -this.resources.getWheatCount();
   
     var list = new catan.models.ResourceList({ 
       "brick" : brick,
@@ -99,20 +99,22 @@ catan.models.TradeOffer = (function() {
     var ore = 0;
     var wood = 0;
     
-    if(this.resources.getBrickCount() < 0)
-      brick = -this.resources.getBrickCount();
+    if(this.resources.getBrickCount() > 0)
+      brick = this.resources.getBrickCount();
     
-    if(this.resources.getWoodCount() < 0)
-      wood = -this.resources.getWoodCount();
+    if(this.resources.getWoodCount() > 0)
+      wood = this.resources.getWoodCount();
     
-    if(this.resources.getSheepCount() < 0)
-      sheep = -this.resources.getSheepCount();
+    if(this.resources.getSheepCount() > 0)
+      sheep = this.resources.getSheepCount();
     
-    if(this.resources.getOreCount() < 0)
-      ore = -this.resources.getOreCount();
+    if(this.resources.getOreCount() > 0)
+      ore = this.resources.getOreCount();
     
-    if(this.resources.getWheatCount() < 0)
-      wheat = -this.resources.getWheatCount();
+    if(this.resources.getWheatCount() > 0)
+      wheat = this.resources.getWheatCount();
+    
+    
   
     var list = new catan.models.ResourceList({ 
       "brick" : brick,

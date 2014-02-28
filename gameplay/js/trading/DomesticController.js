@@ -51,12 +51,15 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       view.setPlayers(tradeablePlayers);
       
 
-
-      // TODO: This needs to be worked on so THIS is preserved.
       this.game.addObserver(this, this.OnUpdatedModel);
     };
     DomesticController.prototype = core.inherit(Controller.prototype);
     
+    
+    /**
+     *  OnUpdatedModel
+     *  This function is the updating method that continually updates the view to reflect the model.
+     */
     DomesticController.prototype.OnUpdatedModel = function(err){
       if (err) {
         console.log(err);
@@ -79,8 +82,8 @@ catan.trade.domestic.Controller = (function trade_namespace() {
           this.waitingView.showModal();
         } else if (tradeOffer.getReceiver() == this.player.getOrderNumber()){
           // we need to display the trade offer, so let's populate that view.
-          this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()));
-          this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsAskedFor()));
+          this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()).getName());
+          this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsOffered()));
           var giveResource;
           var getResource;
           var giveQty;
@@ -131,8 +134,8 @@ catan.trade.domestic.Controller = (function trade_namespace() {
             giveResource = "ore";
           }
           
-          this.acceptView.addGiveResource(giveResource, giveQty);
-          this.acceptView.addGetResource(getResource, getQty);
+          this.acceptView.addGiveResource(giveResource ? giveResource : "wood", giveQty ? giveQty : 0);
+          this.acceptView.addGetResource(getResource ? getResource : "wood", getQty ? getQty : 0);
           
           this.acceptView.showModal();
         } else {
@@ -163,16 +166,15 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      * @return void
      */
     DomesticController.prototype.setResourceToSend = function(resource) {
-      console.log("Setting resource to SEND");
       var self = this;
       if (self.sendQty != undefined){
-        this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
-        this.getView().setResourceAmount(self.resourceToSend, undefined);
-        this.getView().clearTradeViewForResource(self.resourceToSend);
-      } else if (self.setResourceToReceive == resource){
-        this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
-        this.getView().setResourceAmount(self.resourceToReceive, undefined);
-        this.getView().clearTradeViewForResource(self.resourceToReceive);
+        // another resource has already been set to send
+        this.unsetResource(self.resourceToSend);
+      } 
+      if (self.resourceToReceive == resource){
+        // Originally this resource was set to be received
+        this.receiveQty = undefined;
+        self.resourceToReceive = undefined;
       }
       self.sendQty = 0;
       var quickJson = { 
@@ -203,13 +205,11 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       // TODO: figure out how to set other radio buttons to null if they are on RECEIVE
       var self = this;
       if (self.receiveQty != undefined){
-        this.getView().setResourceAmountChangeEnabled(self.resourceToReceive, false, false);
-        this.getView().setResourceAmount(self.resourceToReceive, undefined);
-        this.getView().clearTradeViewForResource(self.resourceToReceive);
-      } else if (self.setResourceToSend == resource){
-        this.getView().setResourceAmountChangeEnabled(self.resourceToSend, false, false);
-        this.getView().setResourceAmount(self.resourceToSend, undefined);
-        this.getView().clearTradeViewForResource(self.resourceToSend);
+        this.unsetResource(self.resourceToReceive);
+      }
+      if (self.resourceToSend == resource){
+        this.sendQty = undefined;
+        self.resourceToSend = undefined;
       }    
       self.receiveQty = 0;
       var shouldIncrease = true; // You can demand all you want
@@ -229,16 +229,17 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      */
     DomesticController.prototype.unsetResource = function(resource) {
       if (this.resourceToReceive == resource){
-        this.resourceToRecieve = "null";
+        this.resourceToReceive = undefined;
         this.receiveQty = undefined;
       } else if (this.resourceToSend == resource){
-        this.resourceToSend = "null";
+        this.resourceToSend = undefined;
         this.sendQty = undefined;
       }
 
       // make it disappear
       this.getView().setResourceAmountChangeEnabled(resource, false, false);
       this.getView().setResourceAmount(resource, undefined);
+      this.getView().clearTradeViewForResource(resource);
     };
 
     /**
@@ -363,29 +364,29 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       var wood = 0;
 
       if (this.resourceToReceive === "brick")
-        brick = this.receiveQty;
+        brick = -this.receiveQty;
       else if (this.resourceToSend === "brick")
-        brick = -this.sendQty;
+        brick = this.sendQty;
 
       if (this.resourceToReceive === "sheep")
-        sheep = this.receiveQty;
+        sheep = -this.receiveQty;
       else if (this.resourceToSend === "sheep")
-        sheep = -this.sendQty;
+        sheep = this.sendQty;
 
       if (this.resourceToReceive === "wheat")
-        wheat = this.receiveQty;
+        wheat = -this.receiveQty;
       else if (this.resourceToSend === "wheat")
-        wheat = -this.sendQty;
+        wheat = this.sendQty;
 
       if (this.resourceToReceive === "ore")
-        ore = this.receiveQty;
+        ore = -this.receiveQty;
       else if (this.resourceToSend === "ore")
-        ore = -this.sendQty;
+        ore = this.sendQty;
 
       if (this.resourceToReceive === "wood")
-        wood = this.receiveQty;
+        wood = -this.receiveQty;
       else if (this.resourceToSend === "wood")
-        wood = -this.sendQty;
+        wood = this.sendQty;
 
       var list = new catan.models.ResourceList({ 
         "brick" : brick,
@@ -409,7 +410,8 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      * @return void
      */
     DomesticController.prototype.acceptTrade = function(willAccept) {
-      this.game().acceptTrade(willAccept, onUpdatedModel);
+      this.game.acceptTrade(willAccept, undefined);
+      this.acceptView.closeModal();
     };
 
     return DomesticController;

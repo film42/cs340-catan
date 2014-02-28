@@ -64,6 +64,7 @@ catan.models.Player = (function() {
     this.playedDevCard = data.playedDevCard;
     this.playerID = data.playerID;
     this.resources = new catan.models.ResourceList(data.resources);
+    this.soldiers = data.soldiers;
     this.points = data.victoryPoints;
   }
   //Getters
@@ -111,6 +112,9 @@ catan.models.Player = (function() {
   };
   Player.prototype.getPoints = function(){
     return this.points;
+  };
+  Player.prototype.getSoldierCount = function(){
+    return this.soldiers;
   };
   
   
@@ -234,7 +238,7 @@ catan.models.Player = (function() {
     @param {resourceList} cardsTraded - cards the client wants to trade in 
   */
   Player.prototype.canAffordToOfferTrade = function(cardsToGive) {
-    return this.resources.hasAtLeast(cardsToGive.brick < 0 ? -cardsToGive.brick : 0, cardsToGive.ore < 0 ? -cardsToGive.ore : 0, cardsToGive.sheep < 0 ? -cardsToGive.sheep : 0, cardsToGive.wheat < 0 ? -cardsToGive.wheat : 0, cardsToGive.wood < 0 ? -cardsToGive.wood : 0);
+    return this.resources.hasAtLeast(cardsToGive.brick, cardsToGive.ore, cardsToGive.sheep, cardsToGive.wheat, cardsToGive.wood);
   };
 
   /**
@@ -246,7 +250,7 @@ catan.models.Player = (function() {
     @param {resourceList} cardsToDiscard -cards the client will need to give
   */
   Player.prototype.canAcceptTrade = function(cardsToGive) {
-    return this.resources.hasAtLeast(cardsToGive.brick, cardsToGive.ore, cardsToGive.sheep, cardsToGive.wheat, cardsToGive.wood);
+    return this.resources.hasAtLeast(cardsToGive.brick < 0 ? -cardsToGive.brick : 0, cardsToGive.ore < 0 ? -cardsToGive.ore : 0, cardsToGive.sheep < 0 ? -cardsToGive.sheep : 0, cardsToGive.wheat < 0 ? -cardsToGive.wheat : 0, cardsToGive.wood < 0 ? -cardsToGive.wood : 0);
   };
 
   /**

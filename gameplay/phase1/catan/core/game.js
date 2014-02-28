@@ -233,10 +233,7 @@ catan.core.Game = (function() {
     callback = callback || function() {};
 
     var playerId = this.getCurrentPlayerOrder();
-    var canAcceptTrade = this.model.canAcceptTrade();
-
-    if(!canAcceptTrade) return callback({error: "Cannot accept trade with these rescources."});
-
+    
     this.proxy.acceptTrade(playerId, status, callback);
   };
 
