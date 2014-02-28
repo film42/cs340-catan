@@ -11,9 +11,9 @@ catan.devCards.Controller = (function(){
 
   var Controller = catan.core.BaseController;
   var Definitions = catan.definitions;
-  
+
   var DevCardController = (function card_namespace(){
-    
+
     core.forceClassInherit(DevCardController,Controller);
 
     core.defineProperty(DevCardController.prototype, "BuyView");
@@ -49,12 +49,18 @@ catan.devCards.Controller = (function(){
       this.view.setCardEnabled("monopoly",     player.canPlayMonopoly());
       this.view.setCardEnabled("roadBuilding", player.canPlayRoadBuilding());
       this.view.setCardEnabled("monument",     player.canPlayMonument());
+
+      this.view.updateAmount("soldier",      player.getNewSoldierCount());
+      this.view.updateAmount("yearOfPlenty", player.getNewYearOfPlentyCount());
+      this.view.updateAmount("monopoly",     player.getNewMonopolyCount());
+      this.view.updateAmount("roadBuilding", player.getNewRoadBuildingCount());
+      this.view.updateAmount("monument",     player.getNewDevCardCount());
     };
 
     DevCardController.prototype.onUpdateModel = function(){
         this.setLegalActions();
     };
-    
+
     /**
      * Called when the player buys a development card
      * @method buyCard
@@ -64,7 +70,7 @@ catan.devCards.Controller = (function(){
       this.game.buyDevelopmentCard(function() {});
       this.view.closeModal();
     };
-        
+
     /**
      * Called when the player plays a year of plenty card
      * @method useYearOfPlenty
@@ -77,7 +83,7 @@ catan.devCards.Controller = (function(){
       this.view.clearView();
       this.view.closeModal();
     };
-        
+
     /**
      * Called when the player plays a monopoly card
      * @method useMonopoly
@@ -89,7 +95,7 @@ catan.devCards.Controller = (function(){
       this.view.clearView();
       this.view.closeModal();
     };
-        
+
     /**
      * Called when the player plays a monument card
      * @method useMonument
@@ -100,7 +106,7 @@ catan.devCards.Controller = (function(){
       this.view.clearView();
       this.view.closeModal();
     };
-        
+
     /**
      * Called when the player plays a soldier card
      * @method useSoldier
@@ -111,7 +117,7 @@ catan.devCards.Controller = (function(){
       this.view.clearView();
       this.view.closeModal();
     };
-        
+
     /**
      * Called when the player plays the road building card
      * @method useRoadBuild
@@ -125,7 +131,6 @@ catan.devCards.Controller = (function(){
 
     return DevCardController;
   }());
-  
+
   return DevCardController;
 }());
-
