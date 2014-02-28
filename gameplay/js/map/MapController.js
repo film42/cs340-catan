@@ -168,6 +168,9 @@ catan.map.Controller = (function catan_controller_namespace() {
 				this.View.startDrop("robber");
 				this.modalOn = true;				
 			}
+			else if(!this.ClientModel.getTurn().isRobbingPhase()){
+				this.modalOn = false;
+			}
 		}
         
         /**
@@ -186,7 +189,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 				this.game.robPlayer(orderID, this.robloc, function(){});
 				this.robView.closeModal();
 				this.modalView.closeModal();
-				this.modalOn = false;
+				//this.modalOn = false;
 			}
 		}
         
