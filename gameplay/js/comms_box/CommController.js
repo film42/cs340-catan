@@ -123,7 +123,8 @@ catan.comm.Controller = (function () {
     @param {String} lineContents The contents of the submitted string
     **/
     ChatController.prototype.addLine = function(lineContents){
-      this.game.sendChat(lineContents, function() {});
+      if (lineContents.length > 0)
+         this.game.sendChat(lineContents, function() {});
     };
     
     return ChatController;
