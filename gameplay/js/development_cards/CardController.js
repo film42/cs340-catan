@@ -62,6 +62,7 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.buyCard = function(){
       this.game.buyDevelopmentCard(function() {});
+      this.view.closeModal();
     };
         
     /**
@@ -73,6 +74,8 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.useYearOfPlenty = function(resource1, resource2){
       this.game.playYearOfPlenty(resource1, resource2, function() {});
+      this.view.clearView();
+      this.view.closeModal();
     };
         
     /**
@@ -83,6 +86,8 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.useMonopoly = function(resource){
       this.game.playMonopoly(resource, function() {});
+      this.view.clearView();
+      this.view.closeModal();
     };
         
     /**
@@ -92,6 +97,8 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.useMonument = function(){
       this.game.playMonument(function() {});
+      this.view.clearView();
+      this.view.closeModal();
     };
         
     /**
@@ -101,6 +108,8 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.useSoldier = function(){
       this.soldierAction();
+      this.view.clearView();
+      this.view.closeModal();
     };
         
     /**
@@ -110,6 +119,8 @@ catan.devCards.Controller = (function(){
      */
     DevCardController.prototype.useRoadBuild = function(resource){
       this.roadAction();
+      this.view.clearView();
+      this.view.closeModal();
     };
 
     return DevCardController;

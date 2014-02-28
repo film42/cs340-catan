@@ -70,8 +70,8 @@ catan.turntracker.Controller = (function turntracker_namespace() {
           score: player.getPoints(),
           // This is where we select the current active user
           highlight: (index == turnPlayerId),
-          largestArmy: player.getLargestArmy(),
-          longestRoad: player.getLongestRoad()
+          army: player.getLargestArmy(),
+          road: player.getLongestRoad()
         };
 
         // Send update blob
@@ -79,7 +79,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
       });
 
       // 2) Update Message state (updateStateView)
-      if(model.isMyTurn()) {
+      if(!model.getTurn().isSetupPhase() && model.isMyTurn()) {
         this.view.updateStateView(true, "Finish Turn");
       } else {
         this.view.updateStateView(false, "Other Player's Turn");
