@@ -34,11 +34,7 @@ catan.points.Controller = (function VPController_Class(){
     this.view = view;
     this.player = game.getCurrentPlayer();
     view.setPoints(this.player.getPoints());
-    if (view.getTotalPoints() > view.MAX_POINTS){
-      //display the end-game view
-      gameFinishedView.showModal();
-    }
-    
+
     this.game.addObserver(this, this.OnUpdatedModel);
   }
   
@@ -47,9 +43,9 @@ catan.points.Controller = (function VPController_Class(){
     var winnerName;
     var isYou;
     var self = this;
-    this.view.setPoints(this.player.getPoints());
+    this.view.setPoints(this.game.getCurrentPlayer().getPoints());
     this.game.getModel().getPlayers().forEach(function(p){
-      if (p.getPoints() == 10){
+      if (p.getPoints() == view.MAX_POINTS){
         theresaWinner = true;
         winnerName  = p.getName();
         isYou = winnerName == self.player.getName();
