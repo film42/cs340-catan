@@ -45,7 +45,7 @@ catan.points.Controller = (function VPController_Class(){
     var self = this;
     this.view.setPoints(this.game.getCurrentPlayer().getPoints());
     this.game.getModel().getPlayers().forEach(function(p){
-      if (p.getPoints() == this.view.MAX_POINTS){
+      if (p.getPoints() == 10){
         theresaWinner = true;
         winnerName  = p.getName();
         isYou = winnerName == self.player.getName();
