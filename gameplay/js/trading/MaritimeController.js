@@ -73,7 +73,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
             //this.getView().hideGetOptions();
             this.typeToGet = undefined;
             this.typeToGive = undefined;
-            this.getView().setMessage("No trades are possible. Come back later.");
+            this.getView().setMessage("No trades are possible");
             this.getView().enableTradeButton(false);
             this.getView().hideGiveOptions();
             this.getView().hideGetOptions();
@@ -98,7 +98,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
           }else{
             this.getView().hideGiveOptions();
             this.getView().hideGetOptions();
-            this.getView().setMessage("The Bank is broke! Someone roll a 7.");
+            this.getView().setMessage("The Bank is broke!");
             this.getView().enableTradeButton(false);
             return;
           }

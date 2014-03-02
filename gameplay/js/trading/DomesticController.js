@@ -337,10 +337,10 @@ catan.trade.domestic.Controller = (function trade_namespace() {
     
     DomesticController.prototype.updateState = function(){
       if (this.resourceToSend == undefined || this.resourceToReceive == undefined){
-        this.getView().setStateMessage("Select a resource to send and receive");
+        this.getView().setStateMessage("Select resources");
         this.getView().setTradeButtonEnabled(false);
       } else if (this.otherPlayer == undefined){
-        this.getView().setStateMessage("Select a player to trade with");
+        this.getView().setStateMessage("Select a player");
         this.getView().setTradeButtonEnabled(false);
       } else {
         this.getView().setStateMessage("TRADE!");
