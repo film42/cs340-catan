@@ -5,8 +5,8 @@ catan.models.map = catan.models.map || {};
 
 test("vertex.getValue", function(){
   var vertex = new catan.models.map.Vertex(modelJson.map.hexGrid.hexes[3][3].vertexes[5]);
-  var value = vertex.getValue();
-  ok(value.getBuildSite() == 1 && value.getOwnerID() == 2, "Occupied by Blue(ownerID = 2) Settlement(worth = 1)");
+  //var value = vertex.getValue();
+  ok(vertex.getBuildSite() == 1 && vertex.getOwnerID() == 2, "Occupied by Blue(ownerID = 2) Settlement(worth = 1)");
 });
 
 test("vertex.isOccupied", function(){
@@ -51,14 +51,14 @@ test("hex.getEdgeNum", function(){
 test("hex.getVertex", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
   var vertex = hex.getVertex("SW");
-  ok(vertex.getValue().getOwnerID() == 2, "Got southwest vertex that belongs to player 2  at (0,0)");
+  ok(vertex.getOwnerID() == 2, "Got southwest vertex that belongs to player 2  at (0,0)");
  
 });
 
 test("hex.getVertexNum", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
   var vertexnum = hex.getVertexNum(5);
-  ok(vertexnum.getValue().getOwnerID() == 2, "Got 5th(=Southwest) vertex that belong to player 2 at (0,0)")
+  ok(vertexnum.getOwnerID() == 2, "Got 5th(=Southwest) vertex that belong to player 2 at (0,0)")
 });
 
 test("hexgrid.getHex", function(){
@@ -78,7 +78,7 @@ test("hexgrid.getVertex", function(){
   //normal vertex
   var hexLoc = new catan.models.map.HexLocation(0, 0);
   var vertex = hexgrid.getVertex(hexLoc, "SW");
-  ok(vertex.getValue().getOwnerID() == 2, "Southwest Vertex of (0,0) is owned by player 2");
+  ok(vertex.getOwnerID() == 2, "Southwest Vertex of (0,0) is owned by player 2");
   //bad direction
   stop();
   try{
@@ -94,7 +94,7 @@ test("hexgrid.getVertex", function(){
   //vertex on coast
   hexLoc = new catan.models.map.HexLocation(3, -2);
   vertex = hexgrid.getVertex(hexLoc, "SW");
-  ok(vertex.getValue().getOwnerID() == 0, "Coast vertex of (3, -2) occupied by player 0");
+  ok(vertex.getOwnerID() == 0, "Coast vertex of (3, -2) occupied by player 0");
 
   //vertex in water
   vertex = hexgrid.getVertex(hexLoc, "E");

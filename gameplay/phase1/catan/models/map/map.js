@@ -127,7 +127,7 @@ catan.models.map.Map = (function() {
     //check if there is a settlement at the given vertex
     var buildVertex = this.hexGrid.getVertex(hexLoc, dir);
     if(buildVertex){
-      if(buildVertex.getValue().getBuildSite() == 1/*"settlement"*/ && buildVertex.getValue().getOwnerID() == playerId){
+      if(buildVertex.getBuildSite() == 1/*"settlement"*/ && buildVertex.getOwnerID() == playerId){
         return true;
       }
     }
@@ -159,7 +159,7 @@ catan.models.map.Map = (function() {
           var settlementdir = "W";
           var noAdjRoad = true;
           for(var i=0; i <adjVertexes.length; i++){
-            if(adjVertexes[i].isOccupied() && adjVertexes[i].getValue().getOwnerID() == playerId){
+            if(adjVertexes[i].isOccupied() && adjVertexes[i].getOwnerID() == playerId){
               isNearSettlement = true;
               var edgeNum = catan.models.map.EdgeDirection[dir];
               var vertexNum = edgeNum + i;
@@ -244,7 +244,7 @@ catan.models.map.Map = (function() {
     //check for buildings of playerId at those locations
     for(var i=0; i<portVertices.length; i++){
       var portVertex = this.hexGrid.getVertex(portVertices[i].getLocation(),portVertices[i].getDirection())
-      if(portVertex && portVertex.isOccupied() && portVertex.getValue().getOwnerID() == playerId){
+      if(portVertex && portVertex.isOccupied() && portVertex.getOwnerID() == playerId){
         return true;
       }
     }
@@ -268,7 +268,7 @@ catan.models.map.Map = (function() {
     for(var i=0; i< 6; i++){
       var vertex = hex.getVertexNum(i);
       if(vertex){
-        if(vertex.isOccupied() && vertex.getValue().getOwnerID() == playerId){
+        if(vertex.isOccupied() && vertex.getOwnerID() == playerId){
           return true;
         }
       }

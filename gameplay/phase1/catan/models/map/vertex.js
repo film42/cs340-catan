@@ -34,7 +34,9 @@ catan.models.map.Vertex = (function Vertex_Class(){
   */
   
   function Vertex(vertexjson){
-    this.value = new catan.models.map.VertexValue(vertexjson.value);
+    this.ownerID = vertexjson.value.ownerID;
+    this.buildsite = vertexjson.value.worth;
+    //this.value = new catan.models.map.VertexValue(vertexjson.value);
   }
   
   /**
@@ -47,7 +49,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
   @method isOccupied
   */
   Vertex.prototype.isOccupied = function isOccupied() {
-    if(this.value.getOwnerID() > -1){
+    if(this.ownerID > -1){
       return true;
     }
     return false;
@@ -56,10 +58,38 @@ catan.models.map.Vertex = (function Vertex_Class(){
   /**
   Returns the value of the edge, which contains the ownerID
   @method getValue
-  */
+  
   Vertex.prototype.getValue = function getValue(){
     return this.value;
-  }
+  }*/
+
+  /**
+  Returns the value of ownerID
+  A value of -1 means is it unoccupied
+  <pre>
+  PRE: None
+  POST: Returns a value between -1 and 3 that represents the owner that occupies the vertex.
+  </pre>
+  @method getOwnerId
+  @return Integer between -1 and 3 that represents the owner that occupies the vertex. -1 means it is unoccupied
+  */
+  Vertex.prototype.getOwnerID = function() {
+      return this.ownerID;
+  };
+
+  /**
+  Returns the value of worth
+  0 has nothing, 1 has settlement and 2 and city
+  <pre>
+  PRE: None
+  POST: Returns a value between 0 and 2 that represents the owner that occupies the vertex.
+  </pre>
+  @method getBuildSite
+  @return Integer between 0 and 2 representing the worth of a vertex
+  */
+  Vertex.prototype.getBuildSite= function() {
+      return this.buildsite;
+  };
 
   return Vertex;
 
