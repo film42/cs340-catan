@@ -134,7 +134,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 				var edge = hex.getEdgeNum(i);
 				if(edge.isOccupied()){
 					var edgeloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), catan.models.map.EdgeDirectionNum[i]);
-					this.View.placeRoad(edgeloc, players[edge.getValue().getOwnerID()].getColor());
+					this.View.placeRoad(edgeloc, players[edge.getOwnerID()].getColor());
 				}
 			}
 		}

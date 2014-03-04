@@ -102,7 +102,7 @@ catan.models.map.Map = (function() {
         //make sure there is a road owned by the player adjacent to the vertex
         var adjEdges = this.hexGrid.getEdgesFromVertex(hexLoc, dir);
         for(var i=0; i< adjEdges.length; i++){
-          if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){ //may not need first check
+          if(adjEdges[i].isOccupied() && adjEdges[i].getOwnerID() == playerId){ //may not need first check
             return true;
           }
         }
@@ -169,7 +169,7 @@ catan.models.map.Map = (function() {
               settlementdir = catan.models.map.VertexDirectionNum[vertexNum];
               var adjEdges = this.hexGrid.getEdgesFromVertex(hexLoc, settlementdir);
               for(var i=0; i< adjEdges.length; i++){
-                if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
+                if(adjEdges[i].isOccupied() && adjEdges[i].getOwnerID() == playerId){
                   noAdjRoad = false
                 }
               }
@@ -189,7 +189,7 @@ catan.models.map.Map = (function() {
           //Check if adjacent edges have roads owned by that player
           var adjEdges = this.hexGrid.getAdjEdges(hexLoc, dir);
           for(var i=0; i< adjEdges.length; i++){
-            if(adjEdges[i].isOccupied() && adjEdges[i].getValue().getOwnerID() == playerId){
+            if(adjEdges[i].isOccupied() && adjEdges[i].getOwnerID() == playerId){
               return true;
             }
           }

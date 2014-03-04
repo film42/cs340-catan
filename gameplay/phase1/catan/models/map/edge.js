@@ -32,7 +32,8 @@ catan.models.map.Edge = (function Edge_Class(){
 
 
   function Edge(edgejson){
-    this.value = new catan.models.map.EdgeValue(edgejson.value);
+    this.ownerID = edgejson.value.ownerID;
+    //this.value = new catan.models.map.EdgeValue(edgejson.value);
   }
   
   /**
@@ -45,7 +46,7 @@ catan.models.map.Edge = (function Edge_Class(){
   @method isOccupied
   */
   Edge.prototype.isOccupied = function isOccupied(){
-    if(this.value.getOwnerID() > -1){
+    if(this.ownerID > -1){
       return true;
     }
     return false;
@@ -54,10 +55,25 @@ catan.models.map.Edge = (function Edge_Class(){
   /**
   Returns the value of the edge, which contains the ownerID
   @method getValue
-  */
+  
   Edge.prototype.getValue = function getValue(){
     return this.value;
-  }
+  }*/
+
+  /**
+  Returns the value of ownerID
+  A value of -1 means is it unoccupied
+  <pre>
+  PRE: None
+  POST: Returns a value between -1 and 3 that represents the owner that occupies the edge.
+  </pre>
+  @method getOwnerId
+  @return Integer between -1 and 3 that represents the owner that occupies the edge. -1 means it is unoccupied
+  */
+  Edge.prototype.getOwnerID = function() {
+      return this.ownerID;
+  };
+
 
   return Edge;
 }());

@@ -17,9 +17,9 @@ test("vertex.isOccupied", function(){
 });
 
 test("edge.getValue", function(){
-  var edge = new catan.models.map.Vertex(modelJson.map.hexGrid.hexes[3][3].edges[4]);
-  var value = edge.getValue();
-  ok(value.getOwnerID() == 2, "Occupied by Blue(ownerID = 2) road");
+  var edge = new catan.models.map.Edge(modelJson.map.hexGrid.hexes[3][3].edges[4]);
+  //var value = edge.getValue();
+  ok(edge.getOwnerID() == 2, "Occupied by Blue(ownerID = 2) road");
 });
 
 test("edge.isOccupied", function(){
@@ -38,14 +38,14 @@ test("hex.getLocation", function(){
 test("hex.getEdge", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
   var edge = hex.getEdge("S");
-  ok(edge.getValue().getOwnerID() == 2, "Got south edge that belongs to player 2  at (0,0)");
+  ok(edge.getOwnerID() == 2, "Got south edge that belongs to player 2  at (0,0)");
  
 });
 
 test("hex.getEdgeNum", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
   var edgenum = hex.getEdgeNum(4);
-  ok(edgenum.getValue().getOwnerID() == 2, "Got 4th(=South) edge that belong to player 2  at (0,0)")
+  ok(edgenum.getOwnerID() == 2, "Got 4th(=South) edge that belong to player 2  at (0,0)")
 });
 
 test("hex.getVertex", function(){
@@ -107,7 +107,7 @@ test("hexgrid.getEdge", function(){
   //normal vertex
   var hexLoc = new catan.models.map.HexLocation(0, 0);
   var edge = hexgrid.getEdge(hexLoc, "S");
-  ok(edge.getValue().getOwnerID() == 2, "South Edge of (0,0) is owned by player 2");
+  ok(edge.getOwnerID() == 2, "South Edge of (0,0) is owned by player 2");
   
   //bad direction
   stop();
@@ -124,7 +124,7 @@ test("hexgrid.getEdge", function(){
   //edge on coast
   hexLoc = new catan.models.map.HexLocation(3, -2);
   edge = hexgrid.getEdge(hexLoc, "SW");
-  ok(edge.getValue().getOwnerID() == 0, "Coast edge of (3, -2) occupied by player 0");
+  ok(edge.getOwnerID() == 0, "Coast edge of (3, -2) occupied by player 0");
 
   //edge inbetween waters
   edge = hexgrid.getEdge(hexLoc, "N");
