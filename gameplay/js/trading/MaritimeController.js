@@ -46,6 +46,9 @@ catan.trade.maritime.Controller = (function trade_namespace(){
     core.defineProperty(DiscardController.prototype,"init");
     core.defineProperty(DiscardController.prototype,"ratios");
 
+
+    
+
     MaritimeController.prototype.OnUpdatedModel = function(){
       if(!this.init){
         this.getView().hideGiveOptions();
@@ -54,61 +57,73 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       }
       //handle turn
       if(this.handleTurn()){
-        //updates if not yet selected give value
-        var types = catan.definitions.ResourceTypes;
-        if(!this.typeToGive){
-          var canTradeResources = [];
-          this.ratios = {};
-          for(var i=0; i<types.length; i++){
-            var ratio = this.canTrade(types[i]);
-            if(ratio > 0){
-              this.ratios[types[i]] = ratio;
-              canTradeResources.push(types[i]);
-            }
-          }
-          if(canTradeResources.length > 0){
-            this.getView().showGiveOptions(canTradeResources);
-          }else{
-            //this.getView().hideGiveOptions();
-            //this.getView().hideGetOptions();
-            this.typeToGet = undefined;
-            this.typeToGive = undefined;
-            this.getView().setMessage("No trades are possible");
-            this.getView().enableTradeButton(false);
-            this.getView().hideGiveOptions();
-            this.getView().hideGetOptions();
-            return;
-          }
-        }
-        //updates if not yet selected get value
-        if(!this.typeToGet){
-          var canGetResources = [];
-          var bankResources = this.game.getBankResources();
-          for(var i=0; i<types.length; i++){
-            if(bankResources[types[i]] > 0){
-              canGetResources.push(types[i]);
-            }
-          }
-          if(canGetResources.length > 0){
-            if(this.typeToGive){ //remove the type giving from the get options
-              var index = canGetResources.indexOf(this.typeToGive);
-              canGetResources.splice(index,1);
-            }
-            this.getView().showGetOptions(canGetResources);
-          }else{
-            this.getView().hideGiveOptions();
-            this.getView().hideGetOptions();
-            this.getView().setMessage("The Bank is broke!");
-            this.getView().enableTradeButton(false);
-            return;
-          }
-        }
+        
+        this.updateGiveType();
+
+        this.updateGetType();
+        
         if(this.typeToGet && this.typeToGive){
           this.getView().enableTradeButton(true);
           this.getView().setMessage("Trade?");
         }
       }
       this.init = true;
+    };
+
+
+    MaritimeController.prototype.updateGiveType = function(){
+      var types = catan.definitions.ResourceTypes;
+
+        //updates if not yet selected give value
+      if(!this.typeToGive){
+        var canTradeResources = [];
+        this.ratios = {};
+        for(var i=0; i<types.length; i++){
+          var ratio = this.canTrade(types[i]);
+          if(ratio > 0){
+            this.ratios[types[i]] = ratio;
+            canTradeResources.push(types[i]);
+          }
+        }
+        if(canTradeResources.length > 0){
+          this.getView().showGiveOptions(canTradeResources);
+        }else{
+          this.typeToGet = undefined;
+          this.typeToGive = undefined;
+          this.getView().setMessage("No trades are possible");
+          this.getView().enableTradeButton(false);
+          this.getView().hideGiveOptions();
+          this.getView().hideGetOptions();
+          return;
+        }
+      }
+    };
+
+    MaritimeController.prototype.updateGetType = function(){
+      var types = catan.definitions.ResourceTypes;
+      //updates if not yet selected get value
+      if(!this.typeToGet){
+        var canGetResources = [];
+        var bankResources = this.game.getBankResources();
+        for(var i=0; i<types.length; i++){
+          if(bankResources[types[i]] > 0){
+            canGetResources.push(types[i]);
+          }
+        }
+        if(canGetResources.length > 0){
+          if(this.typeToGive){ //remove the type giving from the get options
+            var index = canGetResources.indexOf(this.typeToGive);
+            canGetResources.splice(index,1);
+          }
+          this.getView().showGetOptions(canGetResources);
+        }else{
+          this.getView().hideGiveOptions();
+          this.getView().hideGetOptions();
+          this.getView().setMessage("The Bank is broke!");
+          this.getView().enableTradeButton(false);
+          return;
+        }
+      }
     };
 
     /**
