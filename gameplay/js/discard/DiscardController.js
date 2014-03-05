@@ -68,7 +68,7 @@ catan.discard.Controller = (function discard_namespace(){
 
       var curPlayer = this.game.getCurrentPlayer();
       if(curPlayer.hasMoreThan7Cards()){
-        var resources = curPlayer.getResources().getResourceArray();
+        var resources = curPlayer.getResourceArray();
         //catan.definitions
         //ResourceTypes: ["wood","brick","sheep","wheat","ore"]
         var sum = 0;

@@ -83,7 +83,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
         //updates if not yet selected get value
         if(!this.typeToGet){
           var canGetResources = [];
-          var bankResources = this.game.getModel().getBank().resources;
+          var bankResources = this.game.getBankResources();
           for(var i=0; i<types.length; i++){
             if(bankResources[types[i]] > 0){
               canGetResources.push(types[i]);

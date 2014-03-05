@@ -187,6 +187,11 @@ catan.core.Game = (function() {
     return results[0] || null;
   };
 
+  Game.prototype.getBankResources = function() {
+    return this.getModel().getBankResources();
+  };
+
+
 
   /////////////////////////////////////////////
   /////////////////////////////////////////////

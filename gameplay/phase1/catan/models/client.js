@@ -105,6 +105,11 @@ catan.models.ClientModel = (function() {
     return this._bank;
   };
 
+  ClientModel.prototype.getBankResources = function() {
+    return this._bank.resources;
+  };
+
+
   /**
     Get the ClientModel Deck, that is, the game Deck
 
