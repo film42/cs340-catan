@@ -134,8 +134,10 @@ catan.trade.domestic.Controller = (function trade_namespace() {
             giveResource = "ore";
           }
           
-          this.acceptView.addGiveResource(giveResource ? giveResource : "wood", giveQty ? giveQty : 0);
-          this.acceptView.addGetResource(getResource ? getResource : "wood", getQty ? getQty : 0);
+          if (giveResource)
+            this.acceptView.addGiveResource(giveResource, giveQty);
+          if (getResource)
+            this.acceptView.addGetResource(getResource, getQty);
           
           this.acceptView.showModal();
         } else {

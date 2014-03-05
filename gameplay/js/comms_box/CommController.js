@@ -32,6 +32,20 @@ catan.comm.Controller = (function () {
       
     }
     
+
+    BaseCommController.prototype.resetLines = function(lines){
+     var players = this.game.getModel().getPlayers();
+     for(var i= 0; i< lines.length; i++){
+        var source = lines[i].source;
+        for(var j=0; j< players.length; j++){
+          if(players[j].getName() == source){
+            lines[i].className = players[j].getColor();
+            break;
+          }
+        }
+     }
+     this.view.resetLines(lines);
+    };
     return BaseCommController;
   }());
   
@@ -54,22 +68,12 @@ catan.comm.Controller = (function () {
       this.game = game;
       this.view = logView;
 
-      this.game.addObserver(this, this.onModelUpdate);
+     // this.game.addObserver(this, this.onModelUpdate);
     }
 
     LogController.prototype.onModelUpdate = function(){
      var logLines = this.game.getModel().getLog().getMessages();
-     var players = this.game.getModel().getPlayers();
-     for(var i= 0; i< logLines.length; i++){
-        var source = logLines[i].source;
-        for(var j=0; j< players.length; j++){
-          if(players[j].getName() == source){
-            logLines[i].className = players[j].getColor();
-            break;
-          }
-        }
-     }
-     this.view.resetLines(logLines);
+     this.resetLines(logLines);
     };
         
     return LogController;
@@ -95,7 +99,7 @@ catan.comm.Controller = (function () {
       this.game = game;
       this.view = chatView;
 
-      this.game.addObserver(this, this.onModelUpdate);
+    //  this.game.addObserver(this, this.onModelUpdate);
     }
         
     /**
@@ -104,17 +108,7 @@ catan.comm.Controller = (function () {
     */
     ChatController.prototype.onModelUpdate = function(){
      var chatLines = this.game.getModel().getChat().getMessages();
-     var players = this.game.getModel().getPlayers();
-     for(var i= 0; i< chatLines.length; i++){
-        var source = chatLines[i].source;
-        for(var j=0; j< players.length; j++){
-          if(players[j].getName() == source){
-            chatLines[i].className = players[j].getColor();
-            break;
-          }
-        }
-     }
-     this.view.resetLines(chatLines);
+     this.resetLines(chatLines);
     };
 
     /**

@@ -35,29 +35,8 @@ catan.setup.Controller = (function(){
    core.defineProperty(SetupRoundController.prototype, "state");
    core.defineProperty(SetupRoundController.prototype, "numOfRoads");
    core.defineProperty(SetupRoundController.prototype, "numOfSettlements");
-    core.defineProperty(SetupRoundController.prototype, "mapController");
-  /**
-  setup road and setlement in setup phase.
-  <pre>
-    PRE: Less than two roads and two setlement
-    POST: build one more road and one more setlement
-  </pre>      
-    @return {void}
-  */
-  SetupRoundController.prototype.setupRound = function(){
-   
-    var client = this.game.getModel();
-    var currentPlayer = this.game.getCurrentPlayer();
-    
-
-    if (currentPlayer.getRoads() < 2){
-       this.mapController.startMove("road", true, true);
-    }
-
-    if(currentPlayer.getSettlements() < 2){
-      this.mapController.startMove("settlement", true, true);
-    }
-  };
+   core.defineProperty(SetupRoundController.prototype, "mapController");
+ 
   /**
     This is the callback function passed into the game in order to update
     <pre>

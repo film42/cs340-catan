@@ -134,7 +134,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 				var edge = hex.getEdgeNum(i);
 				if(edge.isOccupied()){
 					var edgeloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), catan.models.map.EdgeDirectionNum[i]);
-					this.View.placeRoad(edgeloc, players[edge.getValue().getOwnerID()].getColor());
+					this.View.placeRoad(edgeloc, players[edge.getOwnerID()].getColor());
 				}
 			}
 		}
@@ -148,11 +148,11 @@ catan.map.Controller = (function catan_controller_namespace() {
 				var vertex = hex.getVertex(dir);
 				if(vertex.isOccupied()){
 					var vertexloc = new catan.map.View.VertexLoc(hexloc.getX(), hexloc.getY(), dir);
-					if(vertex.getValue().getBuildSite() == 1){
-						self.View.placeSettlement(vertexloc, players[vertex.getValue().getOwnerID()].getColor());
+					if(vertex.getBuildSite() == 1){
+						self.View.placeSettlement(vertexloc, players[vertex.getOwnerID()].getColor());
 					}
-					else if(vertex.getValue().getBuildSite() == 2){
-						self.View.placeCity(vertexloc, players[vertex.getValue().getOwnerID()].getColor());					
+					else if(vertex.getBuildSite() == 2){
+						self.View.placeCity(vertexloc, players[vertex.getOwnerID()].getColor());					
 					}
 				}
 			}
@@ -285,7 +285,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			for(var i = 0; i < 6; i++){
 				var vertex = hex.getVertexNum(i);
 				if(vertex.isOccupied()){
-					var ownerID = vertex.getValue().getOwnerID();
+					var ownerID = vertex.getOwnerID();
 					var player = this.ClientModel.getPlayerWithOrder(ownerID);
 					if(ownerID != this.game.getCurrentPlayerOrder()){
 						playerInfo[ownerID] = {};
