@@ -2,7 +2,7 @@ package route;
 
 import spark.*;
 
-public class Core {
+public abstract class CoreRoute implements Routable {
 
     public void get(Route route) {
         spark.Spark.get(route);
@@ -11,4 +11,5 @@ public class Core {
     public void post(Route route) {
         spark.Spark.post(route);
     }
+
 }
