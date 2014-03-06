@@ -8,14 +8,13 @@ import spark.Route;
 /**
  * Created by qzcx on 3/6/14.
  */
-public class CreateRoute extends CoreRoute {
-
+public class addAIRoute extends CoreRoute {
     @Override
     public void attach() {
-        get(new Route("/games/create") {
+        get(new Route("/game/addAI") {
             @Override
             public Object handle(Request request, Response response) {
-                return "User Register Test";
+                return "Game addAI Test";
             }
         });
     }

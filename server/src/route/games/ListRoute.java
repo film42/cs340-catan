@@ -1,4 +1,4 @@
-package route.game;
+package route.games;
 
 import route.CoreRoute;
 import spark.Request;
