@@ -1,4 +1,4 @@
-package route.user;
+package route.assets;
 
 import route.CoreRoute;
 import route.Routable;
@@ -6,15 +6,17 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class LoginRoute extends CoreRoute {
+public class StaticRoute extends CoreRoute {
 
     @Override
     public void attach() {
-        get(new Route("/user/login") {
+        get(new Route("/*") {
             @Override
             public Object handle(Request request, Response response) {
-                return "test";
+                String url = request.url();
+                return "We will soon serve: " + url;
             }
         });
     }
+
 }

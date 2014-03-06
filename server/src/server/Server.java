@@ -2,6 +2,7 @@ package server;
 
 import static spark.Spark.*;
 
+import route.assets.StaticRoute;
 import route.user.LoginRoute;
 
 public class Server {
@@ -13,8 +14,11 @@ public class Server {
     private void config() {
         setPort(8081);
 
-        LoginRoute lR = new LoginRoute();
-        lR.attach();
+        // Each Route
+        new LoginRoute().attach();
+
+        // Statics (Last)
+        new StaticRoute().attach();
     }
 
     private void run() {
