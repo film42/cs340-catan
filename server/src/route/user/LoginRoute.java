@@ -16,7 +16,7 @@ public class LoginRoute extends Core implements Routable {
         get(new Route("/user/login") {
             @Override
             public Object handle(Request request, Response response) {
-                return "test";
+                return "User Login Test";
             }
         });
     }
