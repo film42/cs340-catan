@@ -3,7 +3,9 @@ package server;
 import static spark.Spark.*;
 
 import route.assets.StaticRoute;
+import route.game.ListRoute;
 import route.user.LoginRoute;
+import route.user.RegisterRoute;
 
 public class Server {
 
@@ -16,6 +18,8 @@ public class Server {
 
         // Each Route
         new LoginRoute().attach();
+        new RegisterRoute().attach();
+        new ListRoute().attach();
 
         // Statics (Last)
         new StaticRoute().attach();
