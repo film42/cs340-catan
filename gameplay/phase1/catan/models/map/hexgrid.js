@@ -49,6 +49,10 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     this.offsets = hexgridjson.offsets;
   }
 
+  /**
+  Translate from hexlocation (where [0,0] is center hex) to the array of hexes
+  @private
+  */
   HexGrid.prototype._getInternalHexRef = function(hexLoc){
     var translatedX = hexLoc.getX() + this.x0;
     var translatedY = hexLoc.getY() + this.y0;
@@ -73,13 +77,19 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
   }
 
+  
+  /**
+  Returns hexes as the raw array for easy iteration
+  @method getHex
+  @return Hex[]
+  */
   HexGrid.prototype.getHexArray = function(){
     return this.hexes;
   }
 
   /**
   Gets the Vertex in the dir direction on the Hex determined by the HexLocation
-
+  Returns null us vertex is only on water
   @method getVertex
   @param HexLocation, VertexDirection
   @return Vertex
@@ -110,13 +120,12 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
         return null;
       }
     }
-    //console.log("Direction:" + dir);
     return hex.getVertex(dir);
   }
   
   /**
   Gets the Edge in the dir direction on the Hex determined by the HexLocation
-
+  Returns null is edge is totally surrounded by water
   @method getEdge
   @param HexLocation, EdgeDirection
   @return Edge
@@ -131,9 +140,13 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
       var dirnum = catan.models.map.EdgeDirection[dir];
       var neighborloc = hexLoc.getNeighborLocation(dir);
       var neighborhex = this.getHex(neighborloc);
+
+      //edge is edge of map, no neighboring hex
       if(!neighborhex){
         return null;
       }
+
+      //neighboring hex is water also
       if(!neighborhex.isLand()){
         return null;
       }
