@@ -24,16 +24,10 @@ public class Server {
     private void run() {
     }
 
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.config();
-        server.run();
-    }
-
     private void config() {
         setPort(8081);
-
         externalStaticFileLocation("../gameplay");
+
         IModel myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
@@ -54,6 +48,12 @@ public class Server {
         new MoveRoute(myMoveFacade).attach();
         // Statics do this last
         //new StaticRoute().attach();
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.config();
+        server.run();
     }
 
 }
