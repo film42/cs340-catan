@@ -53,6 +53,7 @@ catan.models.map.Edge = (function Edge_Class(){
   }
 
   /**
+  REMOVED
   Returns the value of the edge, which contains the ownerID
   @method getValue
   

@@ -1,4 +1,4 @@
-var catan = catan || {};
+/*var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
@@ -8,7 +8,7 @@ catan.models.map.EdgeValue = (function() {
 
   /**
   @property ownerID
-  */  
+ 
   //core.defineProperty(Map.prototype, "ownerID");
 
   /**
@@ -26,10 +26,10 @@ catan.models.map.EdgeValue = (function() {
     @constructor
     @param {Object} json Contains a value for ownerID
 
-  */
+
 
     // Constructor 
-  function EdgeValue(json) {
+/*  function EdgeValue(json) {
     this.ownerID = json.ownerID;
   }
 
@@ -43,10 +43,9 @@ catan.models.map.EdgeValue = (function() {
   </pre>
   @method getOwnerId
   @return Integer between -1 and 3 that represents the owner that occupies the edge. -1 means it is unoccupied
-  */
   EdgeValue.prototype.getOwnerID = function() {
       return this.ownerID;
   };
 
   return EdgeValue;
-})();
+})();*/

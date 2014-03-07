@@ -142,6 +142,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   }
 
   /**
+  REMOVED
   Returns the vertex belonging to the Hex at direction given
   <pre>
   PRE: A number that corresponds to a vertex is given.
@@ -160,6 +161,7 @@ catan.models.map.Hex = (function CatanHex_Class(){
   }*/
 
   /**
+  REMOVED
   Returns the edge belonging to the Hex at direction given
   <pre>
   PRE: A valid EdgeDirection object that specifies a direction on the Hex

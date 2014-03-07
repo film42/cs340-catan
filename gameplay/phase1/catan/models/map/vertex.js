@@ -56,6 +56,7 @@ catan.models.map.Vertex = (function Vertex_Class(){
   }
 
   /**
+  REMOVED
   Returns the value of the edge, which contains the ownerID
   @method getValue
   

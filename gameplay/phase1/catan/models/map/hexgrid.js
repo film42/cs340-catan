@@ -103,8 +103,8 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     if(!hex.isLand()){
       var dirnum = catan.models.map.VertexDirection[dir];
       var leftdir = nextDirectionCounterClockwise(dirnum);
-      var leftneighbor = this.getHex(hexLoc.getNeighborLocationNum(leftdir));
-      var rightneighbor = this.getHex(hexLoc.getNeighborLocationNum(dirnum));
+      var leftneighbor = this.getHex(hexLoc.getNeighborLocation(leftdir));
+      var rightneighbor = this.getHex(hexLoc.getNeighborLocation(dirnum));
       var both = true;
       if(leftneighbor){
         if(leftneighbor.isLand()){
@@ -183,7 +183,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
     }
 
 
-    var neighborloc = hexLoc.getNeighborLocationNum(dirnum);
+    var neighborloc = hexLoc.getNeighborLocation(dirnum);
     var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       //var oppdir = ((((dirnum+3)%6)+6)%6);
@@ -256,7 +256,7 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
       vertexes.push(left);
     }
 
-    var neighborloc = hexLoc.getNeighborLocationNum(dirnum);
+    var neighborloc = hexLoc.getNeighborLocation(dirnum);
     var neighborhex = this.getHex(neighborloc);
     if(neighborhex){
       var oppdir = getOppositeDirection(dirnum);
@@ -332,8 +332,8 @@ catan.models.map.HexGrid = (function HexGrid_Class(){
       //make sure it's a neighbor that can has an adjacent edge to this edge. namely across the edge, and across the clockwise
       // and counterclockwise edges from that edge
       var neighbor = hexLoc.getNeighborLocation(dir);
-      var neighborcw = hexLoc.getNeighborLocationNum(cw);
-      var neighborccw = hexLoc.getNeighborLocationNum(ccw);
+      var neighborcw = hexLoc.getNeighborLocation(cw);
+      var neighborccw = hexLoc.getNeighborLocation(ccw);
       if(otherHexLoc.equals(neighbor)){
         var oppdir = getOppositeDirection(dirnum);
         var ocw = nextDirectionClockwise(oppdir);

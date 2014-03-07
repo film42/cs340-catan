@@ -1,18 +1,20 @@
-var catan = catan || {};
+/*var catan = catan || {};
 catan.models = catan.models || {};
 catan.models.map = catan.models.map || {};
 
+/*
+REMOVED
 catan.models.map.VertexValue = (function() {
 
   /**
   @property ownerID
-  */  
+  
   //core.defineProperty(Map.prototype, "ownerID");
 
   /**
   @property buildsite
   @type BuildStatus(enumeration)
-  */  
+  
   //core.defineProperty(Map.prototype, "buildsite");
 
   /**
@@ -30,8 +32,8 @@ catan.models.map.VertexValue = (function() {
     @constructor
     @param {Object} json Contains a value for ownerID and for worth
 
-  */
 
+/*
   // Constructor 
   function VertexValue(json) {
     this.ownerID = json.ownerID;
@@ -46,9 +48,9 @@ catan.models.map.VertexValue = (function() {
   POST: Returns a value between -1 and 3 that represents the owner that occupies the vertex.
   </pre>
   @method getOwnerId
-  @return Integer between -1 and 3 that represents the owner that occupies the vertex. -1 means it is unoccupied
-  */
-  VertexValue.prototype.getOwnerID = function() {
+@return Integer between -1 and 3 that represents the owner that occupies the vertex. -1 means it is unoccupied
+
+/*  VertexValue.prototype.getOwnerID = function() {
       return this.ownerID;
   };
 
@@ -61,10 +63,10 @@ catan.models.map.VertexValue = (function() {
   </pre>
   @method getBuildSite
   @return Integer between 0 and 2 representing the worth of a vertex
-  */
-  VertexValue.prototype.getBuildSite= function() {
+
+/*  VertexValue.prototype.getBuildSite= function() {
       return this.buildsite;
   };
 
   return VertexValue;
-})();
+})();*/
