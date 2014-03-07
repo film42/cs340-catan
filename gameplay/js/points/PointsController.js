@@ -26,20 +26,23 @@ catan.points.Controller = (function VPController_Class(){
   */
   function PointController(view, gameFinishedView, game){
     Controller.call(this,view,game);
+    // General Housekeeping
     if (!gameFinishedView) // undefined if in setup controller
       return;
     this.setGameFinishedView(gameFinishedView);
     gameFinishedView.setController(this);
+    
+    //prepare for the updated model
     this.game = game;
     this.view = view;
-    this.player = game.getCurrentPlayer();
-    view.setPoints(this.player.getPoints());
+    view.setPoints(game.getCurrentPlayer().getPoints());
 
+    //add the onUpdatedModel
     this.game.addObserver(this, this.OnUpdatedModel);
   }
   
   PointController.prototype.OnUpdatedModel = function(){
-    var theresaWinner = false
+    var theresaWinner = false;
     var winnerName;
     var isYou;
     var self = this;
