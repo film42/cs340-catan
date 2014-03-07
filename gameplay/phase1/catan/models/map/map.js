@@ -266,7 +266,7 @@ catan.models.map.Map = (function() {
   Map.prototype.canRobPlayer = function(playerId, hexLoc){
     var hex = this.hexGrid.getHex(hexLoc);
     for(var i=0; i< 6; i++){
-      var vertex = hex.getVertexNum(i);
+      var vertex = hex.getVertex(i);
       if(vertex){
         if(vertex.isOccupied() && vertex.getOwnerID() == playerId){
           return true;

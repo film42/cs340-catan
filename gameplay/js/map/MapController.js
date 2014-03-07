@@ -180,7 +180,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			var players = this.ClientModel.getPlayers();
 			//edges 3-5 because MapView only accepts "SE", "SW" and "S". This is to to prevent overlap
 			for (var i = 3; i <= 5; i++){
-				var edge = hex.getEdgeNum(i);
+				var edge = hex.getEdge(i);
 				if(edge.isOccupied()){
 					var edgeloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), catan.models.map.EdgeDirectionNum[i]);
 					this.View.placeRoad(edgeloc, players[edge.getOwnerID()].getColor());
@@ -228,7 +228,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			var hex = this.ClientModel.getMap().getHexGrid().getHex(hexloc);
 			var playerInfo = [];
 			for(var i = 0; i < 6; i++){
-				var vertex = hex.getVertexNum(i);
+				var vertex = hex.getVertex(i);
 				if(vertex.isOccupied()){
 					var ownerID = vertex.getOwnerID();
 					var player = this.ClientModel.getPlayerWithOrder(ownerID);

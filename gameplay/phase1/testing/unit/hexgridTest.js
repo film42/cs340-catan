@@ -44,7 +44,7 @@ test("hex.getEdge", function(){
 
 test("hex.getEdgeNum", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
-  var edgenum = hex.getEdgeNum(4);
+  var edgenum = hex.getEdge(4);
   ok(edgenum.getOwnerID() == 2, "Got 4th(=South) edge that belong to player 2  at (0,0)")
 });
 
@@ -57,7 +57,7 @@ test("hex.getVertex", function(){
 
 test("hex.getVertexNum", function(){
   var hex = new catan.models.map.Hex(modelJson.map.hexGrid.hexes[3][3]);
-  var vertexnum = hex.getVertexNum(5);
+  var vertexnum = hex.getVertex(5);
   ok(vertexnum.getOwnerID() == 2, "Got 5th(=Southwest) vertex that belong to player 2 at (0,0)")
 });
 
