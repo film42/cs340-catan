@@ -97,16 +97,43 @@ test("Map.canMaritimeTrade",function(){
   var map = new catan.models.map.Map(modelJson.map);
   //what I'm doing here is initializing empty 
   //and then using the setResourceListItems function to init.
-  var resources = new catan.models.ResourceList({});
-  resources.setResourceListItems(0,0,0,2,0);
-  var test1 = map.canMaritimeTrade(0,2,"Wheat");
+  var resources = new catan.models.ResourceList({
+        "brick": 0,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 2,
+        "ore": 0
+      });
+  //resources.setResourceListItems(0,0,0,2,0);
+  var test1 = map.canMaritimeTrade(0,2,"wheat");
   console.log(test1);
   ok(test1, "True: Wheat Trade");
-  resources.setResourceListItems(0,0,0,3,0);
-  ok(!map.canMaritimeTrade(2,3,"Wheat"), "False: no 3:1 port");
-  resources.setResourceListItems(0,0,0,0,2);
-  ok(!map.canMaritimeTrade(0,2,"Wood"), "False: wrong resource");
-  resources.setResourceListItems(0,0,0,0,4);
+  //resources.setResourceListItems(0,0,0,3,0);
+  resources = new catan.models.ResourceList({
+        "brick": 0,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 3,
+        "ore": 0
+      });
+  ok(!map.canMaritimeTrade(2,3,"wheat"), "False: no 3:1 port");
+  //resources.setResourceListItems(0,0,0,0,2);
+    var resources = new catan.models.ResourceList({
+        "brick": 0,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 0,
+        "ore": 2
+      });
+  ok(!map.canMaritimeTrade(0,2,"wood"), "False: wrong resource");
+  //resources.setResourceListItems(0,0,0,0,4);
+    var resources = new catan.models.ResourceList({
+        "brick": 0,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 0,
+        "ore": 4
+      });
   ok(map.canMaritimeTrade(0,4), "True: 4:1");
 });
 
