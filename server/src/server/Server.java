@@ -17,14 +17,11 @@ import route.games.ListRoute;
 import route.user.LoginRoute;
 import route.user.RegisterRoute;
 
+import java.io.File;
+
 public class Server {
 
-    public Server() {
-
-    }
-
     private void run() {
-        System.out.println("test");
     }
 
     public static void main(String[] args) {
@@ -35,7 +32,8 @@ public class Server {
 
     private void config() {
         setPort(8081);
-        staticFileLocation("../gameplay");
+
+        externalStaticFileLocation("../gameplay");
         IModel myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
