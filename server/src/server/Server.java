@@ -16,25 +16,21 @@ import route.games.ListRoute;
 import route.user.LoginRoute;
 import route.user.RegisterRoute;
 
+import java.io.File;
+
 public class Server {
 
-    public Server() {
-
-    }
-
     private void run() {
-        System.out.println("test");
-    }
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.config();
-        server.run();
     }
 
     private void config() {
+        // Set port here
         setPort(8081);
-        staticFileLocation("../gameplay");
+
+        // Set static directory to "gameplay"
+        externalStaticFileLocation("../gameplay");
+
+        // Facade Classes
         IModel myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
@@ -53,8 +49,12 @@ public class Server {
         new addAIRoute(myGameFacade).attach();
         new CommandsRoute(myGameFacade).attach();
         new MoveRoute(myMoveFacade).attach();
-        // Statics do this last
-        //new StaticRoute().attach();
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.config();
+        server.run();
     }
 
 }
