@@ -25,9 +25,13 @@ public class Server {
     }
 
     private void config() {
+        // Set port here
         setPort(8081);
+
+        // Set static directory to "gameplay"
         externalStaticFileLocation("../gameplay");
 
+        // Facade Classes
         IModel myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
@@ -46,8 +50,6 @@ public class Server {
         new addAIRoute(myGameFacade).attach();
         new CommandsRoute(myGameFacade).attach();
         new MoveRoute(myMoveFacade).attach();
-        // Statics do this last
-        //new StaticRoute().attach();
     }
 
     public static void main(String[] args) {
