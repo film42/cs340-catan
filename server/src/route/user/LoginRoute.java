@@ -1,13 +1,16 @@
 package route.user;
 
+import model.facade.UtilFacade;
 import route.CoreRoute;
-import route.Routable;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 public class LoginRoute extends CoreRoute {
-
+    private UtilFacade m_utilFacade;
+    public LoginRoute(UtilFacade gamesFacade) {
+        m_utilFacade = gamesFacade;
+    }
     @Override
     public void attach() {
         get(new Route("/user/login") {

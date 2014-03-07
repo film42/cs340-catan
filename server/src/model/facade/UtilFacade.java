@@ -8,7 +8,13 @@ import route.game.ModelRoute;
  * This class will contain the interface for the user/login, user/register, util/changeLogLevel
  *
  */
-public class UtilFacade extends ModelRoute{
+public class UtilFacade {
+
+    private IModel m_model;
+
+    public UtilFacade(IModel model) {
+        m_model = model;
+    }
 
     /**
      *
