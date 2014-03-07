@@ -19,7 +19,8 @@ public class CreateRoute extends CoreRoute {
         get(new Route("/games/create") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Games Create Test";
+                String modelResponse = m_gamesFacade.onCreateGame();
+                return modelResponse;
             }
         });
     }

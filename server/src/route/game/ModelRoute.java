@@ -19,7 +19,8 @@ public class ModelRoute extends CoreRoute{
         get(new Route("/game/model") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Game Model Test";
+                String modelResponse = m_gameFacade.onModelRequest();
+                return modelResponse;
             }
         });
     }

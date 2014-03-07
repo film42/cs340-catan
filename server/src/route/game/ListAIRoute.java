@@ -19,7 +19,8 @@ public class ListAIRoute extends CoreRoute {
         get(new Route("/game/listAI") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Game List AI Test";
+                String modelResponse = m_gameFacade.onListAI();
+                return modelResponse;
             }
         });
     }

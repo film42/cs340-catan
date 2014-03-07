@@ -19,6 +19,8 @@ public class ChangeLogLevelRoute extends CoreRoute {
         get(new Route("/util/changeLogLevel") {
             @Override
             public Object handle(Request request, Response response) {
+                boolean modelResponse = m_utilFacade.onChangeLogLevel();
+
                 return "Util Change Log Level Test";
             }
         });

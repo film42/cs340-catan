@@ -9,7 +9,6 @@ import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
 import route.MoveRoute;
-import route.assets.StaticRoute;
 import route.game.*;
 import route.games.CreateRoute;
 import route.games.JoinRoute;

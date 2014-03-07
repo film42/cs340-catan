@@ -20,6 +20,7 @@ public class addAIRoute extends CoreRoute {
         get(new Route("/game/addAI") {
             @Override
             public Object handle(Request request, Response response) {
+                boolean modelResponse = m_gameFacade.onAddAI();
                 return "Game addAI Test";
             }
         });

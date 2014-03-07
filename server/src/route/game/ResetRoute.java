@@ -20,7 +20,8 @@ public class ResetRoute extends CoreRoute {
         get(new Route("/game/reset") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Game Reset Test";
+                String modelResponse = m_gameFacade.onReset();
+                return modelResponse;
             }
         });
     }
