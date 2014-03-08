@@ -15,8 +15,8 @@ import route.games.JoinRoute;
 import route.games.ListRoute;
 import route.user.LoginRoute;
 import route.user.RegisterRoute;
+import route.util.ChangeLogLevelRoute;
 
-import java.io.File;
 
 public class Server {
 
@@ -49,6 +49,7 @@ public class Server {
         new addAIRoute(myGameFacade).attach();
         new CommandsRoute(myGameFacade).attach();
         new MoveRoute(myMoveFacade).attach();
+        new ChangeLogLevelRoute(myUtilFacade).attach();
     }
 
     public static void main(String[] args) {

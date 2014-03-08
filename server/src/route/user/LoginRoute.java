@@ -16,7 +16,11 @@ public class LoginRoute extends CoreRoute {
         get(new Route("/user/login") {
             @Override
             public Object handle(Request request, Response response) {
+
                 boolean modelResponse = m_utilFacade.onUserLogin();
+                if(modelResponse){
+
+                }
                 return "User Login Test";
             }
         });
