@@ -1,5 +1,6 @@
 package route.game;
 
+import model.base.Game;
 import model.facade.GameFacade;
 import route.CoreRoute;
 import spark.Request;
@@ -10,16 +11,21 @@ import spark.Route;
  * Created by qzcx on 3/6/14.
  */
 public class ModelRoute extends CoreRoute{
+
     private GameFacade m_gameFacade;
+
     public ModelRoute(GameFacade gameFacade) {
         m_gameFacade = gameFacade;
     }
+
     @Override
     public void attach() {
         get(new Route("/game/model") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Game Model Test";
+                Game model = new Game();
+
+                return model.toJson();
             }
         });
     }
