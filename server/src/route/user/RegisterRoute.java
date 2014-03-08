@@ -20,7 +20,13 @@ public class RegisterRoute extends CoreRoute {
             @Override
             public Object handle(Request request, Response response) {
                 boolean modelResponse = m_utilFacade.onUserRegister();
-                return "User Register Test";
+                if(modelResponse){
+                    response.cookie("catan.user", "username:Sam password:sam");
+                    return "";
+                }else{
+                    response.status(401);
+                    return "";
+                }
             }
         });
     }

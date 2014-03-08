@@ -20,6 +20,7 @@ public class LoginRoute extends CoreRoute {
                 boolean modelResponse = m_utilFacade.onUserLogin();
                 if(modelResponse){
                     //default return HTTP_OK
+                    response.cookie("catan.user", "username:Sam password:sam");
                     return "";
                 }
                 else{

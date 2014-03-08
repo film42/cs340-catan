@@ -19,8 +19,14 @@ public class JoinRoute extends CoreRoute {
         get(new Route("/games/join") {
             @Override
             public Object handle(Request request, Response response) {
-                String modelResponse = m_gamesFacade.onListGames();
-                return modelResponse;
+                Boolean modelResponse = m_gamesFacade.onJoinGame();
+                if(modelResponse){
+                    response.cookie("catan.game", "-1");
+                    return "";
+                }else{
+                    response.status(401);
+                    return "";
+                }
             }
         });
     }
