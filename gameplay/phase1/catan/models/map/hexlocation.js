@@ -36,12 +36,20 @@ catan.models.map.HexLocation = (function HexLocationClass(){
           This represents a location of a hex on a hex grid.
          
             @method getNeighborLocation
-            @param {[HexDirection]} hexDirection
+            @param {[HexDirection]} hexDirection -> string(like "NE") or number between 0 and 5
             @return hexgrid.HexLocation Returns a location next to this one, in the direction of the 'hexDirection' given
         */
     HexLocation.prototype.getNeighborLocation = function getNeighborLocation(hexDir){
       var x,  y , z = 0;
-      var hexDirection = catan.models.map.HexDirection[hexDir];
+      if(typeof hexDir == 'string'){
+        var hexDirection = catan.models.map.HexDirection[hexDir];
+      }
+      else if(typeof hexDir == 'number'){
+        var hexDirection = hexDir;
+      }
+      else{
+        throw new Error("Direction not a string or number");
+      }
         switch (hexDirection) {
         case catan.models.map.HexDirection.SE:
           x = 1; y = 0; z = -1;
@@ -75,7 +83,7 @@ catan.models.map.HexLocation = (function HexLocationClass(){
             @method getNeighborLocation
             @param number
             @return hexgrid.HexLocation Returns a location next to this one, in the direction of the 'hexDirection' given
-        */
+        
   HexLocation.prototype.getNeighborLocationNum = function getNeighborLocationNum(hexDirection){
       var x,  y , z = 0;
         switch (hexDirection) {
@@ -103,7 +111,7 @@ catan.models.map.HexLocation = (function HexLocationClass(){
           throw new Error("Invalid Direction");
       }
       return new catan.models.map.HexLocation(this.getX() + x,this.getY() + y);
-    }
+    }*/
     
     return HexLocation;
   }());

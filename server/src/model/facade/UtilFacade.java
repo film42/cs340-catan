@@ -1,7 +1,6 @@
 package model.facade;
 
-import model.IModel;
-import route.game.ModelRoute;
+import model.JsonSerializable;
 
 /**
  * Created by qzcx on 3/6/14.
@@ -10,9 +9,9 @@ import route.game.ModelRoute;
  */
 public class UtilFacade {
 
-    private IModel m_model;
+    private JsonSerializable m_model;
 
-    public UtilFacade(IModel model) {
+    public UtilFacade(JsonSerializable model) {
         m_model = model;
     }
 

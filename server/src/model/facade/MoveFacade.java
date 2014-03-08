@@ -1,15 +1,15 @@
 package model.facade;
 
-import model.IModel;
+import model.JsonSerializable;
 
 /**
  * Created by qzcx on 3/7/14.
  */
 public class MoveFacade {
 
-    private IModel m_model;
+    private JsonSerializable m_model;
 
-    public MoveFacade(IModel model) {
+    public MoveFacade(JsonSerializable model) {
         m_model = model;
     }
 

@@ -38,17 +38,37 @@ catan.map.Controller = (function catan_controller_namespace() {
 			catan.core.BaseController.call(this,view,model.getModel());
 			this.setModalView(modalView);
 			this.setRobView(robView);
+
+			//actually passed in the game which has a model
 			this.game = model;
+
+			//remembers if the map has been initialized or not
 			this.initialized = false;
-			this.modalOn = false;
+
+			//remembers whether the robber modal is open or not
+			this.robModalOn = false;
+
+			//remembers whether a soldier card has been played or not
 			this.soldier = false;
+
+			//holds the robbers new location while other modals are run so that it can be passed to the server
 			this.robloc = {};
+
+			//vars for keeping track of road building
 			this.roadbuild = false;
 			this.firstroad = false;
 			this.firstroadloc;
+
+			//link observer, pass in updateFromModel as the function to be called when model updates
 			this.game.addObserver(this, this.updateFromModel);
 		}
 
+
+		/**
+		Adds permanent map objects to view(hexes, ports and numbers)
+		To be run on first load of controller after model is loaded
+		@private
+		*/
 		MapController.prototype.initFromModel = function(){
 			this.ClientModel = this.game.getModel();
 			this.populateHexes();
@@ -56,6 +76,12 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.populateNumbers();
 		}
 
+		/**
+		Updates location of robber, settlements, roads and cities on map. Also runs the check for robber phase
+		To be run each time the model is changed
+		Should only be run by the observer
+		@private
+		*/
 		MapController.prototype.updateFromModel = function(){
 			if(!this.initialized){
 				this.initFromModel();
@@ -66,6 +92,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 			this.doRobberPhase();
 		}
 
+		/**
+		Adds hexes to mapview
+		@private
+		*/
 		MapController.prototype.populateHexes = function populateHexes(){
 			var map = this.ClientModel.getMap(); //do we have a game or a model here? getModel() if need be
 			var hexgrid = map.getHexGrid(); 
@@ -78,6 +108,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		/**
+		Adds ports to mapview
+		@private
+		*/
 		MapController.prototype.populatePorts = function populatePorts(){
 			var map = this.ClientModel.getMap();
 			var ports = map.getPorts();
@@ -94,6 +128,10 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		/**
+		Adds roll numbers to mapview
+		@private
+		*/
 		MapController.prototype.populateNumbers = function populateNumbers(){
 			var map = this.ClientModel.getMap();
 			var numbers = map.getNumbers();
@@ -105,6 +143,11 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		/**
+		Goes through each hex and calls populateEdges and populateVertexes for that hex.
+		Also places the robber on the map
+		@private
+		*/
 		MapController.prototype.populatePieces = function populatePieces(){
 			var map = this.ClientModel.getMap();
 			
@@ -126,12 +169,18 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		/**
+		Populates the edges of a hex with roads
+
+		@private
+		@param Hex hex
+		*/
 		MapController.prototype.populateEdges = function populateEdges(hex){
 			var hexloc = hex.getLocation();
 			var players = this.ClientModel.getPlayers();
 			//edges 3-5 because MapView only accepts "SE", "SW" and "S". This is to to prevent overlap
 			for (var i = 3; i <= 5; i++){
-				var edge = hex.getEdgeNum(i);
+				var edge = hex.getEdge(i);
 				if(edge.isOccupied()){
 					var edgeloc = new catan.map.View.EdgeLoc(hexloc.getX(), hexloc.getY(), catan.models.map.EdgeDirectionNum[i]);
 					this.View.placeRoad(edgeloc, players[edge.getOwnerID()].getColor());
@@ -139,11 +188,18 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
+		/**
+		Populates the vertexes of a hex with settlements and cities
+
+		@private
+		@param Hex hex
+		*/
 		MapController.prototype.populateVertexes = function populateVertexes(hex){
 			var hexloc = hex.getLocation();
 			var players = this.ClientModel.getPlayers();
 			//only do east and west as any vertex will be east or west of some hex. This prevents multiple placements.
 
+			//internal function that populates the vertex based on the given direction. Same code needs to be run on both East and West
 			var popVer = function(self, dir){
 				var vertex = hex.getVertex(dir);
 				if(vertex.isOccupied()){
@@ -157,23 +213,57 @@ catan.map.Controller = (function catan_controller_namespace() {
 				}
 			}
 
+			//call internal function on both east and west
 			popVer(this, "E");
 			popVer(this, "W");
 
 		}
 
+		/**
+		Populates the Rob Player Overlay with the players than an be robbed for the given hex location
+		@private
+		@param HexLocation hexloc
+		*/
+		MapController.prototype.populateRobOverlay = function(hexloc){
+			var hex = this.ClientModel.getMap().getHexGrid().getHex(hexloc);
+			var playerInfo = [];
+			for(var i = 0; i < 6; i++){
+				var vertex = hex.getVertex(i);
+				if(vertex.isOccupied()){
+					var ownerID = vertex.getOwnerID();
+					var player = this.ClientModel.getPlayerWithOrder(ownerID);
+					if(ownerID != this.game.getCurrentPlayerOrder()){
+						playerInfo[ownerID] = {};
+						playerInfo[ownerID].color = player.getColor();
+						playerInfo[ownerID].name = player.getName();
+						playerInfo[ownerID].playerNum = ownerID;
+						playerInfo[ownerID].cards = player.getResources().getTotalCount();
+					}
+				}
+			}
+			var densePI = playerInfo.filter(function(p){
+				return p;
+			});
+			this.robView.setPlayerInfo(densePI);
+		}
+
+		/**
+		Checks whether it is robber phase and opens the appropriate modals if it is.
+
+		@private
+		*/
 		MapController.prototype.doRobberPhase = function(){
-			if(this.ClientModel.isMyTurn() && this.ClientModel.getTurn().isRobbingPhase() && !this.modalOn){
+			if(this.ClientModel.isMyTurn() && this.ClientModel.getTurn().isRobbingPhase() && !this.robModalOn){
 				this.modalView.showModal("robber");
 				this.View.startDrop("robber");
-				this.modalOn = true;				
+				this.robModalOn = true;				
 			}
 			else if(!this.ClientModel.getTurn().isRobbingPhase()){
-				this.modalOn = false;
+				this.robModalOn = false;
 			}
 		}
         
-        /**
+    /**
 		 This method is called by the Rob View when a player to rob is selected via a button click.
 		 @param {Integer} orderID The index (0-3) of the player who is to be robbed
 		 @method robPlayer
@@ -189,7 +279,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 				this.game.robPlayer(orderID, this.robloc, function(){});
 				this.robView.closeModal();
 				this.modalView.closeModal();
-				//this.modalOn = false;
+				//this.robModalOn = false;
 			}
 		}
         
@@ -226,10 +316,9 @@ catan.map.Controller = (function catan_controller_namespace() {
 		 * @return void
 		**/	
 		MapController.prototype.startMove = function (pieceType,free,disconnected){
-			//what to do with free and disconnected?
 			this.modalView.showModal(pieceType);
 			this.View.startDrop(pieceType, this.game.getCurrentPlayer().getColor());
-			this.modalOn = false;
+			this.robModalOn = false;
 		}
         
 		/**
@@ -241,7 +330,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 		MapController.prototype.cancelMove = function(){
 			this.modalView.closeModal();
 			this.View.cancelDrop();
-			this.modalOn = false;
+			this.robModalOn = false;
 			this.roadbuild = false;
 			this.firstroad = false;
 		}
@@ -264,6 +353,8 @@ catan.map.Controller = (function catan_controller_namespace() {
 					return map.canPlaceRobber(hexloc);
 					break;
 				case "road":
+
+					//if roadbuilder is being played and the first road has already been placed then:
 					if(this.firstroad && this.roadbuild){
 						var hexloc2 = new catan.models.map.HexLocation(this.firstroadloc.x, this.firstroadloc.y);
 						return this.ClientModel.canPlayRoadBuilding(hexloc, loc.getDir(), hexloc2, this.firstroadloc.getDir());
@@ -279,28 +370,7 @@ catan.map.Controller = (function catan_controller_namespace() {
 			}
 		}
 
-		MapController.prototype.populateRobOverlay = function(hexloc){
-			var hex = this.ClientModel.getMap().getHexGrid().getHex(hexloc);
-			var playerInfo = [];
-			for(var i = 0; i < 6; i++){
-				var vertex = hex.getVertexNum(i);
-				if(vertex.isOccupied()){
-					var ownerID = vertex.getOwnerID();
-					var player = this.ClientModel.getPlayerWithOrder(ownerID);
-					if(ownerID != this.game.getCurrentPlayerOrder()){
-						playerInfo[ownerID] = {};
-						playerInfo[ownerID].color = player.getColor();
-						playerInfo[ownerID].name = player.getName();
-						playerInfo[ownerID].playerNum = ownerID;
-						playerInfo[ownerID].cards = player.getResources().getTotalCount();
-					}
-				}
-			}
-			var densePI = playerInfo.filter(function(p){
-				return p;
-			});
-			this.robView.setPlayerInfo(densePI);
-		}
+
 
 		/**
 		 This method is called when the user clicks the mouse to place a piece.

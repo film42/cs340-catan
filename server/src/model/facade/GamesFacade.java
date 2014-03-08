@@ -1,14 +1,14 @@
 package model.facade;
 
-import model.IModel;
+import model.JsonSerializable;
 
 /**
  * Created by qzcx on 3/7/14.
  */
 public class GamesFacade{
-    private IModel m_model;
+    private JsonSerializable m_model;
 
-    public GamesFacade(IModel model) {
+    public GamesFacade(JsonSerializable model) {
         m_model = model;
     }
 

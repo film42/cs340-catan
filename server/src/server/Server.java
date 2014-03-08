@@ -2,7 +2,7 @@ package server;
 
 import static spark.Spark.*;
 
-import model.IModel;
+import model.JsonSerializable;
 import model.Model;
 import model.facade.GameFacade;
 import model.facade.GamesFacade;
@@ -17,7 +17,6 @@ import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
 
-
 public class Server {
 
     private void run() {
@@ -31,7 +30,7 @@ public class Server {
         externalStaticFileLocation("../gameplay");
 
         // Facade Classes
-        IModel myGame = new Model();
+        JsonSerializable myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
         GameFacade myGameFacade = new GameFacade(myGame);

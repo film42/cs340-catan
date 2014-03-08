@@ -1,15 +1,14 @@
 package model.facade;
 
-import model.Game;
-import model.IModel;
+import model.JsonSerializable;
 
 /**
  * Created by qzcx on 3/7/14.
  */
 public class GameFacade{
-    private IModel m_model;
+    private JsonSerializable m_model;
 
-    public GameFacade(IModel model) {
+    public GameFacade(JsonSerializable model) {
         m_model = model;
     }
 
@@ -17,11 +16,11 @@ public class GameFacade{
         //TODO implement this method to use model
         return true;
     }
-    public String onListAI(){
+    public String onGetCommands(){
         //TODO implement this method to use model
         return "Insert Sample JSON here";
     }
-    public String onGetCommands(){
+    public String onListAI(){
         //TODO implement this method to use model
         return "Insert Sample JSON here";
     }

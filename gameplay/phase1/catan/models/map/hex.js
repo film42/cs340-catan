@@ -90,17 +90,25 @@ catan.models.map.Hex = (function CatanHex_Class(){
   /**
   Returns the edge belonging to the Hex at direction given
   <pre>
-  PRE: A valid EdgeDirection object that specifies a direction on the Hex
+  PRE: A valid EdgeDirection indicator(like "NE" or 0 through 5) that specifies a direction on the Hex
   POST: returns an Edge belonging to the hex in the specified direction
   </pre>
 
   @method getEdge
-  @param EdgeDirection
+  @param EdgeDirection -> string or number
   @return Edge
   */
   Hex.prototype.getEdge = function(direction){
-    var dir = catan.models.map.EdgeDirection[direction];
-    if(!dir && dir != 0){
+    if(typeof direction == 'string'){
+      var dir = catan.models.map.EdgeDirection[direction];
+    }
+    else if(typeof direction == 'number'){
+      var dir = direction;
+    }
+    else{
+      throw new Error("Not a string or number");
+    }
+    if((!dir && dir != 0) || dir < 0 || dir > 5){
       throw new Error("Invalid Direction");
     }
     return this.edges[dir];
@@ -109,24 +117,32 @@ catan.models.map.Hex = (function CatanHex_Class(){
   /**
   Returns the vertex belonging to the Hex at direction given
   <pre>
-  PRE: A valid VertexDirection object that specifies a direction on the Hex
+  PRE: A valid VertexDirection indicator (like "NE" or 0 through 5) that specifies a direction on the Hex
   POST: returns a Vertex belonging to the hex in the specified direction
   </pre>
 
   @method getVertex
-  @param VertexDirection
+  @param VertexDirection -> string or number
   @return Vertex
   */
   Hex.prototype.getVertex = function(direction){
-    var dir = catan.models.map.VertexDirection[direction];
-    if(!dir && dir != 0){
-      //console.log("Bad direction? " + direction + " dirnum " + dir);
+    if(typeof direction == 'string'){
+      var dir = catan.models.map.VertexDirection[direction];
+    }
+    else if(typeof direction == 'number'){
+      var dir = direction;
+    }
+    else{
+      throw new Error("Not a string or number");
+    }    
+    if((!dir && dir != 0) || dir < 0 || dir > 5){
       throw new Error("Invalid Direction");
     }
     return this.vertexes[dir];
   }
 
   /**
+  REMOVED
   Returns the vertex belonging to the Hex at direction given
   <pre>
   PRE: A number that corresponds to a vertex is given.
@@ -136,15 +152,16 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @method getVertexNum
   @param number
   @return Vertex
-  */
+  
   Hex.prototype.getVertexNum = function(direction){
-    if(direction < 0 || direction > 6){
+    if(direction < 0 || direction > 5){
       throw new Error("Invalid Direction");
     }
     return this.vertexes[direction];
-  }
+  }*/
 
   /**
+  REMOVED
   Returns the edge belonging to the Hex at direction given
   <pre>
   PRE: A valid EdgeDirection object that specifies a direction on the Hex
@@ -154,13 +171,12 @@ catan.models.map.Hex = (function CatanHex_Class(){
   @method getEdgeNum
   @param number
   @return Edge
-  */
   Hex.prototype.getEdgeNum = function(direction){
-    if(direction < 0 || direction > 6){
+    if(direction < 0 || direction > 5){
       throw new Error("Invalid Direction");
     }
     return this.edges[direction];
-  }
+  }*/
 
 
   /**

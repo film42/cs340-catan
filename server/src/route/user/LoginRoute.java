@@ -19,9 +19,13 @@ public class LoginRoute extends CoreRoute {
 
                 boolean modelResponse = m_utilFacade.onUserLogin();
                 if(modelResponse){
-
+                    //default return HTTP_OK
+                    return "";
                 }
-                return "User Login Test";
+                else{
+                    response.status(401);
+                    return "";
+                }
             }
         });
     }
