@@ -28,7 +28,7 @@ catan.setup.Controller = (function(){
       this.state = Waiting;
 
       Controller.call(this,undefined,game);
-      this.game.addObserver(this, this.onUpdate);
+      this.game.addObserver(this, this.onModelUpdate);
    };
         
    core.forceClassInherit(SetupRoundController,Controller);
@@ -48,7 +48,7 @@ catan.setup.Controller = (function(){
     </pre>
     @return {None}
     */
-  SetupRoundController.prototype.onUpdate = function(){
+  SetupRoundController.prototype.onModelUpdate = function(){
     
     var turnTracker = this.game.getModel().getTurn(); 
     //console.log(turnTracker);

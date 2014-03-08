@@ -19,7 +19,8 @@ public class ListRoute extends CoreRoute {
         get(new Route("/games/list") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Games List Test";
+                String modelResponse = m_gamesFacade.onListGames();
+                return modelResponse;
             }
         });
     }

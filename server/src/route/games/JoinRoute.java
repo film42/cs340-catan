@@ -19,7 +19,8 @@ public class JoinRoute extends CoreRoute {
         get(new Route("/games/join") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Games Join Test";
+                String modelResponse = m_gamesFacade.onListGames();
+                return modelResponse;
             }
         });
     }

@@ -92,6 +92,7 @@ catan.turntracker.Controller = (function turntracker_namespace() {
      * @return void
      */
     TurnTrackerController.prototype.endTurn = function(){
+      this.view.updateStateView(false, "Finishing Turn");
       this.game.finishTurn(function() {});
     };
     

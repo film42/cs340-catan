@@ -37,7 +37,7 @@ catan.roll.Controller = (function roll_namespace(){
       this.serverUpdated = true;
 			this.timerStarted = false;
 			this.timerID = null;
-      this.game.addObserver(this, this.onUpdate);
+      this.game.addObserver(this, this.onModelUpdate);
      
 		};
     /**
@@ -45,7 +45,7 @@ catan.roll.Controller = (function roll_namespace(){
     * @method onUpdate
     * @return void
     **/
-    RollController.prototype.onUpdate = function(){
+    RollController.prototype.onModelUpdate = function(){
       //check flag if already displaying
       if(this.displayFlag || !this.serverUpdated)
         return;

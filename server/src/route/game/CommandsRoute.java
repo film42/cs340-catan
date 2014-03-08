@@ -19,12 +19,14 @@ public class CommandsRoute extends CoreRoute {
         get(new Route("/game/commands") {
             @Override
             public Object handle(Request request, Response response) {
-                return "Game Commands GET Test";
+                String modelResponse = m_gameFacade.onGetCommands();
+                return modelResponse;
             }
         });
         post(new Route("/game/commands") {
             @Override
             public Object handle(Request request, Response response) {
+                boolean modelResponse = m_gameFacade.onPostCommands();
                 return "Game Commands POST Test";
             }
         });

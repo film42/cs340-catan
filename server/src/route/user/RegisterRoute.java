@@ -19,6 +19,7 @@ public class RegisterRoute extends CoreRoute {
         get(new Route("/user/register") {
             @Override
             public Object handle(Request request, Response response) {
+                boolean modelResponse = m_utilFacade.onUserRegister();
                 return "User Register Test";
             }
         });
