@@ -27,7 +27,12 @@ public class CommandsRoute extends CoreRoute {
             @Override
             public Object handle(Request request, Response response) {
                 boolean modelResponse = m_gameFacade.onPostCommands();
-                return "Game Commands POST Test";
+                if(modelResponse){
+                    return "";
+                }else{
+                    response.status(401);
+                    return "";
+                }
             }
         });
     }

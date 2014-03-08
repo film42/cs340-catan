@@ -23,11 +23,8 @@ public class ModelRoute extends CoreRoute{
         get(new Route("/game/model") {
             @Override
             public Object handle(Request request, Response response) {
-//                String modelResponse = m_gameFacade.onModelRequest();
-//                return modelResponse;
-                
-                Game model = new Game();
-                return model.toJson();
+                String modelResponse = m_gameFacade.onModelRequest();
+                return modelResponse;
 
             }
         });

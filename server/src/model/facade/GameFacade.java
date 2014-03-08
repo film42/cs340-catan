@@ -1,6 +1,7 @@
 package model.facade;
 
 import model.JsonSerializable;
+import model.base.Game;
 
 /**
  * Created by qzcx on 3/7/14.
@@ -29,8 +30,8 @@ public class GameFacade{
         return true;
     }
     public String onModelRequest(){
-        //TODO implement this method to use model
-        return "Insert Sample JSON here";
+        Game model = new Game();
+        return model.toJson();
     }
     public String onReset(){
         //TODO implement this method to use model
