@@ -37,7 +37,8 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       this.acceptView = acceptView;
       this.game = game;
       this.view = view;
-      // Setup player stuff -- Include all players BUT the current player
+      
+      // Setup tradable players
       this.player = this.game.getCurrentPlayer();
       var self = this;
       var tradeablePlayers = this.game.getModel().getPlayers().filter(function(p) {
@@ -47,14 +48,13 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         }
         return false;
       });
-      
       view.setPlayers(tradeablePlayers);
       
-
+      // Setup callback method for observe pattern.
       this.game.addObserver(this, this.OnUpdatedModel);
     };
-    DomesticController.prototype = core.inherit(Controller.prototype);
     
+    DomesticController.prototype = core.inherit(Controller.prototype);
     
     /**
      *  OnUpdatedModel
@@ -67,90 +67,97 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       }
       this.player = this.game.getCurrentPlayer();
       if(this.game.model.isMyTurn() && this.game.model.getTurn().isPlayingPhase()){
+        // set all of the trading interfaces to visible
         this.view.setPlayerSelectionEnabled(true);
         this.view.setResourceSelectionEnabled(true);
         this.updateState();
       } else if (!this.game.model.isMyTurn()){
+        // set all of the trading interfaces to invisible
         this.view.setPlayerSelectionEnabled(false);
         this.view.setResourceSelectionEnabled(false);
         this.view.setTradeButtonEnabled(false);
       }
       var tradeOffer = this.game.model.getTradeOffer();
       if(tradeOffer){
-        if(tradeOffer.getSender() == this.player.getOrderNumber()){
-          // we are the sender, please wait
-          this.waitingView.showModal();
-        } else if (tradeOffer.getReceiver() == this.player.getOrderNumber()){
-          // we need to display the trade offer, so let's populate that view.
-          this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()).getName());
-          this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsOffered()));
-          var giveResource;
-          var getResource;
-          var giveQty;
-          var getQty;
-          
-          if (tradeOffer.getCardsOffered().getWheatCount() > 0){
-            getQty = tradeOffer.getCardsOffered().getWheatCount();
-            getResource = "wheat";
-          }
-          else if (tradeOffer.getCardsAskedFor().getWheatCount() > 0){
-            giveQty = tradeOffer.getCardsAskedFor().getWheatCount();
-            giveResource = "wheat";
-          }
-          
-          if (tradeOffer.getCardsOffered().getBrickCount() > 0){
-            getQty = tradeOffer.getCardsOffered().getBrickCount();            
-            getResource = "brick";
-          }
-          else if (tradeOffer.getCardsAskedFor().getBrickCount() > 0){
-            giveQty = tradeOffer.getCardsAskedFor().getBrickCount();            
-            giveResource = "brick";
-          }
-          
-          if (tradeOffer.getCardsOffered().getWoodCount() > 0){
-            getQty = tradeOffer.getCardsOffered().getWoodCount();            
-            getResource = "wood";
-          }
-          else if (tradeOffer.getCardsAskedFor().getWoodCount() > 0){
-            giveQty = tradeOffer.getCardsAskedFor().getWoodCount();            
-            giveResource = "wood";
-          }
-          
-          if (tradeOffer.getCardsOffered().getSheepCount() > 0){
-            getQty = tradeOffer.getCardsOffered().getSheepCount();
-            getResource = "sheep";
-          }
-          else if (tradeOffer.getCardsAskedFor().getSheepCount() > 0){
-            giveQty = tradeOffer.getCardsAskedFor().getSheepCount();            
-            giveResource = "sheep";
-          }
-          
-          if (tradeOffer.getCardsOffered().getOreCount() > 0){
-            getQty = tradeOffer.getCardsOffered().getOreCount();
-            getResource = "ore";
-          }
-          else if (tradeOffer.getCardsAskedFor().getOreCount() > 0){
-            giveQty = tradeOffer.getCardsAskedFor().getOreCount();            
-            giveResource = "ore";
-          }
-          
-          if (giveResource)
-            this.acceptView.addGiveResource(giveResource, giveQty);
-          if (getResource)
-            this.acceptView.addGetResource(getResource, getQty);
-          
-          this.acceptView.showModal();
-        } else {
-          // we do not care because we're in the trade deal anyway, so there should not be a modal for us
-          this.waitingView.closeModal();
-          this.acceptView.closeModal();
-        }
+        handleTradeOffer();
       } else {
         // no active trade
         this.waitingView.closeModal();
         this.acceptView.closeModal();
       }
           
+    };
+    
+    var handleTradeOffer = function(){
+      if(tradeOffer.getSender() == this.player.getOrderNumber()){
+        // we are the sender, please wait
+        this.waitingView.showModal();
+      } else if (tradeOffer.getReceiver() == this.player.getOrderNumber()){
+        // we need to display the trade offer, so let's populate that view.
+        this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()).getName());
+        this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsOffered()));
+        var giveResource;
+        var getResource;
+        var giveQty;
+        var getQty;
+        
+        if (tradeOffer.getCardsOffered().getWheatCount() > 0){
+          getQty = tradeOffer.getCardsOffered().getWheatCount();
+          getResource = "wheat";
+        }
+        else if (tradeOffer.getCardsAskedFor().getWheatCount() > 0){
+          giveQty = tradeOffer.getCardsAskedFor().getWheatCount();
+          giveResource = "wheat";
+        }
+        
+        if (tradeOffer.getCardsOffered().getBrickCount() > 0){
+          getQty = tradeOffer.getCardsOffered().getBrickCount();            
+          getResource = "brick";
+        }
+        else if (tradeOffer.getCardsAskedFor().getBrickCount() > 0){
+          giveQty = tradeOffer.getCardsAskedFor().getBrickCount();            
+          giveResource = "brick";
+        }
+        
+        if (tradeOffer.getCardsOffered().getWoodCount() > 0){
+          getQty = tradeOffer.getCardsOffered().getWoodCount();            
+          getResource = "wood";
+        }
+        
+        else if (tradeOffer.getCardsAskedFor().getWoodCount() > 0){
+          giveQty = tradeOffer.getCardsAskedFor().getWoodCount();            
+          giveResource = "wood";
+        }
+        
+        if (tradeOffer.getCardsOffered().getSheepCount() > 0){
+          getQty = tradeOffer.getCardsOffered().getSheepCount();
+          getResource = "sheep";
+        }
+        else if (tradeOffer.getCardsAskedFor().getSheepCount() > 0){
+          giveQty = tradeOffer.getCardsAskedFor().getSheepCount();            
+          giveResource = "sheep";
+        }
+        
+        if (tradeOffer.getCardsOffered().getOreCount() > 0){
+          getQty = tradeOffer.getCardsOffered().getOreCount();
+          getResource = "ore";
+        }
+        else if (tradeOffer.getCardsAskedFor().getOreCount() > 0){
+          giveQty = tradeOffer.getCardsAskedFor().getOreCount();            
+          giveResource = "ore";
+        }
+        // according to the ta opinion, we need to show nothing if the qty is zero
+        if (giveResource)
+          this.acceptView.addGiveResource(giveResource, giveQty);
+        if (getResource)
+          this.acceptView.addGetResource(getResource, getQty);
+        
+        this.acceptView.showModal();
+      } else {
+        // we do not care because we're in the trade deal anyway, so there should not be a modal for us
+        this.waitingView.closeModal();
+        this.acceptView.closeModal();
+      }
     };
 
     core.defineProperty(DomesticController.prototype, "resourceToSend");// int
@@ -203,7 +210,6 @@ catan.trade.domestic.Controller = (function trade_namespace() {
      * @return void
      */
     DomesticController.prototype.setResourceToReceive = function(resource) {
-      console.log("Setting resource to RECEIVE");
       // TODO: figure out how to set other radio buttons to null if they are on RECEIVE
       var self = this;
       if (self.receiveQty != undefined){

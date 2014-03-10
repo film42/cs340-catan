@@ -11,7 +11,6 @@ catan.points.Controller = catan.points.Controller || {};
 catan.points.Controller = (function VPController_Class(){
 
   var Controller = catan.core.BaseController;
-  var MAX_POINTS = 10;
   PointController.prototype = core.inherit(Controller.prototype);
 
   core.defineProperty(PointController.prototype, "GameFinishedView");
