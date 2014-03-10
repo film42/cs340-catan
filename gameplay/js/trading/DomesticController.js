@@ -79,7 +79,7 @@ catan.trade.domestic.Controller = (function trade_namespace() {
       }
       var tradeOffer = this.game.model.getTradeOffer();
       if(tradeOffer){
-        handleTradeOffer();
+        handleTradeOffer(tradeOffer, this);
       } else {
         // no active trade
         this.waitingView.closeModal();
@@ -88,14 +88,14 @@ catan.trade.domestic.Controller = (function trade_namespace() {
           
     };
     
-    var handleTradeOffer = function(){
-      if(tradeOffer.getSender() == this.player.getOrderNumber()){
+    var handleTradeOffer = function(tradeOffer, self){
+      if(tradeOffer.getSender() == self.player.getOrderNumber()){
         // we are the sender, please wait
-        this.waitingView.showModal();
-      } else if (tradeOffer.getReceiver() == this.player.getOrderNumber()){
+        self.waitingView.showModal();
+      } else if (tradeOffer.getReceiver() == self.player.getOrderNumber()){
         // we need to display the trade offer, so let's populate that view.
-        this.acceptView.setPlayerName(this.game.model.getPlayerWithOrder(tradeOffer.getSender()).getName());
-        this.acceptView.setAcceptEnabled(this.player.hasXResources(tradeOffer.getCardsOffered()));
+        self.acceptView.setPlayerName(self.game.model.getPlayerWithOrder(tradeOffer.getSender()).getName());
+        self.acceptView.setAcceptEnabled(self.player.hasXResources(tradeOffer.getCardsOffered()));
         var giveResource;
         var getResource;
         var giveQty;
@@ -148,15 +148,15 @@ catan.trade.domestic.Controller = (function trade_namespace() {
         }
         // according to the ta opinion, we need to show nothing if the qty is zero
         if (giveResource)
-          this.acceptView.addGiveResource(giveResource, giveQty);
+          self.acceptView.addGiveResource(giveResource, giveQty);
         if (getResource)
-          this.acceptView.addGetResource(getResource, getQty);
+          self.acceptView.addGetResource(getResource, getQty);
         
-        this.acceptView.showModal();
+        self.acceptView.showModal();
       } else {
         // we do not care because we're in the trade deal anyway, so there should not be a modal for us
-        this.waitingView.closeModal();
-        this.acceptView.closeModal();
+        self.waitingView.closeModal();
+        self.acceptView.closeModal();
       }
     };
 
