@@ -8,6 +8,8 @@ import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import route.MoveRoute;
 import route.game.*;
 import route.games.CreateRoute;
