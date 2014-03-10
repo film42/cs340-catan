@@ -17,7 +17,7 @@ public class GameStub extends Model {
     public GameStub() {
         this.title = "Testing!";
         this.id = -1;
-        this.players = new ArrayList<>();
+        this.players = new ArrayList<PlayerStub>();
 
         this.players.add(new PlayerStub());
         this.players.add(new PlayerStub());

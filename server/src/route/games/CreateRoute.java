@@ -16,7 +16,7 @@ public class CreateRoute extends CoreRoute {
     }
     @Override
     public void attach() {
-        get(new Route("/games/create") {
+        post(new Route("/games/create") {
             @Override
             public Object handle(Request request, Response response) {
                 String modelResponse = m_gamesFacade.onCreateGame();

@@ -17,7 +17,7 @@ public class ResetRoute extends CoreRoute {
 
     @Override
     public void attach() {
-        get(new Route("/game/reset") {
+        post(new Route("/game/reset") {
             @Override
             public Object handle(Request request, Response response) {
                 String modelResponse = m_gameFacade.onReset();

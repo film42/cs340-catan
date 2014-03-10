@@ -100,7 +100,8 @@ function rest(){ //this creates a scope for this script
 				$("#request").val($("#jsonText").val());
 				$.post(selected.url,$("#jsonText").val(),doneHandler,"json").fail(failHandler);
 			}else{
-				console.log("error in onTryClick: selected.type");
+				
+				$.post(selected.url,"",doneHandler,"text").fail(failHandler);
 			}
 		}else if(selected.method == "GET"){
 			$("#request").hide();

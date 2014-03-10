@@ -16,7 +16,7 @@ public class JoinRoute extends CoreRoute {
     }
     @Override
     public void attach() {
-        get(new Route("/games/join") {
+        post(new Route("/games/join") {
             @Override
             public Object handle(Request request, Response response) {
                 Boolean modelResponse = m_gamesFacade.onJoinGame();

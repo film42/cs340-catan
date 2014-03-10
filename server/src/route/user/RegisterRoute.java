@@ -16,7 +16,7 @@ public class RegisterRoute extends CoreRoute {
 
     @Override
     public void attach() {
-        get(new Route("/user/register") {
+        post(new Route("/user/register") {
             @Override
             public Object handle(Request request, Response response) {
                 boolean modelResponse = m_utilFacade.onUserRegister();

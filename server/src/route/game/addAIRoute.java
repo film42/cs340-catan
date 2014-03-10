@@ -17,7 +17,7 @@ public class addAIRoute extends CoreRoute {
 
     @Override
     public void attach() {
-        get(new Route("/game/addAI") {
+        post(new Route("/game/addAI") {
             @Override
             public Object handle(Request request, Response response) {
                 boolean modelResponse = m_gameFacade.onAddAI();

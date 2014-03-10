@@ -13,7 +13,7 @@ public class LoginRoute extends CoreRoute {
     }
     @Override
     public void attach() {
-        get(new Route("/user/login") {
+        post(new Route("/user/login") {
             @Override
             public Object handle(Request request, Response response) {
 

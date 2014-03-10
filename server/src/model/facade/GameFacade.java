@@ -33,7 +33,7 @@ public class GameFacade{
         return model.toJson();
     }
     public String onReset(){
-        //TODO implement this method to use model
-        return "Insert Sample JSON here";
+        Game model = new Game();
+        return model.toJson();
     }
 }

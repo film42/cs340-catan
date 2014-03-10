@@ -27,7 +27,7 @@ public class GamesFacade{
     }
     public String onListGames(){
         //TODO Create a transparent list class for serializing `no root json lists`
-        List<GameStub> gS = new ArrayList<>();
+        List<GameStub> gS = new ArrayList<GameStub>();
         gS.add(new GameStub());
         gS.add(new GameStub());
         gS.add(new GameStub());

@@ -16,7 +16,7 @@ public class ChangeLogLevelRoute extends CoreRoute {
     }
     @Override
     public void attach() {
-        get(new Route("/util/changeLogLevel") {
+        post(new Route("/util/changeLogLevel") {
             @Override
             public Object handle(Request request, Response response) {
                 boolean modelResponse = m_utilFacade.onChangeLogLevel();
