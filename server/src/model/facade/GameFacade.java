@@ -19,11 +19,10 @@ public class GameFacade{
     }
     public String onGetCommands(){
         //TODO implement this method to use model
-        return "Insert Sample JSON here";
+        return "[{\"number\":8,\"type\":\"rollNumber\",\"playerIndex\":0},{\"type\":\"finishTurn\",\"playerIndex\":0}]";
     }
     public String onListAI(){
-        //TODO implement this method to use model
-        return "Insert Sample JSON here";
+        return "[\"LARGEST_ARMY\"]";
     }
     public boolean onPostCommands(){
         //TODO implement this method to use model
