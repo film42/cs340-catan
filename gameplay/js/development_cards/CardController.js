@@ -44,17 +44,17 @@ catan.devCards.Controller = (function(){
       var model = this.game.getModel();
       var player = this.game.getCurrentPlayer();
 
-      this.view.setCardEnabled("soldier",      player.canPlaySoldier());
-      this.view.setCardEnabled("yearOfPlenty", player.canPlayYearOfPlenty());
-      this.view.setCardEnabled("monopoly",     player.canPlayMonopoly());
-      this.view.setCardEnabled("roadBuilding", player.canPlayRoadBuilding());
-      this.view.setCardEnabled("monument",     player.canPlayMonument());
+      this.view.setCardEnabled(Definitions.SOLDIER,        player.canPlaySoldier());
+      this.view.setCardEnabled(Definitions.YEAR_OF_PLENTY, player.canPlayYearOfPlenty());
+      this.view.setCardEnabled(Definitions.MONOPOLY,       player.canPlayMonopoly());
+      this.view.setCardEnabled(Definitions.ROAD_BUILD,     player.canPlayRoadBuilding());
+      this.view.setCardEnabled(Definitions.MONUMENT,       player.canPlayMonument());
 
-      this.view.updateAmount("soldier",      player.getNewSoldierCount());
-      this.view.updateAmount("yearOfPlenty", player.getNewYearOfPlentyCount());
-      this.view.updateAmount("monopoly",     player.getNewMonopolyCount());
-      this.view.updateAmount("roadBuilding", player.getNewRoadBuildingCount());
-      this.view.updateAmount("monument",     player.getNewDevCardCount());
+      this.view.updateAmount(Definitions.SOLDIER,        player.getNewSoldierCount());
+      this.view.updateAmount(Definitions.YEAR_OF_PLENTY, player.getNewYearOfPlentyCount());
+      this.view.updateAmount(Definitions.MONOPOLY,       player.getNewMonopolyCount());
+      this.view.updateAmount(Definitions.ROAD_BUILD,     player.getNewRoadBuildingCount());
+      this.view.updateAmount(Definitions.MONUMENT,       player.getNewDevCardCount());
     };
 
     DevCardController.prototype.onUpdateModel = function(){
