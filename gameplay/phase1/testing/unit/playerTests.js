@@ -75,8 +75,8 @@ var joejson = {
  "orderNumber": 0,
  "name": "Well-off Joe",
  "color": "red"
-}     
-var resourcesjson = { 
+}
+var resourcesjson = {
    "brick" : 5,
    "ore" : 6,
    "sheep" : 7,
@@ -124,27 +124,27 @@ var johnjson = {
 }
 
 test("Player Init", function(){
-  
+
 //  stop();// temporarily stop the test so we can wait for incoming json data
 //   jQuery.getJSON("model.json", function(data){
 //     start();
-    
-  
+
+
      // Initialization
      var sam = new catan.models.Player(samjson);
-                 
+
      equal(sam.cities, samjson.cities, "player.cities was initialized correctly");
      equal(sam.color, samjson.color, "player.color was initialized correctly");
      equal(sam.discarded, samjson.discarded, "player.discarded was initialized correctly");
      equal(sam.largestArmy, samjson.largestArmy, "player.largestArmy was initialized correctly");
-     equal(sam.longestRoad, samjson.longestRoad, "player.longestRoad was initialized correctly"); 
+     equal(sam.longestRoad, samjson.longestRoad, "player.longestRoad was initialized correctly");
      equal(sam.monuments, samjson.monuments, "player.monuments was initialized correctly");
      equal(sam.name, samjson.name, "player.name was initialized correctly");
      equal(sam.newDevCards, samjson.newDevCards, "player.newDevCards was initialized correctly");
      equal(sam.oldDevCards, samjson.oldDevCards, "player.oldDevCards was initialized correctly");
-     equal(sam.orderNumber, samjson.orderNumber, "player.coorderNumberlor was initialized correctly"); 
+     equal(sam.orderNumber, samjson.orderNumber, "player.coorderNumberlor was initialized correctly");
      equal(sam.playedDevCard, samjson.playedDevCard, "player.playedDevCard was initialized correctly");
-     equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");     
+     equal(sam.playerID, samjson.playerID, "player.playerID was initialized correctly");
 });
 test("Player: Can Tests", function(){
      // Method Unit Testing
@@ -152,7 +152,7 @@ test("Player: Can Tests", function(){
      var john = new catan.models.Player(johnjson);
      var sam = new catan.models.Player(samjson);
      var someResources = new catan.models.ResourceList(resourcesjson);
-     
+
      ok(joe.canAffordToBuyDevCard(), "canAffordToBuyDevelomentCard() returned true correctly");
      ok(!john.canAffordToBuyDevCard(), "canAffordToBuyDevelomentCard() returned false correctly");
      ok(joe.canAffordToBuyRoad(), "canAffordToBuyRoad() returned true correctly");
@@ -164,13 +164,13 @@ test("Player: Can Tests", function(){
      ok(joe.canAffordToOfferTrade(someResources), "canAffordToOfferTrade() returned true correctly");
      ok(!john.canAffordToOfferTrade(someResources), "canAffordToOfferTrade() returned false correctly");
      ok(joe.canAcceptTrade(someResources), "canAcceptTrade() returned true correctly");
-     ok(!john.canAcceptTrade(someResources), "canAcceptTrade() returned false correctly");
+     ok(john.canAcceptTrade(someResources), "canAcceptTrade() returned true correctly");
      ok(joe.hasMoreThan7Cards(), "hasMoreThan7Cards() returned true correctly");
      ok(!john.hasMoreThan7Cards(), "hasMoreThan7Cards() returned false correctly");
      ok(joe.canDiscardCards(someResources), "canDiscardCard() returned true correctly");
      ok(!john.canDiscardCards(someResources), "canDiscardCard() returned false correctly");
      ok(joe.hasXResources(someResources), "hasXResources() returned true correctly");
-     ok(!john.hasXResources(someResources), "hasXResources() returned false correctly");     
+     ok(!john.hasXResources(someResources), "hasXResources() returned false correctly");
      ok(joe.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return true correctly");
      ok(!sam.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return false correctly");
      ok(!john.canPlayYearOfPlenty(),"canPlayYearOfPlenty() return false correctly -not enough resources");
@@ -188,4 +188,3 @@ test("Player: Can Tests", function(){
      ok(!john.canPlayMonopoly(),"canPlayMonopoly() return false correctly -not enough resources");
 
  });
-
