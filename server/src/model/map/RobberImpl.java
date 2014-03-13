@@ -1,11 +1,12 @@
 package model.map;
 
+import model.JsonImpl;
 import model.Model;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class RobberImpl extends Model implements modelInterfaces.map.Robber {
+public class RobberImpl extends JsonImpl implements modelInterfaces.map.Robber {
 
     private int x;
     private int y;

@@ -1,6 +1,6 @@
 package model.base;
 
-import model.Model;
+import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
 import model.messaging.LogImpl;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/6/14.
  */
-public class GameImpl extends Model implements Game {
+public class GameImpl extends JsonImpl implements Game {
     private DeckImpl deck;
     private Map map;
     private List<Player> players;

@@ -1,12 +1,12 @@
 package model.base;
 
-import model.Model;
+import model.JsonImpl;
 import modelInterfaces.base.Deck;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class DeckImpl extends Model implements Deck {
+public class DeckImpl extends JsonImpl implements Deck {
 
     private int yearOfPlenty;
     private int monopoly;

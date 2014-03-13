@@ -1,5 +1,6 @@
 package model.map;
 
+import model.JsonImpl;
 import model.Model;
 import modelInterfaces.map.HexGrid;
 import modelInterfaces.map.Robber;
@@ -7,7 +8,7 @@ import modelInterfaces.map.Robber;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class MapImpl extends Model implements modelInterfaces.map.Map {
+public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     private HexGrid hexGrid;
     private int radius;
     private int numbers;

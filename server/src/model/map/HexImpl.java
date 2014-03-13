@@ -1,17 +1,14 @@
 package model.map;
 
-import model.Model;
-import modelInterfaces.map.Edge;
-import modelInterfaces.map.Location;
-import modelInterfaces.map.Vertex;
-
+import model.JsonImpl;
+import modelInterfaces.map.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class HexImpl extends Model implements modelInterfaces.map.Hex {
+public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
 
     private boolean isLand;
     private Location location;
@@ -22,12 +19,12 @@ public class HexImpl extends Model implements modelInterfaces.map.Hex {
         isLand = false;
         location = new LocationImpl();
 
-        vertexes = new ArrayList<VertexImpl>();
+        vertexes = new ArrayList<Vertex>();
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
 
-        edges = new ArrayList<EdgeImpl>();
+        edges = new ArrayList<Edge>();
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());

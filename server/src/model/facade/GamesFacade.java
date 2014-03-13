@@ -2,6 +2,7 @@ package model.facade;
 
 import com.google.gson.Gson;
 import model.JsonSerializable;
+import model.Model;
 import model.preview.GameStub;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.List;
  * Created by qzcx on 3/7/14.
  */
 public class GamesFacade{
-    private JsonSerializable m_model;
+    private Model m_model;
 
-    public GamesFacade(JsonSerializable model) {
+    public GamesFacade(Model model) {
         m_model = model;
     }
 

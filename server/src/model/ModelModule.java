@@ -1,14 +1,22 @@
 package model;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Module;
+import model.users.UserImpl;
+import modelInterfaces.users.User;
 
-public class ModelModule implements Module {
+public class ModelModule extends AbstractModule {
 
-	@Override
-	public void configure(Binder arg0) {
+//    @Override
+//	public void configure(Binder arg0) {
+//
+//
+//	}
 
-		// bind(the interface.class).to(the implementation.class);
-	}
+    @Override
+    protected void configure() {
+        bind(User.class).to(UserImpl.class);
+    }
 
 }

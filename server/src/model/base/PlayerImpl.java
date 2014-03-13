@@ -1,12 +1,13 @@
 package model.base;
 
+import model.JsonImpl;
 import model.Model;
 import modelInterfaces.base.Resources;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class PlayerImpl extends Model implements modelInterfaces.base.Player {
+public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player {
 
     private int MAX_GAME_POINTS;
     private Resources resources;

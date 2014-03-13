@@ -1,12 +1,13 @@
 package model.map;
 
+import model.JsonImpl;
 import model.Model;
 import modelInterfaces.map.VertexValue;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class VertexImpl extends Model implements modelInterfaces.map.Vertex {
+public class VertexImpl extends JsonImpl implements modelInterfaces.map.Vertex {
 
     private VertexValue value;
 

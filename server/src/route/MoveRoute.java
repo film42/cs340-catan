@@ -32,34 +32,35 @@ public class MoveRoute extends CoreRoute {
                 String json = request.body();
                 String url = request.pathInfo();
 
-                try {
-                    //
-                    // Switching on all possible commands
-                    //
-                    switch (url) {
-                        case SEND_CHAT:
-                            SendChat sCR = SendChat.fromJson(json);
-                            m_movesFacade.onMove(sCR);
-                            break;
-                        case ROLL_NUMBER:
-                            RollNumber rN = RollNumber.fromJson(json);
-                            m_movesFacade.onMove(rN);
-                            break;
-                        default:
-                            response.status(404);
-                            return "";
-                    }
-
-                    // Once we've switched, return ok
-                    return "Done!";
-                } catch (InvalidCommandException e) {
-                    // Valid but can't run
-                    return "Syntactically Correct Command is Not Valid.";
-                } catch (IOException e) {
-                    // Server Error
-                    response.status(500);
-                    return "Error: Server Error!";
-                }
+//                try {
+//                    //
+//                    // Switching on all possible commands
+//                    //
+//                    switch (url) {
+//                        case SEND_CHAT:
+//                            SendChat sCR = SendChat.fromJson(json);
+//                            m_movesFacade.onMove(sCR);
+//                            break;
+//                        case ROLL_NUMBER:
+//                            RollNumber rN = RollNumber.fromJson(json);
+//                            m_movesFacade.onMove(rN);
+//                            break;
+//                        default:
+//                            response.status(404);
+//                            return "";
+//                    }
+//
+//                    // Once we've switched, return ok
+//                    return "Done!";
+//                } catch (InvalidCommandException e) {
+//                    // Valid but can't run
+//                    return "Syntactically Correct Command is Not Valid.";
+//                } catch (IOException e) {
+//                    // Server Error
+//                    response.status(500);
+//                    return "Error: Server Error!";
+//                }
+                return "";
             }
         });
     }

@@ -1,6 +1,6 @@
 package model.preview;
 
-import model.Model;
+import model.JsonImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/9/14.
  */
-public class GameStub extends Model {
+public class GameStub extends JsonImpl {
 
     private String title;
     private int id;

@@ -30,7 +30,7 @@ public class Server {
         externalStaticFileLocation("../gameplay");
 
         // Facade Classes
-        JsonSerializable myGame = new Model();
+        Model myGame = new Model();
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
         GameFacade myGameFacade = new GameFacade(myGame);

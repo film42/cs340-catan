@@ -1,15 +1,16 @@
 package model.facade;
 
 import model.JsonSerializable;
+import model.Model;
 import model.base.GameImpl;
 
 /**
  * Created by qzcx on 3/7/14.
  */
 public class GameFacade{
-    private JsonSerializable m_model;
+    private Model m_model;
 
-    public GameFacade(JsonSerializable model) {
+    public GameFacade(Model model) {
         m_model = model;
     }
 

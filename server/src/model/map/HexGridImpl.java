@@ -1,5 +1,6 @@
 package model.map;
 
+import model.JsonImpl;
 import model.Model;
 import modelInterfaces.map.Hex;
 
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class HexGridImpl extends Model implements modelInterfaces.map.HexGrid {
+public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid {
 
     private List<List<Hex>> hexes;
     private List<Integer> offsets;

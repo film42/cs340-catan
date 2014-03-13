@@ -1,11 +1,11 @@
 package model.base;
 
-import model.Model;
+import model.JsonImpl;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class TurnTrackerImpl extends Model implements modelInterfaces.base.TurnTracker {
+public class TurnTrackerImpl extends JsonImpl implements modelInterfaces.base.TurnTracker {
 
     private String status;
     private int currentTurn;

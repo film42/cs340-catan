@@ -1,6 +1,7 @@
 package model.facade;
 
 import model.JsonSerializable;
+import model.Model;
 
 /**
  * Created by qzcx on 3/6/14.
@@ -9,9 +10,9 @@ import model.JsonSerializable;
  */
 public class UtilFacade {
 
-    private JsonSerializable m_model;
+    private Model m_model;
 
-    public UtilFacade(JsonSerializable model) {
+    public UtilFacade(Model model) {
         m_model = model;
     }
 

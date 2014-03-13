@@ -1,11 +1,11 @@
 package model.base;
 
-import model.Model;
+import model.JsonImpl;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class ResourcesImpl extends Model implements modelInterfaces.base.Resources {
+public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Resources {
 
     private int brick;
     private int wood;

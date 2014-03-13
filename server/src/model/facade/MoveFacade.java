@@ -3,6 +3,7 @@ package model.facade;
 import comm.moves.Command;
 import comm.moves.InvalidCommandException;
 import model.JsonSerializable;
+import model.Model;
 
 import java.io.IOException;
 
@@ -11,9 +12,9 @@ import java.io.IOException;
  */
 public class MoveFacade {
 
-    private JsonSerializable m_model;
+    private Model m_model;
 
-    public MoveFacade(JsonSerializable model) {
+    public MoveFacade(Model model) {
         m_model = model;
     }
 
