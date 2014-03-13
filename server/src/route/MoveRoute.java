@@ -23,6 +23,7 @@ public class MoveRoute extends CoreRoute {
     public MoveRoute(MoveFacade moveFacade) {
         m_movesFacade = moveFacade;
     }
+    
     @Override
     public void attach() {
         post(new Route("/moves/*") {

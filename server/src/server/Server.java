@@ -8,8 +8,6 @@ import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import route.MoveRoute;
 import route.game.*;
 import route.games.CreateRoute;
@@ -47,7 +45,7 @@ public class Server {
         new ResetRoute(myGameFacade).attach();
         new ModelRoute(myGameFacade).attach();
         new ListAIRoute(myGameFacade).attach();
-        new addAIRoute(myGameFacade).attach();
+        new AddAIRoute(myGameFacade).attach();
         new CommandsRoute(myGameFacade).attach();
         new MoveRoute(myMoveFacade).attach();
         new ChangeLogLevelRoute(myUtilFacade).attach();
