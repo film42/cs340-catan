@@ -1,10 +1,7 @@
 package model;
 
 import com.google.gson.Gson;
-<<<<<<< HEAD
-=======
 import com.google.inject.Inject;
->>>>>>> af219cb8c5a92e5ea92a73b709db25b76318734c
 
 /**
  * Created by qzcx on 3/7/14.
