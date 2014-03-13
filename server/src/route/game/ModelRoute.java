@@ -25,7 +25,6 @@ public class ModelRoute extends CoreRoute{
             public Object handle(Request request, Response response) {
                 String modelResponse = m_gameFacade.onModelRequest();
                 return modelResponse;
-
             }
         });
     }
