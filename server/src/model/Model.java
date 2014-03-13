@@ -1,7 +1,6 @@
 package model;
 
 import com.google.gson.Gson;
-import model.base.Game;
 
 /**
  * Created by qzcx on 3/7/14.

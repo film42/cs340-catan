@@ -1,16 +1,17 @@
 package model.base;
 
 import model.Model;
+import modelInterfaces.base.Resources;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class Player extends Model {
+public class PlayerImpl extends Model implements modelInterfaces.base.Player {
 
     private int MAX_GAME_POINTS;
     private Resources resources;
-    private Deck oldDevCards;
-    private Deck newDevCards;
+    private DeckImpl oldDevCards;
+    private DeckImpl newDevCards;
     private int roads;
     private int cities;
     private int settlements;
@@ -26,11 +27,11 @@ public class Player extends Model {
     private String name;
     private String color;
 
-    public Player() {
+    public PlayerImpl() {
         this.MAX_GAME_POINTS = 10;
-        this.resources = new Resources();
-        this.oldDevCards = new Deck();
-        this.newDevCards = new Deck();
+        this.resources = new ResourcesImpl();
+        this.oldDevCards = new DeckImpl();
+        this.newDevCards = new DeckImpl();
         this.roads = 0;
         this.cities = 0;
         this.settlements = 0;

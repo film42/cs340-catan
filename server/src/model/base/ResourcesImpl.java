@@ -5,7 +5,7 @@ import model.Model;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class Resources extends Model {
+public class ResourcesImpl extends Model implements modelInterfaces.base.Resources {
 
     private int brick;
     private int wood;
@@ -13,7 +13,7 @@ public class Resources extends Model {
     private int wheat;
     private int ore;
 
-    public Resources() {
+    public ResourcesImpl() {
         brick = 0;
         wood = 0;
         sheep = 0;

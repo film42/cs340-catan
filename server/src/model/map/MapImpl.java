@@ -1,20 +1,22 @@
 package model.map;
 
 import model.Model;
+import modelInterfaces.map.HexGrid;
+import modelInterfaces.map.Robber;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class Map extends Model {
+public class MapImpl extends Model implements modelInterfaces.map.Map {
     private HexGrid hexGrid;
     private int radius;
     private int numbers;
     private int ports;
     private Robber robber;
 
-    public Map() {
-        hexGrid = new HexGrid();
-        robber = new Robber();
+    public MapImpl() {
+        hexGrid = new HexGridImpl();
+        robber = new RobberImpl();
 
         radius = 0;
         numbers = 0;

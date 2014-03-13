@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import modelInterfaces.map.Hex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class HexGrid extends Model {
+public class HexGridImpl extends Model implements modelInterfaces.map.HexGrid {
 
     private List<List<Hex>> hexes;
     private List<Integer> offsets;
@@ -16,10 +17,10 @@ public class HexGrid extends Model {
     private int x0;
     private int y0;
 
-    public HexGrid() {
+    public HexGridImpl() {
         hexes = new ArrayList<List<Hex>>();
         List<Hex> hexes_2 = new ArrayList<Hex>();
-        hexes_2.add(new Hex());
+        hexes_2.add(new HexImpl());
 
         hexes.add(hexes_2);
 

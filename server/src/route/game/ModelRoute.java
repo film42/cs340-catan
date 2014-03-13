@@ -1,6 +1,5 @@
 package route.game;
 
-import model.base.Game;
 import model.facade.GameFacade;
 import route.CoreRoute;
 import spark.Request;

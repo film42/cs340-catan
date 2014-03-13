@@ -1,11 +1,12 @@
 package model.base;
 
 import model.Model;
+import modelInterfaces.base.Deck;
 
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class Deck extends Model {
+public class DeckImpl extends Model implements Deck {
 
     private int yearOfPlenty;
     private int monopoly;
@@ -13,7 +14,7 @@ public class Deck extends Model {
     private int roadBuilding;
     private int monument;
 
-    public Deck() {
+    public DeckImpl() {
         yearOfPlenty = 0;
         monopoly = 0;
         soldier = 0;

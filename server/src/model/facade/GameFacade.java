@@ -1,7 +1,7 @@
 package model.facade;
 
 import model.JsonSerializable;
-import model.base.Game;
+import model.base.GameImpl;
 
 /**
  * Created by qzcx on 3/7/14.
@@ -29,11 +29,11 @@ public class GameFacade{
         return true;
     }
     public String onModelRequest(){
-        Game model = new Game();
+        GameImpl model = new GameImpl();
         return model.toJson();
     }
     public String onReset(){
-        Game model = new Game();
+        GameImpl model = new GameImpl();
         return model.toJson();
     }
 }

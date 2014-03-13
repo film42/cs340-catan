@@ -3,7 +3,6 @@ package model.facade;
 import comm.moves.Command;
 import comm.moves.InvalidCommandException;
 import model.JsonSerializable;
-import model.base.Game;
 
 import java.io.IOException;
 
