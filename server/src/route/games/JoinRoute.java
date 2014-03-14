@@ -5,6 +5,7 @@ import route.CoreRoute;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import comm.request.JoinGameRequest;
 
 /**
  * Created by Jon George on 3/6/14.
@@ -19,7 +20,15 @@ public class JoinRoute extends CoreRoute {
         post(new Route("/games/join") {
             @Override
             public Object handle(Request request, Response response) {
-                Boolean modelResponse = m_gamesFacade.onJoinGame();
+                String color = request.params("color");
+                String id = request.params("id");
+                
+                if (color == null || id == null){
+                    response.status(400);
+                    return("Failed to join game");
+                }
+                JoinGameRequest joinGameRequest = new JoinGameRequest(color, id);
+                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest);
                 if(modelResponse){
                     response.cookie("catan.game", "-1");
                     return "";

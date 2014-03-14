@@ -1,11 +1,7 @@
 package server;
 
-import static spark.Spark.*;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import model.InjectorFactory;
-import model.JsonSerializable;
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.setPort;
 import model.Model;
 import model.ModelModule;
 import model.facade.GameFacade;
@@ -13,13 +9,20 @@ import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
 import route.MoveRoute;
-import route.game.*;
+import route.game.AddAIRoute;
+import route.game.CommandsRoute;
+import route.game.ListAIRoute;
+import route.game.ModelRoute;
+import route.game.ResetRoute;
 import route.games.CreateRoute;
 import route.games.JoinRoute;
 import route.games.ListRoute;
 import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class Server {
 
@@ -33,15 +36,16 @@ public class Server {
         // Set static directory to "gameplay"
         externalStaticFileLocation("../gameplay");
 
-        Injector injector = InjectorFactory.createInjector(new ModelModule());
+		// Google Guice injection
+		Injector injector = Guice.createInjector(new ModelModule());
 
         // Facade Classes
-
-        Model myGame = injector.getInstance(Model.class);
+		Model myGame = injector.getInstance(Model.class);
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
         GameFacade myGameFacade = new GameFacade(myGame);
         MoveFacade myMoveFacade = new MoveFacade(myGame);
+
 
         // Each Route
         new LoginRoute(myUtilFacade).attach();
