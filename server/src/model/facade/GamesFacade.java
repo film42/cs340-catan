@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by qzcx on 3/7/14.
+ * Created by Jon George on 3/7/14.
  */
 public class GamesFacade{
     private Model m_model;

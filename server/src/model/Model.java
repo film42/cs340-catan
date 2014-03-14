@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by qzcx on 3/7/14.
+ * Created by Jon George on 3/7/14.
  */
 public class Model extends JsonImpl {
 
@@ -26,26 +26,21 @@ public class Model extends JsonImpl {
 
 	@Inject
 	public Model() {
-        injector = Guice.createInjector(new ModelModule());
         users = new HashSet<User>();
-        init();
 	}
 
-    public void init(){
+    @Inject
+    public void init(User adam, User steve, User june, User garrett){
         //initialize the server information
-        User adam = injector.getInstance(User.class);
         adam.setName("Adam");
         adam.setPassword("adam");
         users.add(adam);
-        User steve = injector.getInstance(User.class);
         steve.setName("Steve");
         steve.setPassword("steve");
         users.add(steve);
-        User june = injector.getInstance(User.class);
         june.setName("June");
         june.setPassword("june");
         users.add(june);
-        User garrett = injector.getInstance(User.class);
         garrett.setName("Garrett");
         garrett.setPassword("garrett");
         users.add(garrett);
@@ -60,7 +55,7 @@ public class Model extends JsonImpl {
         User user = hasUserByName(username);
         if(user == null)
             return false;
-        User newUser = injector.getInstance(User.class);
+        User newUser = InjectorFactory.getInjector().getInstance(User.class);
         newUser.setName(username);
         newUser.setPassword(password);
         users.add(newUser);

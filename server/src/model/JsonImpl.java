@@ -3,7 +3,7 @@ package model;
 import com.google.gson.Gson;
 
 /**
- * Created by qzcx on 3/13/14.
+ * Created by Jon George on 3/13/14.
  */
 public class JsonImpl implements JsonSerializable, JsonParseable{
 

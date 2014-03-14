@@ -2,8 +2,12 @@ package server;
 
 import static spark.Spark.*;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import model.InjectorFactory;
 import model.JsonSerializable;
 import model.Model;
+import model.ModelModule;
 import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
@@ -29,8 +33,11 @@ public class Server {
         // Set static directory to "gameplay"
         externalStaticFileLocation("../gameplay");
 
+        Injector injector = InjectorFactory.createInjector(new ModelModule());
+
         // Facade Classes
-        Model myGame = new Model();
+
+        Model myGame = injector.getInstance(Model.class);
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
         GameFacade myGameFacade = new GameFacade(myGame);

@@ -5,7 +5,7 @@ import model.Model;
 import model.base.GameImpl;
 
 /**
- * Created by qzcx on 3/7/14.
+ * Created by Jon George on 3/7/14.
  */
 public class GameFacade{
     private Model m_model;

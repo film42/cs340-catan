@@ -4,7 +4,7 @@ import model.JsonSerializable;
 import model.Model;
 
 /**
- * Created by qzcx on 3/6/14.
+ * Created by Jon George on 3/6/14.
  * This class will contain the interface for the user/login, user/register, util/changeLogLevel
  *
  */

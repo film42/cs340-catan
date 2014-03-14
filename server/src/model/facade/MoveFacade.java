@@ -8,7 +8,7 @@ import static comm.moves.base.Command.moveFromJson;
 import java.io.IOException;
 
 /**
- * Created by qzcx on 3/7/14.
+ * Created by Jon George on 3/7/14.
  */
 public class MoveFacade {
 

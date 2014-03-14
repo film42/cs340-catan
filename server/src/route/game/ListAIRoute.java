@@ -7,7 +7,7 @@ import spark.Response;
 import spark.Route;
 
 /**
- * Created by qzcx on 3/6/14.
+ * Created by Jon George on 3/6/14.
  */
 public class ListAIRoute extends CoreRoute {
     private GameFacade m_gameFacade;

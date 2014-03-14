@@ -1,7 +1,7 @@
 package modelInterfaces.users;
 
 /**
- * Created by qzcx on 3/13/14.
+ * Created by Jon George on 3/13/14.
  */
 public interface User {
     void setName(String name);

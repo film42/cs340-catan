@@ -3,7 +3,7 @@ package model.users;
 import com.google.inject.Inject;
 
 /**
- * Created by qzcx on 3/13/14.
+ * Created by Jon George on 3/13/14.
  */
 public class UserImpl implements modelInterfaces.users.User {
     private static int nextID = 0;
