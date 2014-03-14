@@ -14,6 +14,10 @@ public class MoveFacade {
 
     final String SEND_CHAT = "/moves/sendChat";
     final String ROLL_NUMBER = "/moves/rollNumber";
+    final String FINISH_TURN = "/moves/finishTurn";
+    final String BUY_DEV_CARD = "/moves/buyDevCard";
+    final String YEAR_OF_PLENTY = "/moves/Year_of_Plenty";
+    final String ROAD_BUILDING = "/moves/Road_Building";
 
     private Model m_model;
 
@@ -34,6 +38,14 @@ public class MoveFacade {
                     command = moveFromJson(json, SendChat.class); break;
                 case ROLL_NUMBER:
                     command = moveFromJson(json, RollNumber.class); break;
+                case FINISH_TURN:
+                    command = moveFromJson(json, FinishTurn.class); break;
+                case BUY_DEV_CARD:
+                    command = moveFromJson(json, BuyDevCard.class); break;
+                case YEAR_OF_PLENTY:
+                    command = moveFromJson(json, YearOfPlenty.class); break;
+                case ROAD_BUILDING:
+                    command = moveFromJson(json, RoadBuilding.class); break;
                 default:
                     return false;
             }
