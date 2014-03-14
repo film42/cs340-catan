@@ -15,4 +15,20 @@ public class LineImpl extends JsonImpl implements modelInterfaces.messaging.Line
         source = "Test";
         message = "Message";
     }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

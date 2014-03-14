@@ -13,4 +13,12 @@ public class EdgeValueImpl extends JsonImpl implements modelInterfaces.map.EdgeV
     public EdgeValueImpl() {
         ownerID = -1;
     }
+
+    public int getOwnerID(){
+        return ownerID;
+    }
+
+    public void setOwnerID(int newID){
+        ownerID = newID;
+    }
 }
