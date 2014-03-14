@@ -1,4 +1,4 @@
-package comm.moves;
+package comm.moves.base;
 
 /**
  * Created by: film42 on: 3/13/14.

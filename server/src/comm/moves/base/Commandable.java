@@ -1,4 +1,4 @@
-package comm.moves;
+package comm.moves.base;
 
 import java.io.IOException;
 
@@ -7,6 +7,6 @@ import java.io.IOException;
  */
 public interface Commandable {
 
-    public void execute() throws IOException;
+    public void execute() throws IOException, InvalidCommandException;
 
 }

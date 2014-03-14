@@ -1,5 +1,10 @@
 package comm.moves;
 
+import comm.moves.base.Command;
+import comm.moves.base.InvalidCommandException;
+
+import java.io.IOException;
+
 /**
  * Created by: film42 on: 3/12/14.
  */
@@ -11,8 +16,8 @@ public class RollNumber extends Command {
         return number;
     }
 
-    // Json Parser Specific
-    public static RollNumber fromJson(String json) {
-        return fromJson(json, RollNumber.class);
+    @Override
+    public void execute() throws IOException, InvalidCommandException {
+
     }
 }

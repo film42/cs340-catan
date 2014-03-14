@@ -1,4 +1,4 @@
-package comm.generic;
+package comm.request.base;
 
 import com.google.gson.Gson;
 import model.JsonParseable;
