@@ -2,23 +2,24 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import comm.moves.form.VertexLocation;
+import comm.moves.form.CardDeck;
 
 import java.io.IOException;
 
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class RoadBuilding extends Command {
-    private VertexLocation spot1;
-    private VertexLocation spot2;
+public class OfferTrade extends Command {
 
-    public VertexLocation getSpot1() {
-        return spot1;
+    private CardDeck offer;
+    private int receiver;
+
+    public CardDeck getOffer() {
+        return offer;
     }
 
-    public VertexLocation getSpot2() {
-        return spot2;
+    public int getReceiver() {
+        return receiver;
     }
 
     @Override

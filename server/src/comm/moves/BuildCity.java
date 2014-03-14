@@ -9,20 +9,22 @@ import java.io.IOException;
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class RoadBuilding extends Command {
-    private VertexLocation spot1;
-    private VertexLocation spot2;
+public class BuildCity extends Command {
 
-    public VertexLocation getSpot1() {
-        return spot1;
+    private boolean free;
+    private VertexLocation vertexLocation;
+
+    public boolean isFree() {
+        return free;
     }
 
-    public VertexLocation getSpot2() {
-        return spot2;
+    public VertexLocation getVertexLocation() {
+        return vertexLocation;
     }
 
     @Override
     public void execute() throws IOException, InvalidCommandException {
 
     }
+
 }

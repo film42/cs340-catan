@@ -9,16 +9,16 @@ import java.io.IOException;
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class RoadBuilding extends Command {
-    private VertexLocation spot1;
-    private VertexLocation spot2;
+public class BuildRoad extends Command {
+    private boolean free;
+    private VertexLocation roadLocation;
 
-    public VertexLocation getSpot1() {
-        return spot1;
+    public boolean isFree() {
+        return free;
     }
 
-    public VertexLocation getSpot2() {
-        return spot2;
+    public VertexLocation getRoadLocation() {
+        return roadLocation;
     }
 
     @Override

@@ -21,6 +21,13 @@ public class MoveFacade {
     final String ROAD_BUILDING = "/moves/Road_Building";
     final String SOLDIER = "/moves/Soldier";
     final String MONOPOLY = "/moves/Monopoly";
+    final String MONUMENT = "/moves/Monument";
+    final String BUILD_ROAD = "/moves/buildRoad";
+    final String BUILD_SETTLEMENT = "/moves/buildSettlement";
+    final String BUILD_CITY = "/moves/buildCity";
+    final String OFFER_TRADE = "/moves/offerTrade";
+    final String ACCEPT_TRADE = "/moves/acceptTrade";
+    final String DISCARD_CARDS = "/moves/discardCards";
 
     private Model m_model;
 
@@ -53,6 +60,20 @@ public class MoveFacade {
                     command = moveFromJson(json, Soldier.class); break;
                 case MONOPOLY:
                     command = moveFromJson(json, Monopoly.class); break;
+                case MONUMENT:
+                    command = moveFromJson(json, Monument.class); break;
+                case BUILD_ROAD:
+                    command = moveFromJson(json, BuildRoad.class); break;
+                case BUILD_SETTLEMENT:
+                    command = moveFromJson(json, BuildSettlement.class); break;
+                case BUILD_CITY:
+                    command = moveFromJson(json, BuildCity.class); break;
+                case OFFER_TRADE:
+                    command = moveFromJson(json, OfferTrade.class); break;
+                case ACCEPT_TRADE:
+                    command = moveFromJson(json, AcceptTrade.class); break;
+                case DISCARD_CARDS:
+                    command = moveFromJson(json, DiscardCards.class); break;
                 default:
                     return false;
             }

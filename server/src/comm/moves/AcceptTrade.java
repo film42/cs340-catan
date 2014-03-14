@@ -2,28 +2,23 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import comm.moves.form.Location;
 
 import java.io.IOException;
 
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class Soldier extends Command {
+public class AcceptTrade extends Command {
 
-    private int victimIndex;
-    private Location robberSpot;
+    private boolean willAccept;
 
-    public int getVictimIndex() {
-        return victimIndex;
-    }
-
-    public Location getRobberSpot() {
-        return robberSpot;
+    public boolean willAccept() {
+        return willAccept;
     }
 
     @Override
     public void execute() throws IOException, InvalidCommandException {
 
     }
+
 }
