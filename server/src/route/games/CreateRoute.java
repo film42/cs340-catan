@@ -7,7 +7,6 @@ import spark.Response;
 import spark.Route;
 import comm.request.CreateGameRequest;
 
-
 /**
  * Created by qzcx on 3/6/14.
  */
@@ -21,13 +20,18 @@ public class CreateRoute extends CoreRoute {
         post(new Route("/games/create") {
             @Override
             public Object handle(Request request, Response response) {
+
+               // if (request.params("randomTiles") == 1);
+
+               //     request.params("randomNumbers"),
+                //    request.params("randomPorts"),
+                //    request.params("name"));
+
                 if (request.params("name") == null){
                     response.status(400);
                     return("Invalid Game Name.");
                 }
-                CreateGameRequest createGameRequest = new CreateGameRequest(request.params("randomTiles"),
-                                                                            request.params("randomNumbers"),
-                                                                            request.params("randomPorts"),
+                CreateGameRequest createGameRequest = new CreateGameRequest(true,true,true,
                                                                             request.params("name"));
 
                     

@@ -21,12 +21,12 @@ public class RegisterRoute extends CoreRoute {
             @Override
             public Object handle(Request request, Response response) {
 
-                string username = request.params("username");
-                string password = request.params("password");
+                String username = request.params("username");
+                String password = request.params("password");
 
                 if (username != null && password != null){
                   response.status(401);
-                  return "Failed to Register - invalid username or password.");
+                  return ("Failed to Register - invalid username or password.");
                 }
                 UserRequest userRequest = new UserRequest(username, password);
                 boolean modelResponse = m_utilFacade.onUserRegister(userRequest);

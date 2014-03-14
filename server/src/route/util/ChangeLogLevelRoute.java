@@ -19,8 +19,8 @@ public class ChangeLogLevelRoute extends CoreRoute {
         post(new Route("/util/changeLogLevel") {
             @Override
             public Object handle(Request request, Response response) {
-                string logLevel = request.params("logLevel");
-                if (logLevel ==null){
+                String logLevel = request.params("logLevel");
+                if (logLevel == null){
                     return("Invalide Log Level");
                 }
                 ChangeLogLevelRequest changeLogLevelRequest = new ChangeLogLevelRequest(logLevel);
@@ -32,7 +32,7 @@ public class ChangeLogLevelRoute extends CoreRoute {
                 }
                 else{
                     response.status(401);
-                    return "Failed to Change Log Level Test");
+                    return("Failed to Change Log Level Test");
                 }
                
             }

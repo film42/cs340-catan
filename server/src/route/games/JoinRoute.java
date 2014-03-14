@@ -20,8 +20,8 @@ public class JoinRoute extends CoreRoute {
         post(new Route("/games/join") {
             @Override
             public Object handle(Request request, Response response) {
-                string color = request.params("color");
-                string id = request.params("id");
+                String color = request.params("color");
+                String id = request.params("id");
                 
                 if (color == null || id == null){
                     response.status(400);
