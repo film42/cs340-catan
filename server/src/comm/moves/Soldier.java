@@ -2,23 +2,24 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import comm.moves.forms.HexLocation;
+import comm.moves.forms.Location;
 
 import java.io.IOException;
 
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class RoadBuilding extends Command {
-    private HexLocation spot1;
-    private HexLocation spot2;
+public class Soldier extends Command {
 
-    public HexLocation getSpot1() {
-        return spot1;
+    private int victimIndex;
+    private Location robberSpot;
+
+    public int getVictimIndex() {
+        return victimIndex;
     }
 
-    public HexLocation getSpot2() {
-        return spot2;
+    public Location getRobberSpot() {
+        return robberSpot;
     }
 
     @Override
