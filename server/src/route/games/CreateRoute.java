@@ -29,13 +29,13 @@ public class CreateRoute extends CoreRoute {
                     response.status(400);
                     return("Invalid Game Name.");
                 }
-                if (request.params("randomTiles") == "1")
+                if (request.params("randomTiles").equals("true"));
                     randomTitles = true;
 
-                if (request.params("randomNumbers") == "1")
+                if (request.params("randomNumbers").equals("true"));
                    randomNumbers = true;
 
-                if (request.params("randomPorts") == "1")
+                if (request.params("randomPorts").equals("true"));
                     randomPorts = true;
 
 
