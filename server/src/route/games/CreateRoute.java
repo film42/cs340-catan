@@ -20,22 +20,27 @@ public class CreateRoute extends CoreRoute {
         post(new Route("/games/create") {
             @Override
             public Object handle(Request request, Response response) {
+                boolean randomTitles = false;
+                boolean randomNumbers = false;
+                boolean randomPorts = false;
 
-               // if (request.params("randomTiles") == 1);
-
-               //     request.params("randomNumbers"),
-                //    request.params("randomPorts"),
-                //    request.params("name"));
 
                 if (request.params("name") == null){
                     response.status(400);
                     return("Invalid Game Name.");
                 }
-                CreateGameRequest createGameRequest = new CreateGameRequest(true,true,true,
+                if (request.params("randomTiles") == "1")
+                    randomTitles = true;
+
+                if (request.params("randomNumbers") == "1")
+                   randomNumbers = true;
+
+                if (request.params("randomPorts") == "1")
+                    randomPorts = true;
+
+
+                CreateGameRequest createGameRequest = new CreateGameRequest(randomTitles,randomNumbers,randomPorts,
                                                                             request.params("name"));
-
-                    
-
                 String modelResponse = m_gamesFacade.onCreateGame(createGameRequest);
                 return modelResponse;
             }
