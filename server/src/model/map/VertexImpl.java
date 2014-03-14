@@ -14,4 +14,12 @@ public class VertexImpl extends JsonImpl implements modelInterfaces.map.Vertex {
     public VertexImpl() {
         value = new VertexValueImpl();
     }
+
+    public VertexValue getValue(){
+        return value;
+    }
+
+    public void setValue(VertexValue newValue){
+        value = newValue;
+    }
 }

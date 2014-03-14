@@ -14,4 +14,12 @@ public class EdgeImpl extends JsonImpl implements modelInterfaces.map.Edge {
     public EdgeImpl() {
         value = new EdgeValueImpl();
     }
+
+    public EdgeValue getValue(){
+        return value;
+    }
+
+    public void setValue(EdgeValue newValue){
+        value = newValue;
+    }
 }
