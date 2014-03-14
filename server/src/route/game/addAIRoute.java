@@ -5,6 +5,7 @@ import route.CoreRoute;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import comm.request.AddAIRequest;
 
 /**
  * Created by qzcx on 3/6/14.
@@ -20,7 +21,14 @@ public class AddAIRoute extends CoreRoute {
         post(new Route("/game/addAI") {
             @Override
             public Object handle(Request request, Response response) {
-                boolean modelResponse = m_gameFacade.onAddAI();
+                string aiType = request.params("AIType");
+                if (aiType == null){
+                    response.status(400);
+                    return("Invalid AIType");
+                }
+
+                AddAIRequest addAIRequest = new AddAIRequest(aiType);
+                boolean modelResponse = m_gameFacade.onAddAI(addAIRequest);
                 if(modelResponse){
                     return "";
                 }else{

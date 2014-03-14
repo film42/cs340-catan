@@ -5,7 +5,7 @@ import route.CoreRoute;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
+import comm.request.ChangeLogLevelRequest;
 /**
  * Created by qzcx on 3/6/14.
  */
@@ -19,9 +19,22 @@ public class ChangeLogLevelRoute extends CoreRoute {
         post(new Route("/util/changeLogLevel") {
             @Override
             public Object handle(Request request, Response response) {
-                boolean modelResponse = m_utilFacade.onChangeLogLevel();
-
-                return "Util Change Log Level Test";
+                string logLevel = request.params("logLevel");
+                if (logLevel ==null){
+                    return("Invalide Log Level");
+                }
+                ChangeLogLevelRequest changeLogLevelRequest = new ChangeLogLevelRequest(logLevel);
+                boolean modelResponse = m_utilFacade.onChangeLogLevel(changeLogLevelRequest);
+                if(modelResponse){
+                  //default return HTTP_OK
+                  response.status(200);
+                  return("Util Changed Log Level Test");
+                }
+                else{
+                    response.status(401);
+                    return "Failed to Change Log Level Test");
+                }
+               
             }
         });
     }
