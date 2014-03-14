@@ -1,5 +1,6 @@
 package model;
 
+import model.base.GameImpl;
 import model.base.PlayerImpl;
 import model.base.ResourcesImpl;
 import model.base.TurnTrackerImpl;
@@ -53,7 +54,7 @@ public class ModelModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(User.class).to(UserImpl.class);
-        bind(Game.class).to(Game.class);
+        bind(Game.class).to(GameImpl.class);
         bind(Player.class).to(PlayerImpl.class);
         bind(Resources.class).to(ResourcesImpl.class);
         bind(TurnTracker.class).to(TurnTrackerImpl.class);

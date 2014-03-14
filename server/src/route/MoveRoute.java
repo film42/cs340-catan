@@ -24,7 +24,12 @@ public class MoveRoute extends CoreRoute {
                 String url = request.pathInfo();
                 boolean status = m_movesFacade.onMove(json, url);
 
-                return status ? "Success!" : "Error!";
+                if(status) {
+                    return "Success!";
+                } else {
+                    response.status(500);
+                    return "Error!";
+                }
             }
         });
     }

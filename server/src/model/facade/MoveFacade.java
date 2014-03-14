@@ -82,7 +82,6 @@ public class MoveFacade {
             command.execute();
             return true;
 
-
         // ERRORS
         } catch (IOException e) {
             // Server Error: Our fault
