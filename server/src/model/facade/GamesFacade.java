@@ -1,6 +1,8 @@
 package model.facade;
 
 import com.google.gson.Gson;
+import comm.request.CreateGameRequest;
+import comm.request.JoinGameRequest;
 import model.JsonSerializable;
 import model.Model;
 import model.preview.GameStub;
@@ -18,11 +20,11 @@ public class GamesFacade{
         m_model = model;
     }
 
-    public String onCreateGame(){
+    public String onCreateGame(CreateGameRequest createGameRequest ){
         //TODO implement this method to use model
         return "{ \"title\": \"New Game NAme\", \"id\": 4, \"players\": [ {}, {}, {}, {} ] }";
     }
-    public boolean onJoinGame(){
+    public boolean onJoinGame(JoinGameRequest joinGameRequest){
         //TODO implement this method to use model
         return true;
     }

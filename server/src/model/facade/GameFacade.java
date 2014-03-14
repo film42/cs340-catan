@@ -21,14 +21,7 @@ public class GameFacade{
         //TODO implement this method to use model
         return true;
     }
-    public boolean onJoinGame(JoinGameRequest joinGameRequest){
-        //TODO implement this method to use model
-        return true;
-    }
-    public boolean onCreateGame(CreateGameRequest createGameRequest ){
-        //TODO implement this method to use model
-        return true;
-    }
+
 
     public String onGetCommands(){
         //TODO implement this method to use model
@@ -37,7 +30,7 @@ public class GameFacade{
     public String onListAI(){
         return "[\"LARGEST_ARMY\"]";
     }
-    
+
     public boolean onPostCommands(){
         //TODO implement this method to use model
         return true;

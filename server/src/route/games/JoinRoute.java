@@ -28,7 +28,7 @@ public class JoinRoute extends CoreRoute {
                     return("Failed to join game");
                 }
                 JoinGameRequest joinGameRequest = new JoinGameRequest(color, id);
-                Boolean modelResponse = m_gamesFacade.onJoinGame();
+                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest);
                 if(modelResponse){
                     response.cookie("catan.game", "-1");
                     return "";
