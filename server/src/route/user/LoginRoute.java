@@ -18,10 +18,10 @@ public class LoginRoute extends CoreRoute {
             @Override
             public Object handle(Request request, Response response) {
 
-                String username = request.params("username");
-                String password = request.params("password");
+                String username = request.queryParams("username");
+                String password = request.queryParams("password");
 
-                if (username != null && password != null){
+                if (username == null || password == null){
                   response.status(401);
                   return("Failed to login - invalid username or password.");
                 }

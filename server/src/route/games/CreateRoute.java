@@ -25,19 +25,25 @@ public class CreateRoute extends CoreRoute {
                 boolean randomPorts = false;
 
 
-                if (request.params("name") == null){
+
+                if (request.queryParams("name") == null){
                     response.status(400);
                     return("Invalid Game Name.");
                 }
-                if (request.params("randomTiles").equals("true"));
+                if (request.queryParams("randomTiles") != null &&
+                        request.queryParams("randomTiles").equals("true")){
                     randomTitles = true;
+                }
 
-                if (request.params("randomNumbers").equals("true"));
+                if (request.queryParams("randomNumbers") != null &&
+                        request.queryParams("randomNumbers").equals("true")){
                    randomNumbers = true;
+                }
 
-                if (request.params("randomPorts").equals("true"));
+                if (request.queryParams("randomPorts") != null &&
+                        request.queryParams("randomPorts").equals("true")){
                     randomPorts = true;
-
+                }
 
                 CreateGameRequest createGameRequest = new CreateGameRequest(randomTitles,randomNumbers,randomPorts,
                                                                             request.params("name"));

@@ -1,5 +1,6 @@
 package model.base;
 
+import comm.request.CreateGameRequest;
 import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
@@ -54,91 +55,120 @@ public class GameImpl extends JsonImpl implements Game {
         revision = 0;
     }
 
+    @Override
     public Deck getDeck() {
         return deck;
     }
 
+    @Override
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
 
+    @Override
     public Map getMap() {
         return map;
     }
 
+    @Override
     public void setMap(Map map) {
         this.map = map;
     }
 
+    @Override
     public List<Player> getPlayers() {
         return players;
     }
 
+    @Override
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
+    @Override
     public Log getLog() {
         return log;
     }
 
+    @Override
     public void setLog(Log log) {
         this.log = log;
     }
 
+    @Override
     public Chat getChat() {
         return chat;
     }
 
+    @Override
     public void setChat(Chat chat) {
         this.chat = chat;
     }
 
+    @Override
     public Resources getBank() {
         return bank;
     }
 
+    @Override
     public void setBank(Resources bank) {
         this.bank = bank;
     }
 
+    @Override
     public TurnTracker getTurnTracker() {
         return turnTracker;
     }
 
+    @Override
     public void setTurnTracker(TurnTracker turnTracker) {
         this.turnTracker = turnTracker;
     }
 
+    @Override
     public int getBiggestArmy() {
         return biggestArmy;
     }
 
+    @Override
     public void setBiggestArmy(int biggestArmy) {
         this.biggestArmy = biggestArmy;
     }
 
+    @Override
     public int getLongestRoad() {
         return longestRoad;
     }
 
+    @Override
     public void setLongestRoad(int longestRoad) {
         this.longestRoad = longestRoad;
     }
 
+    @Override
     public int getWinner() {
         return winner;
     }
 
+    @Override
     public void setWinner(int winner) {
         this.winner = winner;
     }
 
+    @Override
     public int getRevision() {
         return revision;
     }
 
+    @Override
     public void setRevision(int revision) {
         this.revision = revision;
+    }
+
+    @Override
+    public void initGame(CreateGameRequest createGameRequest) {
+        //TODO intilize the Game using the given parameters
+        //these parameters need to go to the map.
+        map.initMap(createGameRequest);
     }
 }

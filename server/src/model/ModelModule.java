@@ -1,9 +1,6 @@
 package model;
 
-import model.base.GameImpl;
-import model.base.PlayerImpl;
-import model.base.ResourcesImpl;
-import model.base.TurnTrackerImpl;
+import model.base.*;
 import model.map.EdgeImpl;
 import model.map.EdgeValueImpl;
 import model.map.HexGridImpl;
@@ -17,10 +14,7 @@ import model.messaging.ChatImpl;
 import model.messaging.LineImpl;
 import model.messaging.LogImpl;
 import model.users.UserImpl;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
-import modelInterfaces.base.TurnTracker;
+import modelInterfaces.base.*;
 import modelInterfaces.map.Edge;
 import modelInterfaces.map.EdgeValue;
 import modelInterfaces.map.Hex;
@@ -55,6 +49,7 @@ public class ModelModule extends AbstractModule {
     protected void configure() {
         bind(User.class).to(UserImpl.class);
         bind(Game.class).to(GameImpl.class);
+        bind(GameInfo.class).to(GameInfoImpl.class);
         bind(Player.class).to(PlayerImpl.class);
         bind(Resources.class).to(ResourcesImpl.class);
         bind(TurnTracker.class).to(TurnTrackerImpl.class);

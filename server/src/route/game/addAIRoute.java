@@ -21,7 +21,7 @@ public class AddAIRoute extends CoreRoute {
         post(new Route("/game/addAI") {
             @Override
             public Object handle(Request request, Response response) {
-                String aiType = request.params("AIType");
+                String aiType = request.queryParams("AIType");
                 if (aiType == null){
                     response.status(400);
                     return("Invalid AIType");

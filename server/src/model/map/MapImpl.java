@@ -1,5 +1,6 @@
 package model.map;
 
+import comm.request.CreateGameRequest;
 import model.JsonImpl;
 import model.Model;
 import modelInterfaces.map.HexGrid;
@@ -62,5 +63,10 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
 
     public void setRobber(Robber robber) {
         this.robber = robber;
+    }
+
+    @Override
+    public void initMap(CreateGameRequest createGameRequest) {
+        //TODO create the map using these parameters
     }
 }

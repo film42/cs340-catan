@@ -50,138 +50,172 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         this.color = "red";
     }
 
+    @Override
     public Resources getResources() {
         return resources;
     }
 
+    @Override
     public void setResources(Resources resources) {
         this.resources = resources;
     }
 
+    @Override
     public Deck getOldDevCards() {
         return oldDevCards;
     }
 
+    @Override
     public void setOldDevCards(Deck oldDevCards) {
         this.oldDevCards = oldDevCards;
     }
 
+    @Override
     public Deck getNewDevCards() {
         return newDevCards;
     }
 
+    @Override
     public void setNewDevCards(Deck newDevCards) {
         this.newDevCards = newDevCards;
     }
 
+    @Override
     public int getRoads() {
         return roads;
     }
 
+    @Override
     public void setRoads(int roads) {
         this.roads = roads;
     }
 
+    @Override
     public int getCities() {
         return cities;
     }
 
+    @Override
     public void setCities(int cities) {
         this.cities = cities;
     }
 
+    @Override
     public int getSettlements() {
         return settlements;
     }
 
+    @Override
     public void setSettlements(int settlements) {
         this.settlements = settlements;
     }
 
+    @Override
     public int getSoldiers() {
         return soldiers;
     }
 
+    @Override
     public void setSoldiers(int soldiers) {
         this.soldiers = soldiers;
     }
 
+    @Override
     public int getVictoryPoints() {
         return victoryPoints;
     }
 
+    @Override
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 
+    @Override
     public int getMonuments() {
         return monuments;
     }
 
+    @Override
     public void setMonuments(int monuments) {
         this.monuments = monuments;
     }
 
+    @Override
     public boolean isLongestRoad() {
         return longestRoad;
     }
 
+    @Override
     public void setLongestRoad(boolean longestRoad) {
         this.longestRoad = longestRoad;
     }
 
+    @Override
     public boolean isLargestArmy() {
         return largestArmy;
     }
 
+    @Override
     public void setLargestArmy(boolean largestArmy) {
         this.largestArmy = largestArmy;
     }
 
+    @Override
     public boolean isPlayedDevCard() {
         return playedDevCard;
     }
 
+    @Override
     public void setPlayedDevCard(boolean playedDevCard) {
         this.playedDevCard = playedDevCard;
     }
 
+    @Override
     public boolean isDiscarded() {
         return discarded;
     }
 
+    @Override
     public void setDiscarded(boolean discarded) {
         this.discarded = discarded;
     }
 
+    @Override
     public int getPlayerID() {
         return playerID;
     }
 
+    @Override
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
     }
 
+    @Override
     public int getOrderNumber() {
         return orderNumber;
     }
 
+    @Override
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getColor() {
         return color;
     }
 
+    @Override
     public void setColor(String color) {
         this.color = color;
     }

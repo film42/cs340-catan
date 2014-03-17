@@ -6,6 +6,8 @@ import comm.request.JoinGameRequest;
 import model.JsonSerializable;
 import model.Model;
 import model.preview.GameStub;
+import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class GamesFacade{
     }
 
     public String onCreateGame(CreateGameRequest createGameRequest ){
-        //TODO implement this method to use model
+        m_model.createGame(createGameRequest);
         return "{ \"title\": \"New Game NAme\", \"id\": 4, \"players\": [ {}, {}, {}, {} ] }";
     }
     public boolean onJoinGame(JoinGameRequest joinGameRequest){
@@ -29,12 +31,11 @@ public class GamesFacade{
         return true;
     }
     public String onListGames(){
-        //TODO Create a transparent list class for serializing `no root json lists`
-        List<GameStub> gS = new ArrayList<GameStub>();
-        gS.add(new GameStub());
-        gS.add(new GameStub());
-        gS.add(new GameStub());
-
+        List<GameStub> gS = new ArrayList<>();
+        List<GameInfo> games = m_model.getGames();
+        for (GameInfo game : games) {
+            gS.add(new GameStub(game.getId(), game.getTitle(), game.getData().getPlayers()));
+        }
         Gson gson = new Gson();
         return gson.toJson(gS);
     }

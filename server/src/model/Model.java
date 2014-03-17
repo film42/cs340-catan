@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import comm.request.CreateGameRequest;
 import model.users.UserImpl;
 import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
 import modelInterfaces.users.User;
 
 import java.util.ArrayList;
@@ -21,16 +23,17 @@ public class Model extends JsonImpl {
     List<String> AITypes = new ArrayList<String>();
 
     Set<User> users;
-    List<Game> games;
+    List<GameInfo> games;
     Injector injector;
 
 	@Inject
 	public Model() {
         users = new HashSet<User>();
+        games = new ArrayList<GameInfo>();
 	}
 
     @Inject
-    public void init(User adam, User steve, User june, User garrett){
+    public void initUsers(User adam, User steve, User june, User garrett){
         //initialize the server information
         adam.setName("Adam");
         adam.setPassword("adam");
@@ -45,6 +48,7 @@ public class Model extends JsonImpl {
         garrett.setPassword("garrett");
         users.add(garrett);
     }
+
     /**
      *
      * @param username
@@ -90,6 +94,27 @@ public class Model extends JsonImpl {
                 return user;
         }
         return null;
+    }
+
+    /**
+     * @return the list of games
+     */
+    public List<GameInfo> getGames(){
+        return games;
+    }
+
+    /**
+     *
+     * @return success flag
+     * @param createGameRequest
+     */
+    public boolean createGame(CreateGameRequest createGameRequest){
+        GameInfo newGame = InjectorFactory.getInjector().getInstance(GameInfo.class);
+        newGame.setTitle(createGameRequest.getName());
+        newGame.initGame(createGameRequest);
+        games.add(newGame);
+
+        return true;
     }
 
 }

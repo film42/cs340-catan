@@ -23,10 +23,7 @@ public class UtilFacade {
      * @return success/failure based on whether the password matches the username
      */
     public boolean onUserLogin(UserRequest userRequest){
-        //TODO implement this method to use model
-        //1. check if user is valid
-        //2. check if password matches
-        return true;
+        return m_model.hasUser(userRequest.getName(), userRequest.getPassword());
     }
 
     /**
@@ -34,14 +31,11 @@ public class UtilFacade {
      * @return success/failure based on whether the username/password is valid
      */
     public boolean onUserRegister(UserRequest userRequest){
-        //TODO implement this method
-        //1. check if username already exists, return false
-        //2. add username/password to model, return true
-        return true;
+        return m_model.addUser(userRequest.getName(), userRequest.getPassword());
     }
 
     public boolean onChangeLogLevel(ChangeLogLevelRequest changeLogLevelRequest){
-        //TODO implement this method
+        //This method is not required.
         //1. change logging level
         return true;
     }

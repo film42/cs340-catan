@@ -2,6 +2,8 @@ package server;
 
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
+
+import model.InjectorFactory;
 import model.Model;
 import model.ModelModule;
 import model.facade.GameFacade;
@@ -37,7 +39,7 @@ public class Server {
         externalStaticFileLocation("../gameplay");
 
 		// Google Guice injection
-		Injector injector = Guice.createInjector(new ModelModule());
+		Injector injector = InjectorFactory.createInjector(new ModelModule());
 
         // Facade Classes
 		Model myGame = injector.getInstance(Model.class);
