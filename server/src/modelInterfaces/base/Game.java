@@ -63,4 +63,6 @@ public interface Game {
     Player getPlayerByIndex(int index);
 
     boolean isLastPlayerIndex(int index);
+
+    boolean playersRequireDiscarding();
 }

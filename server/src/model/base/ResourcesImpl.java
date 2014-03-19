@@ -70,4 +70,9 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
 	public void setOre(int ore) {
         this.ore = ore;
     }
+
+    @Override
+    public int getResourceCount() {
+        return brick + wood + sheep + wheat + ore;
+    }
 }

@@ -2,11 +2,10 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.TurnTracker;
+import modelInterfaces.base.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by: film42 on: 3/12/14.
@@ -22,34 +21,32 @@ public class RollNumber extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
+        game = rolling(game);
 
-        TurnTracker turnTracker = game.getTurnTracker();
-        String status = turnTracker.getStatus();
-
-        switch (status) {
-            case TurnTracker.ROLLING: game = rolling(game); break;
-            case TurnTracker.ROBBING: game = robbing(game); break;
-            case TurnTracker.DISCARDING: game = discarding(game); break;
-        }
+        // TODO: Get use player.addResourceList to add the resources before this is done
 
         gameInfo.setData(game);
-    }
-
-    private Game robbing(Game game) {
-        return null;
     }
 
     private Game rolling(Game game) {
         TurnTracker tracker = game.getTurnTracker();
 
+        switch (number) {
+            case 7:
+                if(game.playersRequireDiscarding()) {
+                    tracker.setStatus(TurnTracker.DISCARDING);
+                } else {
+                    tracker.setStatus(TurnTracker.ROBBING);
+                }
+                break;
+            default: tracker.setStatus(TurnTracker.PLAYING); break;
+        }
 
         // Set and return
         game.setTurnTracker(tracker);
         return game;
     }
 
-    private Game discarding(Game game) {
-        return null;
-    }
-
 }
+
+

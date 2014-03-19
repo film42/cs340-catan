@@ -71,4 +71,6 @@ public interface Player {
     String getColor();
 
     void setColor(String color);
+
+    void addResourceList(Resources resourcesToAdd);
 }

@@ -188,4 +188,18 @@ public class GameImpl extends JsonImpl implements Game {
     public boolean isLastPlayerIndex(int index) {
         return index == (players.size() - 1);
     }
+
+    @Override
+    public boolean playersRequireDiscarding() {
+        for(Player player : players) {
+            Resources resources = player.getResources();
+            // Check each players resource
+            if(resources.getResourceCount() > 7)
+                // Return true if they need to discard
+                return true;
+        }
+
+        // Nobody needs to discard
+        return false;
+    }
 }

@@ -24,4 +24,6 @@ public interface Resources {
 	public abstract void setBrick(int brick);
 
 	public abstract int getBrick();
+
+    int getResourceCount();
 }
