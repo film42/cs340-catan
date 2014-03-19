@@ -38,34 +38,52 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
 
     }
 
+    @Override
     public boolean isLand() {
         return isLand;
     }
 
+    @Override
     public void setLand(boolean isLand) {
         this.isLand = isLand;
     }
 
+    @Override
     public Location getLocation() {
         return location;
     }
 
+    @Override
     public void setLocation(Location location) {
         this.location = location;
     }
 
+    @Override
     public List<Vertex> getVertexes() {
         return vertexes;
     }
 
+    @Override
     public void setVertexes(List<Vertex> vertexes) {
         this.vertexes = vertexes;
     }
 
+    @Override
     public List<Edge> getEdges() {
         return edges;
     }
 
+    @Override
+    public Edge getEdge(int direction){
+        return edges.get(direction);
+    }
+
+    @Override
+    public Vertex getVertex(int direction){
+        return vertexes.get(direction);
+    }
+
+    @Override
     public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }

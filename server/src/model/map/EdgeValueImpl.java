@@ -14,11 +14,14 @@ public class EdgeValueImpl extends JsonImpl implements modelInterfaces.map.EdgeV
         ownerID = -1;
     }
 
+    @Override
     public int getOwnerID(){
         return ownerID;
     }
 
+    @Override
     public void setOwnerID(int newID){
+        assert(newID >= -1 && newID <= 4);
         ownerID = newID;
     }
 }
