@@ -24,7 +24,7 @@ public class RegisterRoute extends CoreRoute {
                 String username = request.queryParams("username");
                 String password = request.queryParams("password");
 
-                if (username != null && password != null){
+                if (username == null || password == null){
                   response.status(401);
                   return ("Failed to Register - invalid username or password.");
                 }

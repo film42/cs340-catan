@@ -57,7 +57,7 @@ public class Model extends JsonImpl {
      */
     public boolean addUser(String username, String password){
         User user = hasUserByName(username);
-        if(user == null)
+        if(user != null)
             return false;
         User newUser = InjectorFactory.getInjector().getInstance(User.class);
         newUser.setName(username);
