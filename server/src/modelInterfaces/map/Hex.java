@@ -12,7 +12,7 @@ import java.util.List;
 public interface Hex {
     boolean isLand();
 
-    void setLand(String landtype);
+    void setLandType(String landtype);
 
     String getLandType();
 
