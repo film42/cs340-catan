@@ -10,17 +10,14 @@ public class PlayerStub extends JsonImpl {
 
     private String color;
     private String name;
-    private int id;
+    private String  id;
 
     public PlayerStub(int id, String name, String color){
-       this.id = id;
+       this.id = ""+id;
        this.color = color;
         this.name = name;
     }
 
     public PlayerStub() {
-        this.color = "red";
-        this.name = "ash";
-        this.id = -1;
     }
 }

@@ -9,19 +9,19 @@ import modelInterfaces.map.VertexValue;
  */
 public class VertexImpl extends JsonImpl implements modelInterfaces.map.Vertex {
 
-    private VertexValue value;
+    private VertexValueImpl value;
 
     public VertexImpl() {
         value = new VertexValueImpl();
     }
 
     @Override
-    public VertexValue getValue(){
+    public VertexValueImpl getValue(){
         return value;
     }
 
     @Override
-    public void setValue(VertexValue newValue){
+    public void setValue(VertexValueImpl newValue){
         value = newValue;
     }
 }

@@ -21,16 +21,17 @@ public class JoinRoute extends CoreRoute {
             @Override
             public Object handle(Request request, Response response) {
                 String color = request.queryParams("color");
-                String id = request.queryParams("id");
-                
-                if (color == null || id == null){
+                String gameId = request.queryParams("id");
+                String userName = request.cookie("catan.username");
+
+                if (color == null || gameId == null || userName == null){
                     response.status(400);
                     return("Failed to join game");
                 }
-                JoinGameRequest joinGameRequest = new JoinGameRequest(color, id);
-                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest);
+                JoinGameRequest joinGameRequest = new JoinGameRequest(color, gameId);
+                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest, userName);
                 if(modelResponse){
-                    response.cookie("catan.game", "-1");
+                    addCookie(response, "catan.game", gameId);
                     return "";
                 }else{
                     response.status(401);

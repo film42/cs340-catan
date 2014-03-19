@@ -4,6 +4,7 @@ import model.JsonSerializable;
 import model.Model;
 import comm.request.UserRequest;
 import comm.request.ChangeLogLevelRequest;
+import modelInterfaces.users.User;
 
 /**
  * Created by Jon George on 3/6/14.
@@ -38,5 +39,10 @@ public class UtilFacade {
         //This method is not required.
         //1. change logging level
         return true;
+    }
+
+    public int getUserId(String userName, String Password) {
+        User user = m_model.findUserByName(userName);
+        return user.getId();
     }
 }

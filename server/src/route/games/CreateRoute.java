@@ -24,8 +24,6 @@ public class CreateRoute extends CoreRoute {
                 boolean randomNumbers = false;
                 boolean randomPorts = false;
 
-
-
                 if (request.queryParams("name") == null){
                     response.status(400);
                     return("Invalid Game Name.");
@@ -45,9 +43,13 @@ public class CreateRoute extends CoreRoute {
                     randomPorts = true;
                 }
 
-                CreateGameRequest createGameRequest = new CreateGameRequest(randomTitles,randomNumbers,randomPorts,
-                                                                            request.params("name"));
+                CreateGameRequest createGameRequest =
+                        new CreateGameRequest(randomTitles,randomNumbers,
+                                    randomPorts, request.queryParams("name"));
                 String modelResponse = m_gamesFacade.onCreateGame(createGameRequest);
+                response.type("application/json");
+                //response.body(modelResponse);
+                //response.redirect("/playerWaiting.html");
                 return modelResponse;
             }
         });

@@ -21,8 +21,17 @@ public class GameStub extends JsonImpl {
         this.id = id;
         this.title = title;
         this.players = new ArrayList<>();
+        for(int i=0; i<4; i++){
+            Player player = players.size() > i ? players.get(i) : null;
+            if(player != null){ //if there is a player to add use it
+                this.players.add(new PlayerStub(player.getPlayerID(), player.getName(), player.getColor()));
+            }else{ //else add a blank player stub.
+                this.players.add(new PlayerStub());
+            }
+        }
+
         for (Player player : players) {
-            this.players.add(new PlayerStub(player.getPlayerID(), player.getName(), player.getColor()));
+
         }
     }
 

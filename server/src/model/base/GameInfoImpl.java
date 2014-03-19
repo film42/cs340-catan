@@ -3,6 +3,7 @@ package model.base;
 import com.google.inject.Inject;
 import comm.request.CreateGameRequest;
 import modelInterfaces.base.Game;
+import modelInterfaces.users.User;
 
 /**
  * Created by qzcx on 3/17/14.
@@ -53,5 +54,10 @@ public class GameInfoImpl implements modelInterfaces.base.GameInfo {
     @Override
     public void initGame(CreateGameRequest createGameRequest){
         this.data.initGame(createGameRequest);
+    }
+
+    @Override
+    public void addPlayer(User user, String color) {
+        this.data.addPlayer(user, color);
     }
 }

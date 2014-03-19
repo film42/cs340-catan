@@ -1,10 +1,38 @@
 package modelInterfaces.map;
 
 import comm.request.CreateGameRequest;
+import model.map.HexGridImpl;
+import model.map.NumbersImpl;
+import model.map.PortImpl;
+import model.map.RobberImpl;
+
+import java.util.List;
 
 /**
  * Created by Jon George on 3/13/14.
  */
 public interface Map {
+    HexGridImpl getHexGrid();
+
+    void setHexGrid(HexGridImpl hexGrid);
+
+    int getRadius();
+
+    void setRadius(int radius);
+
+    NumbersImpl getNumbers();
+
+    void setNumbers(NumbersImpl numbers);
+
+    List<PortImpl> getPorts();
+
+    void setPorts(List<PortImpl> ports);
+
+    Robber getRobber();
+
+    void setRobber(RobberImpl robber);
+
     void initMap(CreateGameRequest createGameRequest);
+
+    void initPorts(boolean randomPorts);
 }

@@ -1,21 +1,22 @@
 package model.base;
 
 import comm.request.CreateGameRequest;
+import model.InjectorFactory;
 import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
 import model.messaging.LogImpl;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
-import modelInterfaces.base.TurnTracker;
-import modelInterfaces.base.Deck;
+import modelInterfaces.base.*;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
+import modelInterfaces.users.User;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by: film42 on: 3/6/14.
@@ -36,9 +37,18 @@ public class GameImpl extends JsonImpl implements Game {
     public GameImpl() {
         deck = new DeckImpl();
 
-        map = new MapImpl();
+        String mapJson= "";
+        try {
+            // TODO: Make the model support a model object. Currently only does int. Whoops
+            mapJson = new Scanner(new File("MapDefault.json")).useDelimiter("\\Z").next();
+            map = fromJson(mapJson, MapImpl.class);
+            //ports = map.getPorts();
+            //hexGrid = map.getHexGrid();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         players.add(new PlayerImpl());
 
         log = new LogImpl();
@@ -202,4 +212,14 @@ public class GameImpl extends JsonImpl implements Game {
         // Nobody needs to discard
         return false;
     }
+
+    @Override
+    public void addPlayer(User user, String color) {
+        Player newPlayer = InjectorFactory.getInjector().getInstance(Player.class);
+        newPlayer.setName(user.getName());
+        newPlayer.setPlayerID(user.getId());
+        newPlayer.setOrderNumber(players.size());
+        players.add(newPlayer);
+    }
+
 }

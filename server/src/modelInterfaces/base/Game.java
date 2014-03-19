@@ -4,6 +4,7 @@ import comm.request.CreateGameRequest;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
+import modelInterfaces.users.User;
 
 import java.util.List;
 
@@ -65,4 +66,6 @@ public interface Game {
     boolean isLastPlayerIndex(int index);
 
     boolean playersRequireDiscarding();
+
+    void addPlayer(User user, String color);
 }

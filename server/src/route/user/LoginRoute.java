@@ -33,9 +33,10 @@ public class LoginRoute extends CoreRoute {
                 UserRequest userRequest = new UserRequest(username, password);
                 boolean modelResponse = m_utilFacade.onUserLogin(userRequest);
                 if(modelResponse){
-                    //default return HTTP_OK
+                    int id = m_utilFacade.getUserId(username, password);
                     response.status(200);
-                    addCookie(response, "catan.user", "username:" + username + " password:" + password);
+                    addCookie(response, "catan.user", "{ username : "+username + " , password : " + password + " , id : " + id + " }");
+                    addCookie(response, "catan.username", username);
                     return "";
                 }
                 else{
