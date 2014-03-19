@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
+import modelInterfaces.base.Player;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-
-import cs340.model.player.Player;
 
 /**
  * Created by: film42 on: 3/13/14.
