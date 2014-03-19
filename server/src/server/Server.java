@@ -3,12 +3,8 @@ package server;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
 
-<<<<<<< HEAD
 import java.util.logging.Logger;
 
-=======
-import comm.request.CreateGameRequest;
->>>>>>> FETCH_HEAD
 import model.InjectorFactory;
 import model.Model;
 import model.ModelModule;
