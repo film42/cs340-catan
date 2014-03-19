@@ -2,7 +2,11 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import model.messaging.LineImpl;
 import modelInterfaces.base.GameInfo;
+import modelInterfaces.messaging.Chat;
+import modelInterfaces.messaging.Line;
+
 
 import java.io.IOException;
 
@@ -19,6 +23,9 @@ public class SendChat extends Command {
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+       Chat  chat = gameInfo.getData().getChat();
+       String user = gameInfo.getData().getPlayers().get(getPlayerIndex()).getName();
+       chat.addLine(new LineImpl(user,content));
 
     }
 }
