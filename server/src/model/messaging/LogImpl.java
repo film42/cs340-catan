@@ -10,17 +10,12 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class LogImpl extends JsonImpl implements modelInterfaces.messaging.Log {
+public class LogImpl extends MessageImpl implements modelInterfaces.messaging.Log{
 
-    private List<Line> lines;
 
     public LogImpl() {
 
-        lines = new ArrayList<Line>();
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-
+       super();
     }
+
 }
