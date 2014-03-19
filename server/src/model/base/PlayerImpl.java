@@ -219,4 +219,13 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     public void setColor(String color) {
         this.color = color;
     }
+
+    @Override
+    public void addResourceList(Resources resourcesToAdd) {
+        resources.setBrick(resources.getBrick() + resourcesToAdd.getBrick());
+        resources.setOre(resources.getOre() + resourcesToAdd.getOre());
+        resources.setSheep(resources.getSheep() + resourcesToAdd.getSheep());
+        resources.setWheat(resources.getWheat() + resourcesToAdd.getWheat());
+        resources.setWood(resources.getWood()  + resourcesToAdd.getWood());
+    }
 }

@@ -1,8 +1,6 @@
 package model.base;
 
-import com.google.inject.Inject;
 import comm.request.CreateGameRequest;
-import model.InjectorFactory;
 import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
@@ -15,7 +13,6 @@ import modelInterfaces.base.Deck;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
-import modelInterfaces.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +33,13 @@ public class GameImpl extends JsonImpl implements Game {
     private int winner;
     private int revision;
 
-    @Inject
-    public GameImpl(Deck deck) {
-        this.deck = deck;
+    public GameImpl() {
+        deck = new DeckImpl();
 
-        this.map = new MapImpl();
+        map = new MapImpl();
 
-        players = new ArrayList<>();
-        //players.add(InjectorFactory.getInjector().getInstance(Player.class));
+        players = new ArrayList<Player>();
+        players.add(new PlayerImpl());
 
         log = new LogImpl();
 
@@ -176,12 +172,34 @@ public class GameImpl extends JsonImpl implements Game {
         map.initMap(createGameRequest);
     }
 
+
+    /////////////////////////////////////////////////////
+    // Sweet Sugar Methods
+    /////////////////////////////////////////////////////
     @Override
-    public void addPlayer(User user, String color) {
-        Player newPlayer = InjectorFactory.getInjector().getInstance(Player.class);
-        newPlayer.setName(user.getName());
-        newPlayer.setPlayerID(user.getId());
-        newPlayer.setOrderNumber(players.size());
-        players.add(newPlayer);
+    public Player getPlayerByIndex(int index) {
+        if(index > (players.size() - 1)) return null;
+        if(index < 0) return null;
+
+        return this.players.get(index);
+    }
+
+    @Override
+    public boolean isLastPlayerIndex(int index) {
+        return index == (players.size() - 1);
+    }
+
+    @Override
+    public boolean playersRequireDiscarding() {
+        for(Player player : players) {
+            Resources resources = player.getResources();
+            // Check each players resource
+            if(resources.getResourceCount() > 7)
+                // Return true if they need to discard
+                return true;
+        }
+
+        // Nobody needs to discard
+        return false;
     }
 }

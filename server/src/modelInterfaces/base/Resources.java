@@ -5,6 +5,12 @@ package modelInterfaces.base;
  */
 public interface Resources {
 
+    public static final String WOOD = "wood";
+    public static final String SHEEP = "sheep";
+    public static final String ORE = "ore";
+    public static final String BRICK = "brick";
+    public static final String WHEAT = "wheat";
+
 	public abstract void setOre(int ore);
 
 	public abstract int getOre();
@@ -24,4 +30,6 @@ public interface Resources {
 	public abstract void setBrick(int brick);
 
 	public abstract int getBrick();
+
+    int getResourceCount();
 }

@@ -11,10 +11,25 @@ import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class ChatImpl extends MessageImpl implements modelInterfaces.messaging.Chat {
+public class ChatImpl extends JsonImpl implements modelInterfaces.messaging.Chat {
 
-
+    private List<Line> lines;
     public ChatImpl() {
-        super();
+
+        lines = new ArrayList<Line>();
+        lines.add(new LineImpl());
+        lines.add(new LineImpl());
+        lines.add(new LineImpl());
+        lines.add(new LineImpl());
+    }
+
+    public void addLine(Line line){
+
+        lines.add(line);
+    }
+
+    public List<Line> getLines(){
+
+        return lines;
     }
 }

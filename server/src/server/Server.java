@@ -31,7 +31,7 @@ import comm.request.CreateGameRequest;
 public class Server {
 
 	// Logger
-	private static Logger log;
+	public static Logger log;
 	static {
 		log = Logger.getLogger("server");
 	}
