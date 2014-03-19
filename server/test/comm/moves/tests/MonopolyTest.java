@@ -4,7 +4,9 @@ import static comm.moves.base.Command.moveFromJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import model.base.DeckImpl;
@@ -22,12 +24,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import comm.moves.Monopoly;
+import comm.moves.base.Commandable;
+import comm.moves.base.InvalidCommandException;
 
 public class MonopolyTest {
 
 	// Constants
 	private static final int HIGH_NUMBER = 99;
 	private static final int LOW_NUMBER = 0;
+	private static final int FIRST_PLAYER = 0;
+	private static final int SECOND_PLAYER = 0;
+	private static final int THIRD_PLAYER = 0;
+	private static final int FOURTH_PLAYER = 0;
+
+	private Game fakeGame;
 
 	@Before
 	public void setUp() throws Exception {
@@ -66,7 +76,6 @@ public class MonopolyTest {
 		noDevCards.setSoldier(LOW_NUMBER);
 		noDevCards.setYearOfPlenty(LOW_NUMBER);
 
-		// Create a rich player
 		Player richMike = new PlayerImpl();
 		richMike.setResources(lotsOfResources);
 		richMike.setOldDevCards(lotsOfDevCards);
@@ -81,8 +90,8 @@ public class MonopolyTest {
 		richMike.setLargestArmy(true);
 		richMike.setPlayedDevCard(true);
 		richMike.setDiscarded(true);
-		richMike.setPlayerID(HIGH_NUMBER);
-		richMike.setOrderNumber(HIGH_NUMBER);
+		richMike.setPlayerID(FIRST_PLAYER);
+		richMike.setOrderNumber(FIRST_PLAYER);
 		richMike.setName("Mike MoneyBags");
 		richMike.setColor("Blue");
 
@@ -100,8 +109,8 @@ public class MonopolyTest {
 		richSteve.setLargestArmy(true);
 		richSteve.setPlayedDevCard(true);
 		richSteve.setDiscarded(true);
-		richSteve.setPlayerID(HIGH_NUMBER);
-		richSteve.setOrderNumber(HIGH_NUMBER);
+		richSteve.setPlayerID(SECOND_PLAYER);
+		richSteve.setOrderNumber(SECOND_PLAYER);
 		richSteve.setName("Steve GreenBacks");
 		richSteve.setColor("Green");
 
@@ -119,17 +128,39 @@ public class MonopolyTest {
 		poorPoorGuy.setLargestArmy(false);
 		poorPoorGuy.setPlayedDevCard(false);
 		poorPoorGuy.setDiscarded(false);
-		poorPoorGuy.setPlayerID(LOW_NUMBER);
-		poorPoorGuy.setOrderNumber(LOW_NUMBER);
+		poorPoorGuy.setPlayerID(THIRD_PLAYER);
+		poorPoorGuy.setOrderNumber(THIRD_PLAYER);
 		poorPoorGuy.setName("PoorGuy");
 		poorPoorGuy.setColor("Puce");
 
+		Player userGuy = new PlayerImpl();
+		userGuy.setResources(noResources);
+		userGuy.setOldDevCards(noDevCards);
+		userGuy.setNewDevCards(noDevCards);
+		userGuy.setRoads(LOW_NUMBER);
+		userGuy.setCities(LOW_NUMBER);
+		userGuy.setSettlements(LOW_NUMBER);
+		userGuy.setSoldiers(LOW_NUMBER);
+		userGuy.setVictoryPoints(LOW_NUMBER);
+		userGuy.setMonuments(LOW_NUMBER);
+		userGuy.setLongestRoad(false);
+		userGuy.setLargestArmy(false);
+		userGuy.setPlayedDevCard(false);
+		userGuy.setDiscarded(false);
+		userGuy.setPlayerID(FOURTH_PLAYER);
+		userGuy.setOrderNumber(FOURTH_PLAYER);
+		userGuy.setName("Poor User");
+		userGuy.setColor("Red");
+
 		ArrayList<Player> fakePlayers = new ArrayList<Player>();
-		Game fakeGame = new GameImpl();
+		fakePlayers.add(richMike);
+		fakePlayers.add(richSteve);
+		fakePlayers.add(userGuy);
+		fakePlayers.add(poorPoorGuy);
+
+		fakeGame = new GameImpl();
 		fakeGame.setPlayers(fakePlayers);
-		GameInfo fakeInfo = new GameInfoImpl(fakeGame);
-		String json = "\"resource\" : \"Brick\", \"playerIndex\": 0";
-		Monopoly monopoly = moveFromJson(json, Monopoly.class);
+
 	}
 
 	@Test
@@ -140,8 +171,34 @@ public class MonopolyTest {
 	}
 
 	@Test 
-	public void testStealWood() { 
-		
+	public void testStealWood() {
+
+		// Setup
+		GameInfo fakeInfo = new GameInfoImpl(fakeGame);
+		String json = "{\"resource\" : \"Wood\", \"playerIndex\": " + FOURTH_PLAYER + "}";
+
+		// Create object
+		Commandable monopoly = moveFromJson(json, Monopoly.class);
+
+		// Execute command
+		try {
+			monopoly.execute(fakeInfo);
+		} catch (IOException | InvalidCommandException e) {
+			fail("Exception in testStealWood.execute();");
+			return;
+		}
+
+		// test that it worked
+		for (Player p : fakeInfo.getData().getPlayers()) {
+			// test to make sure that those who had a wood lost one
+			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
+				assertEquals(p.getResources().getWood(), HIGH_NUMBER - 1);
+			}
+			// test to make sure that those who didn't have anything didn't lose anything
+			else {
+				assertEquals(p.getResources().getWood(), LOW_NUMBER);
+			}
+		}
 	}
 
 	@After
