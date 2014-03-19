@@ -1,9 +1,14 @@
 package route;
 
+import com.google.gson.JsonSyntaxException;
+import comm.moves.base.InvalidCommandException;
 import model.facade.MoveFacade;
+import modelInterfaces.base.GameInfo;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import java.io.IOException;
 
 /**
  * Created by Jon George on 3/6/14.
@@ -22,13 +27,32 @@ public class MoveRoute extends CoreRoute {
             public Object handle(Request request, Response response) {
                 String json = request.body();
                 String url = request.pathInfo();
-                boolean status = m_movesFacade.onMove(json, url);
+                // Get Game ID
+                String gameId = request.cookie("catan.gamess");
+                if(gameId == null) {
+                    // TODO: REMOVE THIS HERE REMOVE THIS HERE
+                    gameId = "0";
+                    //response.status(401);
+                    //return "Unauthorized";
+                }
 
-                if(status) {
-                    return "Success!";
-                } else {
+                // Valid game ID so we'll run the Command
+                try{
+                    boolean status = m_movesFacade.onMove(Integer.parseInt(gameId), json, url);
+                    response.status(200);
+                    return status;
+                } catch (IOException e) {
+                    // Server Error: Our fault
                     response.status(500);
-                    return "Error!";
+                    return "Server Error";
+                } catch (InvalidCommandException e) {
+                    // Syntax Correct, but Error
+                    response.status(400);
+                    return "Syntactically Valid Command, but cannot be applied at this time.";
+                } catch (JsonSyntaxException e) {
+                    // Caused by bad json.. could not serialize
+                    response.status(400);
+                    return "Bad Json";
                 }
             }
         });

@@ -3,6 +3,7 @@ package server;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
 
+import comm.request.CreateGameRequest;
 import model.InjectorFactory;
 import model.Model;
 import model.ModelModule;
@@ -62,6 +63,10 @@ public class Server {
         new CommandsRoute(myGameFacade).attach();
         new MoveRoute(myMoveFacade).attach();
         new ChangeLogLevelRoute(myUtilFacade).attach();
+
+
+        // TODO: REMOVE!
+        myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
     }
 
     public static void main(String[] args) {

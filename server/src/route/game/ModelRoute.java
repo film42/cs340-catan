@@ -22,7 +22,6 @@ public class ModelRoute extends CoreRoute{
         get(new Route("/game/model") {
             @Override
             public Object handle(Request request, Response response) {
-                response.cookie("test", "test");
                 String modelResponse = m_gameFacade.onModelRequest();
                 return modelResponse;
             }
