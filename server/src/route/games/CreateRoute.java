@@ -45,6 +45,7 @@ public class CreateRoute extends CoreRoute {
                     randomPorts = true;
                 }
 
+                String user = request.cookie("catan.user");
                 CreateGameRequest createGameRequest = new CreateGameRequest(randomTitles,randomNumbers,randomPorts,
                                                                             request.params("name"));
                 String modelResponse = m_gamesFacade.onCreateGame(createGameRequest);

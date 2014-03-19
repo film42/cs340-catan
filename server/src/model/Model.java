@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import comm.request.CreateGameRequest;
+import comm.request.JoinGameRequest;
 import model.users.UserImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
@@ -108,11 +109,17 @@ public class Model extends JsonImpl {
      * @return success flag
      * @param createGameRequest
      */
-    public boolean createGame(CreateGameRequest createGameRequest){
+    public GameInfo createGame(CreateGameRequest createGameRequest){
         GameInfo newGame = InjectorFactory.getInjector().getInstance(GameInfo.class);
         newGame.setTitle(createGameRequest.getName());
         newGame.initGame(createGameRequest);
+
         games.add(newGame);
+
+        return newGame;
+    }
+
+    public boolean joinGame(JoinGameRequest joinGameRequest, String userName) {
 
         return true;
     }

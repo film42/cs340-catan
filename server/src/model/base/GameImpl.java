@@ -1,6 +1,7 @@
 package model.base;
 
 import comm.request.CreateGameRequest;
+import model.InjectorFactory;
 import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
@@ -13,6 +14,7 @@ import modelInterfaces.base.Deck;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
+import modelInterfaces.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class GameImpl extends JsonImpl implements Game {
         map = new MapImpl();
 
         players = new ArrayList<Player>();
-        players.add(new PlayerImpl());
+        players.add(InjectorFactory.getInjector().getInstance(Player.class));
 
         log = new LogImpl();
 
@@ -170,5 +172,14 @@ public class GameImpl extends JsonImpl implements Game {
         //TODO intilize the Game using the given parameters
         //these parameters need to go to the map.
         map.initMap(createGameRequest);
+    }
+
+    @Override
+    public void addPlayer(User user, String color) {
+        Player newPlayer = InjectorFactory.getInjector().getInstance(Player.class);
+        newPlayer.setName(user.getName());
+        newPlayer.setPlayerID(user.getId());
+        newPlayer.setOrderNumber(players.size());
+        players.add(newPlayer);
     }
 }

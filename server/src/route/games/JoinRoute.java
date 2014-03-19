@@ -22,13 +22,14 @@ public class JoinRoute extends CoreRoute {
             public Object handle(Request request, Response response) {
                 String color = request.queryParams("color");
                 String id = request.queryParams("id");
-                
-                if (color == null || id == null){
+                String userName = request.cookie("catan.user");
+
+                if (color == null || id == null || userName == null){
                     response.status(400);
                     return("Failed to join game");
                 }
                 JoinGameRequest joinGameRequest = new JoinGameRequest(color, id);
-                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest);
+                Boolean modelResponse = m_gamesFacade.onJoinGame(joinGameRequest, userName);
                 if(modelResponse){
                     response.cookie("catan.game", "-1");
                     return "";

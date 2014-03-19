@@ -22,12 +22,13 @@ public class GamesFacade{
         m_model = model;
     }
 
-    public String onCreateGame(CreateGameRequest createGameRequest ){
-        m_model.createGame(createGameRequest);
-        return "{ \"title\": \"New Game NAme\", \"id\": 4, \"players\": [ {}, {}, {}, {} ] }";
+    public String onCreateGame(CreateGameRequest createGameRequest){
+        GameInfo game = m_model.createGame(createGameRequest);
+        GameStub gS = new GameStub(game.getId(), game.getTitle(), game.getData().getPlayers());
+        return gS.toJson();
     }
-    public boolean onJoinGame(JoinGameRequest joinGameRequest){
-        //TODO implement this method to use model
+    public boolean onJoinGame(JoinGameRequest joinGameRequest, String userName){
+        m_model.joinGame(joinGameRequest, userName);
         return true;
     }
     public String onListGames(){
