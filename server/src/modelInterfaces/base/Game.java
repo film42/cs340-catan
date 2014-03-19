@@ -56,4 +56,11 @@ public interface Game {
     void setRevision(int revision);
 
     void initGame(CreateGameRequest createGameRequest);
+
+    /////////////////////////////////////////////////////
+    // Sweet Sugar Methods
+    /////////////////////////////////////////////////////
+    Player getPlayerByIndex(int index);
+
+    boolean isLastPlayerIndex(int index);
 }

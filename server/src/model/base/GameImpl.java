@@ -171,4 +171,21 @@ public class GameImpl extends JsonImpl implements Game {
         //these parameters need to go to the map.
         map.initMap(createGameRequest);
     }
+
+
+    /////////////////////////////////////////////////////
+    // Sweet Sugar Methods
+    /////////////////////////////////////////////////////
+    @Override
+    public Player getPlayerByIndex(int index) {
+        if(index > (players.size() - 1)) return null;
+        if(index < 0) return null;
+
+        return this.players.get(index);
+    }
+
+    @Override
+    public boolean isLastPlayerIndex(int index) {
+        return index == (players.size() - 1);
+    }
 }
