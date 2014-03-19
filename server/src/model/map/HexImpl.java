@@ -13,15 +13,16 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
 
     private boolean isLand;
     private LocationImpl location;
-    private List<VertexImpl> vertexes;
-    private List<EdgeImpl> edges;
+    private List<Vertex> vertexes;
+    private List<Edge> edges;
+    private String landtype;
 
 
     public HexImpl() {
         isLand = false;
         location = new LocationImpl();
 
-        vertexes = new ArrayList<>();
+        vertexes = new ArrayList<Vertex>();
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
@@ -30,7 +31,7 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
         vertexes.add(new VertexImpl());
 
 
-        edges = new ArrayList<>();
+        edges = new ArrayList<Edge>();
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());
@@ -46,8 +47,11 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     }
 
     @Override
-    public void setLand(boolean isLand) {
-        this.isLand = isLand;
+    public String getLandType(){return landtype;}
+
+    @Override
+    public void setLand(String landtype) {
+        this.landtype = landtype;
     }
 
     @Override
@@ -61,17 +65,17 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     }
 
     @Override
-    public List<VertexImpl> getVertexes() {
+    public List<Vertex> getVertexes() {
         return vertexes;
     }
 
     @Override
-    public void setVertexes(List<VertexImpl> vertexes) {
+    public void setVertexes(List<Vertex> vertexes) {
         this.vertexes = vertexes;
     }
 
     @Override
-    public List<EdgeImpl> getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
 
@@ -86,7 +90,7 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     }
 
     @Override
-    public void setEdges(List<EdgeImpl> edges) {
+    public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }
 }
