@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 
 import modelInterfaces.base.Player;
@@ -30,7 +31,8 @@ public class YearOfPlenty extends Command {
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
-         Player player = gameInfo.getData().getPlayers().get(getPlayerIndex());
+         Game game = gameInfo.getData();
+         Player player = game.getPlayerByIndex(playerIndex);
          addSource(player, resource1);
          addSource(player, resource2);
 
