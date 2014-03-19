@@ -94,5 +94,8 @@ public class Monopoly extends Command {
             default:
                 server.Server.log.severe("Unrecognized resource selected :" + resource);
 		}
+
+        // Write our changes
+        gameInfo.setData(game);
 	}
 }
