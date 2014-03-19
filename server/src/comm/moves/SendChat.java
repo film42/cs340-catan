@@ -3,6 +3,7 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import model.messaging.LineImpl;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Line;
@@ -23,9 +24,20 @@ public class SendChat extends Command {
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
-       Chat  chat = gameInfo.getData().getChat();
-       String user = gameInfo.getData().getPlayers().get(getPlayerIndex()).getName();
-       chat.addLine(new LineImpl(user,content));
+        Game game = gameInfo.getData();
+
+        Chat  chat = game.getChat();
+
+        try {
+            String user = game.getPlayerByIndex(playerIndex).getName();
+            chat.addLine(new LineImpl(user,content));
+
+            game.setChat(chat);
+            gameInfo.setData(game);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new InvalidCommandException("Bad player index");
+        }
+
 
     }
 }
