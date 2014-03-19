@@ -3,7 +3,8 @@ package server;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
 
-import comm.request.CreateGameRequest;
+import java.util.logging.Logger;
+
 import model.InjectorFactory;
 import model.Model;
 import model.ModelModule;
@@ -24,15 +25,23 @@ import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
+import comm.request.CreateGameRequest;
 
 public class Server {
+
+	// Logger
+	private static Logger log;
+	static {
+		log = Logger.getLogger("server");
+	}
 
     private void run() {
     }
 
     private void config() {
+		Server.log.info("Configuring server...");
+
         // Set port here
         setPort(8081);
 
@@ -64,12 +73,14 @@ public class Server {
         new MoveRoute(myMoveFacade).attach();
         new ChangeLogLevelRoute(myUtilFacade).attach();
 
+		Server.log.info("Server configured");
 
         // TODO: REMOVE!
         myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
     }
 
     public static void main(String[] args) {
+		// Server
         Server server = new Server();
         server.config();
         server.run();
