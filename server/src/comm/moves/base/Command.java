@@ -8,9 +8,9 @@ import com.google.gson.JsonSyntaxException;
  */
 public abstract class Command implements Commandable {
 
-    private String type;
+	protected String type;
 
-    private int playerIndex;
+	protected int playerIndex;
 
     public String getType() {
         return type;
