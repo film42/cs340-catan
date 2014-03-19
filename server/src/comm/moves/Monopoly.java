@@ -8,6 +8,7 @@ import modelInterfaces.base.Player;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.Resources;
 
 /**
  * Created by: film42 on: 3/13/14.
@@ -31,31 +32,31 @@ public class Monopoly extends Command {
 		for (Player p : game.getPlayers()) {
 			if (p.getOrderNumber() != this.playerIndex) {
 				switch (resource) {
-				case "wood":
+				case Resources.WOOD:
 					if (p.getResources().getWood() > 0) {
 						p.getResources().setWood(p.getResources().getWood() - 1);
 						cardsStolen++;
 					}
 					break;
-				case "sheep":
+				case Resources.SHEEP:
 					if (p.getResources().getSheep() > 0) {
 						p.getResources().setSheep(p.getResources().getSheep() - 1);
 						cardsStolen++;
 					}
 					break;
-				case "ore":
+				case Resources.ORE:
 					if (p.getResources().getOre() > 0) {
 						p.getResources().setOre(p.getResources().getOre() - 1);
 						cardsStolen++;
 					}
 					break;
-				case "brick":
+				case Resources.BRICK:
 					if (p.getResources().getBrick() > 0) {
 						p.getResources().setBrick(p.getResources().getBrick() - 1);
 						cardsStolen++;
 					}
 					break;
-				case "wheat":
+				case Resources.WHEAT:
 					if (p.getResources().getWheat() > 0) {
 						p.getResources().setWheat(p.getResources().getWheat() - 1);
 						cardsStolen++;
