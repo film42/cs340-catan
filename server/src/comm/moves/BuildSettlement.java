@@ -3,6 +3,7 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class BuildSettlement extends Command {
     }
 
     @Override
-    public void execute(GameInfo game) throws IOException, InvalidCommandException {
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
     }
 
