@@ -1,5 +1,9 @@
 package modelInterfaces.map;
 
+import model.map.EdgeImpl;
+import model.map.LocationImpl;
+import model.map.VertexImpl;
+
 import java.util.List;
 
 /**
@@ -10,19 +14,19 @@ public interface Hex {
 
     void setLand(boolean isLand);
 
-    Location getLocation();
+    LocationImpl getLocation();
 
-    void setLocation(Location location);
+    void setLocation(LocationImpl location);
 
-    List<Vertex> getVertexes();
+    List<VertexImpl> getVertexes();
 
-    void setVertexes(List<Vertex> vertexes);
+    void setVertexes(List<VertexImpl> vertexes);
 
-    List<Edge> getEdges();
+    List<EdgeImpl> getEdges();
 
     Edge getEdge(int direction);
 
     Vertex getVertex(int direction);
 
-    void setEdges(List<Edge> edges);
+    void setEdges(List<EdgeImpl> edges);
 }

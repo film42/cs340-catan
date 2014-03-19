@@ -9,19 +9,19 @@ import modelInterfaces.map.EdgeValue;
  */
 public class EdgeImpl extends JsonImpl implements modelInterfaces.map.Edge {
 
-    private EdgeValue value;
+    private EdgeValueImpl value;
 
     public EdgeImpl() {
         value = new EdgeValueImpl();
     }
 
     @Override
-    public EdgeValue getValue(){
+    public EdgeValueImpl getValue(){
         return value;
     }
 
     @Override
-    public void setValue(EdgeValue newValue){
+    public void setValue(EdgeValueImpl newValue){
         value = newValue;
     }
 }

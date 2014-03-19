@@ -12,16 +12,16 @@ import java.util.List;
 public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
 
     private boolean isLand;
-    private Location location;
-    private List<Vertex> vertexes;
-    private List<Edge> edges;
+    private LocationImpl location;
+    private List<VertexImpl> vertexes;
+    private List<EdgeImpl> edges;
 
 
     public HexImpl() {
         isLand = false;
         location = new LocationImpl();
 
-        vertexes = new ArrayList<Vertex>();
+        vertexes = new ArrayList<>();
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
         vertexes.add(new VertexImpl());
@@ -30,7 +30,7 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
         vertexes.add(new VertexImpl());
 
 
-        edges = new ArrayList<Edge>();
+        edges = new ArrayList<>();
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());
         edges.add(new EdgeImpl());
@@ -51,27 +51,27 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     }
 
     @Override
-    public Location getLocation() {
+    public LocationImpl getLocation() {
         return location;
     }
 
     @Override
-    public void setLocation(Location location) {
+    public void setLocation(LocationImpl location) {
         this.location = location;
     }
 
     @Override
-    public List<Vertex> getVertexes() {
+    public List<VertexImpl> getVertexes() {
         return vertexes;
     }
 
     @Override
-    public void setVertexes(List<Vertex> vertexes) {
+    public void setVertexes(List<VertexImpl> vertexes) {
         this.vertexes = vertexes;
     }
 
     @Override
-    public List<Edge> getEdges() {
+    public List<EdgeImpl> getEdges() {
         return edges;
     }
 
@@ -86,7 +86,7 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     }
 
     @Override
-    public void setEdges(List<Edge> edges) {
+    public void setEdges(List<EdgeImpl> edges) {
         this.edges = edges;
     }
 }

@@ -1,6 +1,7 @@
 package modelInterfaces.map;
 
 import model.map.LocationImpl;
+import model.map.VertexLocationImpl;
 
 /**
  * Created by qzcx on 3/18/14.
@@ -10,8 +11,8 @@ public interface Port {
               LocationImpl location,
               String orientation,
               int ratio,
-              VertexLocation validVertex1,
-              VertexLocation validVertex2);
+              VertexLocationImpl validVertex1,
+              VertexLocationImpl validVertex2);
 
     String getInputResource();
 
@@ -29,11 +30,11 @@ public interface Port {
 
     void setRatio(int ratio);
 
-    VertexLocation getValidVertex1();
+    VertexLocationImpl getValidVertex1();
 
-    void setValidVertex1(VertexLocation validVertex1);
+    void setValidVertex1(VertexLocationImpl validVertex1);
 
-    VertexLocation getValidVertex2();
+    VertexLocationImpl getValidVertex2();
 
-    void setValidVertex2(VertexLocation validVertex2);
+    void setValidVertex2(VertexLocationImpl validVertex2);
 }

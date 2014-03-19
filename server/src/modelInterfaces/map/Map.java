@@ -1,6 +1,9 @@
 package modelInterfaces.map;
 
 import comm.request.CreateGameRequest;
+import model.map.HexGridImpl;
+import model.map.PortImpl;
+import model.map.RobberImpl;
 
 import java.util.List;
 import java.util.Set;
@@ -9,9 +12,9 @@ import java.util.Set;
  * Created by Jon George on 3/13/14.
  */
 public interface Map {
-    HexGrid getHexGrid();
+    HexGridImpl getHexGrid();
 
-    void setHexGrid(HexGrid hexGrid);
+    void setHexGrid(HexGridImpl hexGrid);
 
     int getRadius();
 
@@ -21,13 +24,13 @@ public interface Map {
 
     void setNumbers(int numbers);
 
-    List<Port> getPorts();
+    List<PortImpl> getPorts();
 
-    void setPorts(List<Port> ports);
+    void setPorts(List<PortImpl> ports);
 
     Robber getRobber();
 
-    void setRobber(Robber robber);
+    void setRobber(RobberImpl robber);
 
     void initMap(CreateGameRequest createGameRequest);
 

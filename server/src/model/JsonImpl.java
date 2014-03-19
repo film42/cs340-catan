@@ -15,7 +15,7 @@ public class JsonImpl implements JsonSerializable, JsonParseable{
         return gson.toJson(this);
     }
 
-    public static <T> T fromJson(String json, Class<T> type) {
+    public static <T extends JsonImpl> T fromJson(String json, Class<T> type) {
         Gson gson = new Gson();
         return gson.fromJson(json, type);
     }

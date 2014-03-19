@@ -15,38 +15,24 @@ import java.util.List;
  * Created by: film42 on: 3/7/14.
  */
 public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
-    private HexGrid hexGrid;
+    private HexGridImpl hexGrid;
     private int radius;
     private int numbers;
-    private List<Port> ports;
-    private Robber robber;
+    private List<PortImpl> ports;
+    private RobberImpl robber;
 
 
     public MapImpl() {
-
         radius = 0;
         numbers = 0;
-        String mapJson= "";
-        BufferedReader bR = null;
-        try {
-            bR = new BufferedReader(new FileReader("MapDefault.json"));
-            mapJson = bR.readLine();
-            //Map map = fromJson(mapJson, MapImpl.class);
-            //ports = map.getPorts();
-            //hexGrid = map.getHexGrid();
-            bR.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         this.robber = new RobberImpl();
     }
-    @Override
-    public HexGrid getHexGrid() {
+    public HexGridImpl getHexGrid() {
         return hexGrid;
     }
 
     @Override
-    public void setHexGrid(HexGrid hexGrid) {
+    public void setHexGrid(HexGridImpl hexGrid) {
         this.hexGrid = hexGrid;
     }
 
@@ -71,12 +57,12 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     }
 
     @Override
-    public List<Port> getPorts() {
+    public List<PortImpl> getPorts() {
         return ports;
     }
 
     @Override
-    public void setPorts(List<Port> ports) {
+    public void setPorts(List<PortImpl> ports) {
         this.ports = ports;
     }
 
@@ -86,7 +72,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     }
 
     @Override
-    public void setRobber(Robber robber) {
+    public void setRobber(RobberImpl robber) {
         this.robber = robber;
     }
 

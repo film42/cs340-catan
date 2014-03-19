@@ -11,15 +11,18 @@ public class PortImpl implements Port {
     LocationImpl location;
     String orientation;
     int ratio;
-    VertexLocation validVertex1;
-    VertexLocation validVertex2;
+    VertexLocationImpl validVertex1;
+    VertexLocationImpl validVertex2;
+
+    public PortImpl() {
+    }
 
     @Override
     public void init(String inputResource,                     LocationImpl location,
                      String orientation,
                      int ratio,
-                     VertexLocation validVertex1,
-                     VertexLocation validVertex2) {
+                     VertexLocationImpl validVertex1,
+                     VertexLocationImpl validVertex2) {
         this.inputResource = inputResource;
         this.location = location;
         this.orientation = orientation;
@@ -69,22 +72,22 @@ public class PortImpl implements Port {
     }
 
     @Override
-    public VertexLocation getValidVertex1() {
+    public VertexLocationImpl getValidVertex1() {
         return validVertex1;
     }
 
     @Override
-    public void setValidVertex1(VertexLocation validVertex1) {
+    public void setValidVertex1(VertexLocationImpl validVertex1) {
         this.validVertex1 = validVertex1;
     }
 
     @Override
-    public VertexLocation getValidVertex2() {
+    public VertexLocationImpl getValidVertex2() {
         return validVertex2;
     }
 
     @Override
-    public void setValidVertex2(VertexLocation validVertex2) {
+    public void setValidVertex2(VertexLocationImpl validVertex2) {
         this.validVertex2 = validVertex2;
     }
 }

@@ -13,20 +13,20 @@ import java.util.List;
  */
 public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid {
 
-    private List<List<Hex>> hexes;
+    private List<List<HexImpl>> hexes;
     private List<Integer> offsets;
     private int radius;
     private int x0;
     private int y0;
 
     public HexGridImpl() {
-        hexes = new ArrayList<List<Hex>>();
-        List<Hex> hexes_2 = new ArrayList<Hex>();
+        hexes = new ArrayList<>();
+        List<HexImpl> hexes_2 = new ArrayList<>();
         hexes_2.add(new HexImpl());
 
         hexes.add(hexes_2);
 
-        offsets = new ArrayList<Integer>();
+        offsets = new ArrayList<>();
         offsets.add(3);
         offsets.add(2);
         offsets.add(1);
@@ -148,12 +148,12 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
     }
 
 
-    public List<List<Hex>> getHexes() {
+    public List<List<HexImpl>> getHexes() {
         return hexes;
     }
 
 
-    public void setHexes(List<List<Hex>> hexes) {
+    public void setHexes(List<List<HexImpl>> hexes) {
         this.hexes = hexes;
     }
 
