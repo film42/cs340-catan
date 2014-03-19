@@ -27,7 +27,7 @@ public class InjectorFactory {
 
     public static Injector getInjector(){
         //check if injector is defined already
-        assert(injector == null);
+		assert (injector != null);
 
         return injector;
     }
