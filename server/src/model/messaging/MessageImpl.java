@@ -29,6 +29,13 @@ public class MessageImpl extends JsonImpl {
 
     }
     public void addLine(LineImpl line){
+
         lines.add(line);
     }
+
+    public List<Line> getLines(){
+
+        return lines;
+    }
+
 }
