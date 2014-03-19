@@ -22,7 +22,7 @@ public class JoinRoute extends CoreRoute {
             public Object handle(Request request, Response response) {
                 String color = request.queryParams("color");
                 String gameId = request.queryParams("id");
-                String userName = request.cookie("catan.user");
+                String userName = request.cookie("catan.username");
 
                 if (color == null || gameId == null || userName == null){
                     response.status(400);

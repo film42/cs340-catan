@@ -45,11 +45,12 @@ public class CreateRoute extends CoreRoute {
 
                 CreateGameRequest createGameRequest =
                         new CreateGameRequest(randomTitles,randomNumbers,
-                                    randomPorts, request.params("name"));
+                                    randomPorts, request.queryParams("name"));
                 String modelResponse = m_gamesFacade.onCreateGame(createGameRequest);
-                response.body(modelResponse);
+                response.type("application/json");
+                //response.body(modelResponse);
                 //response.redirect("/playerWaiting.html");
-                return true;
+                return modelResponse;
             }
         });
     }

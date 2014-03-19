@@ -85,7 +85,7 @@ public class Model extends JsonImpl {
      * @param username
      * @return if the user doesn't exist then return null
      */
-    private User findUserByName(String username){
+    public User findUserByName(String username){
         for (User user : users) {
             if(user.getName().equals(username))
                 return user;

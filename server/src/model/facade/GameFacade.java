@@ -1,5 +1,6 @@
 package model.facade;
 
+import model.InjectorFactory;
 import model.JsonSerializable;
 import model.Model;
 import model.base.GameImpl;
@@ -36,11 +37,11 @@ public class GameFacade{
         return true;
     }
     public String onModelRequest(){
-        GameImpl model = new GameImpl();
+        GameImpl model = InjectorFactory.getInjector().getInstance(GameImpl.class);
         return model.toJson();
     }
     public String onReset(){
-        GameImpl model = new GameImpl();
+        GameImpl model = InjectorFactory.getInjector().getInstance(GameImpl.class);
         return model.toJson();
     }
 }

@@ -1,5 +1,6 @@
 package model.base;
 
+import com.google.inject.Inject;
 import comm.request.CreateGameRequest;
 import model.InjectorFactory;
 import model.JsonImpl;
@@ -35,13 +36,14 @@ public class GameImpl extends JsonImpl implements Game {
     private int winner;
     private int revision;
 
-    public GameImpl() {
-        deck = new DeckImpl();
+    @Inject
+    public GameImpl(Deck deck) {
+        this.deck = deck;
 
-        map = new MapImpl();
+        this.map = new MapImpl();
 
-        players = new ArrayList<Player>();
-        players.add(InjectorFactory.getInjector().getInstance(Player.class));
+        players = new ArrayList<>();
+        //players.add(InjectorFactory.getInjector().getInstance(Player.class));
 
         log = new LogImpl();
 

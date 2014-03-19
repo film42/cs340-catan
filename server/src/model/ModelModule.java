@@ -53,19 +53,20 @@ public class ModelModule extends AbstractModule {
         bind(Player.class).to(PlayerImpl.class);
         bind(Resources.class).to(ResourcesImpl.class);
         bind(TurnTracker.class).to(TurnTrackerImpl.class);
-        bind(Edge.class).to(EdgeImpl.class);
-        bind(EdgeValue.class).to(EdgeValueImpl.class);
-        bind(Hex.class).to(HexImpl.class);
-        bind(HexGrid.class).to(HexGridImpl.class);
-        bind(Location.class).to(LocationImpl.class);
-        bind(Map.class).to(MapImpl.class);
-        bind(Robber.class).to(RobberImpl.class);
-        bind(Vertex.class).to(VertexImpl.class);
-        bind(VertexValue.class).to(VertexValueImpl.class);
+        //bind(Edge.class).to(EdgeImpl.class);
+        //bind(EdgeValue.class).to(EdgeValueImpl.class);
+        //bind(Hex.class).to(HexImpl.class);
+        //bind(HexGrid.class).to(HexGridImpl.class);
+        //bind(Location.class).to(LocationImpl.class);
+        //bind(Map.class).to(MapImpl.class);
+        //bind(Robber.class).to(RobberImpl.class);
+        //bind(Vertex.class).to(VertexImpl.class);
+        //bind(VertexValue.class).to(VertexValueImpl.class);
         bind(Chat.class).to(ChatImpl.class);
         bind(Line.class).to(LineImpl.class);
         bind(Log.class).to(LogImpl.class);
         bind(User.class).to(UserImpl.class);
+        bind(Deck.class).to(DeckImpl.class);
     }
 
 }
