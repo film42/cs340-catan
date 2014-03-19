@@ -21,5 +21,5 @@ public interface GameInfo {
 
     void initGame(CreateGameRequest createGameRequest);
 
-    void addPlayer(User user);
+    void addPlayer(User user, String color);
 }

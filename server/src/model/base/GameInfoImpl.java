@@ -57,7 +57,7 @@ public class GameInfoImpl implements modelInterfaces.base.GameInfo {
     }
 
     @Override
-    public void addPlayer(User user) {
-        this.data.addPlayer(user);
+    public void addPlayer(User user, String color) {
+        this.data.addPlayer(user, color);
     }
 }

@@ -32,7 +32,7 @@ public class RegisterRoute extends CoreRoute {
                 boolean modelResponse = m_utilFacade.onUserRegister(userRequest);
                 if(modelResponse){
                     response.status(200);
-                    response.cookie("catan.user", "username:" +username +" password:"+password);
+                    response.cookie("catan.user", username);
                     return "";
                 }else{
                     response.status(401);

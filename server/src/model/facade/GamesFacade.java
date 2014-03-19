@@ -40,4 +40,9 @@ public class GamesFacade{
         Gson gson = new Gson();
         return gson.toJson(gS);
     }
+
+    public int getMostRecentGameId() {
+        List<GameInfo> games= m_model.getGames();
+        return games.size() - 1;
+    }
 }

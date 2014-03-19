@@ -1,13 +1,9 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import comm.request.CreateGameRequest;
 import comm.request.JoinGameRequest;
-import model.users.UserImpl;
-import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.users.User;
 
@@ -57,7 +53,7 @@ public class Model extends JsonImpl {
      * @return true if user was added, false if user already exist.
      */
     public boolean addUser(String username, String password){
-        User user = hasUserByName(username);
+        User user = findUserByName(username);
         if(user != null)
             return false;
         User newUser = InjectorFactory.getInjector().getInstance(User.class);
@@ -74,7 +70,7 @@ public class Model extends JsonImpl {
      * @return true if user exists and password matchs, else false
      */
     public boolean hasUser(String username, String password){
-        User user = hasUserByName(username);
+        User user = findUserByName(username);
         if(user == null)
             return false;
         if(user.getPassword().equals(password)){
@@ -89,7 +85,7 @@ public class Model extends JsonImpl {
      * @param username
      * @return if the user doesn't exist then return null
      */
-    private User hasUserByName(String username){
+    private User findUserByName(String username){
         for (User user : users) {
             if(user.getName().equals(username))
                 return user;
@@ -134,7 +130,9 @@ public class Model extends JsonImpl {
     }
 
     public boolean joinGame(JoinGameRequest joinGameRequest, String userName) {
-
+        GameInfo gameInfo = findGameById(Integer.parseInt(joinGameRequest.getId()));
+        User user = findUserByName(userName);
+        gameInfo.getData().addPlayer(user,joinGameRequest.getColor());
         return true;
     }
 

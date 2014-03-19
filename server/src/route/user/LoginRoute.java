@@ -35,7 +35,7 @@ public class LoginRoute extends CoreRoute {
                 if(modelResponse){
                     //default return HTTP_OK
                     response.status(200);
-                    addCookie(response, "catan.user", "username:" + username + " password:" + password);
+                    addCookie(response, "catan.user", username);
                     return "";
                 }
                 else{
