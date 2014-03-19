@@ -8,10 +8,14 @@ import spark.Route;
 import comm.request.UserRequest;
 
 public class LoginRoute extends CoreRoute {
+
     private UtilFacade m_utilFacade;
+
+
     public LoginRoute(UtilFacade gamesFacade) {
         m_utilFacade = gamesFacade;
     }
+
     @Override
     public void attach() {
         post(new Route("/user/login") {
@@ -29,10 +33,10 @@ public class LoginRoute extends CoreRoute {
                 UserRequest userRequest = new UserRequest(username, password);
                 boolean modelResponse = m_utilFacade.onUserLogin(userRequest);
                 if(modelResponse){
-                  //default return HTTP_OK
-                  response.status(200);
-                  response.cookie("catan.user", "username:" +username +" password:"+password,3600 );
-                  return "";
+                    //default return HTTP_OK
+                    response.status(200);
+                    addCookie(response, "catan.user", "username:" + username + " password:" + password);
+                    return "";
                 }
                 else{
                     response.status(401);
