@@ -8,11 +8,11 @@ import modelInterfaces.base.Deck;
  */
 public class DeckImpl extends JsonImpl implements Deck {
 
-    private int yearOfPlenty;
-    private int monopoly;
-    private int soldier;
-    private int roadBuilding;
-    private int monument;
+	protected int yearOfPlenty;
+	protected int monopoly;
+	protected int soldier;
+	protected int roadBuilding;
+	protected int monument;
 
     public DeckImpl() {
         yearOfPlenty = 0;
@@ -22,43 +22,53 @@ public class DeckImpl extends JsonImpl implements Deck {
         monument = 0;
     }
 
-    public int getYearOfPlenty(){
+    @Override
+	public int getYearOfPlenty(){
         return yearOfPlenty;
     }
 
-    public void setYearOfPlenty(int newYearOfPlenty){
+    @Override
+	public void setYearOfPlenty(int newYearOfPlenty){
         yearOfPlenty = newYearOfPlenty;
     }
 
-    public int getMonopoly(){
+    @Override
+	public int getMonopoly(){
         return monopoly;
     }
 
-    public void setMonopoly(int newMonopoly){
+    @Override
+	public void setMonopoly(int newMonopoly){
         monopoly = newMonopoly;
     }
 
-    public int getSoldier(){
+    @Override
+	public int getSoldier(){
         return soldier;
     }
 
-    public void setSoldier(int newSoldier){
+    @Override
+	public void setSoldier(int newSoldier){
         soldier = newSoldier;
     }
 
-    public int getRoadBuilding(){
+    @Override
+	public int getRoadBuilding(){
         return roadBuilding;
     }
 
-    public void setRoadBuilding(int newRoadBuilding){
+    @Override
+	public void setRoadBuilding(int newRoadBuilding){
         roadBuilding = newRoadBuilding;
     }
 
-    public int getMonument(){
+    @Override
+	public int getMonument(){
         return monument;
     }
 
-    public void setMonument(int newMonument){
+    @Override
+	public void setMonument(int newMonument){
         monument = newMonument;
     }
 }

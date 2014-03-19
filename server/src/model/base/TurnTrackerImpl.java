@@ -15,19 +15,23 @@ public class TurnTrackerImpl extends JsonImpl implements modelInterfaces.base.Tu
         currentTurn = 0;
     }
 
-    public String getStatus() {
+    @Override
+	public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    @Override
+	public void setStatus(String status) {
         this.status = status;
     }
 
-    public int getCurrentTurn() {
+    @Override
+	public int getCurrentTurn() {
         return currentTurn;
     }
 
-    public void setCurrentTurn(int currentTurn) {
+    @Override
+	public void setCurrentTurn(int currentTurn) {
         this.currentTurn = currentTurn;
     }
 }
