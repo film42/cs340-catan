@@ -105,6 +105,20 @@ public class Model extends JsonImpl {
     }
 
     /**
+     * @return GameInfo or Null
+     * @param gameId Some game id
+     *
+     */
+    public GameInfo findGameById(int gameId) {
+        for(GameInfo game : games) {
+            if(game.getId() == gameId) return game;
+        }
+
+        // Not Found
+        return null;
+    }
+
+    /**
      *
      * @return success flag
      * @param createGameRequest
