@@ -9,6 +9,6 @@ import java.io.IOException;
  */
 public interface Commandable {
 
-    public void execute(GameInfo game) throws IOException, InvalidCommandException;
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException;
 
 }

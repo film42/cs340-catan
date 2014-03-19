@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class Monument extends Command {
     @Override
-    public void execute(GameInfo game) throws IOException, InvalidCommandException {
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
     }
 }
