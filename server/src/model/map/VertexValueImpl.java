@@ -16,18 +16,22 @@ public class VertexValueImpl extends JsonImpl implements modelInterfaces.map.Ver
         ownerID = -1;
     }
 
+    @Override
     public int getWorth(){
         return worth;
     }
 
+    @Override
     public void setWorth(int newWorth){
         worth = newWorth;
     }
 
+    @Override
     public int getOwnerID(){
         return ownerID;
     }
 
+    @Override
     public void setOwnerID(int newID){
         ownerID = newID;
     }
