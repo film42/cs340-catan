@@ -2,6 +2,7 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.GameInfo;
 
 import java.io.IOException;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
  */
 public class Monument extends Command {
     @Override
-    public void execute() throws IOException, InvalidCommandException {
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
     }
 }

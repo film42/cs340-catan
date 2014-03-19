@@ -1,5 +1,7 @@
 package comm.moves.base;
 
+import modelInterfaces.base.GameInfo;
+
 import java.io.IOException;
 
 /**
@@ -7,6 +9,6 @@ import java.io.IOException;
  */
 public interface Commandable {
 
-    public void execute() throws IOException, InvalidCommandException;
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException;
 
 }
