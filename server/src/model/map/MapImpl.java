@@ -17,14 +17,14 @@ import java.util.List;
 public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     private HexGridImpl hexGrid;
     private int radius;
-    private int numbers;
+    private NumbersImpl numbers;
     private List<PortImpl> ports;
     private RobberImpl robber;
 
 
     public MapImpl() {
         radius = 0;
-        numbers = 0;
+        numbers = new NumbersImpl();
         this.robber = new RobberImpl();
     }
     public HexGridImpl getHexGrid() {
@@ -47,12 +47,12 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     }
 
     @Override
-    public int getNumbers() {
+    public NumbersImpl getNumbers() {
         return numbers;
     }
 
     @Override
-    public void setNumbers(int numbers) {
+    public void setNumbers(NumbersImpl numbers) {
         this.numbers = numbers;
     }
 

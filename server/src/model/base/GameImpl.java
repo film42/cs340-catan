@@ -6,19 +6,13 @@ import model.JsonImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
 import model.messaging.LogImpl;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
-import modelInterfaces.base.TurnTracker;
-import modelInterfaces.base.Deck;
+import modelInterfaces.base.*;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
 import modelInterfaces.users.User;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +48,7 @@ public class GameImpl extends JsonImpl implements Game {
             e.printStackTrace();
         }
 
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         players.add(new PlayerImpl());
 
         log = new LogImpl();

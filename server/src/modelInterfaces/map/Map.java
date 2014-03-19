@@ -2,11 +2,11 @@ package modelInterfaces.map;
 
 import comm.request.CreateGameRequest;
 import model.map.HexGridImpl;
+import model.map.NumbersImpl;
 import model.map.PortImpl;
 import model.map.RobberImpl;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Jon George on 3/13/14.
@@ -20,9 +20,9 @@ public interface Map {
 
     void setRadius(int radius);
 
-    int getNumbers();
+    NumbersImpl getNumbers();
 
-    void setNumbers(int numbers);
+    void setNumbers(NumbersImpl numbers);
 
     List<PortImpl> getPorts();
 
