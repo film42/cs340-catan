@@ -7,6 +7,7 @@ import model.base.GameImpl;
 import comm.request.AddAIRequest;
 import comm.request.JoinGameRequest;
 import comm.request.CreateGameRequest;
+import modelInterfaces.base.GameInfo;
 
 /**
  * Created by Jon George on 3/7/14.
@@ -36,9 +37,11 @@ public class GameFacade{
         //TODO implement this method to use model
         return true;
     }
-    public String onModelRequest(){
-        GameImpl model = InjectorFactory.getInjector().getInstance(GameImpl.class);
-        return model.toJson();
+    public String onModelRequest(int gameId){
+        GameInfo game = m_model.findGameById(gameId);
+        if(game == null || game.getData() == null)
+            return "";
+        return game.getData().toJson();
     }
     public String onReset(){
         GameImpl model = InjectorFactory.getInjector().getInstance(GameImpl.class);

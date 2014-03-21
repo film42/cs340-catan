@@ -17,16 +17,15 @@ import java.util.Set;
  */
 public class Model extends JsonImpl {
 
-    List<String> AITypes = new ArrayList<String>();
+    List<String> AITypes = new ArrayList<>();
 
     Set<User> users;
     List<GameInfo> games;
-    Injector injector;
 
 	@Inject
 	public Model() {
-        users = new HashSet<User>();
-        games = new ArrayList<GameInfo>();
+        users = new HashSet<>();
+        games = new ArrayList<>();
 	}
 
     @Inject
@@ -67,7 +66,7 @@ public class Model extends JsonImpl {
      * Checks for a certain user is registered, returns true if password matches.
      * @param username
      * @param password
-     * @return true if user exists and password matchs, else false
+     * @return true if user exists and password matches, else false
      */
     public boolean hasUser(String username, String password){
         User user = findUserByName(username);

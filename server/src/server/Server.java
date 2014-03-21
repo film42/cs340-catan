@@ -3,6 +3,8 @@ package server;
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.logging.Logger;
 
 import model.InjectorFactory;
@@ -77,6 +79,35 @@ public class Server {
 
         // TODO: REMOVE!
         myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
+    }
+
+    /**
+     * utility function used to encode cookie strings
+     * @param s
+     * @return
+     */
+    public static String encodeURIComponent(String s)
+    {
+        String result = null;
+
+        try
+        {
+            result = URLEncoder.encode(s, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("\\%21", "!")
+                    .replaceAll("\\%27", "'")
+                    .replaceAll("\\%28", "(")
+                    .replaceAll("\\%29", ")")
+                    .replaceAll("\\%7E", "~");
+        }
+
+        // This exception should never occur.
+        catch (UnsupportedEncodingException e)
+        {
+            result = s;
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
