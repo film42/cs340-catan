@@ -1,14 +1,20 @@
 package model.facade;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import comm.moves.*;
+import comm.moves.base.Command;
 import comm.moves.base.Commandable;
 import comm.moves.base.InvalidCommandException;
+import model.JsonImpl;
 import model.Model;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 
 import static comm.moves.base.Command.moveFromJson;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jon George on 3/7/14.
@@ -32,9 +38,20 @@ public class MoveFacade {
     final String DISCARD_CARDS = "/moves/discardCards";
 
     private Model m_model;
-
     public MoveFacade(Model model) {
         m_model = model;
+    }
+
+    public String onGetCommands(int gameId){
+        GameInfo game = m_model.findGameById(gameId);
+        Gson gson = new Gson();
+        return gson.toJson(game.getCommandList());
+    }
+
+    public boolean onPostCommands(String json, int gameId){
+        m_model.findGameById(gameId);
+        //TODO finish this method :D
+        return true;
     }
 
     public boolean onMove(int gameId, String json, String type)

@@ -10,6 +10,7 @@ import modelInterfaces.map.Robber;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
@@ -85,11 +86,17 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
     //final String[][] validVertex1 = [["E",-3,0],[],[],[],[],[],[], [], []]
     //final String[] PortRatios = ["","Wood",]
 
-
-
     @Override
-    public void initPorts(boolean randomPorts){
+    public void randomizePorts(){
+        List<String> typeList = new ArrayList<>();
+        for (PortImpl port : ports) {
+            typeList.add(port.getInputResource());
+        }
 
+        for (PortImpl port : ports) {
+            int index = (int)Math.random()*(typeList.size());  //fun fact: Math.random is between [0,1).
+            port.setInputResource(typeList.remove(index));
+        }
     }
 
 }

@@ -34,5 +34,5 @@ public interface Map {
 
     void initMap(CreateGameRequest createGameRequest);
 
-    void initPorts(boolean randomPorts);
+    void randomizePorts();
 }

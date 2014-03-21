@@ -8,6 +8,9 @@ import comm.request.AddAIRequest;
 import comm.request.JoinGameRequest;
 import comm.request.CreateGameRequest;
 import modelInterfaces.base.GameInfo;
+import modelInterfaces.base.Player;
+
+import java.util.List;
 
 /**
  * Created by Jon George on 3/7/14.
@@ -25,26 +28,20 @@ public class GameFacade{
     }
 
 
-    public String onGetCommands(){
-        //TODO implement this method to use model
-        return "[{\"number\":8,\"type\":\"rollNumber\",\"playerIndex\":0},{\"type\":\"finishTurn\",\"playerIndex\":0}]";
-    }
     public String onListAI(){
         return "[\"LARGEST_ARMY\"]";
     }
 
-    public boolean onPostCommands(){
-        //TODO implement this method to use model
-        return true;
-    }
     public String onModelRequest(int gameId){
         GameInfo game = m_model.findGameById(gameId);
         if(game == null || game.getData() == null)
             return "";
         return game.getData().toJson();
     }
-    public String onReset(){
-        GameImpl model = InjectorFactory.getInjector().getInstance(GameImpl.class);
-        return model.toJson();
+    public String onReset(int gameId){
+        List<Player> players = m_model.findGameById(gameId).getData().getPlayers();
+        GameImpl newGame = InjectorFactory.getInjector().getInstance(GameImpl.class);
+        newGame.setPlayers(players);
+        return newGame.toJson();
     }
 }

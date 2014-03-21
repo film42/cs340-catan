@@ -9,6 +9,9 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.inject.Injector;
+import model.InjectorFactory;
+import model.ModelModule;
 import model.base.DeckImpl;
 import model.base.GameImpl;
 import model.base.GameInfoImpl;
@@ -76,7 +79,10 @@ public class MonopolyTest {
 		noDevCards.setSoldier(LOW_NUMBER);
 		noDevCards.setYearOfPlenty(LOW_NUMBER);
 
-		Player richMike = new PlayerImpl();
+        //Jon: I'm changing this to use dependancy injection.
+        Injector injector = InjectorFactory.createInjector(new ModelModule());
+
+		Player richMike = injector.getInstance(Player.class);
 		richMike.setResources(lotsOfResources);
 		richMike.setOldDevCards(lotsOfDevCards);
 		richMike.setNewDevCards(lotsOfDevCards);
@@ -95,7 +101,7 @@ public class MonopolyTest {
 		richMike.setName("Mike MoneyBags");
 		richMike.setColor("Blue");
 
-		Player richSteve = new PlayerImpl();
+		Player richSteve = injector.getInstance(Player.class);
 		richSteve.setResources(lotsOfResources);
 		richSteve.setOldDevCards(lotsOfDevCards);
 		richSteve.setNewDevCards(lotsOfDevCards);
@@ -114,7 +120,7 @@ public class MonopolyTest {
 		richSteve.setName("Steve GreenBacks");
 		richSteve.setColor("Green");
 
-		Player poorPoorGuy = new PlayerImpl();
+		Player poorPoorGuy = injector.getInstance(Player.class);
 		poorPoorGuy.setResources(noResources);
 		poorPoorGuy.setOldDevCards(noDevCards);
 		poorPoorGuy.setNewDevCards(noDevCards);
@@ -133,7 +139,7 @@ public class MonopolyTest {
 		poorPoorGuy.setName("PoorGuy");
 		poorPoorGuy.setColor("Puce");
 
-		Player userGuy = new PlayerImpl();
+		Player userGuy = injector.getInstance(Player.class);
 		userGuy.setResources(noResources);
 		userGuy.setOldDevCards(noDevCards);
 		userGuy.setNewDevCards(noDevCards);

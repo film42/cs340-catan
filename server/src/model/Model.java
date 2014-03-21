@@ -21,7 +21,6 @@ public class Model extends JsonImpl {
 
     Set<User> users;
     List<GameInfo> games;
-
 	@Inject
 	public Model() {
         users = new HashSet<>();
@@ -131,6 +130,7 @@ public class Model extends JsonImpl {
     public boolean joinGame(JoinGameRequest joinGameRequest, String userName) {
         GameInfo gameInfo = findGameById(Integer.parseInt(joinGameRequest.getId()));
         User user = findUserByName(userName);
+
         gameInfo.getData().addPlayer(user,joinGameRequest.getColor());
         return true;
     }

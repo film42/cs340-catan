@@ -1,5 +1,6 @@
 package model.base;
 
+import com.google.inject.Inject;
 import model.JsonImpl;
 
 /**
@@ -13,6 +14,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
     private int wheat;
     private int ore;
 
+    @Inject
     public ResourcesImpl() {
         brick = 0;
         wood = 0;

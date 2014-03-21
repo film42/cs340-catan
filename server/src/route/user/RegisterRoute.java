@@ -39,9 +39,8 @@ public class RegisterRoute extends CoreRoute {
                 if(modelResponse){
                     int id = m_utilFacade.getUserId(username, password);
                     response.status(200);
-                    String s = "{ 'username' : '" + username + "' , 'password' : '" + password + "' , 'playerID' : '" + id + "' }";
-                    String uriCookie = Server.encodeURIComponent(s);
-                    addCookie(response, "catan.user", uriCookie);
+                    String uriCookie = Server.createUserCookie(username,password, id);
+                    response.header("Set-cookie","catan.user="+uriCookie+";Path=/;");
                     addCookie(response, "catan.username", username);
 
                     return "";

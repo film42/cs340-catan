@@ -20,7 +20,8 @@ public class ResetRoute extends CoreRoute {
         post(new Route("/game/reset") {
             @Override
             public Object handle(Request request, Response response) {
-                String modelResponse = m_gameFacade.onReset();
+                int gameId = Integer.parseInt(request.cookie("catan.game"));
+                String modelResponse = m_gameFacade.onReset(gameId);
                 return modelResponse;
             }
         });
