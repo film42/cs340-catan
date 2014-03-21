@@ -12,7 +12,7 @@ import java.util.List;
 public interface Hex {
     boolean isLand();
 
-    void setLand(String landtype);
+    void setLandType(String landtype);
 
     String getLandType();
 
@@ -20,15 +20,15 @@ public interface Hex {
 
     void setLocation(LocationImpl location);
 
-    List<Vertex> getVertexes();
+    List<VertexImpl> getVertexes();
 
-    void setVertexes(List<Vertex> vertexes);
+    void setVertexes(List<VertexImpl> vertexes);
 
-    List<Edge> getEdges();
+    List<EdgeImpl> getEdges();
 
     Edge getEdge(int direction);
 
     Vertex getVertex(int direction);
 
-    void setEdges(List<Edge> edges);
+    void setEdges(List<EdgeImpl> edges);
 }

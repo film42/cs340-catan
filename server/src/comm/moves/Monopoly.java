@@ -5,10 +5,10 @@ import java.io.IOException;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
+import modelInterfaces.base.Resources;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import modelInterfaces.base.Resources;
 
 /**
  * Created by: film42 on: 3/13/14.
@@ -63,7 +63,7 @@ public class Monopoly extends Command {
 					}
 					break;
 				default:
-					server.Server.log.severe("Unrecognized resource selected :" + resource);
+					server.Server.log.severe("Unrecognized resource selected: " + resource);
 				}
 			}
 		}

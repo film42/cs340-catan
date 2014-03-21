@@ -68,4 +68,6 @@ public interface Game {
     boolean playersRequireDiscarding();
 
     void addPlayer(User user, String color);
+
+    public String toJson();
 }

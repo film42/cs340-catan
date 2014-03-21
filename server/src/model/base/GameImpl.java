@@ -34,7 +34,7 @@ public class GameImpl extends JsonImpl implements Game {
     private int winner;
     private int revision;
 
-    public GameImpl() {
+    public GameImpl(){
         deck = new DeckImpl();
 
         String mapJson= "";
@@ -49,7 +49,6 @@ public class GameImpl extends JsonImpl implements Game {
         }
 
         players = new ArrayList<>();
-        players.add(new PlayerImpl());
 
         log = new LogImpl();
 
@@ -219,6 +218,7 @@ public class GameImpl extends JsonImpl implements Game {
         newPlayer.setName(user.getName());
         newPlayer.setPlayerID(user.getId());
         newPlayer.setOrderNumber(players.size());
+        newPlayer.setColor(color);
         players.add(newPlayer);
     }
 

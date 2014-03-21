@@ -2,10 +2,15 @@ package route.user;
 
 import model.facade.UtilFacade;
 import route.CoreRoute;
+import server.Server;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import comm.request.UserRequest;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by Jon George on 3/6/14.
  */
@@ -34,8 +39,11 @@ public class RegisterRoute extends CoreRoute {
                 if(modelResponse){
                     int id = m_utilFacade.getUserId(username, password);
                     response.status(200);
-                    addCookie(response, "catan.user", "{ username : " + username + " , password : " + password + " , id : " + id + " }");
+                    String s = "{ 'username' : '" + username + "' , 'password' : '" + password + "' , 'playerID' : '" + id + "' }";
+                    String uriCookie = Server.encodeURIComponent(s);
+                    addCookie(response, "catan.user", uriCookie);
                     addCookie(response, "catan.username", username);
+
                     return "";
                 }else{
                     response.status(401);
