@@ -39,89 +39,24 @@ public class Soldier extends Command {
         robber.setY(robberSpot.getY());
 
         //steal one random resource from victim. (make sure they have at least one);
-        Player player = game.getPlayerByIndex(victimIndex);
-        Resources resources = player.getResources();
-
-        if (resources.getResourceCount() <= 0)
-            return;
-
-        Random random = new Random();
-        int randomInt = random.nextInt(4);
-        switch (randomInt) {
-            case 0:
-                if (resources.getBrick() > 0) {
-                    resources.setBrick(resources.getBrick() - 1);
-                }
-                else{
-                    stealOneWithResource(resources);
-                }
-                break;
-            case 1:
-                if (resources.getOre() > 0) {
-                    resources.setOre(resources.getOre() - 1);
-                }
-                else{
-                    stealOneWithResource(resources);
-                }
-                break;
-            case 2:
-                if (resources.getSheep() > 0) {
-                    resources.setSheep(resources.getSheep() - 1);
-                }
-                else{
-                    stealOneWithResource(resources);
-                }
-                break;
-            case 3:
-                if (resources.getWheat() > 0) {
-                    resources.setWheat(resources.getWheat() - 1);
-                }
-                else{
-                    stealOneWithResource(resources);
-                }
-            case 4:
-                if (resources.getWood() > 0) {
-                    resources.setWood(resources.getWood() - 1);
-                }
-                else{
-                    stealOneWithResource(resources);
-                }
-                break;
-            default:
-                stealOneWithResource(resources);
-                break;
-        }
-
-        gameInfo.setData(game);
+        Player victim = game.getPlayerByIndex(getVictimIndex());
+        Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
+        stealResource(victim.getResources(), currentPlayer.getResources());
 
     }
 
-    private void stealOneWithResource(Resources resources) {
-        if (resources.getBrick() > 0) {
-            resources.setBrick(resources.getBrick() - 1);
-           return;
-        }
-
-        if (resources.getOre() > 0) {
-            resources.setOre(resources.getOre() - 1);
+    private void stealResource(Resources stealFrom, Resources giveTo){
+        List<String> availibleList = stealFrom.getAvailibleResources();
+        if(availibleList.size() <=0){
+            System.err.println("Steal Resource called on player with no resources");
             return;
         }
 
-        if (resources.getSheep() > 0) {
-            resources.setSheep(resources.getSheep() - 1);
-            return;
-        }
+        int index = (int)(Math.random()*availibleList.size());
+        String type = availibleList.get(index);
+        stealFrom.setResourceByString(type, stealFrom.getResourceByString(type) - 1);
+        giveTo.setResourceByString(type, giveTo.getResourceByString(type)+1);
 
-        if (resources.getWheat() > 0) {
-            resources.setWheat(resources.getWheat() - 1);
-            return;
-
-        }
-
-        if (resources.getWood() > 0) {
-            resources.setWood(resources.getWood() - 1);
-            return;
-        }
 
     }
 }

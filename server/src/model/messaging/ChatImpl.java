@@ -16,11 +16,11 @@ public class ChatImpl extends JsonImpl implements modelInterfaces.messaging.Chat
     private List<Line> lines;
     public ChatImpl() {
 
-        lines = new ArrayList<Line>();
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
+        lines = new ArrayList<>();
+        //lines.add(new LineImpl());
+        //lines.add(new LineImpl());
+        //lines.add(new LineImpl());
+        //lines.add(new LineImpl());
     }
 
     public void addLine(Line line){

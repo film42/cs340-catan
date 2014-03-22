@@ -1,5 +1,7 @@
 package modelInterfaces.base;
 
+import java.util.List;
+
 /**
  * Created by Jon George on 3/13/14.
  */
@@ -32,4 +34,10 @@ public interface Resources {
 	public abstract int getBrick();
 
     int getResourceCount();
+
+    int getResourceByString(String type);
+
+    List<String> getAvailibleResources();
+
+    void setResourceByString(String type, int amount);
 }
