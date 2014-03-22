@@ -29,6 +29,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     private int orderNumber;
     private String name;
     private String color;
+    private boolean willAcceptTrade;
 
     @Inject
     public PlayerImpl(Resources resources, Deck newDeck, Deck oldDeck ) {
@@ -50,6 +51,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         this.orderNumber = 0;
         this.name = "Sam";
         this.color = "red";
+        this.willAcceptTrade = false;
     }
 
     @Override
@@ -230,4 +232,10 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         resources.setWheat(resources.getWheat() + resourcesToAdd.getWheat());
         resources.setWood(resources.getWood()  + resourcesToAdd.getWood());
     }
+
+    @Override
+    public boolean isWillingAcceptTrade(){ return willAcceptTrade; }
+
+    @Override
+    public void setWillingAcceptTrade(boolean willAcceptTrade){ this.willAcceptTrade = willAcceptTrade};
 }

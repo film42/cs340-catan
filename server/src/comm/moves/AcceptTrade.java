@@ -2,7 +2,9 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
+import modelInterfaces.base.Player;
 
 import java.io.IOException;
 
@@ -20,6 +22,10 @@ public class AcceptTrade extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
+        Game game = gameInfo.getData();
+        Player player = game.getPlayerByIndex(playerIndex);
+        player.setWillAcceptTrade(willAccept);
+        gameInfo.setData(game);
     }
 
 }

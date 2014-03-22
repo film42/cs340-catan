@@ -73,4 +73,8 @@ public interface Player {
     void setColor(String color);
 
     void addResourceList(Resources resourcesToAdd);
+
+    void boolean isWillAcceptTrade();
+
+    void setWillAcceptTrade(boolean willAcceptTrade);
 }
