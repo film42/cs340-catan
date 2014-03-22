@@ -54,6 +54,7 @@ public class OfferTrade extends Command {
                 resourcesReceiver.setResourceByString(type,(resourcesReceiver.getResourceByString(type) - Math.abs(num)));
             }
         }
+        playerReceiver.setWillAcceptTrade(false);
         gameInfo.setData(game);
     }
 }
