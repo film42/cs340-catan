@@ -22,7 +22,6 @@ public class Monopoly extends Command {
 
 	@Override
 	public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
-
 		// Get the game model
 		Game game = gameInfo.getData();
 
@@ -30,7 +29,7 @@ public class Monopoly extends Command {
 		int cardsStolen = 0;
 		for (Player p : game.getPlayers()) {
 			if (p.getOrderNumber() != this.playerIndex) {
-				switch (resource) {
+				switch (resource.toLowerCase()) {
 				case Resources.WOOD:
 					if (p.getResources().getWood() > 0) {
 						p.getResources().setWood(p.getResources().getWood() - 1);
@@ -65,11 +64,11 @@ public class Monopoly extends Command {
 					server.Server.log.severe("Unrecognized resource selected: " + resource);
 				}
 			}
-		}
 
+		}
 		// give the qty of stolen cards to the user
 		int oldQty = 0;
-		switch (resource) {
+		switch (resource.toLowerCase()) {
             case Resources.WOOD:
                 oldQty = game.getPlayerByIndex(playerIndex).getResources().getWood();
                 game.getPlayerByIndex(playerIndex).getResources().setWood(oldQty + cardsStolen);
@@ -91,7 +90,7 @@ public class Monopoly extends Command {
                 game.getPlayerByIndex(playerIndex).getResources().setWheat(oldQty + cardsStolen);
                 break;
             default:
-                server.Server.log.severe("Unrecognized resource selected :" + resource);
+			server.Server.log.severe("Unrecognized resource selected: " + resource);
 		}
 
         // Write our changes
