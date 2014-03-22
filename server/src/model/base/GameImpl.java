@@ -11,6 +11,7 @@ import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
 import modelInterfaces.users.User;
+import modelInterfaces.base.TradeOffer;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class GameImpl extends JsonImpl implements Game {
     private int longestRoad;
     private int winner;
     private int revision;
+    private TradeOffer tradeoffer;
 
     public GameImpl(){
         deck = new DeckImpl();
@@ -173,6 +175,18 @@ public class GameImpl extends JsonImpl implements Game {
     public void setRevision(int revision) {
         this.revision = revision;
     }
+
+    @Override
+    public TradeOffer getTradeOffer() {
+        return tradeoffer;
+    }
+
+    @Override
+    public void setTradeOffer(TradeOffer tradeoffer) {
+        this.tradeoffer = tradeoffer;
+    }
+
+
 
     @Override
     public void initGame(CreateGameRequest createGameRequest) {

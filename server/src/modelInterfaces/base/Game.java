@@ -12,6 +12,8 @@ import java.util.List;
  * Created by Jon George on 3/13/14.
  */
 public interface Game {
+
+
     Deck getDeck();
 
     void setDeck(Deck deck);
@@ -55,6 +57,12 @@ public interface Game {
     int getRevision();
 
     void setRevision(int revision);
+
+    void setTradeOffer(TradeOffer tradeOffer);
+
+    TradeOffer getTradeOffer();
+
+
 
     void initGame(CreateGameRequest createGameRequest);
 

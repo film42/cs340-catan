@@ -6,7 +6,7 @@ import model.base.ResourcesImpl;
  */
 public class CardDeck extends ResourcesImpl{
 
-   /* private int brick;
+   /** private int brick;
     private int wood;
     private int sheep;
     private int wheat;
@@ -30,5 +30,6 @@ public class CardDeck extends ResourcesImpl{
 
     public int getOre() {
         return ore;
-    }*/
+    }
+    */
 }
