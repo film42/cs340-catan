@@ -74,7 +74,7 @@ public interface Player {
 
     void addResourceList(Resources resourcesToAdd);
 
-    void boolean isWillAcceptTrade();
+    boolean isWillAcceptTrade();
 
     void setWillAcceptTrade(boolean willAcceptTrade);
 }

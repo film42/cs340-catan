@@ -234,8 +234,8 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     }
 
     @Override
-    public boolean isWillingAcceptTrade(){ return willAcceptTrade; }
+    public boolean isWillAcceptTrade(){ return willAcceptTrade; }
 
     @Override
-    public void setWillingAcceptTrade(boolean willAcceptTrade){ this.willAcceptTrade = willAcceptTrade};
+    public void setWillAcceptTrade(boolean willAcceptTrade){ this.willAcceptTrade = willAcceptTrade;}
 }
