@@ -2,6 +2,7 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.Deck;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.Player;
@@ -17,7 +18,14 @@ public class Monument extends Command {
         //add one to victory points
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());
-        player.setVictoryPoints(player.getVictoryPoints()+1);
-        gameInfo.setData(game);
+        Deck newDevCards = player.getNewDevCards();
+        Deck oldDevCards = player.getOldDevCards();
+        if(newDevCards.getMonument() > 0){ //this might need to change depending on how new and old dev cards are arranged.
+            newDevCards.setMonument(newDevCards.getMonument()-1);
+            player.setVictoryPoints(player.getVictoryPoints() + 1);
+        }
+        if(oldDevCards.getMonument() > 0){
+            oldDevCards.setMonument(oldDevCards.getMonument()-1);
+        }
     }
 }
