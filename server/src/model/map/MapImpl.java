@@ -2,20 +2,15 @@ package model.map;
 
 import comm.request.CreateGameRequest;
 import model.JsonImpl;
-import modelInterfaces.map.HexGrid;
-import modelInterfaces.map.Map;
-import modelInterfaces.map.Port;
+import modelInterfaces.map.Location;
 import modelInterfaces.map.Robber;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
+public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAccessor {
     private HexGridImpl hexGrid;
     private int radius;
     private NumbersImpl numbers;
@@ -99,4 +94,18 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
         }
     }
 
+    @Override
+    public void addRoad(int playerIndex, Location location) {
+
+    }
+
+    @Override
+    public void addSettlement(int playerIndex, Location location) {
+
+    }
+
+    @Override
+    public void addCity(int playerIndex, Location location) {
+
+    }
 }

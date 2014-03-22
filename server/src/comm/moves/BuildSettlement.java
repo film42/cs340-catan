@@ -26,7 +26,18 @@ public class BuildSettlement extends Command {
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        Game game = gameInfo.getData();
 
+//        TurnTracker turnTracker = game.getTurnTracker();
+//        turnTracker.setStatus(TurnTracker.ROLLING);
+
+        // Increment user counter
+//        game.incrementUserCounter(playerIndex);
+
+
+
+
+        gameInfo.setData(game);
     }
 
 }

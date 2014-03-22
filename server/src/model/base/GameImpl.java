@@ -227,4 +227,13 @@ public class GameImpl extends JsonImpl implements Game {
         players.add(newPlayer);
     }
 
+    @Override
+    public void incrementUserCounter(int playerIndex) {
+        if(isLastPlayerIndex(playerIndex)) {
+            turnTracker.setCurrentTurn(0);
+        } else {
+            turnTracker.setCurrentTurn(turnTracker.getCurrentTurn() + 1);
+        }
+    }
+
 }

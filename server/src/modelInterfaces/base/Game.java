@@ -70,4 +70,6 @@ public interface Game {
     void addPlayer(User user, String color);
 
     public String toJson();
+
+    void incrementUserCounter(int playerIndex);
 }
