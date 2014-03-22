@@ -31,36 +31,24 @@ public class YearOfPlenty extends Command {
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+
          Game game = gameInfo.getData();
          Player player = game.getPlayerByIndex(playerIndex);
-         addSource(player, resource1);
-         addSource(player, resource2);
+         Resources resources = player.getResources();
+
+         addSource(resources, resource1);
+         addSource(resources, resource2);
          gameInfo.setData(game);
 
     }
-    private void addSource(Player p, String resource){
-        switch (resource) {
-            case Resources.WOOD:
-                p.getResources().setWood(p.getResources().getWood() + 1);
-                break;
+    private void addSource(Resources resources, String resource){
 
-            case Resources.SHEEP:
-                p.getResources().setSheep(p.getResources().getSheep() + 1);
-                break;
-
-            case Resources.ORE:
-                p.getResources().setOre(p.getResources().getOre() + 1);
-                break;
-
-            case Resources.BRICK:
-                p.getResources().setBrick(p.getResources().getBrick() + 1);
-                break;
-
-            case Resources.WHEAT:
-                p.getResources().setWheat(p.getResources().getWheat() + 1);
-                break;
-            default:
-                server.Server.log.severe("Unrecognized resource :" + resource);
+        //validate resource
+        if (resources.getResourceByString(resource) < 0) {
+            server.Server.log.severe("Unrecognized resource :" + resource);
+        }
+        else {
+            resources.setResourceByString(resource, resources.getResourceByString(resource) +1);
         }
    }
 }
