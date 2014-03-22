@@ -28,12 +28,11 @@ public class OfferTrade extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
         Game game = gameInfo.getData();
-
         TradeOffer tradeOffer = game.getTradeOffer();
+
         tradeOffer.setReceiver(getReceiver());
         tradeOffer.setSender(getPlayerIndex());
         tradeOffer.setResourceOffer(offer);
-
         gameInfo.setData(game);
     }
 }

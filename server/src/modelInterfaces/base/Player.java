@@ -74,5 +74,5 @@ public interface Player {
 
     void addResourceList(Resources resourcesToAdd);
 
-  
+
 }
