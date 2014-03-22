@@ -28,8 +28,10 @@ public class DiscardCards extends Command {
         Resources resources = player.getResources();
 
         //check if if he/she is discarded state
-        if (!player.isDiscarded())
+        if (!player.isDiscarded()){
+            server.Server.log.severe("Attempting to discard outside of discard phase");
             return;
+        }
 
         for (String type : discardedCards.TYPES) {
             int discardNum = discardedCards.getResourceByString(type);
