@@ -26,34 +26,24 @@ public class DiscardCards extends Command {
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(playerIndex);
         Resources resources = player.getResources();
-        
+
+        //check if if he/she is discarded state
         if (!player.isDiscarded())
             return;
 
+        for (String type : discardedCards.TYPES) {
+            int discardNum = discardedCards.getResourceByString(type);
+            if (discardNum > 0 ) {
+                if (resources.getResourceByString(type) >= discardNum) {
+                    resources.setResourceByString(type, resources.getResourceByString(type) - discardNum);
+                } else {
+                    server.Server.log.severe("No enough resources to discard for " + type);
+                }
 
-        if(resources.getBrick() >= discardedCards.getBrick()){
-            resources.setBrick(resources.getBrick() - discardedCards.getBrick());
+            }
         }
 
-        if(resources.getOre()>= discardedCards.getOre()){
-            resources.setOre(resources.getOre() - discardedCards.getOre());
-        }
-
-        if(resources.getWood() >= discardedCards.getWood()){
-            resources.setWood(resources.getWood() - discardedCards.getWood());
-        }
-
-        if(resources.getWheat() >= discardedCards.getWheat()){
-            resources.setWheat(resources.getWheat() - discardedCards.getWheat());
-        }
-
-        if(resources.getSheep() >= discardedCards.getSheep()){
-            resources.setSheep(resources.getSheep() - discardedCards.getSheep());
-        }
-
-        
         // if it is the last on discard the cards, set to robbing state
-
         TurnTracker tracker = game.getTurnTracker();
         if(game.isLastPlayerIndex(playerIndex)) {
             tracker.setStatus(TurnTracker.ROBBING);
