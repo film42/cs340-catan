@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Resources {
 
-    final private String BRICK_TYPE = "brick";
-    final private String WOOD_TYPE  = "wood";
-    final private String SHEEP_TYPE = "sheep";
-    final private String WHEAT_TYPE = "wheat";
-    final private String ORE_TYPE   = "ore";
-    private String[] TYPES = {BRICK_TYPE, WOOD_TYPE, SHEEP_TYPE, WHEAT_TYPE, ORE_TYPE};
+    //final private String BRICK_TYPE = "brick";
+    //final private String WOOD_TYPE  = "wood";
+    //final private String SHEEP_TYPE = "sheep";
+    //final private String WHEAT_TYPE = "wheat";
+    //final private String ORE_TYPE   = "ore";
+    //private String[] TYPES = {BRICK_TYPE, WOOD_TYPE, SHEEP_TYPE, WHEAT_TYPE, ORE_TYPE};
 
     private int brick;
     private int wood;
@@ -91,15 +91,15 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
     @Override
     public int getResourceByString(String type){
         switch(type){
-            case BRICK_TYPE:
+            case BRICK:
                 return brick;
-            case WOOD_TYPE:
+            case WOOD:
                 return wood;
-            case SHEEP_TYPE:
+            case SHEEP:
                 return sheep;
-            case WHEAT_TYPE:
+            case WHEAT:
                 return wheat;
-            case ORE_TYPE:
+            case ORE:
                 return ore;
             default:
                 System.err.println("getResourceByString: Invalid String");
@@ -110,15 +110,15 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
     @Override
     public void setResourceByString(String type, int amount){
         switch(type){
-            case BRICK_TYPE:
+            case BRICK:
                 brick = amount;
-            case WOOD_TYPE:
+            case WOOD:
                 wood  = amount;
-            case SHEEP_TYPE:
+            case SHEEP:
                 sheep = amount;
-            case WHEAT_TYPE:
+            case WHEAT:
                 wheat = amount;
-            case ORE_TYPE:
+            case ORE:
                 ore   = amount;
         }
     }

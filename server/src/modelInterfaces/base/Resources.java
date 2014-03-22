@@ -7,11 +7,12 @@ import java.util.List;
  */
 public interface Resources {
 
-    public static final String WOOD = "wood";
-    public static final String SHEEP = "sheep";
-    public static final String ORE = "ore";
+    public static final String WOOD= "wood";
+    public static final String SHEEP= "sheep";
+    public static final String ORE= "ore";
     public static final String BRICK = "brick";
-    public static final String WHEAT = "wheat";
+    public static final String WHEAT= "wheat";
+    public static final String[] TYPES = {BRICK, WOOD, SHEEP, WHEAT, ORE};
 
 	public abstract void setOre(int ore);
 

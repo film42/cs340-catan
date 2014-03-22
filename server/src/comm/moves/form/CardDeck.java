@@ -1,10 +1,12 @@
 package comm.moves.form;
+import model.base.ResourcesImpl;
 
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class CardDeck {
-    private int brick;
+public class CardDeck extends ResourcesImpl{
+
+   /* private int brick;
     private int wood;
     private int sheep;
     private int wheat;
@@ -28,5 +30,5 @@ public class CardDeck {
 
     public int getOre() {
         return ore;
-    }
+    }*/
 }
