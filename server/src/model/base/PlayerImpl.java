@@ -36,9 +36,9 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         this.resources = resources;
         this.oldDevCards = oldDeck;
         this.newDevCards = newDeck;
-        this.roads = 0;
-        this.cities = 0;
-        this.settlements = 0;
+        this.roads = 15;
+        this.cities = 4;
+        this.settlements = 5;
         this.soldiers = 0;
         this.victoryPoints = 0;
         this.monuments = 0;

@@ -17,10 +17,10 @@ public class LogImpl extends JsonImpl implements modelInterfaces.messaging.Log{
     public LogImpl() {
 
         lines = new ArrayList<Line>();
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
-        lines.add(new LineImpl());
+        //lines.add(new LineImpl(""));
+        //lines.add(new LineImpl());
+        //lines.add(new LineImpl());
+        //lines.add(new LineImpl());
     }
 
     public void addLine(Line line){
