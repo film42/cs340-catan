@@ -1,5 +1,6 @@
 package model.base;
 
+import com.google.inject.Inject;
 import model.JsonImpl;
 import modelInterfaces.base.Deck;
 
@@ -14,6 +15,7 @@ public class DeckImpl extends JsonImpl implements Deck {
 	protected int roadBuilding;
 	protected int monument;
 
+    @Inject
     public DeckImpl() {
         yearOfPlenty = 0;
         monopoly = 0;

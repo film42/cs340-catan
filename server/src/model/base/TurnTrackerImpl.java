@@ -11,7 +11,7 @@ public class TurnTrackerImpl extends JsonImpl implements modelInterfaces.base.Tu
     private int currentTurn;
 
     public TurnTrackerImpl() {
-        status = "Rolling";
+        status = "firstround";
         currentTurn = 0;
     }
 

@@ -7,7 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
+import comm.request.JoinGameRequest;
 import model.InjectorFactory;
+import model.JsonImpl;
 import model.Model;
 import model.ModelModule;
 import model.facade.GameFacade;
@@ -71,7 +74,7 @@ public class Server {
         new ModelRoute(myGameFacade).attach();
         new ListAIRoute(myGameFacade).attach();
         new AddAIRoute(myGameFacade).attach();
-        new CommandsRoute(myGameFacade).attach();
+        new CommandsRoute(myMoveFacade).attach();
         new MoveRoute(myMoveFacade).attach();
         new ChangeLogLevelRoute(myUtilFacade).attach();
 
@@ -79,10 +82,35 @@ public class Server {
 
         // TODO: REMOVE!
         myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
+        myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
+        myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
+        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
+        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
+    }
+
+    private static class UserCookie extends JsonImpl{
+        private String name;
+        private String password;
+        private Long playerID;
+
+        private UserCookie(String name, String password, Long playerID) {
+            this.name = name;
+            this.password = password;
+            this.playerID = playerID;
+        }
+    }
+
+    public static String createUserCookie(String username, String password, int id){
+        String s = "{ username : " + username + " , password : " + password + " , playerID : " + id + " }";
+        UserCookie cookie = new UserCookie(username,password,(long)id);
+        String jsonCookie = cookie.toJson();
+        //noinspection deprecation
+        return encodeURIComponent(jsonCookie);
     }
 
     /**
      * utility function used to encode cookie strings
+     * I got this from stack overflow :D
      * @param s
      * @return
      */

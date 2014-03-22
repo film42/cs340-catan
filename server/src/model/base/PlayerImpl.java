@@ -1,5 +1,6 @@
 package model.base;
 
+import com.google.inject.Inject;
 import model.JsonImpl;
 import model.Model;
 import modelInterfaces.base.Resources;
@@ -29,11 +30,12 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     private String name;
     private String color;
 
-    public PlayerImpl() {
+    @Inject
+    public PlayerImpl(Resources resources, Deck newDeck, Deck oldDeck ) {
         this.MAX_GAME_POINTS = 10;
-        this.resources = new ResourcesImpl();
-        this.oldDevCards = new DeckImpl();
-        this.newDevCards = new DeckImpl();
+        this.resources = resources;
+        this.oldDevCards = oldDeck;
+        this.newDevCards = newDeck;
         this.roads = 0;
         this.cities = 0;
         this.settlements = 0;
