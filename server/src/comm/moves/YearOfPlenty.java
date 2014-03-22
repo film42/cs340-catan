@@ -35,6 +35,7 @@ public class YearOfPlenty extends Command {
          Player player = game.getPlayerByIndex(playerIndex);
          addSource(player, resource1);
          addSource(player, resource2);
+         gameInfo.setData(game);
 
     }
     private void addSource(Player p, String resource){
