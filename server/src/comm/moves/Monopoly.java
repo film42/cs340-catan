@@ -1,14 +1,13 @@
 package comm.moves;
 
-import java.io.IOException;
-
+import comm.moves.base.Command;
+import comm.moves.base.InvalidCommandException;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
 import modelInterfaces.base.Resources;
 
-import comm.moves.base.Command;
-import comm.moves.base.InvalidCommandException;
+import java.io.IOException;
 
 /**
  * Created by: film42 on: 3/13/14.
@@ -72,24 +71,24 @@ public class Monopoly extends Command {
 		int oldQty = 0;
 		switch (resource) {
             case Resources.WOOD:
-                oldQty = game.getPlayers().get(playerIndex).getResources().getWood();
-                game.getPlayers().get(playerIndex).getResources().setWood(oldQty + cardsStolen);
+                oldQty = game.getPlayerByIndex(playerIndex).getResources().getWood();
+                game.getPlayerByIndex(playerIndex).getResources().setWood(oldQty + cardsStolen);
                 break;
             case Resources.SHEEP:
-                oldQty = game.getPlayers().get(playerIndex).getResources().getSheep();
-                game.getPlayers().get(playerIndex).getResources().setSheep(oldQty + cardsStolen);
+                oldQty = game.getPlayerByIndex(playerIndex).getResources().getSheep();
+                game.getPlayerByIndex(playerIndex).getResources().setSheep(oldQty + cardsStolen);
                 break;
             case Resources.ORE:
-                oldQty = game.getPlayers().get(playerIndex).getResources().getOre();
-                game.getPlayers().get(playerIndex).getResources().setOre(oldQty + cardsStolen);
+                oldQty = game.getPlayerByIndex(playerIndex).getResources().getOre();
+                game.getPlayerByIndex(playerIndex).getResources().setOre(oldQty + cardsStolen);
                 break;
             case Resources.BRICK:
-                oldQty = game.getPlayers().get(playerIndex).getResources().getBrick();
-                game.getPlayers().get(playerIndex).getResources().setBrick(oldQty + cardsStolen);
+                oldQty = game.getPlayerByIndex(playerIndex).getResources().getBrick();
+                game.getPlayerByIndex(playerIndex).getResources().setBrick(oldQty + cardsStolen);
                 break;
             case Resources.WHEAT:
-                oldQty = game.getPlayers().get(playerIndex).getResources().getWheat();
-                game.getPlayers().get(playerIndex).getResources().setWheat(oldQty + cardsStolen);
+                oldQty = game.getPlayerByIndex(playerIndex).getResources().getWheat();
+                game.getPlayerByIndex(playerIndex).getResources().setWheat(oldQty + cardsStolen);
                 break;
             default:
                 server.Server.log.severe("Unrecognized resource selected :" + resource);
