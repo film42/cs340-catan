@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by: film42 on: 3/13/14.
  */
-public class OfferTrade extends Command {
+public class TradeOfferCommand extends Command {
 
     private CardDeck offer;
 
@@ -28,11 +28,12 @@ public class OfferTrade extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
         Game game = gameInfo.getData();
-        TradeOffer tradeOffer = game.getTradeOffer();
 
+        TradeOffer tradeOffer = game.getTradeOffer();
         tradeOffer.setReceiver(getReceiver());
         tradeOffer.setSender(getPlayerIndex());
         tradeOffer.setResourceOffer(offer);
+
         gameInfo.setData(game);
     }
 }

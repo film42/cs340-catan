@@ -1,5 +1,6 @@
 package model.map;
 
+import comm.moves.form.VertexLocation;
 import comm.request.CreateGameRequest;
 import model.JsonImpl;
 import modelInterfaces.map.Location;
@@ -95,12 +96,12 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
     }
 
     @Override
-    public void addRoad(int playerIndex, Location location) {
+    public void addRoad(int playerIndex, VertexLocation location) {
 
     }
 
     @Override
-    public void addSettlement(int playerIndex, Location location) {
+    public void addSettlement(int playerIndex, VertexLocation location) {
 
     }
 

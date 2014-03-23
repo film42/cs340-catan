@@ -1,5 +1,6 @@
 package model.map;
 
+import comm.moves.form.VertexLocation;
 import modelInterfaces.map.Location;
 
 /**
@@ -7,9 +8,9 @@ import modelInterfaces.map.Location;
  */
 public interface MapAccessor {
 
-    public void addRoad(int playerIndex, Location location);
+    public void addRoad(int playerIndex, VertexLocation location);
 
-    public void addSettlement(int playerIndex, Location location);
+    public void addSettlement(int playerIndex, VertexLocation location);
 
     public void addCity(int playerIndex, Location location);
 
