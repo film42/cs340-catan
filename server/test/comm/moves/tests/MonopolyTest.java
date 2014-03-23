@@ -59,7 +59,7 @@ public class MonopolyTest {
 		try {
 			monopoly.execute(fakeInfo);
 		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealWood.execute();");
+			fail("Exception in .execute();");
 			return;
 		}
 
@@ -234,7 +234,7 @@ public class MonopolyTest {
 		try {
 			monopoly.execute(fakeInfo);
 		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealWood.execute();");
+			fail("Exception in .execute();");
 			return;
 		}
 

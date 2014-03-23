@@ -6,6 +6,7 @@ import model.InjectorFactory;
 import model.ModelModule;
 import model.base.DeckImpl;
 import model.base.GameImpl;
+import model.base.TradeOfferImpl;
 import modelInterfaces.base.Deck;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.Player;
@@ -44,6 +45,9 @@ public class FakeGameFactory {
 		Game fakeGame = new GameImpl();
 		fakeGame.setPlayers(fakePlayers);
 
+		// set the tradeOffer to empty (the test cases should set it up every time)
+		fakeGame.setTradeOffer(new TradeOfferImpl());
+
 		return fakeGame;
 	}
 
@@ -63,6 +67,9 @@ public class FakeGameFactory {
 		Game fakeGame = new GameImpl();
 		fakeGame.setPlayers(fakePlayers);
 
+		// set the tradeOffer to empty (the test cases should set it up every time)
+		fakeGame.setTradeOffer(new TradeOfferImpl());
+
 		return fakeGame;
 	}
 
@@ -81,6 +88,9 @@ public class FakeGameFactory {
 
 		Game fakeGame = new GameImpl();
 		fakeGame.setPlayers(fakePlayers);
+
+		// set the tradeOffer to empty (the test cases should set it up every time)
+		fakeGame.setTradeOffer(new TradeOfferImpl());
 
 		return fakeGame;
 	}

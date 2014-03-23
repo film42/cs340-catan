@@ -112,14 +112,21 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
         switch(type){
             case BRICK:
                 brick = amount;
+			break;
             case WOOD:
                 wood  = amount;
+			break;
             case SHEEP:
                 sheep = amount;
+			break;
             case WHEAT:
                 wheat = amount;
+			break;
             case ORE:
                 ore   = amount;
+			break;
+		default:
+			System.err.println("setResourceByString: Invalid String");
         }
     }
 

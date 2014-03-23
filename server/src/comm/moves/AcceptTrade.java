@@ -4,7 +4,6 @@ import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
 import modelInterfaces.base.TradeOffer;
 import modelInterfaces.base.Resources;
 
@@ -25,7 +24,6 @@ public class AcceptTrade extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
         Game game = gameInfo.getData();
-        Player player = game.getPlayerByIndex(playerIndex);
         TradeOffer tradeOffer = game.getTradeOffer();
         Resources resourcesOffer = tradeOffer.getResourcesOffer();
 
@@ -48,7 +46,10 @@ public class AcceptTrade extends Command {
                     resourcesReceiver.setResourceByString(type,(resourcesReceiver.getResourceByString(type) - Math.abs(num)));
                 }
             }
+
         }
+
+		// clear the trade offer object from the game model
         for (String type : Resources.TYPES){
             resourcesOffer.setResourceByString(type,0);
         }

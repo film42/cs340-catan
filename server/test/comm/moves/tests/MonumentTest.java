@@ -40,7 +40,7 @@ public class MonumentTest {
 		try {
 			monument.execute(fakeInfo);
 		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealWood.execute();");
+			fail("Exception in .execute();");
 			return;
 		}
 
