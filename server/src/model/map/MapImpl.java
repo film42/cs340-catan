@@ -3,7 +3,6 @@ package model.map;
 import comm.moves.form.VertexLocation;
 import comm.request.CreateGameRequest;
 import model.JsonImpl;
-import modelInterfaces.map.Location;
 import modelInterfaces.map.Robber;
 
 import java.util.ArrayList;
@@ -90,6 +89,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
         }
 
         for (PortImpl port : ports) {
+            // TODO: NOTE THAT You're casting Math.random to an int.. which is most always 0
             int index = (int)Math.random()*(typeList.size());  //fun fact: Math.random is between [0,1).
             port.setInputResource(typeList.remove(index));
         }
@@ -97,16 +97,16 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public void addRoad(int playerIndex, VertexLocation location) {
-
+        String direction = location.getDirection();
     }
 
     @Override
     public void addSettlement(int playerIndex, VertexLocation location) {
-
+        String direction = location.getDirection();
     }
 
     @Override
-    public void addCity(int playerIndex, Location location) {
-
+    public void addCity(int playerIndex, VertexLocation location) {
+        String direction = location.getDirection();
     }
 }

@@ -4,10 +4,7 @@ import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
 import model.map.MapImpl;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
+import modelInterfaces.base.*;
 
 import java.io.IOException;
 
@@ -43,6 +40,13 @@ public class BuildSettlement extends Command {
 
             // Build a free settlement
             buildSettlement(game);
+            game.incrementUserCounter(playerIndex);
+
+            if(game.isLastPlayerIndex(playerIndex)) {
+                TurnTracker turnTracker = game.getTurnTracker();
+                turnTracker.setStatus(TurnTracker.SECOND_ROUND);
+                game.setTurnTracker(turnTracker);
+            }
 
         }
         // Are there enough resources?
