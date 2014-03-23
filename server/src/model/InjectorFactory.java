@@ -19,7 +19,7 @@ public class InjectorFactory {
      * @return
      */
     public static Injector createInjector(Module module){
-        if(injector == null || !(module.getClass().equals(currentModule.getClass()))){
+		if (injector == null || currentModule == null || !(module.getClass().equals(currentModule.getClass()))) {
             injector = Guice.createInjector(module);
         }
         return injector;

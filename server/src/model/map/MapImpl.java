@@ -1,21 +1,16 @@
 package model.map;
 
+import comm.moves.form.VertexLocation;
 import comm.request.CreateGameRequest;
 import model.JsonImpl;
-import modelInterfaces.map.HexGrid;
-import modelInterfaces.map.Map;
-import modelInterfaces.map.Port;
 import modelInterfaces.map.Robber;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by: film42 on: 3/7/14.
  */
-public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
+public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAccessor {
     private HexGridImpl hexGrid;
     private int radius;
     private NumbersImpl numbers;
@@ -94,9 +89,24 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map {
         }
 
         for (PortImpl port : ports) {
+            // TODO: NOTE THAT You're casting Math.random to an int.. which is most always 0
             int index = (int)Math.random()*(typeList.size());  //fun fact: Math.random is between [0,1).
             port.setInputResource(typeList.remove(index));
         }
     }
 
+    @Override
+    public void addRoad(int playerIndex, VertexLocation location) {
+        String direction = location.getDirection();
+    }
+
+    @Override
+    public void addSettlement(int playerIndex, VertexLocation location) {
+        String direction = location.getDirection();
+    }
+
+    @Override
+    public void addCity(int playerIndex, VertexLocation location) {
+        String direction = location.getDirection();
+    }
 }

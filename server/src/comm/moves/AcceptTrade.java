@@ -4,7 +4,8 @@ import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
+import modelInterfaces.base.TradeOffer;
+import modelInterfaces.base.Resources;
 
 import java.io.IOException;
 
@@ -23,8 +24,37 @@ public class AcceptTrade extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
         Game game = gameInfo.getData();
-        Player player = game.getPlayerByIndex(playerIndex);
-        player.setWillAcceptTrade(willAccept);
+        TradeOffer tradeOffer = game.getTradeOffer();
+        Resources resourcesOffer = tradeOffer.getResourcesOffer();
+
+        if (willAccept){
+
+            Resources resourcesSender = game.getPlayerByIndex(tradeOffer.getSender()).getResources();
+            Resources resourcesReceiver = game.getPlayerByIndex(tradeOffer.getReceiver()).getResources();
+
+            for (String type : Resources.TYPES) {
+
+                int num = resourcesOffer.getResourceByString(type);
+                if(num > 0){ // resource offered
+
+                    resourcesSender.setResourceByString(type, (resourcesSender.getResourceByString(type) - num));
+                    resourcesReceiver.setResourceByString(type,(resourcesReceiver.getResourceByString(type) + num));
+                }
+
+                else if (num < 0){ //resource asked for
+                    resourcesSender.setResourceByString(type,(resourcesSender.getResourceByString(type) + Math.abs(num)));
+                    resourcesReceiver.setResourceByString(type,(resourcesReceiver.getResourceByString(type) - Math.abs(num)));
+                }
+            }
+
+        }
+
+		// clear the trade offer object from the game model
+        for (String type : Resources.TYPES){
+            resourcesOffer.setResourceByString(type,0);
+        }
+        tradeOffer.setReceiver(0);
+        tradeOffer.setSender(0);
         gameInfo.setData(game);
     }
 

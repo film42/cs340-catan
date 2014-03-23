@@ -11,6 +11,7 @@ import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Log;
 import modelInterfaces.users.User;
+import modelInterfaces.base.TradeOffer;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class GameImpl extends JsonImpl implements Game {
     private int longestRoad;
     private int winner;
     private int revision;
+    private TradeOffer tradeoffer;
 
     public GameImpl(){
         deck = new DeckImpl();
@@ -175,6 +177,18 @@ public class GameImpl extends JsonImpl implements Game {
     }
 
     @Override
+    public TradeOffer getTradeOffer() {
+        return tradeoffer;
+    }
+
+    @Override
+    public void setTradeOffer(TradeOffer tradeoffer) {
+        this.tradeoffer = tradeoffer;
+    }
+
+
+
+    @Override
     public void initGame(CreateGameRequest createGameRequest) {
         //TODO intilize the Game using the given parameters
         //these parameters need to go to the map.
@@ -225,6 +239,15 @@ public class GameImpl extends JsonImpl implements Game {
         newPlayer.setOrderNumber(players.size());
         newPlayer.setColor(color);
         players.add(newPlayer);
+    }
+
+    @Override
+    public void incrementUserCounter(int playerIndex) {
+        if(isLastPlayerIndex(playerIndex)) {
+            turnTracker.setCurrentTurn(0);
+        } else {
+            turnTracker.setCurrentTurn(turnTracker.getCurrentTurn() + 1);
+        }
     }
 
 }

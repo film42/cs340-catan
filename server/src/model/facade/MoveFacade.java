@@ -3,18 +3,13 @@ package model.facade;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import comm.moves.*;
-import comm.moves.base.Command;
 import comm.moves.base.Commandable;
 import comm.moves.base.InvalidCommandException;
-import model.JsonImpl;
 import model.Model;
-import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 
 import static comm.moves.base.Command.moveFromJson;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jon George on 3/7/14.
@@ -93,7 +88,7 @@ public class MoveFacade {
             case BUILD_CITY:
                 command = moveFromJson(json, BuildCity.class); break;
             case OFFER_TRADE:
-                command = moveFromJson(json, OfferTrade.class); break;
+                command = moveFromJson(json, TradeOfferCommand.class); break;
             case ACCEPT_TRADE:
                 command = moveFromJson(json, AcceptTrade.class); break;
             case DISCARD_CARDS:

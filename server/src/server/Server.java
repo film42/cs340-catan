@@ -1,13 +1,7 @@
 package server;
 
-import static spark.Spark.externalStaticFileLocation;
-import static spark.Spark.setPort;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.logging.Logger;
-
-import com.google.gson.Gson;
+import com.google.inject.Injector;
+import comm.request.CreateGameRequest;
 import comm.request.JoinGameRequest;
 import model.InjectorFactory;
 import model.JsonImpl;
@@ -18,11 +12,7 @@ import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
 import route.MoveRoute;
-import route.game.AddAIRoute;
-import route.game.CommandsRoute;
-import route.game.ListAIRoute;
-import route.game.ModelRoute;
-import route.game.ResetRoute;
+import route.game.*;
 import route.games.CreateRoute;
 import route.games.JoinRoute;
 import route.games.ListRoute;
@@ -30,8 +20,12 @@ import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
 
-import com.google.inject.Injector;
-import comm.request.CreateGameRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Logger;
+
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.setPort;
 
 public class Server {
 
@@ -84,8 +78,10 @@ public class Server {
         myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
         myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
-        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
-        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
+//        myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
+//        myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
+//        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
+//        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
     }
 
     private static class UserCookie extends JsonImpl{

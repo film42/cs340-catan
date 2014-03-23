@@ -5,6 +5,16 @@ package modelInterfaces.base;
  */
 public interface Deck {
 
+    public static final String YEAR_OF_PLENTY= "yearOfPlenty";
+    public static final String MONOPOLY= "monopoly";
+    public static final String SOLDIER= "soldier";
+    public static final String ROAD_BUILDING = "roadBuilding";
+    public static final String MONUMENT= "monument";
+    public static final String INVALID_DECK = "invalid";
+
+    public static final String[] TYPES = {YEAR_OF_PLENTY, MONOPOLY, SOLDIER, ROAD_BUILDING, MONUMENT};
+
+
 	public abstract void setMonument(int newMonument);
 
 	public abstract int getMonument();
@@ -24,5 +34,9 @@ public interface Deck {
 	public abstract void setYearOfPlenty(int newYearOfPlenty);
 
 	public abstract int getYearOfPlenty();
+
+    public abstract int getDeckCount();
+
+    public abstract String getDevCard();
 
 }
