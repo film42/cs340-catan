@@ -1,7 +1,6 @@
 package modelInterfaces.map;
 
 import model.map.HexImpl;
-import modelInterfaces.base.Player;
 
 import java.util.List;
 
@@ -12,11 +11,11 @@ public interface HexGrid {
 
     Hex getHex(Location hexLoc);
 
-    void addRoad(Location hexLocation, Direction direction, Player player);
+    void addRoad(Location hexLocation, Direction direction, int playerIndex);
 
-    void addSettlement(Location hexLocation, Direction direction, Player player);
+    void addSettlement(Location hexLocation, Direction direction, int playerIndex);
 
-    void addCity(Location hexLocation, Direction direction, Player player);
+    void addCity(Location hexLocation, Direction direction, int playerIndex);
 
     List<List<HexImpl>> getHexes();
 

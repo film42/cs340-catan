@@ -91,16 +91,28 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public void addRoad(int playerIndex, VertexLocation location) {
-        String direction = location.getDirection();
+        String dirEnum = location.getDirection();
+        LocationImpl hexLocation = new LocationImpl(location.getX(), location.getY());
+        DirectionImpl direction = new EdgeDirection(dirEnum);
+
+        hexGrid.addRoad(hexLocation, direction, playerIndex);
     }
 
     @Override
     public void addSettlement(int playerIndex, VertexLocation location) {
-        String direction = location.getDirection();
+        String dirEnum = location.getDirection();
+        LocationImpl hexLocation = new LocationImpl(location.getX(), location.getY());
+        DirectionImpl direction = new VertexDirection(dirEnum);
+
+        hexGrid.addSettlement(hexLocation, direction, playerIndex);
     }
 
     @Override
     public void addCity(int playerIndex, VertexLocation location) {
-        String direction = location.getDirection();
+        String dirEnum = location.getDirection();
+        LocationImpl hexLocation = new LocationImpl(location.getX(), location.getY());
+        DirectionImpl direction = new VertexDirection(dirEnum);
+
+        hexGrid.addCity(hexLocation, direction, playerIndex);
     }
 }

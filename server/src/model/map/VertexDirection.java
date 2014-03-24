@@ -17,4 +17,16 @@ public class VertexDirection extends DirectionImpl{
         directions.add("SE");
         directions.add("SW");
     }
+
+    public VertexDirection(String direction) {
+        super();
+
+        this.setDirection(direction);
+    }
+
+    public VertexDirection(int direction) {
+        super();
+
+        this.setDirection(direction);
+    }
 }

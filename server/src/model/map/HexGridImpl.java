@@ -1,9 +1,7 @@
 package model.map;
 
 import model.JsonImpl;
-import model.Model;
 import modelInterfaces.map.*;
-import modelInterfaces.base.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +72,7 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         }
     }
 
-    public void addRoad(Location hexLocation, Direction direction, Player player){
+    public void addRoad(Location hexLocation, Direction direction, int playerIndex){
         //get hexes
         Hex hex = getHex(hexLocation);
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
@@ -82,19 +80,19 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         if(hex != null){
             Edge edge = hex.getEdge(direction.getNumDirection());
             EdgeValue edgevalue = edge.getValue();
-            edgevalue.setOwnerID(player.getOrderNumber());
+            edgevalue.setOwnerID(playerIndex);
 
         }
         if(neighborHex != null){
             Edge neighborEdge = neighborHex.getEdge(direction.getOppositeDirection());
             EdgeValue neighborEdgeValue = neighborEdge.getValue();
-            neighborEdgeValue.setOwnerID(player.getOrderNumber());
+            neighborEdgeValue.setOwnerID(playerIndex);
         }
 
     }
 
 
-    public void addSettlement(Location hexLocation, Direction direction, Player player){
+    public void addSettlement(Location hexLocation, Direction direction, int playerIndex){
         Hex hex = getHex(hexLocation);
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
         Hex neighborHex = getHex(neighborLoc);
@@ -103,25 +101,25 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         if(hex != null){
             Vertex vertex = hex.getVertex(direction.getNumDirection());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(1);
         }
         if(neighborHex != null){
             Vertex vertex = neighborHex.getVertex(direction.nextDoubleCounterClockwise());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(1);
         }
         if(ccwNeighborHex != null){
             Vertex vertex = ccwNeighborHex.getVertex(direction.nextDoubleClockwise());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(1);
         }
     }
 
 
-    public void addCity(Location hexLocation, Direction direction, Player player){
+    public void addCity(Location hexLocation, Direction direction, int playerIndex){
         Hex hex = getHex(hexLocation);
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
         Hex neighborHex = getHex(neighborLoc);
@@ -130,19 +128,19 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         if(hex != null){
             Vertex vertex = hex.getVertex(direction.getNumDirection());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(2);
         }
         if(neighborHex != null){
             Vertex vertex = neighborHex.getVertex(direction.nextDoubleCounterClockwise());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(2);
         }
         if(ccwNeighborHex != null){
             Vertex vertex = ccwNeighborHex.getVertex(direction.nextDoubleClockwise());
             VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(player.getOrderNumber());
+            vertexvalue.setOwnerID(playerIndex);
             vertexvalue.setWorth(2);
         }
     }

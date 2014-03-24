@@ -30,12 +30,12 @@ public class BuildSettlement extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
         Player curPlayer = game.getPlayerByIndex(playerIndex);
-        if(curPlayer.getRoads() < 1){
+        if(curPlayer.getSettlements() < 1){
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
-        curPlayer.buyRoad(isFree());
-        game.getMap().addRoad(getPlayerIndex(),getVertexLocation());
+        curPlayer.buySettlement(isFree());
+        game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
     }
 
 }

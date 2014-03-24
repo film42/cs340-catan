@@ -18,4 +18,15 @@ public class EdgeDirection extends DirectionImpl{
         directions.add("SW");
     }
 
+    public EdgeDirection(String direction) {
+        super();
+
+        this.setDirection(direction);
+    }
+
+    public EdgeDirection(int direction) {
+        super();
+
+        this.setDirection(direction);
+    }
 }
