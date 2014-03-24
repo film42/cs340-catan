@@ -120,6 +120,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
         hexGrid.addCity(hexLocation, direction, playerIndex);
     }
 
+    @Override
     public Resources getResourcesAroundVertex(Location hexLocation, Direction direction){
         Resources resources = new ResourcesImpl();
         List<Hex> hexes = hexGrid.getHexesFromVertex(hexLocation, direction);

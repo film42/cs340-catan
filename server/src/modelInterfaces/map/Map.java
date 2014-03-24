@@ -43,5 +43,7 @@ public interface Map {
 
     public void addCity(int playerIndex, comm.moves.form.VertexLocation location);
 
+    Resources getResourcesAroundVertex(Location hexLocation, Direction direction);
+
     List<Resources> getResourcesByNumber(int number);
 }
