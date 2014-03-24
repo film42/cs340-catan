@@ -3,6 +3,7 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import modelInterfaces.base.*;
+import modelInterfaces.map.Map;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +25,12 @@ public class RollNumber extends Command {
         game = rolling(game);
 
         // TODO: Get use player.addResourceList to add the resources before this is done
-
+        Map map = game.getMap();
+        List<Resources> playerresources = map.getResourcesByNumber(number);
+        for (int i = 0; i < playerresources.size(); i++){
+            game.getPlayerByIndex(i).addResourceList(playerresources.get(i));
+        }
+        
         gameInfo.setData(game);
     }
 

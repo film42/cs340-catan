@@ -1,7 +1,11 @@
 package modelInterfaces.map;
 
 import comm.request.CreateGameRequest;
-import model.map.*;
+import model.map.HexGridImpl;
+import model.map.NumbersImpl;
+import model.map.PortImpl;
+import model.map.RobberImpl;
+import modelInterfaces.base.Resources;
 
 import java.util.List;
 
@@ -38,4 +42,6 @@ public interface Map {
     public void addSettlement(int playerIndex, comm.moves.form.VertexLocation location);
 
     public void addCity(int playerIndex, comm.moves.form.VertexLocation location);
+
+    List<Resources> getResourcesByNumber(int number);
 }
