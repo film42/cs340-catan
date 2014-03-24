@@ -41,4 +41,8 @@ public interface Resources {
     List<String> getAvailibleResources();
 
     void setResourceByString(String type, int amount);
+
+    void incrementResourceByString(String type, int amount);
+
+    void decrementResourceByString(String type, int amount);
 }

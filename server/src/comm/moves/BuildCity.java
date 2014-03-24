@@ -34,6 +34,7 @@ public class BuildCity extends Command {
             Server.log.warning("Attempted to buy city without city available");
             throw new InvalidCommandException("Attempted to buy city without city available");
         }
+        // TODO: Let's make sure we update the banks resources
         curPlayer.buyCity();
         game.getMap().addCity(getPlayerIndex(),getVertexLocation());
     }

@@ -34,6 +34,7 @@ public class BuildSettlement extends Command {
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
+        // TODO: Let's make sure we update the banks resources
         curPlayer.buySettlement(isFree());
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
         gameInfo.setData(game);
