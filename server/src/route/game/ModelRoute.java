@@ -22,7 +22,13 @@ public class ModelRoute extends CoreRoute{
         get(new Route("/game/model") {
             @Override
             public Object handle(Request request, Response response) {
-                int gameId = Integer.parseInt(request.cookie("catan.game"));
+                String gameIdStr = request.cookie("catan.game");
+                if(gameIdStr == null) {
+                    response.status(401);
+                    return "Unauthorized: Please login and join a game.";
+                }
+
+                int gameId = Integer.parseInt(gameIdStr);
                 String modelResponse = m_gameFacade.onModelRequest(gameId);
                 return modelResponse;
             }
