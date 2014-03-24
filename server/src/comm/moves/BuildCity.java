@@ -32,7 +32,7 @@ public class BuildCity extends Command {
         Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getCities() < 1){
             Server.log.warning("Attempted to buy city without city available");
-            return;
+            throw new InvalidCommandException("Attempted to buy city without city available");
         }
         curPlayer.buyCity();
         game.getMap().addCity(getPlayerIndex(),getVertexLocation());

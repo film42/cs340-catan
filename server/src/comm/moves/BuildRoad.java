@@ -31,7 +31,7 @@ public class BuildRoad extends Command {
         Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getRoads() < 1){
             Server.log.warning("Attempted to buy road without road available");
-            return;
+            throw new InvalidCommandException("Attempted to buy road without road available");
         }
         curPlayer.buyRoad(isFree());
         game.getMap().addRoad(getPlayerIndex(),getRoadLocation());
