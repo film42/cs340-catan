@@ -28,7 +28,7 @@ public class BuildRoad extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player curPlayer = game.getPlayers().get(getPlayerIndex());
+        Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getRoads() < 1){
             Server.log.warning("Attempted to buy road without road available");
             return;

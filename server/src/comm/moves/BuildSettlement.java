@@ -3,8 +3,9 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
-import model.map.MapImpl;
-import modelInterfaces.base.*;
+import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
+import modelInterfaces.base.Player;
 import server.Server;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class BuildSettlement extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player curPlayer = game.getPlayers().get(getPlayerIndex());
+        Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getRoads() < 1){
             Server.log.warning("Attempted to buy road without road available");
             return;
