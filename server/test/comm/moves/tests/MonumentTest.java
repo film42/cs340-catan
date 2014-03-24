@@ -46,8 +46,8 @@ public class MonumentTest {
 		assertEquals(LOW_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getVictoryPoints());
 
         // Add a monument card
-        fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).setMonuments(1);
-        assertEquals(1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+        assertEquals(0, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+        fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getNewDevCards().setMonument(1);
 
         // Can purchase a monument card
         try {
@@ -56,7 +56,8 @@ public class MonumentTest {
             fail("Exception in .execute();");
             return;
         }
-        assertEquals(1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+        assertEquals(0, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+        assertEquals(1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getVictoryPoints());
 
 	}
 }
