@@ -51,7 +51,6 @@ public class FinishTurn extends Command {
         if(game.isLastPlayerIndex(playerIndex)) {
             // Advance to SECOND ROUND if the last player played in first round
             tracker.setStatus(TurnTracker.SECOND_ROUND);
-            tracker.setCurrentTurn(0);
         } else {
             // Else just increment the player order number
             tracker.setCurrentTurn(tracker.getCurrentTurn() + 1);
@@ -62,15 +61,16 @@ public class FinishTurn extends Command {
         return game;
     }
 
+    //reminder: The second round goes in opposite order.
     private Game secondTurn(Game game) {
         TurnTracker tracker = game.getTurnTracker();
-        if(game.isLastPlayerIndex(playerIndex)) {
-            // Advance to ROLLING (start real game) if Last Player just played
+        if(playerIndex == 0) {
+            // Advance to ROLLING (start real game) if First Player just played
             tracker.setStatus(TurnTracker.ROLLING);
             tracker.setCurrentTurn(0);
         } else {
-            // Else just increment the player order number
-            tracker.setCurrentTurn(tracker.getCurrentTurn() + 1);
+            // Else just decrement the player order number
+            tracker.setCurrentTurn(tracker.getCurrentTurn() - 1);
         }
 
         // Set and return
