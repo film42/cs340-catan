@@ -28,13 +28,13 @@ public class BuildSettlement extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player curPlayer = game.getPlayers().get(getPlayerIndex());
-        if(curPlayer.getRoads() < 1){
-            Server.log.warning("Attempted to buy road without road available");
+        Player curPlayer = game.getPlayerByIndex(getPlayerIndex());
+        if(curPlayer.getSettlements() < 1){
+            Server.log.warning("Attempted to buy settlement without settlement available");
             return;
         }
-        curPlayer.buyRoad(isFree());
-        game.getMap().addRoad(getPlayerIndex(),getVertexLocation());
+        curPlayer.buySettlement(isFree());
+        game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
     }
 
 }

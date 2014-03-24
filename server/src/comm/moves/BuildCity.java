@@ -29,7 +29,7 @@ public class BuildCity extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player curPlayer = game.getPlayers().get(getPlayerIndex());
+        Player curPlayer = game.getPlayerByIndex(getPlayerIndex());
         if(curPlayer.getCities() < 1){
             Server.log.warning("Attempted to buy city without city available");
             return;
