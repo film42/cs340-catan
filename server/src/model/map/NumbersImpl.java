@@ -2,11 +2,13 @@ package model.map;
 
 import com.google.gson.annotations.SerializedName;
 import model.JsonImpl;
+import modelInterfaces.map.Hex;
 import modelInterfaces.map.HexGrid;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by: film42 on: 3/19/14.
@@ -68,13 +70,49 @@ public class NumbersImpl extends JsonImpl {
         //no “7.”
         //all land has a number except desert
 
+        this.number2 = new ArrayList<>();
+        this.number3 = new ArrayList<>();
+        this.number4 = new ArrayList<>();
+        this.number5 = new ArrayList<>();
+        this.number6 = new ArrayList<>();
+        this.number8 = new ArrayList<>();
+        this.number9 = new ArrayList<>();
+        this.number10 = new ArrayList<>();
+        this.number11 = new ArrayList<>();
+        this.number12 = new ArrayList<>();
         List<List<HexImpl>> hexes = hexgrid.getHexes();
         for(int i = 0; i < hexes.size(); i++){
             List<HexImpl> hexes_2 = hexes.get(i);
             for(int j = 0; j < hexes_2.size(); j++){
+                Hex hex = hexes_2.get(j);
+                if(hex.isLand() && hex.getLandType() != "Desert" && hex.getLandType() != "desert"){
+                    boolean assigned = false;
+                    Random r = new Random();
+                    while(!assigned){
+                        int random = (int)(r.nextInt(11) + 2); //random number between 2 and 12;
+                        assert(random >=2 && random <= 12);
+                        if(random == 7){
+                            continue;
+                        }
+                        List<LocationImpl> locs = this.getLocations(random);
+                        if(random == 2 || random == 12){
+                            if(locs.size() == 0){
+                                locs.add((LocationImpl)hexgrid.internalToHexLocation(i, j));
+                                assigned = true;
+                            }
+                        }
+                        else{
+                            if(locs.size() < 2){
+                                locs.add((LocationImpl)hexgrid.internalToHexLocation(i, j));
+                                assigned = true;
+                            }
+                        }
+                    }
 
+                }
             }
         }
+
     }
 
     public NumbersImpl() {
