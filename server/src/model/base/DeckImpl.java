@@ -76,6 +76,17 @@ public class DeckImpl extends JsonImpl implements Deck {
     }
 
     @Override
+    public Deck clone() {
+        Deck ret = new DeckImpl();
+        ret.setMonument(this.getMonument());
+        ret.setMonopoly(this.getMonopoly());
+        ret.setRoadBuilding(this.getRoadBuilding());
+        ret.setSoldier(this.getSoldier());
+        ret.setYearOfPlenty(this.getYearOfPlenty());
+        return ret;
+    }
+
+    @Override
     public void setMonument(int newMonument) {
         monument = newMonument;
     }

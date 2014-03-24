@@ -15,6 +15,8 @@ public interface Deck {
     public static final String[] TYPES = {YEAR_OF_PLENTY, MONOPOLY, SOLDIER, ROAD_BUILDING, MONUMENT};
 
 
+    public abstract Deck clone();
+
 	public abstract void setMonument(int newMonument);
 
 	public abstract int getMonument();
