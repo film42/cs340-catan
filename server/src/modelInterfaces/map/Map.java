@@ -1,6 +1,5 @@
 package modelInterfaces.map;
 
-import comm.moves.form.*;
 import comm.request.CreateGameRequest;
 import model.map.HexGridImpl;
 import model.map.NumbersImpl;

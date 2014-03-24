@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface HexGrid {
 
+    //needed? maybe not...this could just go in getHex since it is never called outside of there....
+    Location internalToHexLocation(int x, int y);
+
     Hex getHex(Location hexLoc);
 
     void addRoad(Location hexLocation, Direction direction, int playerIndex);

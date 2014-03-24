@@ -1,12 +1,9 @@
 package model.facade;
 
+import comm.request.AddAIRequest;
 import model.InjectorFactory;
-import model.JsonSerializable;
 import model.Model;
 import model.base.GameImpl;
-import comm.request.AddAIRequest;
-import comm.request.JoinGameRequest;
-import comm.request.CreateGameRequest;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
 
@@ -36,6 +33,7 @@ public class GameFacade{
         GameInfo game = m_model.findGameById(gameId);
         if(game == null || game.getData() == null)
             return "";
+
         return game.getData().toJson();
     }
     public String onReset(int gameId){
