@@ -19,13 +19,13 @@ public class EdgeDirection extends DirectionImpl{
     }
 
     public EdgeDirection(String direction) {
-        super();
+        this();
 
         this.setDirection(direction);
     }
 
     public EdgeDirection(int direction) {
-        super();
+        this();
 
         this.setDirection(direction);
     }

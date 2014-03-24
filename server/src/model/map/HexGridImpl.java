@@ -97,7 +97,7 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
         Hex neighborHex = getHex(neighborLoc);
         Location ccwNeighborLoc = hexLocation.getNeighborLocation(direction.nextDirectionCounterClockwise());
-        Hex ccwNeighborHex = getHex(neighborLoc);
+        Hex ccwNeighborHex = getHex(ccwNeighborLoc);
         if(hex != null){
             Vertex vertex = hex.getVertex(direction.getNumDirection());
             VertexValue vertexvalue = vertex.getValue();
@@ -124,7 +124,7 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
         Hex neighborHex = getHex(neighborLoc);
         Location ccwNeighborLoc = hexLocation.getNeighborLocation(direction.nextDirectionCounterClockwise());
-        Hex ccwNeighborHex = getHex(neighborLoc);
+        Hex ccwNeighborHex = getHex(ccwNeighborLoc);
         if(hex != null){
             Vertex vertex = hex.getVertex(direction.getNumDirection());
             VertexValue vertexvalue = vertex.getValue();

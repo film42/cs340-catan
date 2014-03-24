@@ -1,7 +1,6 @@
 package model;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import comm.request.CreateGameRequest;
 import comm.request.JoinGameRequest;
 import modelInterfaces.base.GameInfo;
@@ -105,7 +104,8 @@ public class Model extends JsonImpl {
      */
     public GameInfo findGameById(int gameId) {
         for(GameInfo game : games) {
-            if(game.getId() == gameId) return game;
+            if(game.getId() == gameId)
+                return game;
         }
 
         // Not Found

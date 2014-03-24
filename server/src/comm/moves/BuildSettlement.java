@@ -36,6 +36,7 @@ public class BuildSettlement extends Command {
         }
         curPlayer.buySettlement(isFree());
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
+        gameInfo.setData(game);
     }
 
 }

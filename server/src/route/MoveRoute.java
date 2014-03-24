@@ -3,7 +3,6 @@ package route;
 import com.google.gson.JsonSyntaxException;
 import comm.moves.base.InvalidCommandException;
 import model.facade.MoveFacade;
-import modelInterfaces.base.GameInfo;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -28,7 +27,7 @@ public class MoveRoute extends CoreRoute {
                 String json = request.body();
                 String url = request.pathInfo();
                 // Get Game ID
-                String gameId = request.cookie("catan.gamess");
+                String gameId = request.cookie("catan.game");
                 if(gameId == null) {
                     // TODO: REMOVE THIS HERE REMOVE THIS HERE
                     gameId = "0";

@@ -19,13 +19,13 @@ public class VertexDirection extends DirectionImpl{
     }
 
     public VertexDirection(String direction) {
-        super();
+        this();
 
         this.setDirection(direction);
     }
 
     public VertexDirection(int direction) {
-        super();
+        this();
 
         this.setDirection(direction);
     }

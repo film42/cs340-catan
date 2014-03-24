@@ -8,8 +8,9 @@ import comm.moves.base.InvalidCommandException;
 import model.Model;
 import modelInterfaces.base.GameInfo;
 
-import static comm.moves.base.Command.moveFromJson;
 import java.io.IOException;
+
+import static comm.moves.base.Command.moveFromJson;
 
 /**
  * Created by Jon George on 3/7/14.
