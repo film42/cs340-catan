@@ -1,23 +1,21 @@
 package comm.moves.tests;
 
+import comm.moves.Monument;
+import comm.moves.base.Commandable;
+import comm.moves.base.InvalidCommandException;
+import model.base.GameInfoImpl;
+import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+
 import static comm.moves.base.Command.moveFromJson;
 import static comm.moves.tests.FakeGameFactory.FOURTH_PLAYER;
 import static comm.moves.tests.FakeGameFactory.LOW_NUMBER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
-import model.base.GameInfoImpl;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import comm.moves.Monument;
-import comm.moves.base.Commandable;
-import comm.moves.base.InvalidCommandException;
 
 public class MonumentTest {
 
@@ -44,6 +42,21 @@ public class MonumentTest {
 			return;
 		}
 
-		assertEquals(LOW_NUMBER + 1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getVictoryPoints());
+        // Should fail because we haven't added a monument card yet
+		assertEquals(LOW_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getVictoryPoints());
+
+        // Add a monument card
+        fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).setMonuments(1);
+        assertEquals(1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+
+        // Can purchase a monument card
+        try {
+            monument.execute(fakeInfo);
+        } catch (IOException | InvalidCommandException e) {
+            fail("Exception in .execute();");
+            return;
+        }
+        assertEquals(1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getMonuments());
+
 	}
 }
