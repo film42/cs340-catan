@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.base.*;
 import model.deserializer.InterfaceDeserializer;
+import model.map.LocationImpl;
 import model.map.MapImpl;
 import model.messaging.ChatImpl;
 import model.messaging.LineImpl;
 import model.messaging.LogImpl;
 import modelInterfaces.base.*;
+import modelInterfaces.map.Location;
 import modelInterfaces.map.Map;
 import modelInterfaces.messaging.Chat;
 import modelInterfaces.messaging.Line;
@@ -40,6 +42,7 @@ public class JsonImpl implements JsonSerializable, JsonParseable{
         gb.registerTypeAdapter(TradeOffer.class, new InterfaceDeserializer<TradeOfferImpl>(TradeOfferImpl.class));
         gb.registerTypeAdapter(Line.class, new InterfaceDeserializer<LineImpl>(LineImpl.class));
         gb.registerTypeAdapter(Map.class, new InterfaceDeserializer<MapImpl>(MapImpl.class));
+        gb.registerTypeAdapter(Location.class, new InterfaceDeserializer<LocationImpl>(LocationImpl.class));
 
 
         // Create and deserialize
