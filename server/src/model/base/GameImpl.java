@@ -229,8 +229,10 @@ public class GameImpl extends JsonImpl implements Game {
     @Override
     public void addPlayer(User user, String color) {
         for (Player player : players) {
-            if(player.getPlayerID() == user.getId())
+            if(player.getPlayerID() == user.getId()) {
+                player.setColor(color);
                 return;
+            }
         }
 
         Player newPlayer = InjectorFactory.getInjector().getInstance(Player.class);
