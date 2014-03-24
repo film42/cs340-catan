@@ -2,9 +2,7 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.TurnTracker;
+import modelInterfaces.base.*;
 
 import java.io.IOException;
 
@@ -45,7 +43,8 @@ public class FinishTurn extends Command {
         game.setTurnTracker(tracker);
 
         //Move new dev cards into old dev cards for current player.
-        game.getPlayers().get(getPlayerIndex());
+        Player player = game.getPlayers().get(getPlayerIndex());
+        player.setOldDevCards(player.getNewDevCards().clone());
         return game;
     }
 
