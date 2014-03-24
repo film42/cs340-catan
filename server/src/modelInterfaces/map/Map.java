@@ -1,5 +1,6 @@
 package modelInterfaces.map;
 
+import comm.moves.form.*;
 import comm.request.CreateGameRequest;
 import model.map.HexGridImpl;
 import model.map.NumbersImpl;
@@ -35,4 +36,10 @@ public interface Map {
     void initMap(CreateGameRequest createGameRequest);
 
     void randomizePorts();
+
+    public void addRoad(int playerIndex, comm.moves.form.VertexLocation location);
+
+    public void addSettlement(int playerIndex, comm.moves.form.VertexLocation location);
+
+    public void addCity(int playerIndex, comm.moves.form.VertexLocation location);
 }

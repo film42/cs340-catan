@@ -233,4 +233,38 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         resources.setWood(resources.getWood()  + resourcesToAdd.getWood());
     }
 
+    @Override
+    public void buyCity() {
+        resources.setOre(resources.getOre() - 3);
+        resources.setWheat(resources.getWheat() - 2);
+        cities--;
+    }
+
+    @Override
+    public void buySettlement(boolean free) {
+        if(!free){
+            resources.setBrick(resources.getBrick() - 1);
+            resources.setWheat(resources.getWheat() - 1);
+            resources.setSheep(resources.getSheep() - 1);
+            resources.setWood(resources.getWood() - 1);
+        }
+        settlements--;
+    }
+
+    @Override
+    public void buyRoad(boolean free) {
+        if(!free){
+            resources.setBrick(resources.getBrick() - 1);
+            resources.setWood(resources.getWood() - 1);
+        }
+        roads--;
+    }
+
+    @Override
+    public void buyDevCard(){
+        resources.setSheep(resources.getSheep() - 1);
+        resources.setWheat(resources.getWheat() - 1);
+        resources.setOre(resources.getOre() - 1);
+    }
+
    }

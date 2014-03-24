@@ -75,4 +75,11 @@ public interface Player {
     void addResourceList(Resources resourcesToAdd);
 
 
+    void buyCity();
+
+    void buySettlement(boolean free);
+
+    void buyRoad(boolean free);
+
+    void buyDevCard();
 }

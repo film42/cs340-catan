@@ -5,6 +5,7 @@ import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
 import model.map.MapImpl;
 import modelInterfaces.base.*;
+import server.Server;
 
 import java.io.IOException;
 
@@ -27,54 +28,13 @@ public class BuildSettlement extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player player = game.getPlayerByIndex(playerIndex);
-
-        // Check for errors!
-        if(player == null) throw new InvalidCommandException("Bad user ID!");
-
-        // Get Resource list
-        Resources r = player.getResources();
-
-        // Is the settlement free?
-        if(free) {
-
-            // Build a free settlement
-            buildSettlement(game);
-            game.incrementUserCounter(playerIndex);
-
-            if(game.isLastPlayerIndex(playerIndex)) {
-                TurnTracker turnTracker = game.getTurnTracker();
-                turnTracker.setStatus(TurnTracker.SECOND_ROUND);
-                game.setTurnTracker(turnTracker);
-            }
-
+        Player curPlayer = game.getPlayers().get(getPlayerIndex());
+        if(curPlayer.getRoads() < 1){
+            Server.log.warning("Attempted to buy road without road available");
+            return;
         }
-        // Are there enough resources?
-        // NOT REQUIRED: But a good idea
-        else if(r.getBrick() > 0 && r.getWheat() > 0
-                && r.getSheep() > 0 & r.getWood() > 0) {
-
-            // Decrement the resources
-            r.setBrick(r.getBrick() - 1);
-            r.setSheep(r.getSheep() - 1);
-            r.setWheat(r.getWheat() - 1);
-            r.setWood(r.getWood() - 1);
-
-            // Add Settlement ot map
-            buildSettlement(game);
-        } else {
-            throw new InvalidCommandException("Not enough resources!");
-        }
-
-        gameInfo.setData(game);
-    }
-
-    private Game buildSettlement(Game game) {
-        MapImpl map = (MapImpl)game.getMap();
-        map.addSettlement(playerIndex, vertexLocation);
-        game.setMap(map);
-
-        return game;
+        curPlayer.buyRoad(isFree());
+        game.getMap().addRoad(getPlayerIndex(),getVertexLocation());
     }
 
 }

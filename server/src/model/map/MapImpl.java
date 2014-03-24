@@ -74,12 +74,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public void initMap(CreateGameRequest createGameRequest) {
-        //TODO create the map using these parameters
     }
-
-    //final int[][] PortLocations = [[-3,0],[-3,2],[],[],[],[],[], [], []]
-    //final String[][] validVertex1 = [["E",-3,0],[],[],[],[],[],[], [], []]
-    //final String[] PortRatios = ["","Wood",]
 
     @Override
     public void randomizePorts(){
@@ -89,8 +84,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
         }
 
         for (PortImpl port : ports) {
-            // TODO: NOTE THAT You're casting Math.random to an int.. which is most always 0
-            int index = (int)Math.random()*(typeList.size());  //fun fact: Math.random is between [0,1).
+            int index = (int)(Math.random()*(typeList.size()));  //fun fact: Math.random is between [0,1).
             port.setInputResource(typeList.remove(index));
         }
     }

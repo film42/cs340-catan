@@ -74,14 +74,14 @@ public class Server {
 
 		Server.log.info("Server configured");
 
-        // TODO: REMOVE!
-        myGame.createGame(new CreateGameRequest(true, true, true, "Demo made by server"));
+        myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
         myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
-//        myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
-//        myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
-//        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
-//        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
+        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
+        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
+        myGame.createGame(new CreateGameRequest(true, true, true, "Needs people"));
+        myGame.joinGame(new JoinGameRequest("red","1"), "Adam");
+        myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
     }
 
     private static class UserCookie extends JsonImpl{

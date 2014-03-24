@@ -7,10 +7,6 @@ import comm.moves.form.VertexLocation;
  */
 public interface MapAccessor {
 
-    public void addRoad(int playerIndex, VertexLocation location);
 
-    public void addSettlement(int playerIndex, VertexLocation location);
-
-    public void addCity(int playerIndex, VertexLocation location);
 
 }
