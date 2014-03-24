@@ -103,7 +103,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
                 return ore;
             default:
                 System.err.println("getResourceByString: Invalid String");
-                return -1;
+                return 0;
         }
     }
 
