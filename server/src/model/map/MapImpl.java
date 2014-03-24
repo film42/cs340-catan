@@ -78,6 +78,12 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public void initMap(CreateGameRequest createGameRequest) {
+        if(createGameRequest.isRandomNumbers()){
+           // numbers.randomizeNumberLocations(hexGrid);
+        }
+        if(createGameRequest.isRandomPorts()){
+            this.randomizePorts();
+        }
     }
 
     @Override
@@ -149,7 +155,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
             String type = hex.getLandType().toLowerCase();
             List<VertexImpl> vertexes = hex.getVertexes();
             for(int j = 0; j < vertexes.size(); j++){
-                Vertex vertex = vertexes.get(i);
+                Vertex vertex = vertexes.get(j);
                 VertexValue value = vertex.getValue();
                 if(value.getOwnerID() >= 0){
                     Resources rec = resources.get(value.getOwnerID());

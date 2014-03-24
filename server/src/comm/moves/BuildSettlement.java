@@ -3,8 +3,6 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
-import model.InjectorFactory;
-import model.map.DirectionImpl;
 import model.map.LocationImpl;
 import model.map.VertexDirection;
 import modelInterfaces.base.*;
@@ -40,6 +38,7 @@ public class BuildSettlement extends Command {
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
+        // TODO: Let's make sure we update the banks resources
         curPlayer.buySettlement(isFree());
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
 
@@ -57,6 +56,13 @@ public class BuildSettlement extends Command {
 
             }
         }
+
+        // Add back to Bank Resources
+        Resources bank = game.getBank();
+        bank.incrementResourceByString(Resources.WOOD, 1);
+        bank.incrementResourceByString(Resources.BRICK, 1);
+        bank.incrementResourceByString(Resources.SHEEP, 1);
+        bank.incrementResourceByString(Resources.WHEAT, 1);
 
         gameInfo.setData(game);
     }

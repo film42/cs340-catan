@@ -148,6 +148,16 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
     }
 
     @Override
+    public void incrementResourceByString(String type, int amount) {
+        setResourceByString(type, getResourceByString(type) + amount);
+    }
+
+    @Override
+    public void decrementResourceByString(String type, int amount) {
+        setResourceByString(type, getResourceByString(type) - amount);
+    }
+
+    @Override
     public List<String> getAvailibleResources(){
         List<String> resources = new ArrayList<>();
         for (String type : TYPES) {

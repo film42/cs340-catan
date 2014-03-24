@@ -6,6 +6,7 @@ import comm.moves.form.VertexLocation;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
+import modelInterfaces.base.Resources;
 import server.Server;
 
 import java.io.IOException;
@@ -33,7 +34,13 @@ public class BuildRoad extends Command {
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
+        // TODO: Let's make sure we update the banks resources
         curPlayer.buyRoad(isFree());
         game.getMap().addRoad(getPlayerIndex(),getRoadLocation());
+
+        // Add back to Bank Resources
+        Resources bank = game.getBank();
+        bank.incrementResourceByString(Resources.WOOD, 1);
+        bank.incrementResourceByString(Resources.BRICK, 1);
     }
 }
