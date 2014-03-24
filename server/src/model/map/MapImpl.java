@@ -121,6 +121,22 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
     }
 
     @Override
+    public Resources getResourcesAroundVertex(Location hexLocation, Direction direction){
+        Resources resources = new ResourcesImpl();
+        List<Hex> hexes = hexGrid.getHexesFromVertex(hexLocation, direction);
+        for(int i = 0; i < hexes.size(); i++){
+            Hex hex = hexes.get(i);
+            if(hex.isLand()){
+                String land = hex.getLandType();
+                if(land != "Desert" && land != "desert"){
+                    resources.setResourceByString(land.toLowerCase(), 1);
+                }
+            }
+        }
+        return resources;
+    }
+
+    @Override
     public List<Resources> getResourcesByNumber(int number){
         List<LocationImpl> locations = numbers.getLocations(number);
         List<Resources> resources = new ArrayList<>();

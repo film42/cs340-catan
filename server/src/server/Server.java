@@ -11,6 +11,8 @@ import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
+import modelInterfaces.base.Player;
+import modelInterfaces.base.Resources;
 import route.MoveRoute;
 import route.game.*;
 import route.games.CreateRoute;
@@ -22,6 +24,7 @@ import route.util.ChangeLogLevelRoute;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static spark.Spark.externalStaticFileLocation;
@@ -75,13 +78,21 @@ public class Server {
 		Server.log.info("Server configured");
 
         myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
-        myGame.joinGame(new JoinGameRequest("red","0"), "Adam");
+        myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
         myGame.joinGame(new JoinGameRequest("orange","0"), "June");
         myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
-        myGame.createGame(new CreateGameRequest(true, true, true, "Needs people"));
+
+        myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
         myGame.joinGame(new JoinGameRequest("red","1"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
+
+        List<Player> players = myGame.findGameById(1).getData().getPlayers();
+        for (Player player : players) { //give them lots of resources
+            Resources money = injector.getInstance(Resources.class);
+            money.setResources(99,99,99,99,99);
+            player.setResources(money);
+        }
     }
 
     private static class UserCookie extends JsonImpl{

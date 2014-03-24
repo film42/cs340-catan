@@ -50,7 +50,8 @@ function impersonator(){//create a scope using this function
 	}
 	
 	function onPlayerSelected(){ 
-		var playerId = $(this).val();
+		//debugger;
+		var playerId = $("#player_list").val();
 		if(!_players || !(playerId) || !(_players[playerId])  ){ //make sure gameList has been intialized.
 			console.log("onGameSelect Failure");
 			return;
@@ -59,6 +60,34 @@ function impersonator(){//create a scope using this function
 		setCookie("catan.user", '{"name":"'+_players[playerId].name+'","playerID":"'+playerId+'"}'); 
 	}
 	
+	nextPlayer = function(){
+		//debugger;
+		if(!_players){ //make sure gameList has been intialized.
+			console.log("nextPlayer Failure");
+			return;
+		}
+		var selectedIndex = parseInt($('#player_list').val());
+		if(selectedIndex + 1 <_players.length)
+			$("#player_list").val(selectedIndex + 1);
+		else
+			$("#player_list").val(0);
+		onPlayerSelected();
+	}
+
+	prevPlayer = function(){
+		//debugger;
+		if(!_players){ //make sure gameList has been intialized.
+			console.log("prevPlayer Failure");
+			return;
+		}
+		var selectedIndex = parseInt($('#player_list').val());
+		if(selectedIndex - 1 >= 0)
+			$("#player_list").val(selectedIndex - 1);
+		else
+			$("#player_list").val(_players.length -1);
+		onPlayerSelected();
+	}
+
 	//uses cookies.js to modify cookies.
 	function setCookie(name, data){
 		Cookies.set(name, encodeURIComponent(data),null);

@@ -3,9 +3,13 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
+import model.InjectorFactory;
+import model.map.DirectionImpl;
+import model.map.LocationImpl;
+import model.map.VertexDirection;
+import modelInterfaces.base.*;
+import modelInterfaces.map.Direction;
+import modelInterfaces.map.Location;
 import server.Server;
 
 import java.io.IOException;
@@ -30,6 +34,8 @@ public class BuildSettlement extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
         Player curPlayer = game.getPlayerByIndex(playerIndex);
+
+
         if(curPlayer.getSettlements() < 1){
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
@@ -37,6 +43,22 @@ public class BuildSettlement extends Command {
         // TODO: Let's make sure we update the banks resources
         curPlayer.buySettlement(isFree());
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
+
+        //Add resources if it is second round
+        TurnTracker turnTracker = game.getTurnTracker();
+        if (turnTracker.getStatus().equals(TurnTracker.SECOND_ROUND)) {
+            Location loc = new LocationImpl(getVertexLocation().getX(), getVertexLocation().getY());
+            Direction dir = new VertexDirection(getVertexLocation().getDirection());
+            Resources resources = game.getMap().getResourcesAroundVertex(loc,dir);
+            Resources currentResource = curPlayer.getResources();
+
+            for (String type : Resources.TYPES) {
+                currentResource.setResourceByString(type,
+                        currentResource.getResourceByString(type)+resources.getResourceByString(type));
+
+            }
+        }
+
         gameInfo.setData(game);
     }
 

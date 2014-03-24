@@ -32,6 +32,14 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
         wheat = 0;
         ore = 0;
     }
+    @Override
+    public void setResources(int brick, int wood, int sheep, int wheat, int ore) {
+        this.brick = brick;
+        this.wood = wood;
+        this.sheep = sheep;
+        this.wheat = wheat;
+        this.ore = ore;
+    }
 
     @Override
 	public int getBrick() {
@@ -103,7 +111,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
                 return ore;
             default:
                 System.err.println("getResourceByString: Invalid String");
-                return -1;
+                return 0;
         }
     }
 
