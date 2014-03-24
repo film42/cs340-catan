@@ -3,24 +3,19 @@ package comm.moves.tests;
 import static comm.moves.base.Command.moveFromJson;
 import static comm.moves.tests.FakeGameFactory.*;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
 import model.base.GameInfoImpl;
 import model.map.LocationImpl;
-import model.map.VertexImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
-import modelInterfaces.map.Location;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import comm.moves.BuildCity;
-import comm.moves.Monument;
 import comm.moves.base.Commandable;
 import comm.moves.base.InvalidCommandException;
 

@@ -6,6 +6,7 @@ import model.InjectorFactory;
 import model.ModelModule;
 import model.base.DeckImpl;
 import model.base.GameImpl;
+import model.base.ResourcesImpl;
 import model.base.TradeOfferImpl;
 import modelInterfaces.base.Deck;
 import modelInterfaces.base.Game;
@@ -48,6 +49,9 @@ public class FakeGameFactory {
 		// set the tradeOffer to empty (the test cases should set it up every time)
 		fakeGame.setTradeOffer(new TradeOfferImpl());
 
+		fakeGame.setDeck(createFullDeck());
+		fakeGame.setBank(createFullBank());
+
 		return fakeGame;
 	}
 
@@ -70,7 +74,34 @@ public class FakeGameFactory {
 		// set the tradeOffer to empty (the test cases should set it up every time)
 		fakeGame.setTradeOffer(new TradeOfferImpl());
 
+		fakeGame.setDeck(createFullDeck());
+		fakeGame.setBank(createFullBank());
+
 		return fakeGame;
+	}
+
+	private static Deck createFullDeck() {
+		Deck deck = new DeckImpl();
+
+		deck.setMonopoly(HIGH_NUMBER);
+		deck.setMonument(HIGH_NUMBER);
+		deck.setRoadBuilding(HIGH_NUMBER);
+		deck.setSoldier(HIGH_NUMBER);
+		deck.setYearOfPlenty(HIGH_NUMBER);
+
+		return deck;
+	}
+
+	private static Resources createFullBank() {
+		Resources resources = new ResourcesImpl();
+
+		resources.setBrick(HIGH_NUMBER);
+		resources.setOre(HIGH_NUMBER);
+		resources.setSheep(HIGH_NUMBER);
+		resources.setWheat(HIGH_NUMBER);
+		resources.setWood(HIGH_NUMBER);
+
+		return resources;
 	}
 
 	static public Game getPoorFakeGame() {
@@ -91,6 +122,9 @@ public class FakeGameFactory {
 
 		// set the tradeOffer to empty (the test cases should set it up every time)
 		fakeGame.setTradeOffer(new TradeOfferImpl());
+
+		fakeGame.setDeck(createFullDeck());
+		fakeGame.setBank(createFullBank());
 
 		return fakeGame;
 	}
