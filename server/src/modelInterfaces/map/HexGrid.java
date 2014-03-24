@@ -14,6 +14,8 @@ public interface HexGrid {
 
     Hex getHex(Location hexLoc);
 
+    List<Hex> getHexesFromVertex(Location hexLocation, Direction direction);
+
     void addRoad(Location hexLocation, Direction direction, int playerIndex);
 
     void addSettlement(Location hexLocation, Direction direction, int playerIndex);
