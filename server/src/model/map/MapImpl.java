@@ -7,22 +7,24 @@ import modelInterfaces.map.Robber;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by: film42 on: 3/7/14.
  */
 public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAccessor {
+
     private HexGridImpl hexGrid;
     private int radius;
     private NumbersImpl numbers;
     private List<PortImpl> ports;
     private RobberImpl robber;
 
-
     public MapImpl() {
         radius = 0;
-        numbers = new NumbersImpl();
         this.robber = new RobberImpl();
+        this.numbers = new NumbersImpl();
     }
+
     public HexGridImpl getHexGrid() {
         return hexGrid;
     }

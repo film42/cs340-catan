@@ -1,11 +1,7 @@
 package modelInterfaces.map;
 
-import comm.moves.form.*;
 import comm.request.CreateGameRequest;
-import model.map.HexGridImpl;
-import model.map.NumbersImpl;
-import model.map.PortImpl;
-import model.map.RobberImpl;
+import model.map.*;
 
 import java.util.List;
 

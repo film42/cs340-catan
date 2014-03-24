@@ -32,6 +32,7 @@ public class NumbersImpl extends JsonImpl {
     @SerializedName("12")
     private List<LocationImpl> number12;
 
+
     public NumbersImpl() {
         this.number2 = new ArrayList<>();
         this.number3 = new ArrayList<>();
