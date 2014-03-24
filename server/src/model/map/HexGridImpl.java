@@ -79,6 +79,26 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
         }
     }
 
+    @Override
+    public List<Hex> getHexesFromVertex(Location hexLocation, Direction direction){
+        List<Hex> adjHexes = new ArrayList<>();
+        Hex hex = getHex(hexLocation);
+        Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
+        Hex neighborHex = getHex(neighborLoc);
+        Location ccwNeighborLoc = hexLocation.getNeighborLocation(direction.nextDirectionCounterClockwise());
+        Hex ccwNeighborHex = getHex(ccwNeighborLoc);
+        if(hex != null){
+            adjHexes.add(hex);
+        }
+        if(neighborHex != null){
+            adjHexes.add(neighborHex);
+        }
+        if(ccwNeighborHex != null){
+            adjHexes.add(ccwNeighborHex);
+        }
+        return adjHexes;
+    }
+
     public void addRoad(Location hexLocation, Direction direction, int playerIndex){
         //get hexes
         Hex hex = getHex(hexLocation);
