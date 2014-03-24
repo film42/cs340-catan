@@ -19,14 +19,14 @@ import java.util.*;
 public class Soldier extends Command {
 
     private int victimIndex;
-    private Location robberSpot;
+    private Location location;
 
     public int getVictimIndex() {
         return victimIndex;
     }
 
     public Location getRobberSpot() {
-        return robberSpot;
+        return location;
     }
 
     @Override
@@ -35,8 +35,8 @@ public class Soldier extends Command {
         //move robber to robberspot
         Game game = gameInfo.getData();
         Robber robber = game.getMap().getRobber();
-        robber.setX(robberSpot.getX());
-        robber.setY(robberSpot.getY());
+        robber.setX(getRobberSpot().getX());
+        robber.setY(getRobberSpot().getY());
 
         //steal one random resource from victim. (make sure they have at least one);
         Player victim = game.getPlayerByIndex(getVictimIndex());

@@ -90,7 +90,7 @@ public class Server {
         List<Player> players = myGame.findGameById(1).getData().getPlayers();
         for (Player player : players) { //give them lots of resources
             Resources money = injector.getInstance(Resources.class);
-            money.setResources(99,99,99,99,99);
+            money.setResources(9,9,9,9,9);
             player.setResources(money);
         }
     }

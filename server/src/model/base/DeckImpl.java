@@ -23,6 +23,15 @@ public class DeckImpl extends JsonImpl implements Deck {
 
     @Inject
     public DeckImpl() {
+        yearOfPlenty = 0;
+        monopoly = 0;
+        soldier = 0;
+        roadBuilding = 0;
+        monument = 0;
+    }
+
+    @Override
+    public void initBank(){
         yearOfPlenty = 2;
         monopoly = 2;
         soldier = 14;

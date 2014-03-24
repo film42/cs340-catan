@@ -38,6 +38,7 @@ public class GameImpl extends JsonImpl implements Game {
 
     public GameImpl(){
         deck = new DeckImpl();
+        deck.initBank();
 
         String mapJson= "";
         try {

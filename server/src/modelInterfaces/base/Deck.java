@@ -35,7 +35,9 @@ public interface Deck {
 
 	public abstract void setYearOfPlenty(int newYearOfPlenty);
 
-	public abstract int getYearOfPlenty();
+    void initBank();
+
+    public abstract int getYearOfPlenty();
 
     public abstract int getDeckCount();
 

@@ -48,7 +48,7 @@ public class BuyDevCard extends Command {
 			server.Server.log.severe("Invalid Development Card Type " + type);
 			break;
 		}
-
+        player.buyDevCard();
 		gameInfo.setData(game);
 	}
 }
