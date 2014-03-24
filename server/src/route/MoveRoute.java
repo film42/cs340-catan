@@ -29,10 +29,8 @@ public class MoveRoute extends CoreRoute {
                 // Get Game ID
                 String gameId = request.cookie("catan.game");
                 if(gameId == null) {
-                    // TODO: REMOVE THIS HERE REMOVE THIS HERE
-                    gameId = "0";
-                    //response.status(401);
-                    //return "Unauthorized";
+                    response.status(401);
+                    return "Unauthorized: Join a game or login first.";
                 }
 
                 // Valid game ID so we'll run the Command
