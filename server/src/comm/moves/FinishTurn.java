@@ -45,7 +45,7 @@ public class FinishTurn extends Command {
         game.setTurnTracker(tracker);
 
         //Move new dev cards into old dev cards for current player.
-        game.getPlayers().getPlayerIndex()
+        game.getPlayers().get(getPlayerIndex());
         return game;
     }
 
