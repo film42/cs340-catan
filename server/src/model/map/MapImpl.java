@@ -3,7 +3,9 @@ package model.map;
 import comm.moves.form.VertexLocation;
 import comm.request.CreateGameRequest;
 import model.JsonImpl;
-import modelInterfaces.map.Robber;
+import model.base.ResourcesImpl;
+import modelInterfaces.base.Resources;
+import modelInterfaces.map.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,5 +116,29 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
         DirectionImpl direction = new VertexDirection(dirEnum);
 
         hexGrid.addCity(hexLocation, direction, playerIndex);
+    }
+
+    @Override
+    public List<Resources> getResourcesByNumber(int number){
+        List<Location> locations = numbers.getLocations(number);
+        List<Resources> resources = new ArrayList<>();
+        resources.add(new ResourcesImpl());
+        resources.add(new ResourcesImpl());
+        resources.add(new ResourcesImpl());
+        resources.add(new ResourcesImpl());
+        for (int i = 0; i < locations.size(); i++){
+            Hex hex = hexGrid.getHex(locations.get(i));
+            String type = hex.getLandType().toLowerCase();
+            List<VertexImpl> vertexes = hex.getVertexes();
+            for(int j = 0; j < vertexes.size(); j++){
+                Vertex vertex = vertexes.get(i);
+                VertexValue value = vertex.getValue();
+                if(value.getOwnerID() >= 0){
+                    Resources rec = resources.get(value.getOwnerID());
+                    rec.setResourceByString(type, value.getWorth() + rec.getResourceByString(type));
+                }
+            }
+        }
+        return resources;
     }
 }
