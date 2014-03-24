@@ -26,11 +26,12 @@ public class RollNumber extends Command {
 
         // TODO: Get use player.addResourceList to add the resources before this is done
         Map map = game.getMap();
-        List<Resources> playerResources = map.getResourcesByNumber(number);
-        for (int i = 0; i < playerResources.size() && i < game.getPlayers().size(); i++){
-            game.getPlayerByIndex(i).addResourceList(playerResources.get(i));
+        if(number != 7){
+            List<Resources> playerResources = map.getResourcesByNumber(number);
+            for (int i = 0; i < playerResources.size() && i < game.getPlayers().size(); i++){
+                game.getPlayerByIndex(i).addResourceList(playerResources.get(i));
+            }
         }
-        
         gameInfo.setData(game);
     }
 
