@@ -120,7 +120,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public List<Resources> getResourcesByNumber(int number){
-        List<Location> locations = numbers.getLocations(number);
+        List<LocationImpl> locations = numbers.getLocations(number);
         List<Resources> resources = new ArrayList<>();
         resources.add(new ResourcesImpl());
         resources.add(new ResourcesImpl());

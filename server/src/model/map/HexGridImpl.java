@@ -41,14 +41,20 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
 
 
     //needed? maybe not...this could just go in getHex since it is never called outside of there....
-    public Location internalHexLocation(Location hexLoc){
-        int translatedX = hexLoc.getX() + x0;
-        int translatedY = hexLoc.getY() + y0;
-        int arrayX = translatedX - offsets.get(translatedY);
-        int arrayY = translatedY;
+    public Location internalToHexLocation(int x, int y){
+        int hexX = x - y0 + offsets.get(y);
+        int hexY = y - y0;
+
+
+        //int translatedX = hexX + x0;
+        //int translatedY = hexY + y0;
+        //int x = hexX + y0 - offsets.get(y);
+        //int y = hexY + y0;
+
+
         Location loc = new LocationImpl();
-        loc.setX(arrayX);
-        loc.setY(arrayY);
+        loc.setX(hexX);
+        loc.setY(hexY);
         return loc;
     }
 

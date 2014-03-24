@@ -2,6 +2,8 @@ package model.map;
 
 import com.google.gson.annotations.SerializedName;
 import model.JsonImpl;
+import modelInterfaces.map.Hex;
+import modelInterfaces.map.HexGrid;
 import modelInterfaces.map.Location;
 
 import java.security.InvalidParameterException;
@@ -14,27 +16,27 @@ import java.util.List;
 public class NumbersImpl extends JsonImpl {
 
     @SerializedName("2")
-    private List<Location> number2;
+    private List<LocationImpl> number2;
     @SerializedName("3")
-    private List<Location> number3;
+    private List<LocationImpl> number3;
     @SerializedName("4")
-    private List<Location> number4;
+    private List<LocationImpl> number4;
     @SerializedName("5")
-    private List<Location> number5;
+    private List<LocationImpl> number5;
     @SerializedName("6")
-    private List<Location> number6;
+    private List<LocationImpl> number6;
     @SerializedName("8")
-    private List<Location> number8;
+    private List<LocationImpl> number8;
     @SerializedName("9")
-    private List<Location> number9;
+    private List<LocationImpl> number9;
     @SerializedName("10")
-    private List<Location> number10;
+    private List<LocationImpl> number10;
     @SerializedName("11")
-    private List<Location> number11;
+    private List<LocationImpl> number11;
     @SerializedName("12")
-    private List<Location> number12;
+    private List<LocationImpl> number12;
 
-    public List<Location> getLocations(int number){
+    public List<LocationImpl> getLocations(int number){
         switch(number){
             case 2:
                 return number2;
@@ -62,6 +64,20 @@ public class NumbersImpl extends JsonImpl {
 
     }
 
+    public void randomizeNumberLocations(HexGrid hexgrid){
+        //From Rules:The 18 number tokens are marked with the numerals “2”
+        //through “12.” There is only one “2” and one “12.” There is
+        //no “7.”
+        //all land has a number except desert
+
+        List<List<HexImpl>> hexes = hexgrid.getHexes();
+        for(int i = 0; i < hexes.size(); i++){
+            List<HexImpl> hexes_2 = hexes.get(i);
+            for(int j = 0; j < hexes_2.size(); j++){
+
+            }
+        }
+    }
     public NumbersImpl() {
         this.number2 = new ArrayList<>();
         this.number3 = new ArrayList<>();

@@ -52,6 +52,7 @@ public class HexImpl extends JsonImpl implements modelInterfaces.map.Hex {
     @Override
     public void setLandType(String landtype) {
         this.landtype = landtype;
+        //if()
     }
 
     @Override
