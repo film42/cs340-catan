@@ -53,8 +53,10 @@ public class Soldier extends Command {
         currentPlayer.setSoldiers(currentPlayer.getSoldiers() + 1);
 
         // Reduce soldier card count
-        Deck cards = currentPlayer.getOldDevCards();
-        cards.setSoldier(cards.getSoldier()-1);
+        Deck newCards = currentPlayer.getNewDevCards();
+        newCards.setSoldier(newCards.getSoldier()-1);
+        Deck oldCards = currentPlayer.getOldDevCards();
+        oldCards.setSoldier(oldCards.getSoldier()-1);
 
         // Prevent additional dev card playing
         currentPlayer.setPlayedDevCard(true);
