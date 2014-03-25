@@ -80,4 +80,6 @@ public interface Game {
     public String toJson();
 
     void incrementUserCounter(int playerIndex);
+
+    void determineLongestRoad();
 }

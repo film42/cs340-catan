@@ -35,12 +35,20 @@ public class Soldier extends Command {
         robber.setX(getRobberSpot().getX());
         robber.setY(getRobberSpot().getY());
 
-        //steal one random resource from victim. (make sure they have at least one);
-        Player victim = game.getPlayerByIndex(getVictimIndex());
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
-        stealResource(victim.getResources(), currentPlayer.getResources());
+
+        if(victimIndex != Player.NO_PLAYER) {
+            //steal one random resource from victim. (make sure they have at least one);
+            Player victim = game.getPlayerByIndex(getVictimIndex());
+            stealResource(victim.getResources(), currentPlayer.getResources());
+        }
+
+        // Reduce soldier card count
         Deck cards = currentPlayer.getOldDevCards();
         cards.setSoldier(cards.getSoldier()-1);
+
+        // Prevent additional dev card playing
+        currentPlayer.setPlayedDevCard(true);
     }
 
     //This method is shared by Soldier and RobPlayer.

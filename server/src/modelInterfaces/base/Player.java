@@ -4,6 +4,8 @@ package modelInterfaces.base;
  * Created by Jon George on 3/13/14.
  */
 public interface Player {
+    final int NO_PLAYER = -1;
+
     Resources getResources();
 
     void setResources(Resources resources);
@@ -17,6 +19,8 @@ public interface Player {
     void setNewDevCards(Deck newDevCards);
 
     int getRoads();
+
+    int getRoadCount();
 
     void setRoads(int roads);
 

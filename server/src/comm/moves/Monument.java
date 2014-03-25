@@ -27,5 +27,8 @@ public class Monument extends Command {
         if(oldDevCards.getMonument() > 0){
             oldDevCards.setMonument(oldDevCards.getMonument()-1);
         }
+
+        // Prevent additional dev card playing
+        player.setPlayedDevCard(true);
     }
 }

@@ -1,18 +1,10 @@
 package comm.moves;
 
+import comm.moves.base.Command;
+import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.*;
+
 import java.io.IOException;
-
-import comm.moves.base.Command;
-import comm.moves.base.InvalidCommandException;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-
-import modelInterfaces.base.Player;
-
-import comm.moves.base.Command;
-import comm.moves.base.InvalidCommandException;
-import modelInterfaces.base.Resources;
-import modelInterfaces.base.Deck;
 /**
  * Created by: film42 on: 3/13/14.
  */
@@ -32,15 +24,19 @@ public class YearOfPlenty extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
-         Game game = gameInfo.getData();
-         Player player = game.getPlayerByIndex(playerIndex);
-         Resources resources = player.getResources();
+        Game game = gameInfo.getData();
+        Player player = game.getPlayerByIndex(playerIndex);
+        Resources resources = player.getResources();
 
-         addSource(resources, getResource1());
-         addSource(resources, getResource2());
-         Deck deck = player.getOldDevCards();
-         deck.setYearOfPlenty(deck.getYearOfPlenty()-1);
-         gameInfo.setData(game);
+        addSource(resources, getResource1());
+        addSource(resources, getResource2());
+        Deck deck = player.getOldDevCards();
+        deck.setYearOfPlenty(deck.getYearOfPlenty()-1);
+
+        // Prevent additional dev card playing
+        player.setPlayedDevCard(true);
+
+        gameInfo.setData(game);
 
     }
     private void addSource(Resources resources, String resource){

@@ -44,11 +44,11 @@ catan.devCards.Controller = (function(){
       var model = this.game.getModel();
       var player = this.game.getCurrentPlayer();
 
-      this.view.setCardEnabled(Definitions.SOLDIER,        player.canPlaySoldier());
-      this.view.setCardEnabled(Definitions.YEAR_OF_PLENTY, player.canPlayYearOfPlenty());
-      this.view.setCardEnabled(Definitions.MONOPOLY,       player.canPlayMonopoly());
-      this.view.setCardEnabled(Definitions.ROAD_BUILD,     player.canPlayRoadBuilding());
-      this.view.setCardEnabled(Definitions.MONUMENT,       player.canPlayMonument());
+      this.view.setCardEnabled(Definitions.SOLDIER,        player.canPlaySoldier()      && player.canPlayDevCard());
+      this.view.setCardEnabled(Definitions.YEAR_OF_PLENTY, player.canPlayYearOfPlenty() && player.canPlayDevCard());
+      this.view.setCardEnabled(Definitions.MONOPOLY,       player.canPlayMonopoly()     && player.canPlayDevCard());
+      this.view.setCardEnabled(Definitions.ROAD_BUILD,     player.canPlayRoadBuilding() && player.canPlayDevCard());
+      this.view.setCardEnabled(Definitions.MONUMENT,       player.canPlayMonument()     && player.canPlayDevCard());
 
       this.view.updateAmount(Definitions.SOLDIER,        player.getNewSoldierCount());
       this.view.updateAmount(Definitions.YEAR_OF_PLENTY, player.getNewYearOfPlentyCount());
