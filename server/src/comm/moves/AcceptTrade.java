@@ -22,7 +22,10 @@ public class AcceptTrade extends Command {
 
     @Override
     public String getLogMessage() {
-        return " accepted the trade";
+		if (willAccept)
+			return " accepted the trade";
+		else
+			return " refused the trade";
     }
 
     @Override
