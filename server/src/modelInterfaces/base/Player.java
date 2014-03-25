@@ -4,6 +4,8 @@ package modelInterfaces.base;
  * Created by Jon George on 3/13/14.
  */
 public interface Player {
+    final int NO_PLAYER = -1;
+
     Resources getResources();
 
     void setResources(Resources resources);
@@ -52,7 +54,7 @@ public interface Player {
 
     void setPlayedDevCard(boolean playedDevCard);
 
-    boolean isDiscarded();
+    boolean hasDiscarded();
 
     void setDiscarded(boolean discarded);
 

@@ -3,10 +3,7 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.Location;
-import modelInterfaces.base.Game;
-import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
+import modelInterfaces.base.*;
 import modelInterfaces.map.Robber;
 
 
@@ -38,24 +35,31 @@ public class Soldier extends Command {
         robber.setX(getRobberSpot().getX());
         robber.setY(getRobberSpot().getY());
 
-        //steal one random resource from victim. (make sure they have at least one);
-        Player victim = game.getPlayerByIndex(getVictimIndex());
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
-        stealResource(victim.getResources(), currentPlayer.getResources());
+
+        if(victimIndex != Player.NO_PLAYER) {
+            //steal one random resource from victim. (make sure they have at least one);
+            Player victim = game.getPlayerByIndex(getVictimIndex());
+            stealResource(victim.getResources(), currentPlayer.getResources());
+        }
+
+        // Reduce soldier card count
+        Deck cards = currentPlayer.getOldDevCards();
+        cards.setSoldier(cards.getSoldier()-1);
 
         // Prevent additional dev card playing
         currentPlayer.setPlayedDevCard(true);
     }
 
     private void stealResource(Resources stealFrom, Resources giveTo){
-        List<String> availibleList = stealFrom.getAvailibleResources();
-        if(availibleList.size() <=0){
+        List<String> availableList = stealFrom.getAvailibleResources();
+        if(availableList.size() <=0){
             System.err.println("Steal Resource called on player with no resources");
             return;
         }
 
-        int index = (int)(Math.random()*availibleList.size());
-        String type = availibleList.get(index);
+        int index = (int)(Math.random()*availableList.size());
+        String type = availableList.get(index);
         stealFrom.setResourceByString(type, stealFrom.getResourceByString(type) - 1);
         giveTo.setResourceByString(type, giveTo.getResourceByString(type)+1);
 

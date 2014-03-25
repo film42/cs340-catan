@@ -175,7 +175,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     }
 
     @Override
-    public boolean isDiscarded() {
+    public boolean hasDiscarded() {
         return discarded;
     }
 
@@ -238,6 +238,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         resources.setOre(resources.getOre() - 3);
         resources.setWheat(resources.getWheat() - 2);
         cities--;
+        victoryPoints++;
     }
 
     @Override
@@ -248,6 +249,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
             resources.setSheep(resources.getSheep() - 1);
             resources.setWood(resources.getWood() - 1);
         }
+        victoryPoints++;
         settlements--;
     }
 
