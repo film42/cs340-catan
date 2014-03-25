@@ -22,6 +22,10 @@ public interface HexGrid {
 
     void addCity(Location hexLocation, Direction direction, int playerIndex);
 
+    Location findDesert();
+
+    void randomizeTiles();
+
     List<List<HexImpl>> getHexes();
 
     void setHexes(List<List<HexImpl>> hexes);
