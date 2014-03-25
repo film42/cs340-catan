@@ -25,13 +25,9 @@ public class Monument extends Command {
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());
         Deck newDevCards = player.getNewDevCards();
-        Deck oldDevCards = player.getOldDevCards();
-        if(newDevCards.getMonument() > 0){ //this might need to change depending on how new and old dev cards are arranged.
+		if (newDevCards.getMonument() > 0) {
             newDevCards.setMonument(newDevCards.getMonument()-1);
             player.setVictoryPoints(player.getVictoryPoints() + 1);
-        }
-        if(oldDevCards.getMonument() > 0){
-            oldDevCards.setMonument(oldDevCards.getMonument()-1);
         }
 
         // Prevent additional dev card playing
