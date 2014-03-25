@@ -107,7 +107,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
 
     @Override
     public int getResourceByString(String type){
-        switch(type){
+        switch(type.toLowerCase()){
             case BRICK:
                 return brick;
             case WOOD:
@@ -126,7 +126,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
 
     @Override
     public void setResourceByString(String type, int amount){
-        switch(type){
+        switch(type.toLowerCase()){
             case BRICK:
                 brick = amount;
 			break;
