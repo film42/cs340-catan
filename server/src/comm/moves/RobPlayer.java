@@ -3,12 +3,13 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.Location;
-import modelInterfaces.base.*;
+import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
+import modelInterfaces.base.Player;
+import modelInterfaces.base.TurnTracker;
 import modelInterfaces.map.Robber;
-import server.Server;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Jon on 3/24/14.
@@ -36,20 +37,22 @@ public class RobPlayer extends Command {
 
         Game game = gameInfo.getData();
         //change to playing phase from robbing phase
-        if(game.getTurnTracker().getStatus() != TurnTracker.ROBBING){
-            Server.log.severe("Rob Player called outside of robbing phase");
-            return;
+        if(!game.getTurnTracker().getStatus().equals(TurnTracker.ROBBING)){
+            throw new InvalidCommandException("Rob Player called outside of robbing phase");
         }
 
-        //move robber to robberspot
+        // Move robber to Robber Spot
         Robber robber = game.getMap().getRobber();
         robber.setX(getRobberSpot().getX());
         robber.setY(getRobberSpot().getY());
 
-        //steal one random resource from victim. (make sure they have at least one);
+        // Steal one random resource from victim. (make sure they have at least one);
         Player victim = game.getPlayerByIndex(getVictimIndex());
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
-        Soldier.stealResource(victim.getResources(), currentPlayer.getResources());
+
+        if(victimIndex != Player.NO_PLAYER) {
+            Soldier.stealResource(victim.getResources(), currentPlayer.getResources());
+        }
 
         game.getTurnTracker().setStatus(TurnTracker.PLAYING);
     }

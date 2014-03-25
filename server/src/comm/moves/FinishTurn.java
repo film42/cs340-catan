@@ -29,6 +29,11 @@ public class FinishTurn extends Command {
             case TurnTracker.SECOND_ROUND: game = secondTurn(game); break;
         }
 
+        // Reset the users dev card list
+        for(Player player : game.getPlayers()) {
+            player.setPlayedDevCard(false);
+        }
+
         gameInfo.setData(game);
     }
 

@@ -48,6 +48,9 @@ public class Monopoly extends Command {
             deck.setMonopoly(deck.getMonopoly()-1);
         }
 
+        // Played Dev Card
+        game.getPlayerByIndex(playerIndex).setPlayedDevCard(true);
+
         // Write our changes
         gameInfo.setData(game);
 	}
