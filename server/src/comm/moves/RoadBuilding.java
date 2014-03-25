@@ -41,6 +41,9 @@ public class RoadBuilding extends Command {
         // Increment the Bank Dev cards
         game.getDeck().setRoadBuilding(game.getDeck().getRoadBuilding() + 1);
 
+        // Prevent additional dev card playing
+        curPlayer.setPlayedDevCard(true);
+
         // Update Longest Road
         game.determineLongestRoad();
     }
