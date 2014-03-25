@@ -90,7 +90,9 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     }
 
     @Override
-    public int getRoadCount() {return Catan.MAX_ROAD_COUNT - roads; }
+    public int getRoadCount() {
+        return Catan.MAX_ROAD_COUNT - roads;
+    }
 
     @Override
     public void setRoads(int roads) {
