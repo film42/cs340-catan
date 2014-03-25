@@ -28,7 +28,7 @@ public class TradeOfferImpl extends JsonImpl implements modelInterfaces.base.Tra
 
     @Override
     public void setReceiver(int receiver) {
-        this.sender = receiver;
+		this.receiver = receiver;
     }
 
     @Override

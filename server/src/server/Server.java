@@ -85,18 +85,18 @@ public class Server {
 
         myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
         myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
-        myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
-        myGame.joinGame(new JoinGameRequest("orange","0"), "June");
-        myGame.joinGame(new JoinGameRequest("green","0"), "Steve");
+		myGame.joinGame(new JoinGameRequest("blue", "0"), "Garrett");
+		myGame.joinGame(new JoinGameRequest("orange", "0"), "June");
+		myGame.joinGame(new JoinGameRequest("green", "0"), "Steve");
 
         myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
-        myGame.joinGame(new JoinGameRequest("red","1"), "Adam");
+		myGame.joinGame(new JoinGameRequest("red", "1"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
 
 		// Past Setup
 		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
-		myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
-		myGame.joinGame(new JoinGameRequest("blue", "0"), "June");
+		myGame.joinGame(new JoinGameRequest("red", "2"), "Adam");
+		myGame.joinGame(new JoinGameRequest("blue", "2"), "Garrett");
 		
 		// now load an existing model from a json and put it in our Past Setup game
         try {
