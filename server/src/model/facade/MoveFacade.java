@@ -32,6 +32,8 @@ public class MoveFacade {
     final String OFFER_TRADE = "/moves/offerTrade";
     final String ACCEPT_TRADE = "/moves/acceptTrade";
     final String DISCARD_CARDS = "/moves/discardCards";
+    final String MARITIME_TRADE = "/moves/maritimeTrade";
+
 
     private Model m_model;
     public MoveFacade(Model model) {
@@ -94,6 +96,8 @@ public class MoveFacade {
                 command = moveFromJson(json, AcceptTrade.class); break;
             case DISCARD_CARDS:
                 command = moveFromJson(json, DiscardCards.class); break;
+            case MARITIME_TRADE:
+                command = moveFromJson(json, MaritimeTrade.class); break;
             default:
                 return false;
         }

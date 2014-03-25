@@ -23,6 +23,15 @@ public class DeckImpl extends JsonImpl implements Deck {
 
     @Inject
     public DeckImpl() {
+        yearOfPlenty = 0;
+        monopoly = 0;
+        soldier = 0;
+        roadBuilding = 0;
+        monument = 0;
+    }
+
+    @Override
+    public void initBank(){
         yearOfPlenty = 2;
         monopoly = 2;
         soldier = 14;
@@ -73,6 +82,17 @@ public class DeckImpl extends JsonImpl implements Deck {
     @Override
     public int getMonument() {
         return monument;
+    }
+
+    @Override
+    public Deck clone() {
+        Deck ret = new DeckImpl();
+        ret.setMonument(this.getMonument());
+        ret.setMonopoly(this.getMonopoly());
+        ret.setRoadBuilding(this.getRoadBuilding());
+        ret.setSoldier(this.getSoldier());
+        ret.setYearOfPlenty(this.getYearOfPlenty());
+        return ret;
     }
 
     @Override

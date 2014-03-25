@@ -2,6 +2,7 @@ package model.base;
 
 import com.google.inject.Inject;
 import model.JsonImpl;
+import modelInterfaces.base.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,14 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
         wheat = 0;
         ore = 0;
     }
+
+    @Override
+    public Resources Clone(Resources r) {
+        Resources ret = new ResourcesImpl();
+        ret.setResources(r.getBrick(),r.getWood(),r.getSheep(),r.getWheat(),r.getOre());
+        return ret;
+    }
+
     @Override
     public void setResources(int brick, int wood, int sheep, int wheat, int ore) {
         this.brick = brick;
@@ -111,7 +120,7 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
                 return ore;
             default:
                 System.err.println("getResourceByString: Invalid String");
-                return -1;
+                return 0;
         }
     }
 
@@ -136,6 +145,16 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
 		default:
 			System.err.println("setResourceByString: Invalid String");
         }
+    }
+
+    @Override
+    public void incrementResourceByString(String type, int amount) {
+        setResourceByString(type, getResourceByString(type) + amount);
+    }
+
+    @Override
+    public void decrementResourceByString(String type, int amount) {
+        setResourceByString(type, getResourceByString(type) - amount);
     }
 
     @Override
