@@ -49,12 +49,7 @@ public class AcceptTrade extends Command {
 
         }
 
-		// clear the trade offer object from the game model
-        for (String type : Resources.TYPES){
-            resourcesOffer.setResourceByString(type,0);
-        }
-        tradeOffer.setReceiver(0);
-        tradeOffer.setSender(0);
+		game.setTradeOffer(null);
         gameInfo.setData(game);
     }
 

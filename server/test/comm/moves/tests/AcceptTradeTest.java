@@ -68,6 +68,7 @@ public class AcceptTradeTest {
 		assertEquals(HIGH_NUMBER - 1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getResources().getOre());
 		assertEquals(HIGH_NUMBER + 1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getResources().getBrick());
 
+		assertEquals(null, fakeInfo.getData().getTradeOffer());
 	}
 
 	@Test
@@ -107,5 +108,6 @@ public class AcceptTradeTest {
 		assertEquals(HIGH_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getResources().getBrick());
 		assertEquals(HIGH_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getResources().getOre());
 
+		assertEquals(null, fakeInfo.getData().getTradeOffer());
 	}
 }
