@@ -14,9 +14,15 @@ import java.io.IOException;
  * Created by: film42 on: 3/13/14.
  */
 public class BuyDevCard extends Command {
-	@Override
+    @Override
+    public String getLogMessage() {
+        return " bought a development card";
+    }
+
+    @Override
 	public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
-		Game game = gameInfo.getData();
+        super.execute(gameInfo);
+        Game game = gameInfo.getData();
 		Deck deck = game.getDeck();
 
 		if (deck.getDeckCount() <= 0) {

@@ -27,8 +27,13 @@ public class Soldier extends Command {
     }
 
     @Override
-    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+    public String getLogMessage() {
+        return " played a soldier card";
+    }
 
+    @Override
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         // Move robber to robber spot
         Game game = gameInfo.getData();
         Robber robber = game.getMap().getRobber();
@@ -58,7 +63,9 @@ public class Soldier extends Command {
         game.determineLargestArmy();
     }
 
-    private void stealResource(Resources stealFrom, Resources giveTo) throws InvalidCommandException {
+    //This method is shared by Soldier and RobPlayer.
+    //It is just util, so I figure inheritance wasn't needed.
+    public static void stealResource(Resources stealFrom, Resources giveTo) throws InvalidCommandException {
 
         List<String> availableList = stealFrom.getAvailibleResources();
 

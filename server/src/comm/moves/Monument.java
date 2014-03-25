@@ -14,7 +14,13 @@ import java.io.IOException;
  */
 public class Monument extends Command {
     @Override
+    public String getLogMessage() {
+        return " played a monument";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         //add one to victory points
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());

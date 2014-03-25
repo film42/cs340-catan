@@ -33,6 +33,7 @@ public class MoveFacade {
     final String ACCEPT_TRADE = "/moves/acceptTrade";
     final String DISCARD_CARDS = "/moves/discardCards";
     final String MARITIME_TRADE = "/moves/maritimeTrade";
+    final String ROB_PLAYER = "/moves/robPlayer";
 
 
     private Model m_model;
@@ -99,6 +100,8 @@ public class MoveFacade {
                 command = moveFromJson(json, DiscardCards.class); break;
             case MARITIME_TRADE:
                 command = moveFromJson(json, MaritimeTrade.class); break;
+            case ROB_PLAYER:
+                command = moveFromJson(json, RobPlayer.class); break;
             default:
                 return false;
         }

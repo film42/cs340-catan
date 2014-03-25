@@ -28,8 +28,14 @@ public class TradeOfferCommand extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " offered a trade";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
 		TradeOffer newTradeOffer = InjectorFactory.getInjector().getInstance(TradeOffer.class);
 		newTradeOffer.setReceiver(getReceiver());

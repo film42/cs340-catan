@@ -23,7 +23,13 @@ public class SendChat extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return null;
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
 
         Chat  chat = game.getChat();

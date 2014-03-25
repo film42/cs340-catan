@@ -11,7 +11,13 @@ import java.io.IOException;
  */
 public class FinishTurn extends Command {
     @Override
+    public String getLogMessage() {
+        return "'s turn ended";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
 
         TurnTracker turnTracker = game.getTurnTracker();

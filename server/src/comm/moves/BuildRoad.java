@@ -27,7 +27,13 @@ public class BuildRoad extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " built a road";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
         Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getRoads() < 1){

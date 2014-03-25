@@ -20,7 +20,13 @@ public class RollNumber extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " rolled a " + getNumber();
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
         game = rolling(game);
 
