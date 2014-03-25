@@ -120,19 +120,19 @@ catan.models.Player = (function() {
   // New DevCard Get Methods
   //
   Player.prototype.getNewSoldierCount = function(){
-    return this.oldDevCards.soldier;
+    return this.newDevCards.soldier;
   };
   Player.prototype.getNewDevCardCount = function(){
-    return this.oldDevCards.monument;
+    return this.newDevCards.monument;
   };
   Player.prototype.getNewMonopolyCount = function(){
-    return this.oldDevCards.monopoly;
+    return this.newDevCards.monopoly;
   };
   Player.prototype.getNewRoadBuildingCount = function(){
-    return this.oldDevCards.roadBuilding;
+    return this.newDevCards.roadBuilding;
   };
   Player.prototype.getNewYearOfPlentyCount = function(){
-    return this.oldDevCards.yearOfPlenty;
+    return this.newDevCards.yearOfPlenty;
   };
 
 
