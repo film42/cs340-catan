@@ -120,6 +120,10 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
 
 
     public void addSettlement(Location hexLocation, Direction direction, int playerIndex){
+        addMuni(hexLocation, direction, playerIndex, 1);
+    }
+
+    private void addMuni(Location hexLocation, Direction direction, int playerIndex, int worth){
         Hex hex = getHex(hexLocation);
         Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
         Hex neighborHex = getHex(neighborLoc);
@@ -129,46 +133,67 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
             Vertex vertex = hex.getVertex(direction.getNumDirection());
             VertexValue vertexvalue = vertex.getValue();
             vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(1);
+            vertexvalue.setWorth(worth);
         }
         if(neighborHex != null){
             Vertex vertex = neighborHex.getVertex(direction.nextDoubleCounterClockwise());
             VertexValue vertexvalue = vertex.getValue();
             vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(1);
+            vertexvalue.setWorth(worth);
         }
         if(ccwNeighborHex != null){
             Vertex vertex = ccwNeighborHex.getVertex(direction.nextDoubleClockwise());
             VertexValue vertexvalue = vertex.getValue();
             vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(1);
+            vertexvalue.setWorth(worth);
         }
     }
 
-
     public void addCity(Location hexLocation, Direction direction, int playerIndex){
-        Hex hex = getHex(hexLocation);
-        Location neighborLoc = hexLocation.getNeighborLocation(direction.getNumDirection());
-        Hex neighborHex = getHex(neighborLoc);
-        Location ccwNeighborLoc = hexLocation.getNeighborLocation(direction.nextDirectionCounterClockwise());
-        Hex ccwNeighborHex = getHex(ccwNeighborLoc);
-        if(hex != null){
-            Vertex vertex = hex.getVertex(direction.getNumDirection());
-            VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(2);
+        addMuni(hexLocation, direction, playerIndex, 2);
+    }
+
+    @Override
+    public Location findDesert(){
+        for(List<HexImpl> row : hexes){
+            for(Hex hex : row){
+                if(hex.isLand() && hex.getLandType() == null){
+                    return hex.getLocation();
+                }
+            }
         }
-        if(neighborHex != null){
-            Vertex vertex = neighborHex.getVertex(direction.nextDoubleCounterClockwise());
-            VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(2);
+        assert(false);
+        return null;
+    }
+
+    @Override
+    public void randomizeTiles(){
+        List<String> typeList = new ArrayList<>();
+        for(List<HexImpl> row : hexes){
+            for (HexImpl hex : row) {
+                if(hex.isLand()){
+                    if(hex.getLandType() == null){
+                        typeList.add("");
+                    }
+                    else{
+                        typeList.add(hex.getLandType());
+                    }
+                }
+            }
         }
-        if(ccwNeighborHex != null){
-            Vertex vertex = ccwNeighborHex.getVertex(direction.nextDoubleClockwise());
-            VertexValue vertexvalue = vertex.getValue();
-            vertexvalue.setOwnerID(playerIndex);
-            vertexvalue.setWorth(2);
+        for(List<HexImpl> row : hexes){
+            for (Hex hex : row) {
+                if(hex.isLand()){
+                    int index = (int)(Math.random()*(typeList.size()));  //fun fact: Math.random is between [0,1).
+                    String type = typeList.remove(index);
+                    if(type.equals("")){
+                        hex.setLandType(null);
+                    }
+                    else{
+                        hex.setLandType(type);
+                    }
+                }
+            }
         }
     }
 
