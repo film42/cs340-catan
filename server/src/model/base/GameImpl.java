@@ -34,7 +34,7 @@ public class GameImpl extends JsonImpl implements Game {
     private int longestRoad;
     private int winner;
     private int revision;
-    private TradeOffer tradeoffer;
+	private TradeOffer tradeOffer;
 
     public GameImpl(){
         deck = new DeckImpl();
@@ -179,12 +179,12 @@ public class GameImpl extends JsonImpl implements Game {
 
     @Override
     public TradeOffer getTradeOffer() {
-        return tradeoffer;
+		return tradeOffer;
     }
 
     @Override
     public void setTradeOffer(TradeOffer tradeoffer) {
-        this.tradeoffer = tradeoffer;
+		this.tradeOffer = tradeoffer;
     }
 
 

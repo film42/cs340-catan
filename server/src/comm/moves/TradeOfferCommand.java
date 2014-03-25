@@ -3,6 +3,9 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.CardDeck;
+import model.InjectorFactory;
+import model.ModelModule;
+import model.base.TradeOfferImpl;
 import modelInterfaces.base.*;
 
 import java.io.IOException;
@@ -28,11 +31,11 @@ public class TradeOfferCommand extends Command {
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
         Game game = gameInfo.getData();
-
-        TradeOffer tradeOffer = game.getTradeOffer();
-        tradeOffer.setReceiver(getReceiver());
-        tradeOffer.setSender(getPlayerIndex());
-        tradeOffer.setResourceOffer(offer);
+		TradeOffer newTradeOffer = InjectorFactory.getInjector().getInstance(TradeOffer.class);
+		newTradeOffer.setReceiver(getReceiver());
+		newTradeOffer.setSender(getPlayerIndex());
+		newTradeOffer.setResourceOffer(offer);
+		game.setTradeOffer(newTradeOffer);
 
         gameInfo.setData(game);
     }
