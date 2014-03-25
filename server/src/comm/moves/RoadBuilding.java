@@ -3,6 +3,7 @@ package comm.moves;
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import comm.moves.form.VertexLocation;
+import modelInterfaces.base.Deck;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
@@ -44,8 +45,12 @@ public class RoadBuilding extends Command {
         game.getMap().addRoad(getPlayerIndex(),getSpot1());
         game.getMap().addRoad(getPlayerIndex(),getSpot2());
 
-        // Increment the Bank Dev cards
+		// Decrement the Bank Dev cards
 		game.getDeck().setRoadBuilding(game.getDeck().getRoadBuilding() - 1);
+
+		// Decrement the amount of RoadBuilding cards the user has
+		Deck deck = game.getPlayerByIndex(playerIndex).getNewDevCards();
+		deck.setRoadBuilding(deck.getRoadBuilding() - 1);
 
         // Prevent additional dev card playing
         curPlayer.setPlayedDevCard(true);
