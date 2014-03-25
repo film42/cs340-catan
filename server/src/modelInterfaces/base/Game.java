@@ -82,4 +82,6 @@ public interface Game {
     void incrementUserCounter(int playerIndex);
 
     void determineLongestRoad();
+
+    void determineLargestArmy();
 }

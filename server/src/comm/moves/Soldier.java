@@ -29,7 +29,7 @@ public class Soldier extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
 
-        //move robber to robberspot
+        // Move robber to robber spot
         Game game = gameInfo.getData();
         Robber robber = game.getMap().getRobber();
         robber.setX(getRobberSpot().getX());
@@ -38,10 +38,14 @@ public class Soldier extends Command {
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
 
         if(victimIndex != Player.NO_PLAYER) {
-            //steal one random resource from victim. (make sure they have at least one);
+            // Steal one random resource from victim.
+            // (make sure they have at least one)
+            // TODO: Logic check this for soldier
             Player victim = game.getPlayerByIndex(getVictimIndex());
             stealResource(victim.getResources(), currentPlayer.getResources());
         }
+
+        currentPlayer.setSoldiers(currentPlayer.getSoldiers() + 1);
 
         // Reduce soldier card count
         Deck cards = currentPlayer.getOldDevCards();
@@ -49,20 +53,22 @@ public class Soldier extends Command {
 
         // Prevent additional dev card playing
         currentPlayer.setPlayedDevCard(true);
+
+        // Determine largest army
+        game.determineLargestArmy();
     }
 
-    private void stealResource(Resources stealFrom, Resources giveTo){
+    private void stealResource(Resources stealFrom, Resources giveTo) throws InvalidCommandException {
+
         List<String> availableList = stealFrom.getAvailibleResources();
-        if(availableList.size() <=0){
-            System.err.println("Steal Resource called on player with no resources");
-            return;
+
+        if(availableList.size() <= 0){
+            throw new InvalidCommandException("Steal Resource called on player with no resources");
         }
 
         int index = (int)(Math.random()*availableList.size());
         String type = availableList.get(index);
-        stealFrom.setResourceByString(type, stealFrom.getResourceByString(type) - 1);
-        giveTo.setResourceByString(type, giveTo.getResourceByString(type)+1);
-
-
+        stealFrom.decrementResourceByString(type, 1);
+        giveTo.incrementResourceByString(type, 1);
     }
 }

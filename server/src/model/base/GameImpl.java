@@ -255,33 +255,64 @@ public class GameImpl extends JsonImpl implements Game {
 
     @Override
     public void determineLongestRoad() {
-        // See if a User currently has Road building
+        // See if a User currently has Longest Road
         Player longestRoadPlayer = null;
         for(Player player : players) {
-            if(player.isLongestRoad())
+            if(player.isLongestRoad()) {
                 longestRoadPlayer = player;
+                // Assume the player no longer has the longest road
+                longestRoadPlayer.setLongestRoad(false);
+                longestRoadPlayer.setVictoryPoints(longestRoadPlayer.getVictoryPoints() - 2);
+                break;
+            }
         }
 
-        if(longestRoadPlayer == null) {
-            longestRoadPlayer = getPlayerByIndex(0);
-        }
+        // If null, there is no one, so we just find the largest
+        if(longestRoadPlayer == null) longestRoadPlayer = getPlayerByIndex(0);
 
-        // Adjust the new longest road player
+        // Find the new longest road
         for(Player player : players) {
-            if(player.getRoadCount() > longestRoadPlayer.getRoadCount()
-                    || player.getPlayerID() == longestRoadPlayer.getPlayerID()) {
-
-                // Only allow 5 or more
-                if(player.getRoadCount() >= 5) {
-                    // Apply changes
-                    longestRoadPlayer.setLongestRoad(false);
-                    player.setLongestRoad(true);
-                }
-
+            if(player.getRoadCount() > longestRoadPlayer.getRoadCount()) {
                 longestRoadPlayer = player;
             }
         }
 
+        // Is this really the new longest road?
+        if(longestRoadPlayer.getRoadCount() >= 5) {
+            longestRoadPlayer.setLongestRoad(true);
+            longestRoadPlayer.setVictoryPoints(longestRoadPlayer.getVictoryPoints() + 2);
+        }
+    }
+
+    @Override
+    public void determineLargestArmy() {
+        // See if a User currently has Longest Road
+        Player largestArmyPlayer = null;
+        for(Player player : players) {
+            if(player.isLargestArmy()) {
+                largestArmyPlayer = player;
+                // Assume the player no longer has the largest army
+                largestArmyPlayer.setLargestArmy(false);
+                largestArmyPlayer.setVictoryPoints(largestArmyPlayer.getVictoryPoints() - 2);
+                break;
+            }
+        }
+
+        // If null, there is no one, so we just find the largest
+        if(largestArmyPlayer == null) largestArmyPlayer = getPlayerByIndex(0);
+
+        // Find the new largest army
+        for(Player player : players) {
+            if(player.getSoldiers() > largestArmyPlayer.getSoldiers()) {
+                largestArmyPlayer = player;
+            }
+        }
+
+        // Is this really the new longest road?
+        if(largestArmyPlayer.getSoldiers() >= 3) {
+            largestArmyPlayer.setLargestArmy(true);
+            largestArmyPlayer.setVictoryPoints(largestArmyPlayer.getVictoryPoints() + 2);
+        }
     }
 
 }
