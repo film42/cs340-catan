@@ -50,7 +50,7 @@ catan.points.Controller = (function VPController_Class(){
       if (p.getPoints() == 10){
         theresaWinner = true;
         winnerName  = p.getName();
-        isYou = winnerName == self.player.getName();
+        isYou = winnerName == self.game.getCurrentPlayer().getName();
       }
     });
     if (theresaWinner){
