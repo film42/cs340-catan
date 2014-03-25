@@ -2,6 +2,7 @@ package model.base;
 
 import com.google.inject.Inject;
 import model.JsonImpl;
+import modelInterfaces.base.Catan;
 import modelInterfaces.base.Deck;
 import modelInterfaces.base.Resources;
 
@@ -89,7 +90,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     }
 
     @Override
-    public int getRoadCount() {return 15 - roads; }
+    public int getRoadCount() {return Catan.MAX_ROAD_COUNT - roads; }
 
     @Override
     public void setRoads(int roads) {
