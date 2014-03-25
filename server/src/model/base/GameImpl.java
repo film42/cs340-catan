@@ -215,16 +215,21 @@ public class GameImpl extends JsonImpl implements Game {
 
     @Override
     public boolean playersRequireDiscarding() {
+        boolean ret = false;
         for(Player player : players) {
             Resources resources = player.getResources();
             // Check each players resource
-            if(resources.getResourceCount() > 7)
+            if(resources.getResourceCount() > 7){
                 // Return true if they need to discard
-                return true;
+                player.setDiscarded(false);
+                ret = true;
+            }else{
+                player.setDiscarded(true);
+            }
         }
 
         // Nobody needs to discard
-        return false;
+        return ret;
     }
 
     @Override

@@ -238,6 +238,7 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
         resources.setOre(resources.getOre() - 3);
         resources.setWheat(resources.getWheat() - 2);
         cities--;
+        settlements++;
         victoryPoints++;
     }
 

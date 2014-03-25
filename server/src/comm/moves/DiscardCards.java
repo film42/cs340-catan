@@ -24,11 +24,11 @@ public class DiscardCards extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         Game game = gameInfo.getData();
-        Player player = game.getPlayerByIndex(playerIndex);
-        Resources resources = player.getResources();
+        Player currentPlayer = game.getPlayerByIndex(playerIndex);
+        Resources resources = currentPlayer.getResources();
 
         //check if if he/she is discarding state
-        if (player.hasDiscarded() && game.getTurnTracker().getStatus() == TurnTracker.DISCARDING){
+        if (currentPlayer.hasDiscarded() && game.getTurnTracker().getStatus() == TurnTracker.DISCARDING){
             server.Server.log.severe("Already discard, attempting a second time");
             return;
         }
@@ -45,17 +45,17 @@ public class DiscardCards extends Command {
                 } else {
                     server.Server.log.severe("No enough resources to discard for " + type);
                 }
-
             }
         }
-
+        currentPlayer.setDiscarded(true);
         // if it is the last on discard the cards, set to robbing state
         TurnTracker tracker = game.getTurnTracker();
-        if(game.isLastPlayerIndex(playerIndex)) {
+        boolean doneDiscarding = true;
+        for (Player player : game.getPlayers()) {
+            doneDiscarding = doneDiscarding && player.hasDiscarded();
+        }
+        if(doneDiscarding) {
             tracker.setStatus(TurnTracker.ROBBING);
-            tracker.setCurrentTurn(0);
-        } else {
-            tracker.setCurrentTurn(tracker.getCurrentTurn() + 1);
         }
         
     }

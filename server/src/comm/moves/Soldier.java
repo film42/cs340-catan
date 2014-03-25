@@ -43,7 +43,9 @@ public class Soldier extends Command {
         cards.setSoldier(cards.getSoldier()-1);
     }
 
-    private void stealResource(Resources stealFrom, Resources giveTo){
+    //This method is shared by Soldier and RobPlayer.
+    //It is just util, so I figure inheritance wasn't needed.
+    public static void stealResource(Resources stealFrom, Resources giveTo){
         List<String> availableList = stealFrom.getAvailibleResources();
         if(availableList.size() <=0){
             System.err.println("Steal Resource called on player with no resources");
