@@ -7,10 +7,13 @@ import model.InjectorFactory;
 import model.JsonImpl;
 import model.Model;
 import model.ModelModule;
+import model.base.GameImpl;
 import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
+import model.map.MapImpl;
+import modelInterfaces.base.Game;
 import modelInterfaces.base.Player;
 import modelInterfaces.base.Resources;
 import route.MoveRoute;
@@ -22,9 +25,12 @@ import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static spark.Spark.externalStaticFileLocation;
@@ -81,16 +87,30 @@ public class Server {
         myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","0"), "Garrett");
         myGame.joinGame(new JoinGameRequest("orange","0"), "June");
-        myGame.joinGame(new JoinGameRequest("puce","0"), "Steve");
+        myGame.joinGame(new JoinGameRequest("green","0"), "Steve");
 
         myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
         myGame.joinGame(new JoinGameRequest("red","1"), "Adam");
         myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
 
+		// Past Setup
+		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
+		myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
+		myGame.joinGame(new JoinGameRequest("blue", "0"), "June");
+		
+		// now load an existing model from a json and put it in our Past Setup game
+        try {
+            String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
+            Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
+            myGame.getGames().get(2).setData(game);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         List<Player> players = myGame.findGameById(1).getData().getPlayers();
         for (Player player : players) { //give them lots of resources
             Resources money = injector.getInstance(Resources.class);
-            money.setResources(99,99,99,99,99);
+			money.setResources(50, 50, 50, 50, 50);
             player.setResources(money);
         }
     }

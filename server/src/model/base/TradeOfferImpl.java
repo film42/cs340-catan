@@ -12,7 +12,7 @@ import modelInterfaces.base.Resources;
 public class TradeOfferImpl extends JsonImpl implements modelInterfaces.base.TradeOffer{
    private int sender;
    private int receiver;
-   private Resources resourcesTradeOffer;
+	private Resources offer;
 
 
     @Override
@@ -38,12 +38,12 @@ public class TradeOfferImpl extends JsonImpl implements modelInterfaces.base.Tra
 
     @Override
     public void setResourceOffer(Resources tradeOffer) {
-       this.resourcesTradeOffer = tradeOffer;
+		this.offer = tradeOffer;
 
     }
 
     @Override
     public Resources getResourcesOffer() {
-        return this.resourcesTradeOffer;
+		return this.offer;
     }
 }

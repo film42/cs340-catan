@@ -67,6 +67,7 @@ public class ModelModule extends AbstractModule {
         bind(Log.class).to(LogImpl.class);
         bind(User.class).to(UserImpl.class);
         bind(Deck.class).to(DeckImpl.class);
+		bind(TradeOffer.class).to(TradeOfferImpl.class);
     }
 
 }
