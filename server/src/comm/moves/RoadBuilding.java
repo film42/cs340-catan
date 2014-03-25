@@ -26,7 +26,13 @@ public class RoadBuilding extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " used a road builder card";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
         Player curPlayer = game.getPlayerByIndex(playerIndex);
         if(curPlayer.getRoads() < 2){

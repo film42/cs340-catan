@@ -22,7 +22,13 @@ public class DiscardCards extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " had to discarded cards";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
         Player currentPlayer = game.getPlayerByIndex(playerIndex);
         Resources resources = currentPlayer.getResources();

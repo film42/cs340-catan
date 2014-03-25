@@ -17,9 +17,15 @@ public class Monopoly extends Command {
 		return resource;
 	}
 
-	@Override
+    @Override
+    public String getLogMessage() {
+        return " played a monopoly card";
+    }
+
+    @Override
 	public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
-		// Get the game model
+        super.execute(gameInfo);
+        // Get the game model
 		Game game = gameInfo.getData();
 
 		// Cycle through all players, steal a card, increase count, and skip if it's the current player

@@ -26,7 +26,13 @@ public class RobPlayer extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " moved the robber";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
 
         Game game = gameInfo.getData();
         //change to playing phase from robbing phase

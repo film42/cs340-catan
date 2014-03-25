@@ -22,7 +22,13 @@ public class YearOfPlenty extends Command {
     }
 
     @Override
+    public String getLogMessage() {
+        return " played year of plenty";
+    }
+
+    @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
 
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(playerIndex);
@@ -31,7 +37,7 @@ public class YearOfPlenty extends Command {
         addSource(resources, getResource1());
         addSource(resources, getResource2());
         Deck deck = player.getOldDevCards();
-        deck.setYearOfPlenty(deck.getYearOfPlenty()-1);
+        deck.setYearOfPlenty(deck.getYearOfPlenty() - 1);
 
         // Prevent additional dev card playing
         player.setPlayedDevCard(true);

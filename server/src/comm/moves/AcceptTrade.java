@@ -21,8 +21,13 @@ public class AcceptTrade extends Command {
     }
 
     @Override
-    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+    public String getLogMessage() {
+        return " accepted the trade";
+    }
 
+    @Override
+    public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
+        super.execute(gameInfo);
         Game game = gameInfo.getData();
         TradeOffer tradeOffer = game.getTradeOffer();
         Resources resourcesOffer = tradeOffer.getResourcesOffer();
