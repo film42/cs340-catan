@@ -23,7 +23,7 @@ public class DiscardCards extends Command {
 
     @Override
     public String getLogMessage() {
-        return " had to discarded cards";
+		return " had to discard cards";
     }
 
     @Override
