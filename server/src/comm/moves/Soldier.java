@@ -43,6 +43,8 @@ public class Soldier extends Command {
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
         stealResource(victim.getResources(), currentPlayer.getResources());
 
+        // Prevent additional dev card playing
+        currentPlayer.setPlayedDevCard(true);
     }
 
     private void stealResource(Resources stealFrom, Resources giveTo){

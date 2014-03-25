@@ -42,5 +42,8 @@ public class BuildRoad extends Command {
         Resources bank = game.getBank();
         bank.incrementResourceByString(Resources.WOOD, 1);
         bank.incrementResourceByString(Resources.BRICK, 1);
+
+        // Update Longest Road
+        game.determineLongestRoad();
     }
 }
