@@ -78,20 +78,22 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
 
     @Override
     public void initMap(CreateGameRequest createGameRequest) {
+        if(createGameRequest.isRandomTiles()){
+            hexGrid.randomizeTiles();
+            putRobberOnDesert();
+        }
         if(createGameRequest.isRandomNumbers()){
            numbers.randomizeNumberLocations(hexGrid);
         }
         if(createGameRequest.isRandomPorts()){
             this.randomizePorts();
         }
-        if(createGameRequest.isRandomTiles()){
-           // hexGrid.randomizeTiles();
-            //putRobberOnDesert();
-        }
     }
 
     private void putRobberOnDesert(){
-
+        Location loc = hexGrid.findDesert();
+        robber.setX(loc.getX());
+        robber.setY(loc.getY());
     }
 
     @Override
