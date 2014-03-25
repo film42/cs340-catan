@@ -111,23 +111,23 @@ public class DeckImpl extends JsonImpl implements Deck {
 
             switch (type) {
                 case YEAR_OF_PLENTY:
-                    if (yearOfPlenty > 0)
+                    for (int i=0; i<yearOfPlenty; i++)
                         haveCards.add(type);
                     break;
                 case MONOPOLY:
-                    if (monopoly > 0)
+                    for (int i=0; i<monopoly; i++)
                         haveCards.add(type);
                     break;
                 case SOLDIER:
-                    if (soldier > 0)
+                    for (int i=0; i<soldier; i++)
                         haveCards.add(type);
                     break;
                 case ROAD_BUILDING:
-                    if (roadBuilding > 0)
+                    for (int i=0; i<roadBuilding; i++)
                         haveCards.add(type);
                     break;
                 case MONUMENT:
-                    if (monument > 0) ;
+                    for (int i=0; i<monument; i++)
                     haveCards.add(type);
                     break;
                 default:
