@@ -268,9 +268,16 @@ public class GameImpl extends JsonImpl implements Game {
 
         // Adjust the new longest road player
         for(Player player : players) {
-            if(player.getRoads() > longestRoadPlayer.getRoads()) {
-                longestRoadPlayer.setLongestRoad(false);
-                player.setLongestRoad(true);
+            if(player.getRoadCount() > longestRoadPlayer.getRoadCount()
+                    || player.getPlayerID() == longestRoadPlayer.getPlayerID()) {
+
+                // Only allow 5 or more
+                if(player.getRoadCount() >= 5) {
+                    // Apply changes
+                    longestRoadPlayer.setLongestRoad(false);
+                    player.setLongestRoad(true);
+                }
+
                 longestRoadPlayer = player;
             }
         }

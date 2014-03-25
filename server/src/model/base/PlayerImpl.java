@@ -2,9 +2,8 @@ package model.base;
 
 import com.google.inject.Inject;
 import model.JsonImpl;
-import model.Model;
-import modelInterfaces.base.Resources;
 import modelInterfaces.base.Deck;
+import modelInterfaces.base.Resources;
 
 /**
  * Created by: film42 on: 3/7/14.
@@ -88,6 +87,9 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     public int getRoads() {
         return roads;
     }
+
+    @Override
+    public int getRoadCount() {return 15 - roads; }
 
     @Override
     public void setRoads(int roads) {

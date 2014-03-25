@@ -20,6 +20,8 @@ public interface Player {
 
     int getRoads();
 
+    int getRoadCount();
+
     void setRoads(int roads);
 
     int getCities();
