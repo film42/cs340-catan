@@ -63,7 +63,6 @@ public interface Game {
     TradeOffer getTradeOffer();
 
 
-
     void initGame(CreateGameRequest createGameRequest);
 
     /////////////////////////////////////////////////////
@@ -84,4 +83,6 @@ public interface Game {
     void determineLongestRoad();
 
     void determineLargestArmy();
+
+    void checkForCompletedGame();
 }

@@ -320,4 +320,13 @@ public class GameImpl extends JsonImpl implements Game {
         }
     }
 
+    @Override
+    public void checkForCompletedGame() {
+        for(Player player : players) {
+            if(player.getVictoryPoints() == Catan.MAX_VICTORY_POINTS) {
+                setWinner(player.getPlayerID());
+            }
+        }
+    }
+
 }

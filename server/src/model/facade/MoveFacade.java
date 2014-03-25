@@ -108,6 +108,9 @@ public class MoveFacade {
 
         // Run this command then return OK
         command.execute(game);
+
+        // Test game for winner
+        game.getData().checkForCompletedGame();
         return true;
     }
 

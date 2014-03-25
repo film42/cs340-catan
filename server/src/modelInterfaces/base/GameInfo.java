@@ -32,3 +32,4 @@ public interface GameInfo {
 
     void addCommand(Command command);
 }
+
