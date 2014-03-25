@@ -156,7 +156,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
             if(hex.isLand()){
                 String land = hex.getLandType();
                 if( land != null && !land.equals("Desert") && !land.equals("desert")){
-                    resources.setResourceByString(land.toLowerCase(), 1);
+                    resources.incrementResourceByString(land.toLowerCase(), 1);
                 }
             }
         }
@@ -180,7 +180,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
                 VertexValue value = vertex.getValue();
                 if(value.getOwnerID() >= 0){
                     Resources rec = resources.get(value.getOwnerID());
-                    rec.setResourceByString(type, value.getWorth() + rec.getResourceByString(type));
+                    rec.incrementResourceByString(type, value.getWorth());
                 }
             }
         }
