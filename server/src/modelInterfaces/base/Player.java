@@ -52,7 +52,7 @@ public interface Player {
 
     void setPlayedDevCard(boolean playedDevCard);
 
-    boolean isDiscarded();
+    boolean hasDiscarded();
 
     void setDiscarded(boolean discarded);
 

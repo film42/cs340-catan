@@ -27,9 +27,13 @@ public class DiscardCards extends Command {
         Player player = game.getPlayerByIndex(playerIndex);
         Resources resources = player.getResources();
 
-        //check if if he/she is discarded state
-        if (!player.isDiscarded()){
-            server.Server.log.severe("Attempting to discard outside of discard phase");
+        //check if if he/she is discarding state
+        if (player.hasDiscarded() && game.getTurnTracker().getStatus() == TurnTracker.DISCARDING){
+            server.Server.log.severe("Already discard, attempting a second time");
+            return;
+        }
+        if(game.getTurnTracker().getStatus() != TurnTracker.DISCARDING){
+            server.Server.log.severe("Attempting to discard outside of discarding phase");
             return;
         }
 

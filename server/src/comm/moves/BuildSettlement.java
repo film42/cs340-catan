@@ -40,6 +40,12 @@ public class BuildSettlement extends Command {
         }
         // TODO: Let's make sure we update the banks resources
         curPlayer.buySettlement(isFree());
+        // Add back to Bank Resources
+        Resources bank = game.getBank();
+        bank.incrementResourceByString(Resources.WOOD, 1);
+        bank.incrementResourceByString(Resources.BRICK, 1);
+        bank.incrementResourceByString(Resources.SHEEP, 1);
+        bank.incrementResourceByString(Resources.WHEAT, 1);
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
 
         //Add resources if it is second round
@@ -57,12 +63,7 @@ public class BuildSettlement extends Command {
             }
         }
 
-        // Add back to Bank Resources
-        Resources bank = game.getBank();
-        bank.incrementResourceByString(Resources.WOOD, 1);
-        bank.incrementResourceByString(Resources.BRICK, 1);
-        bank.incrementResourceByString(Resources.SHEEP, 1);
-        bank.incrementResourceByString(Resources.WHEAT, 1);
+
 
         gameInfo.setData(game);
     }
