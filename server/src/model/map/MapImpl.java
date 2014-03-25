@@ -79,7 +79,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
     @Override
     public void initMap(CreateGameRequest createGameRequest) {
         if(createGameRequest.isRandomNumbers()){
-           // numbers.randomizeNumberLocations(hexGrid);
+           numbers.randomizeNumberLocations(hexGrid);
         }
         if(createGameRequest.isRandomPorts()){
             this.randomizePorts();
@@ -90,12 +90,23 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
     public void randomizePorts(){
         List<String> typeList = new ArrayList<>();
         for (PortImpl port : ports) {
-            typeList.add(port.getInputResource());
+            if(port.getInputResource() == null){
+                typeList.add("");
+            }
+            else{
+                typeList.add(port.getInputResource());
+            }
         }
 
         for (PortImpl port : ports) {
             int index = (int)(Math.random()*(typeList.size()));  //fun fact: Math.random is between [0,1).
-            port.setInputResource(typeList.remove(index));
+            String type = typeList.remove(index);
+            if(type.equals("")){
+                port.setInputResource(null);
+            }
+            else{
+                port.setInputResource(type);
+            }
         }
     }
 
@@ -134,7 +145,7 @@ public class MapImpl extends JsonImpl implements modelInterfaces.map.Map, MapAcc
             Hex hex = hexes.get(i);
             if(hex.isLand()){
                 String land = hex.getLandType();
-                if(land != "Desert" && land != "desert"){
+                if( land != null && !land.equals("Desert") && !land.equals("desert")){
                     resources.setResourceByString(land.toLowerCase(), 1);
                 }
             }

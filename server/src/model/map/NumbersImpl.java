@@ -85,7 +85,8 @@ public class NumbersImpl extends JsonImpl {
             List<HexImpl> hexes_2 = hexes.get(i);
             for(int j = 0; j < hexes_2.size(); j++){
                 Hex hex = hexes_2.get(j);
-                if(hex.isLand() && hex.getLandType() != "Desert" && hex.getLandType() != "desert"){
+                String type = hex.getLandType();
+                if(hex.isLand() && type != null && !type.equals("Desert") && !type.equals("desert")){
                     boolean assigned = false;
                     Random r = new Random();
                     while(!assigned){
@@ -97,13 +98,13 @@ public class NumbersImpl extends JsonImpl {
                         List<LocationImpl> locs = this.getLocations(random);
                         if(random == 2 || random == 12){
                             if(locs.size() == 0){
-                                locs.add((LocationImpl)hexgrid.internalToHexLocation(i, j));
+                                locs.add((LocationImpl)hexgrid.internalToHexLocation(j, i));
                                 assigned = true;
                             }
                         }
                         else{
                             if(locs.size() < 2){
-                                locs.add((LocationImpl)hexgrid.internalToHexLocation(i, j));
+                                locs.add((LocationImpl)hexgrid.internalToHexLocation(j, i));
                                 assigned = true;
                             }
                         }

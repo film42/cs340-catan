@@ -43,7 +43,7 @@ public class HexGridImpl extends JsonImpl implements modelInterfaces.map.HexGrid
     //needed? maybe not...this could just go in getHex since it is never called outside of there....
     @Override
     public Location internalToHexLocation(int x, int y){
-        int hexX = x - y0 + offsets.get(y);
+        int hexX = x - x0 + offsets.get(y);
         int hexY = y - y0;
 
 
