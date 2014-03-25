@@ -96,16 +96,16 @@ public class Server {
 		// Past Setup
 		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
 		myGame.joinGame(new JoinGameRequest("red", "2"), "Adam");
-		myGame.joinGame(new JoinGameRequest("blue", "2"), "Garrett");
+		myGame.joinGame(new JoinGameRequest("blue", "2"), "June");
 		
 		// now load an existing model from a json and put it in our Past Setup game
-        try {
-            String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
-            Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
-            myGame.getGames().get(2).setData(game);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		try {
+			String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
+			Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
+			myGame.getGames().get(2).setData(game);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
         List<Player> players = myGame.findGameById(1).getData().getPlayers();
         for (Player player : players) { //give them lots of resources
