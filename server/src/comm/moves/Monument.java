@@ -24,6 +24,8 @@ public class Monument extends Command {
         //add one to victory points
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());
+		player.setVictoryPoints(player.getVictoryPoints() + 1);
+		gameInfo.setData(game);
 
 		// Reduce monument card count
 		Deck newCards = player.getNewDevCards();
