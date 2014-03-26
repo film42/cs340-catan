@@ -179,7 +179,7 @@ catan.models.Player = (function() {
   POST: The method returns whether the user can play a monument card.
    */
   Player.prototype.canPlayMonument = function(){
-    return this.oldDevCards.monument > 0 && this.canPlayDevCard();
+    return (this.oldDevCards.monument > 0 || this.newDevCards.monument > 0) && this.canPlayDevCard();
   }
 
   /**
