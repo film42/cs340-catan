@@ -44,9 +44,13 @@ public class Monopoly extends Command {
             Player curPlayer = game.getPlayerByIndex(playerIndex);
            
             curPlayer.getResources().incrementResourceByString(resource.toLowerCase(), cardsStolen);
-			Deck deck = game.getPlayerByIndex(playerIndex).getNewDevCards();
-            deck.setMonopoly(deck.getMonopoly()-1);
         }
+
+		// Reduce monument card count
+		Deck newCards = game.getPlayerByIndex(playerIndex).getNewDevCards();
+		newCards.setMonopoly(newCards.getMonopoly() - 1);
+		Deck oldCards = game.getPlayerByIndex(playerIndex).getOldDevCards();
+		oldCards.setMonopoly(oldCards.getMonopoly() - 1);
 
         // Played Dev Card
         game.getPlayerByIndex(playerIndex).setPlayedDevCard(true);

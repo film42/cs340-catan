@@ -24,11 +24,12 @@ public class Monument extends Command {
         //add one to victory points
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());
-        Deck newDevCards = player.getNewDevCards();
-		if (newDevCards.getMonument() > 0) {
-            newDevCards.setMonument(newDevCards.getMonument()-1);
-            player.setVictoryPoints(player.getVictoryPoints() + 1);
-        }
+
+		// Reduce monument card count
+		Deck newCards = player.getNewDevCards();
+		newCards.setMonument(newCards.getMonument() - 1);
+		Deck oldCards = player.getOldDevCards();
+		oldCards.setMonument(oldCards.getMonument() - 1);
 
         // Prevent additional dev card playing
         player.setPlayedDevCard(true);

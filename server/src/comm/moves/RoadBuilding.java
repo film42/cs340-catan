@@ -45,11 +45,10 @@ public class RoadBuilding extends Command {
         game.getMap().addRoad(getPlayerIndex(),getSpot1());
         game.getMap().addRoad(getPlayerIndex(),getSpot2());
 
-		// Increment the Bank Dev cards
-		game.getDeck().setRoadBuilding(game.getDeck().getRoadBuilding() + 1);
-
 		// Decrement the amount of RoadBuilding cards the user has
-		Deck deck = game.getPlayerByIndex(playerIndex).getNewDevCards();
+		Deck newCards = game.getPlayerByIndex(playerIndex).getNewDevCards();
+		newCards.setRoadBuilding(newCards.getRoadBuilding() - 1);
+		Deck deck = game.getPlayerByIndex(playerIndex).getOldDevCards();
 		deck.setRoadBuilding(deck.getRoadBuilding() - 1);
 
         // Prevent additional dev card playing
