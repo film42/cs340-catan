@@ -65,9 +65,9 @@ public class NumbersImpl extends JsonImpl {
     }
 
     public void randomizeNumberLocations(HexGrid hexgrid){
-        //From Rules:The 18 number tokens are marked with the numerals “2”
-        //through “12.” There is only one “2” and one “12.” There is
-        //no “7.”
+        //From Rules:The 18 number tokens are marked with the numerals 2
+        //through 12. There is only one 2 and one 12. There is
+        //no 7.
         //all land has a number except desert
 
         this.number2 = new ArrayList<>();
