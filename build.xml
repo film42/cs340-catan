@@ -67,8 +67,8 @@
   </target>
 
   <target name="compile" depends="init" description="compile the source code">
-      <javac srcdir="${src}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
-      <javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
+      <javac srcdir="${src}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
+      <javac srcdir="${test}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
   </target>
 
 
