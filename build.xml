@@ -1,4 +1,4 @@
-﻿<project name="Demo Server" default="server" basedir="server">
+﻿<project name="Demo Server" default="server" basedir=".">
 
 	<!-- PROPERTIES -->
 	<!-- ********** -->
@@ -20,10 +20,10 @@
     <!-- PROPERTIES -->
     <!-- ********** -->
 
-    <property name="lib" location="lib"/>
-    <property name="build" location="ant-build"/>
-    <property name="test" location="test"/>
-    <property name="src" location="src"/>
+    <property name="lib" location="server/lib"/>
+    <property name="build" location="server/ant-build"/>
+    <property name="test" location="server/test"/>
+    <property name="src" location="server/src"/>
 
     <path id="lib-classpath">
         <fileset dir="${lib}">
@@ -47,8 +47,8 @@
 
 	<!-- TARGETS -->
 	<!-- ******* -->
-  <target name="server" depends="compile" description="Runs the student server">
-      <java classname="server.Server" fork="yes">
+  <target name="our-server" depends="compile" description="Runs the student server">
+      <java classname="server.Server" fork="yes" dir="server">
           <arg value="${port.arg}"/>
           <arg value="${web.arg}"/>
           <arg value="${requests.arg}"/>
@@ -72,7 +72,7 @@
   </target>
 
 
-	<target name="ta-server" description="Runs the demo server">
+	<target name="server" description="Runs the demo server">
 		<java jar="${jar.file}" fork="true">
 			<arg value="${port.arg}"/>
 			<arg value="${web.arg}"/>
