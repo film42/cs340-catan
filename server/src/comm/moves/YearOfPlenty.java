@@ -39,7 +39,7 @@ public class YearOfPlenty extends Command {
 
 		Deck newCards = player.getNewDevCards();
 		newCards.setYearOfPlenty(newCards.getYearOfPlenty() - 1);
-		Deck deck = player.getNewDevCards();
+		Deck deck = player.getOldDevCards();
 		deck.setYearOfPlenty(deck.getYearOfPlenty() - 1);
 
         // Prevent additional dev card playing
