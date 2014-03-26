@@ -43,11 +43,13 @@ public class DiscardCards extends Command {
             return;
         }
 
+        Resources bank = game.getBank();
         for (String type : discardedCards.TYPES) {
             int discardNum = discardedCards.getResourceByString(type);
             if (discardNum > 0 ) {
                 if (resources.getResourceByString(type) >= discardNum) {
-                    resources.setResourceByString(type, resources.getResourceByString(type) - discardNum);
+                    resources.decrementResourceByString(type, discardNum);
+                    bank.incrementResourceByString(type, discardNum);
                 } else {
                     server.Server.log.severe("No enough resources to discard for " + type);
                 }

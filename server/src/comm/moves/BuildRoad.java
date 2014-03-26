@@ -41,13 +41,8 @@ public class BuildRoad extends Command {
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
         // TODO: Let's make sure we update the banks resources
-        curPlayer.buyRoad(isFree());
+        curPlayer.buyRoad(game.getBank(),isFree());
         game.getMap().addRoad(getPlayerIndex(),getRoadLocation());
-
-        // Add back to Bank Resources
-        Resources bank = game.getBank();
-        bank.incrementResourceByString(Resources.WOOD, 1);
-        bank.incrementResourceByString(Resources.BRICK, 1);
 
         // Update Longest Road
         game.determineLongestRoad();

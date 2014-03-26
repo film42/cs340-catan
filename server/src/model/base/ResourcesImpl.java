@@ -35,6 +35,16 @@ public class ResourcesImpl extends JsonImpl implements modelInterfaces.base.Reso
     }
 
     @Override
+    public void initBank(){
+        brick = 19;
+        wood = 19;
+        sheep = 19;
+        wheat = 19;
+        ore = 19;
+    }
+
+
+    @Override
     public Resources Clone(Resources r) {
         Resources ret = new ResourcesImpl();
         ret.setResources(r.getBrick(),r.getWood(),r.getSheep(),r.getWheat(),r.getOre());

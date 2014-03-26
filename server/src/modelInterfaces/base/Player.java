@@ -79,11 +79,11 @@ public interface Player {
     void addResourceList(Resources resourcesToAdd);
 
 
-    void buyCity();
+    void buyCity(Resources deck);
 
-    void buySettlement(boolean free);
+    void buySettlement(Resources deck, boolean free);
 
-    void buyRoad(boolean free);
+    void buyRoad(Resources deck,boolean free);
 
-    void buyDevCard();
+    void buyDevCard(Resources bank);
 }

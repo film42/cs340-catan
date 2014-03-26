@@ -44,14 +44,8 @@ public class BuildSettlement extends Command {
             Server.log.warning("Attempted to buy road without road available");
             throw new InvalidCommandException("Attempted to buy road without road available");
         }
-        // TODO: Let's make sure we update the banks resources
-        curPlayer.buySettlement(isFree());
-        // Add back to Bank Resources
-        Resources bank = game.getBank();
-        bank.incrementResourceByString(Resources.WOOD, 1);
-        bank.incrementResourceByString(Resources.BRICK, 1);
-        bank.incrementResourceByString(Resources.SHEEP, 1);
-        bank.incrementResourceByString(Resources.WHEAT, 1);
+        curPlayer.buySettlement(game.getBank(), isFree());
+
         game.getMap().addSettlement(getPlayerIndex(),getVertexLocation());
 
         //Add resources if it is second round
@@ -63,8 +57,8 @@ public class BuildSettlement extends Command {
             Resources currentResource = curPlayer.getResources();
 
             for (String type : Resources.TYPES) {
-                currentResource.setResourceByString(type,
-                        currentResource.getResourceByString(type)+resources.getResourceByString(type));
+                currentResource.incrementResourceByString(type,resources.getResourceByString(type));
+                game.getBank().decrementResourceByString(type, resources.getResourceByString(type));
 
             }
         }

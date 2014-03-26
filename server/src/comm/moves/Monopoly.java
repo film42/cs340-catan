@@ -33,17 +33,17 @@ public class Monopoly extends Command {
 		for (Player p : game.getPlayers()) {
             if (p.getOrderNumber() != this.playerIndex) {
                 int resourceNum = p.getResources().getResourceByString(resource.toLowerCase());
-                if (resourceNum > 0) {
-                    p.getResources().setResourceByString(resource.toLowerCase(), resourceNum - 1);
-                    cardsStolen++;
-                }
+                p.getResources().setResourceByString(resource.toLowerCase(), 0);
+                cardsStolen+=resourceNum;
+
             }
         }
 		if (cardsStolen > 0) {
             // give the qty of stolen cards to the user
             int oldQty = 0;
-            oldQty = game.getPlayerByIndex(playerIndex).getResources().getResourceByString(resource.toLowerCase());
-            game.getPlayerByIndex(playerIndex).getResources().setResourceByString(resource.toLowerCase(), oldQty + cardsStolen);
+            Player curPlayer = game.getPlayerByIndex(playerIndex);
+           
+            curPlayer.getResources().incrementResourceByString(resource.toLowerCase(), cardsStolen);
 			Deck deck = game.getPlayerByIndex(playerIndex).getNewDevCards();
             deck.setMonopoly(deck.getMonopoly()-1);
         }

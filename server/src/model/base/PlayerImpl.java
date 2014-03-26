@@ -239,40 +239,52 @@ public class PlayerImpl extends JsonImpl implements modelInterfaces.base.Player 
     }
 
     @Override
-    public void buyCity() {
-        resources.setOre(resources.getOre() - 3);
-        resources.setWheat(resources.getWheat() - 2);
+    public void buyCity(Resources bank) {
+        resources.decrementResourceByString(resources.ORE, 3);
+        resources.decrementResourceByString(resources.WHEAT, 2);
+        bank.incrementResourceByString(resources.ORE, 3);
+        bank.incrementResourceByString(resources.WHEAT, 2);
         cities--;
         settlements++;
         victoryPoints++;
     }
 
     @Override
-    public void buySettlement(boolean free) {
+    public void buySettlement(Resources bank, boolean free) {
         if(!free){
-            resources.setBrick(resources.getBrick() - 1);
-            resources.setWheat(resources.getWheat() - 1);
-            resources.setSheep(resources.getSheep() - 1);
-            resources.setWood(resources.getWood() - 1);
+            resources.decrementResourceByString(resources.BRICK, 1);
+            resources.decrementResourceByString(resources.WOOD, 1);
+            resources.decrementResourceByString(resources.SHEEP, 1);
+            resources.decrementResourceByString(resources.WHEAT, 1);
+            bank.incrementResourceByString(resources.BRICK, 1);
+            bank.incrementResourceByString(resources.WOOD, 1);
+            bank.incrementResourceByString(resources.SHEEP, 1);
+            bank.incrementResourceByString(resources.WHEAT, 1);
         }
         victoryPoints++;
         settlements--;
     }
 
     @Override
-    public void buyRoad(boolean free) {
+    public void buyRoad(Resources bank, boolean free) {
         if(!free){
-            resources.setBrick(resources.getBrick() - 1);
-            resources.setWood(resources.getWood() - 1);
+            resources.decrementResourceByString(resources.BRICK, 1);
+            resources.decrementResourceByString(resources.WOOD, 1);
+            bank.incrementResourceByString(resources.BRICK, 1);
+            bank.incrementResourceByString(resources.WOOD, 1);
         }
         roads--;
     }
 
     @Override
-    public void buyDevCard(){
-        resources.setSheep(resources.getSheep() - 1);
-        resources.setWheat(resources.getWheat() - 1);
-        resources.setOre(resources.getOre() - 1);
+    public void buyDevCard(Resources bank){
+        resources.decrementResourceByString(resources.ORE, 1);
+        resources.decrementResourceByString(resources.SHEEP, 1);
+        resources.decrementResourceByString(resources.WHEAT, 1);
+
+        bank.incrementResourceByString(resources.ORE, 1);
+        bank.incrementResourceByString(resources.SHEEP, 1);
+        bank.incrementResourceByString(resources.WHEAT, 1);
     }
 
    }

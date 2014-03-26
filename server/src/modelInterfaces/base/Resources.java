@@ -14,6 +14,8 @@ public interface Resources {
     public static final String WHEAT= "wheat";
     public static final String[] TYPES = {BRICK, WOOD, SHEEP, WHEAT, ORE};
 
+    void initBank();
+
     public Resources Clone(Resources r);
 
     public abstract void setResources(int brick, int wood, int sheep, int wheat, int ore);

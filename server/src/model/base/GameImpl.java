@@ -58,6 +58,7 @@ public class GameImpl extends JsonImpl implements Game {
         chat = new ChatImpl();
 
         bank = new ResourcesImpl();
+        bank.initBank();
 
         turnTracker = new TurnTrackerImpl();
 
