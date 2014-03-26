@@ -73,7 +73,6 @@ public class Soldier extends Command {
 
         if(availableList.size() <= 0){
 			return;
-			// throw new InvalidCommandException("Steal Resource called on player with no resources");
         }
 
         int index = (int)(Math.random()*availableList.size());

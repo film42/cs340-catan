@@ -34,10 +34,10 @@ public class RollNumber extends Command {
         Resources bank = game.getBank();
         if(number != 7){
             List<Resources> playerResources = map.getResourcesByNumber(number);
-            for(int i=0; i<playerResources.size(); i++){
+            for(int i=0; i < game.getPlayers().size(); i++){
                 for(String type : Resources.TYPES){
                     int amount = playerResources.get(i).getResourceByString(type);
-                    game.getPlayers().get(i).getResources().incrementResourceByString(type, amount);
+                    game.getPlayerByIndex(i).getResources().incrementResourceByString(type, amount);
                     bank.decrementResourceByString(type,amount);
                 }
             }
