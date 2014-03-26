@@ -4,7 +4,7 @@
     <!-- ********** -->
 
     <property name="lib" location="lib"/>
-    <property name="build" location="build"/>
+    <property name="build" location="ant-build"/>
     <property name="test" location="test"/>
     <property name="src" location="src"/>
 
