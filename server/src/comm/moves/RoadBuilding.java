@@ -40,8 +40,8 @@ public class RoadBuilding extends Command {
             Server.log.warning("Attempted to buy roads without roads available");
             throw new InvalidCommandException("Attempted to buy roads without roads available");
         }
-        curPlayer.buyRoad(true);
-        curPlayer.buyRoad(true);
+        curPlayer.buyRoad(game.getBank(),true);
+        curPlayer.buyRoad(game.getBank(),true);
         game.getMap().addRoad(getPlayerIndex(),getSpot1());
         game.getMap().addRoad(getPlayerIndex(),getSpot2());
 

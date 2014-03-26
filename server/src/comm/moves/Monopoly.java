@@ -40,9 +40,7 @@ public class Monopoly extends Command {
         }
 		if (cardsStolen > 0) {
             // give the qty of stolen cards to the user
-            int oldQty = 0;
             Player curPlayer = game.getPlayerByIndex(playerIndex);
-           
             curPlayer.getResources().incrementResourceByString(resource.toLowerCase(), cardsStolen);
         }
 

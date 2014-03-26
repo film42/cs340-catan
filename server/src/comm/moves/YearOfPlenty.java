@@ -34,8 +34,8 @@ public class YearOfPlenty extends Command {
         Player player = game.getPlayerByIndex(playerIndex);
         Resources resources = player.getResources();
 
-        addSource(resources, getResource1());
-        addSource(resources, getResource2());
+        addSource(resources, getResource1(), game.getBank());
+        addSource(resources, getResource2(), game.getBank());
 
 		Deck newCards = player.getNewDevCards();
 		newCards.setYearOfPlenty(newCards.getYearOfPlenty() - 1);
@@ -48,7 +48,8 @@ public class YearOfPlenty extends Command {
         gameInfo.setData(game);
 
     }
-    private void addSource(Resources resources, String resource){
-        resources.setResourceByString(resource, resources.getResourceByString(resource) +1);
+    private void addSource(Resources resources, String resource, Resources bank){
+        resources.incrementResourceByString(resource, 1);
+        bank.decrementResourceByString(resource, 1);
    }
 }
