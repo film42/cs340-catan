@@ -16,4 +16,7 @@ log/
 target/
 build/
 
+# ant
+ant-build/
+
 out
