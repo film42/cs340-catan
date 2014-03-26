@@ -36,8 +36,11 @@ public class YearOfPlenty extends Command {
 
         addSource(resources, getResource1());
         addSource(resources, getResource2());
+
+		Deck newCards = player.getNewDevCards();
+		newCards.setYearOfPlenty(newCards.getYearOfPlenty() - 1);
 		Deck deck = player.getNewDevCards();
-        deck.setYearOfPlenty(deck.getYearOfPlenty() - 1);
+		deck.setYearOfPlenty(deck.getYearOfPlenty() - 1);
 
         // Prevent additional dev card playing
         player.setPlayedDevCard(true);
