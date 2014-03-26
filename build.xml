@@ -67,8 +67,10 @@
   </target>
 
   <target name="compile" depends="init" description="compile the source code">
-      <javac srcdir="${src}" encoding="ISO-8859-1" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
-      <javac srcdir="${test}" encoding="ISO-8859-1" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
+      <javac srcdir="${src}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true">
+        <compilerarg line="-encoding utf-8"/>
+      </javac>
+      <javac srcdir="${test}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
   </target>
 
 
