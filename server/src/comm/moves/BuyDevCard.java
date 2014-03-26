@@ -2,11 +2,10 @@ package comm.moves;
 
 import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
+import modelInterfaces.base.Deck;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
-import modelInterfaces.base.Deck;
 
 import java.io.IOException;
 
@@ -26,8 +25,7 @@ public class BuyDevCard extends Command {
 		Deck deck = game.getDeck();
 
 		if (deck.getDeckCount() <= 0) {
-			server.Server.log.severe("No Development Card Type in the Deck");
-			return;
+			throw new InvalidCommandException("No Development Card Type in the Deck");
 		}
 		Player player = game.getPlayerByIndex(playerIndex);
 		Deck newDevDeck = player.getNewDevCards();
@@ -51,8 +49,7 @@ public class BuyDevCard extends Command {
 			newDevDeck.setMonument(newDevDeck.getMonument() + 1);
 			break;
 		default:
-			server.Server.log.severe("Invalid Development Card Type " + type);
-			break;
+            throw new InvalidCommandException("Invalid Development Card Type " + type);
 		}
         player.buyDevCard(game.getBank());
 		gameInfo.setData(game);
