@@ -58,9 +58,9 @@ catan.trade.maritime.Controller = (function trade_namespace(){
       //handle turn
       if(this.handleTurn()){
         
-        this.updateGiveType();
-
-        this.updateGetType();
+        if(this.updateGiveType()){
+          this.updateGetType();
+        }
         
         if(this.typeToGet && this.typeToGive){
           this.getView().enableTradeButton(true);
@@ -73,7 +73,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
     MaritimeController.prototype.updateGiveType = function(){
       var types = catan.definitions.ResourceTypes;
-
+      this.getView().hideGiveOptions();
         //updates if not yet selected give value
       if(!this.typeToGive){
         var canTradeResources = [];
@@ -87,6 +87,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
         }
         if(canTradeResources.length > 0){
           this.getView().showGiveOptions(canTradeResources);
+          return true;
         }else{
           this.typeToGet = undefined;
           this.typeToGive = undefined;
@@ -94,13 +95,14 @@ catan.trade.maritime.Controller = (function trade_namespace(){
           this.getView().enableTradeButton(false);
           this.getView().hideGiveOptions();
           this.getView().hideGetOptions();
-          return;
+          return false;
         }
       }
     };
 
     MaritimeController.prototype.updateGetType = function(){
       var types = catan.definitions.ResourceTypes;
+      this.getView().hideGetOptions();
       //updates if not yet selected get value
       if(!this.typeToGet){
         var canGetResources = [];
@@ -110,6 +112,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
             canGetResources.push(types[i]);
           }
         }
+        this.getView().hideGetOptions();
         if(canGetResources.length > 0){
           if(this.typeToGive){ //remove the type giving from the get options
             var index = canGetResources.indexOf(this.typeToGive);

@@ -30,12 +30,16 @@ public class RollNumber extends Command {
         Game game = gameInfo.getData();
         game = rolling(game);
 
-        // TODO: Get use player.addResourceList to add the resources before this is done
         Map map = game.getMap();
+        Resources bank = game.getBank();
         if(number != 7){
             List<Resources> playerResources = map.getResourcesByNumber(number);
-            for (int i = 0; i < playerResources.size() && i < game.getPlayers().size(); i++){
-                game.getPlayerByIndex(i).addResourceList(playerResources.get(i));
+            for(int i=0; i<playerResources.size(); i++){
+                for(String type : Resources.TYPES){
+                    int amount = playerResources.get(i).getResourceByString(type);
+                    game.getPlayers().get(i).getResources().incrementResourceByString(type, amount);
+                    bank.decrementResourceByString(type,amount);
+                }
             }
         }
         gameInfo.setData(game);
