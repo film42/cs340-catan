@@ -18,5 +18,6 @@ build/
 
 # ant
 ant-build/
+coverage-build/
 
 out
