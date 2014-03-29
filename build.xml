@@ -172,7 +172,7 @@
 		</java>
 	</target>
 
-  <target name="test" depends="compile-tests"
+  <target name="cobertura-test" depends="compile-tests"
     description="run unit tests">
     <junit fork="no" printsummary="yes" haltonfailure="no">
       <jvmarg value="-XX:-UseSplitVerifier"/>
@@ -197,7 +197,7 @@
     </junit>
   </target>
 
-  <target name="coverage" depends="test"
+  <target name="coverage" depends="cobertura-test"
     description="generate unit test coverage report">
     <cobertura-report srcdir="${src}" destdir="${coverage-reports}"
       datafile="${coverage-data-file}"/>
