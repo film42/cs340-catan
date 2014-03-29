@@ -150,13 +150,14 @@
 
   <target name="compile-tests" depends="instrument"
     description="compile unit tests " >
-    <javac srcdir="${test}" destdir="${test-build}" debug="true" includeantruntime="false">
+    <javac srcdir="${test}" destdir="${test-build}" debug="true" includeantruntime="true">
       <classpath>
         <pathelement location="${coverage-build}"/>
         <pathelement location="${build}"/>
       </classpath>
       <classpath refid="junit-classpath" />
       <classpath refid="cobertura-classpath" />
+      <classpath refid="all-classpath" />
     </javac>
   </target>
 

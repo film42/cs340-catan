@@ -12,5 +12,7 @@ cs340-catan.iml
 
 *.prefs
 
-
+server/test-build/
 coverage-build/
+coverage-reports/
+server/test-reports/
