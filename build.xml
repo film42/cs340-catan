@@ -1,4 +1,4 @@
-<project name="Our Server" default="server" basedir="server">
+<project name="Our Server" default="server" basedir=".">
 
 	<!-- PROPERTIES -->
 	<!-- ********** -->
@@ -68,10 +68,10 @@
       <include name="junit-4.8.2.jar" />
     </fileset>
   </path>
+
   <!-- ***************** -->
   <!-- task definintions -->
   <!-- ***************** -->
-
   <taskdef classpathref="cobertura-classpath" resource="tasks.properties" />
 
 
@@ -116,20 +116,19 @@
       <javac srcdir="${test}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
   </target>
 
-    <target name="tests" depends="compile" description="run automated server tests">
-      <java classname="driver.TestDriver" fork="yes"  dir="server">
-          <classpath>
-              <path refid="all-classpath"/>
-          </classpath>
-          <assertions>
-              <enable/>
-          </assertions>
-      </java>
+  <target name="tests" depends="compile" description="run automated server tests">
+    <java classname="driver.TestDriver" fork="yes"  dir="server">
+        <classpath>
+            <path refid="all-classpath"/>
+        </classpath>
+        <assertions>
+            <enable/>
+        </assertions>
+    </java>
   </target>
 
   <target name="instrument" depends="compile"
     description="instrument class files for code coverage analysis">
-
     <cobertura-instrument ignoreTrivial="true" />
     <cobertura-instrument todir="${coverage-build}" datafile="${coverage-data-file}">
       <fileset dir="${build}">
@@ -192,12 +191,12 @@
       datafile="${coverage-data-file}"/>
   </target>
 
-    <target name="make-js-doc" description="Parse and produce the javascript docs">
-        <echo> Making javascript documentation</echo>
-        <exec executable="yuidoc">
-            <arg value="-o"/>
-            <arg value="${yuidoc.dir}"/>
-            <arg value="${javascript.dir}"/>
-        </exec>
+  <target name="make-js-doc" description="Parse and produce the javascript docs">
+      <echo> Making javascript documentation</echo>
+      <exec executable="yuidoc">
+          <arg value="-o"/>
+          <arg value="${yuidoc.dir}"/>
+          <arg value="${javascript.dir}"/>
+      </exec>
 	</target>
 </project>
