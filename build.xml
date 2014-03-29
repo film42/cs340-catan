@@ -33,8 +33,19 @@
         </fileset>
     </path>
 
+    <path id="server-lib-classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
     <path id="all-classpath">
         <path refid="lib-classpath"/>
+        <pathelement location="${build}"/>
+    </path>
+
+    <path id="server-classpath">
+        <path refid="server-lib-classpath"/>
         <pathelement location="${build}"/>
     </path>
 
@@ -83,7 +94,7 @@
           <arg value="${web.arg}"/>
           <arg value="${requests.arg}"/>
           <classpath>
-              <path refid="all-classpath"/>
+              <path refid="server-classpath"/>
           </classpath>
           <assertions>
               <enable/>
