@@ -1,4 +1,4 @@
-﻿<project name="Our Server" default="server" basedir="server">
+<project name="Our Server" default="server" basedir="server">
 
 	<!-- PROPERTIES -->
 	<!-- ********** -->
@@ -20,14 +20,12 @@
     <!-- PROPERTIES -->
     <!-- ********** -->
 
-    <property name="lib" location="lib"/>
-    <property name="build" location="ant-build"/>
-    <property name="test" location="test"/>
-    <property name="src" location="src"/>
-    <property name="test-build" location="test-build"/>
-    <property name="test-reports" location="test-reports"/>
-
-    
+    <property name="lib" location="server/lib"/>
+    <property name="build" location="server/ant-build"/>
+    <property name="test" location="server/test"/>
+    <property name="src" location="server/src"/>
+    <property name="test-build" location="server/test-build"/>
+    <property name="test-reports" location="server/test-reports"/>
 
     <path id="lib-classpath">
         <fileset dir="${lib}">
@@ -79,8 +77,8 @@
 
 	<!-- TARGETS -->
 	<!-- ******* -->
-  <target name="server" depends="compile" description="Runs the student server">
-      <java classname="server.Server" fork="yes">
+  <target name="our-server" depends="compile" description="Runs the student server">
+      <java classname="server.Server" fork="yes" dir="server">
           <arg value="${port.arg}"/>
           <arg value="${web.arg}"/>
           <arg value="${requests.arg}"/>
@@ -112,8 +110,10 @@
   </target>
 
   <target name="compile" depends="init" description="compile the source code">
-      <javac srcdir="${src}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
-      <javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
+      <javac srcdir="${src}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true">
+        <compilerarg line="-encoding utf-8"/>
+      </javac>
+      <javac srcdir="${test}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
   </target>
 
   <target name="instrument" depends="compile"
@@ -139,7 +139,7 @@
     </javac>
   </target>
 
-	<target name="ta-server" description="Runs the demo server">
+	<target name="server" description="Runs the demo server">
 		<java jar="${jar.file}" fork="true">
 			<arg value="${port.arg}"/>
 			<arg value="${web.arg}"/>

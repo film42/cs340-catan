@@ -34,13 +34,11 @@ public class DiscardCards extends Command {
         Resources resources = currentPlayer.getResources();
 
         //check if if he/she is discarding state
-        if (currentPlayer.hasDiscarded() && game.getTurnTracker().getStatus() == TurnTracker.DISCARDING){
-            server.Server.log.severe("Already discard, attempting a second time");
-            return;
+        if (currentPlayer.hasDiscarded() && game.getTurnTracker().getStatus().equals(TurnTracker.DISCARDING)){
+            throw new InvalidCommandException("Already discard, attempting a second time");
         }
-        if(game.getTurnTracker().getStatus() != TurnTracker.DISCARDING){
-            server.Server.log.severe("Attempting to discard outside of discarding phase");
-            return;
+        if(!game.getTurnTracker().getStatus().equals(TurnTracker.DISCARDING)){
+            throw new InvalidCommandException("Attempting to discard outside of discarding phase");
         }
 
         Resources bank = game.getBank();
@@ -51,7 +49,7 @@ public class DiscardCards extends Command {
                     resources.decrementResourceByString(type, discardNum);
                     bank.incrementResourceByString(type, discardNum);
                 } else {
-                    server.Server.log.severe("No enough resources to discard for " + type);
+                    throw new InvalidCommandException("No enough resources to discard for " + type);
                 }
             }
         }
