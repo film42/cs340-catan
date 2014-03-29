@@ -6,7 +6,6 @@ import comm.moves.form.VertexLocation;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
 import server.Server;
 
 import java.io.IOException;
@@ -41,6 +40,8 @@ public class BuildCity extends Command {
             Server.log.warning("Attempted to buy city without city available");
             throw new InvalidCommandException("Attempted to buy city without city available");
         }
+
+        System.out.println("WAS HEREERERERE");
 
         curPlayer.buyCity(game.getBank());
         game.getMap().addCity(getPlayerIndex(),getVertexLocation());

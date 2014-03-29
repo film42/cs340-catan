@@ -1,24 +1,23 @@
 package comm.moves.tests;
 
-import static comm.moves.base.Command.moveFromJson;
-import static comm.factory.FakeGameFactory.*;
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-
 import comm.factory.FakeGameFactory;
+import comm.moves.BuildCity;
+import comm.moves.base.Commandable;
+import comm.moves.base.InvalidCommandException;
 import model.base.GameInfoImpl;
 import model.map.LocationImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import comm.moves.BuildCity;
-import comm.moves.base.Commandable;
-import comm.moves.base.InvalidCommandException;
+import java.io.IOException;
+
+import static comm.factory.FakeGameFactory.FOURTH_PLAYER;
+import static comm.factory.FakeGameFactory.HIGH_NUMBER;
+import static comm.moves.base.Command.moveFromJson;
+import static org.junit.Assert.*;
 
 public class BuildCityTest {
 
