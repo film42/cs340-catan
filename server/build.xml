@@ -60,8 +60,8 @@
         <javac srcdir="${test}" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
     </target>
 
-    <target name="server-tests" depends="compile" description="run automated server tests">
-        <java classname="server.ServerUnitTests" fork="yes">
+    <target name="tests" depends="compile" description="run automated server tests">
+        <java classname="driver.TestDriver" fork="yes">
             <classpath>
                 <path refid="all-classpath"/>
             </classpath>

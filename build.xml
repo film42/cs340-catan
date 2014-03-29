@@ -73,6 +73,17 @@
       <javac srcdir="${test}" target="1.7" source="1.7" classpathref="lib-classpath" destdir="${build}" debug="true" includeantruntime="true" />
   </target>
 
+    <target name="tests" depends="compile" description="run automated server tests">
+      <java classname="driver.TestDriver" fork="yes"  dir="server">
+          <classpath>
+              <path refid="all-classpath"/>
+          </classpath>
+          <assertions>
+              <enable/>
+          </assertions>
+      </java>
+  </target>
+
 
 	<target name="server" description="Runs the demo server">
 		<java jar="${jar.file}" fork="true">
