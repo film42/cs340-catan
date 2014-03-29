@@ -1,7 +1,6 @@
-package comm.moves.tests;
+package comm.factory;
 
-import java.util.ArrayList;
-
+import com.google.inject.Injector;
 import model.InjectorFactory;
 import model.ModelModule;
 import model.base.DeckImpl;
@@ -13,7 +12,7 @@ import modelInterfaces.base.Game;
 import modelInterfaces.base.Player;
 import modelInterfaces.base.Resources;
 
-import com.google.inject.Injector;
+import java.util.ArrayList;
 
 /**
  * This is a static class that generates a bunch of fake data that we can run test cases on

@@ -1,17 +1,18 @@
 package comm.moves.tests;
 
 import static comm.moves.base.Command.moveFromJson;
-import static comm.moves.tests.FakeGameFactory.FIRST_PLAYER;
-import static comm.moves.tests.FakeGameFactory.FOURTH_PLAYER;
-import static comm.moves.tests.FakeGameFactory.HIGH_NUMBER;
-import static comm.moves.tests.FakeGameFactory.LOW_NUMBER;
-import static comm.moves.tests.FakeGameFactory.SECOND_PLAYER;
-import static comm.moves.tests.FakeGameFactory.THIRD_PLAYER;
+import static comm.factory.FakeGameFactory.FIRST_PLAYER;
+import static comm.factory.FakeGameFactory.FOURTH_PLAYER;
+import static comm.factory.FakeGameFactory.HIGH_NUMBER;
+import static comm.factory.FakeGameFactory.LOW_NUMBER;
+import static comm.factory.FakeGameFactory.SECOND_PLAYER;
+import static comm.factory.FakeGameFactory.THIRD_PLAYER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
+import comm.factory.FakeGameFactory;
 import model.base.GameInfoImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;

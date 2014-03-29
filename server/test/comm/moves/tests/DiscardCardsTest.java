@@ -1,5 +1,6 @@
 package comm.moves.tests;
 
+import comm.factory.FakeGameFactory;
 import comm.moves.DiscardCards;
 import comm.moves.base.Commandable;
 import comm.moves.base.InvalidCommandException;
@@ -11,8 +12,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static comm.moves.base.Command.moveFromJson;
-import static comm.moves.tests.FakeGameFactory.FOURTH_PLAYER;
-import static comm.moves.tests.FakeGameFactory.HIGH_NUMBER;
+import static comm.factory.FakeGameFactory.FOURTH_PLAYER;
+import static comm.factory.FakeGameFactory.HIGH_NUMBER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

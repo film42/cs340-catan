@@ -1,13 +1,14 @@
 package comm.moves.tests;
 
 import static comm.moves.base.Command.moveFromJson;
-import static comm.moves.tests.FakeGameFactory.*;
+import static comm.factory.FakeGameFactory.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
+import comm.factory.FakeGameFactory;
 import model.base.GameInfoImpl;
 import model.map.LocationImpl;
 import modelInterfaces.base.Game;
