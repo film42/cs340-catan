@@ -92,7 +92,6 @@ public class MoveFacade {
             case BUILD_CITY:
                 command = moveFromJson(json, BuildCity.class); break;
             case OFFER_TRADE:
-			System.out.println(json);
                 command = moveFromJson(json, TradeOfferCommand.class); break;
             case ACCEPT_TRADE:
                 command = moveFromJson(json, AcceptTrade.class); break;

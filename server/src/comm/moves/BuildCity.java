@@ -41,8 +41,6 @@ public class BuildCity extends Command {
             throw new InvalidCommandException("Attempted to buy city without city available");
         }
 
-        System.out.println("WAS HEREERERERE");
-
         curPlayer.buyCity(game.getBank());
         game.getMap().addCity(getPlayerIndex(),getVertexLocation());
 
