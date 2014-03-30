@@ -80,12 +80,12 @@ public class BuyDevCardTest {
 		try {
 			buyDevCard.execute(fakeInfo);
 		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in .execute();");
+			// Check to make sure that the user didn't get anything because the deck had nothing
+			assertEquals(LOW_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getNewDevCards().getDeckCount());
 			return;
 		}
+		fail(" No Exception in .execute();");
 
-		// Check to make sure that the user didn't get anything because the deck had nothing
-		assertEquals(LOW_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getNewDevCards().getDeckCount());
 	}
 
 }
