@@ -23,7 +23,7 @@ import java.util.Scanner;
  * Created by: film42 on: 3/6/14.
  */
 public class GameImpl extends JsonImpl implements Game {
-    private Deck deck;
+	protected Deck deck;
     private Map map;
     private List<Player> players;
     private Log log;
@@ -37,7 +37,7 @@ public class GameImpl extends JsonImpl implements Game {
 	private TradeOffer tradeOffer;
 
     public GameImpl(){
-        deck = new DeckImpl();
+		deck = InjectorFactory.getInjector().getInstance(Deck.class);
         deck.initBank();
 
         String mapJson= "";
@@ -53,14 +53,14 @@ public class GameImpl extends JsonImpl implements Game {
 
         players = new ArrayList<>();
 
-        log = new LogImpl();
+		log = InjectorFactory.getInjector().getInstance(Log.class);
 
-        chat = new ChatImpl();
+		chat = InjectorFactory.getInjector().getInstance(Chat.class);
 
-        bank = new ResourcesImpl();
+		bank = InjectorFactory.getInjector().getInstance(Resources.class);
         bank.initBank();
 
-        turnTracker = new TurnTrackerImpl();
+		turnTracker = InjectorFactory.getInjector().getInstance(TurnTracker.class);
 
         biggestArmy = 0;
         longestRoad = 0;

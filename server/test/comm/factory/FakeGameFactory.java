@@ -27,7 +27,7 @@ public class FakeGameFactory {
 	public static final int THIRD_PLAYER = 2;
 	public static final int FOURTH_PLAYER = 3;
 
-	private static Injector injector = InjectorFactory.createInjector(new ModelModule());
+	private static Injector injector = InjectorFactory.createInjector(new MockModule());
 
 	static public Game getNormalFakeGame() {
 
@@ -80,7 +80,7 @@ public class FakeGameFactory {
 	}
 
 	private static Deck createFullDeck() {
-		Deck deck = new DeckImpl();
+		Deck deck = InjectorFactory.getInjector().getInstance(Deck.class);
 
 		deck.setMonopoly(HIGH_NUMBER);
 		deck.setMonument(HIGH_NUMBER);

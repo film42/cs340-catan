@@ -8,6 +8,8 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 
 import comm.factory.FakeGameFactory;
+import comm.factory.MockModule;
+import model.InjectorFactory;
 import model.base.DeckImpl;
 import model.base.GameInfoImpl;
 import modelInterfaces.base.Deck;
@@ -27,6 +29,7 @@ public class BuyDevCardTest {
 
 	@Before
 	public void setUp() throws Exception {
+
 		fakeWealthyGame = FakeGameFactory.getWealthyFakeGame();
 
 		// Let's have our rich user (who can afford stuff) not have any dev cards to start
@@ -40,6 +43,7 @@ public class BuyDevCardTest {
 
 	@Test
 	public void testIt() {
+
 		// Setup
 		GameInfo fakeInfo = new GameInfoImpl(fakeWealthyGame);
 		String json = "{\"type\" : \"buyDevCard\", \"playerIndex\": " + FOURTH_PLAYER + "}";
@@ -55,6 +59,9 @@ public class BuyDevCardTest {
 		}
 
 		assertEquals(LOW_NUMBER + 1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getNewDevCards().getDeckCount());
+
+		// Our fine example of use of dependency injection
+		assertEquals(LOW_NUMBER + 1, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getNewDevCards().getMonument());
 	}
 
 	@Test
