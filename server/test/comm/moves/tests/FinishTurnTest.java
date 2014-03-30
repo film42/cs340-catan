@@ -32,11 +32,8 @@ public class FinishTurnTest {
 
 	@Test
 	public void testIt() {
-		// Setup
-		String json = "{\"type\" : \"finishTurn\", \"playerIndex\": " + FIRST_PLAYER + "}";
 
 		fakeInfo.getData().getTurnTracker().setStatus(TurnTracker.FIRST_ROUND);
-
 		executeFinishTurnFor(FIRST_PLAYER);
 
 		assertEquals(TurnTracker.FIRST_ROUND, fakeInfo.getData().getTurnTracker().getStatus());
