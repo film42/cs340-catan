@@ -15,6 +15,7 @@ import java.io.IOException;
 import static comm.moves.base.Command.moveFromJson;
 import static comm.factory.FakeGameFactory.FOURTH_PLAYER;
 import static comm.factory.FakeGameFactory.LOW_NUMBER;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -36,12 +37,14 @@ public class MonumentTest {
 		Commandable monument = moveFromJson(json, Monument.class);
 
 		// Execute command
+		boolean errorThrown = false;
 		try {
 			monument.execute(fakeInfo);
 		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in .execute();");
-			return;
+			errorThrown = true;
 		}
+
+		assertTrue(errorThrown);
 
         // Should fail because we haven't added a monument card yet
 		assertEquals(LOW_NUMBER, fakeInfo.getData().getPlayerByIndex(FOURTH_PLAYER).getVictoryPoints());

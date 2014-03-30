@@ -21,9 +21,13 @@ public class Monument extends Command {
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException {
         super.execute(gameInfo);
-        //add one to victory points
         Game game = gameInfo.getData();
         Player player = game.getPlayerByIndex(getPlayerIndex());
+
+		if (player.getNewDevCards().getMonument() == 0)
+			throw new InvalidCommandException("Player does not have a Monument Card to play");
+
+		// add one to victory points
 		player.setVictoryPoints(player.getVictoryPoints() + 1);
 		gameInfo.setData(game);
 
