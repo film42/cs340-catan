@@ -67,159 +67,15 @@ public class MonopolyTest {
 		// test that it worked
 		for (Player p : fakeInfo.getData().getPlayers()) {
 			// test to make sure that those who had a wood lost one
-			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getWood());
-			}
-			// test to make sure that those who didn't have anything didn't lose or gain anything
-			else if (p.getOrderNumber() == THIRD_PLAYER) {
+			if (!(p.getOrderNumber() == FOURTH_PLAYER)) {
 				assertEquals(LOW_NUMBER, p.getResources().getWood());
 			}
-			// test to make sure that the user who played the card got the resources
-			else if (p.getOrderNumber() == FOURTH_PLAYER) {
-				assertEquals(LOW_NUMBER + 2, p.getResources().getWood());
-			}
+			// test to make sure that the user who played the card got the resources from the two that did
+			else
+				assertEquals(HIGH_NUMBER * 2, p.getResources().getWood());
 		}
 	}
 
-	@Test
-	public void testStealOre() {
-
-		// Setup
-		GameInfo fakeInfo = new GameInfoImpl(fakeNormalGame);
-		String json = "{\"resource\" : \"Ore\", \"playerIndex\": " + FOURTH_PLAYER + "}";
-
-		// Create object
-		Commandable monopoly = moveFromJson(json, Monopoly.class);
-
-		// Execute command
-		try {
-			monopoly.execute(fakeInfo);
-		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealOre.execute();");
-			return;
-		}
-
-		// test that it worked
-		for (Player p : fakeInfo.getData().getPlayers()) {
-			// test to make sure that those who had a ore lost one
-			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getOre());
-			}
-			// test to make sure that those who didn't have anything didn't lose or gain anything
-			else if (p.getOrderNumber() == THIRD_PLAYER) {
-				assertEquals(LOW_NUMBER, p.getResources().getOre());
-			}
-			// test to make sure that the user who played the card got the resources
-			else if (p.getOrderNumber() == FOURTH_PLAYER) {
-				assertEquals(LOW_NUMBER + 2, p.getResources().getOre());
-			}
-		}
-	}
-
-	@Test
-	public void testStealWheat() {
-
-		// Setup
-		GameInfo fakeInfo = new GameInfoImpl(fakeNormalGame);
-		String json = "{\"resource\" : \"Wheat\", \"playerIndex\": " + FOURTH_PLAYER + "}";
-
-		// Create object
-		Commandable monopoly = moveFromJson(json, Monopoly.class);
-
-		// Execute command
-		try {
-			monopoly.execute(fakeInfo);
-		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealWheat.execute();");
-			return;
-		}
-
-		// test that it worked
-		for (Player p : fakeInfo.getData().getPlayers()) {
-			// test to make sure that those who had a Wheat lost one
-			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getWheat());
-			}
-			// test to make sure that those who didn't have anything didn't lose or gain anything
-			else if (p.getOrderNumber() == THIRD_PLAYER) {
-				assertEquals(LOW_NUMBER, p.getResources().getWheat());
-			}
-			// test to make sure that the user who played the card got the resources
-			else if (p.getOrderNumber() == FOURTH_PLAYER) {
-				assertEquals(LOW_NUMBER + 2, p.getResources().getWheat());
-			}
-		}
-	}
-
-	@Test
-	public void testStealSheep() {
-
-		// Setup
-		GameInfo fakeInfo = new GameInfoImpl(fakeNormalGame);
-		String json = "{\"resource\" : \"Sheep\", \"playerIndex\": " + FOURTH_PLAYER + "}";
-
-		// Create object
-		Commandable monopoly = moveFromJson(json, Monopoly.class);
-
-		// Execute command
-		try {
-			monopoly.execute(fakeInfo);
-		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealSheep.execute();");
-			return;
-		}
-
-		// test that it worked
-		for (Player p : fakeInfo.getData().getPlayers()) {
-			// test to make sure that those who had a Sheep lost one
-			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getSheep());
-			}
-			// test to make sure that those who didn't have anything didn't lose or gain anything
-			else if (p.getOrderNumber() == THIRD_PLAYER) {
-				assertEquals(LOW_NUMBER, p.getResources().getSheep());
-			}
-			// test to make sure that the user who played the card got the resources
-			else if (p.getOrderNumber() == FOURTH_PLAYER) {
-				assertEquals(LOW_NUMBER + 2, p.getResources().getSheep());
-			}
-		}
-	}
-
-	@Test
-	public void testStealBrick() {
-
-		// Setup
-		GameInfo fakeInfo = new GameInfoImpl(fakeNormalGame);
-		String json = "{\"resource\" : \"Brick\", \"playerIndex\": " + FOURTH_PLAYER + "}";
-
-		// Create object
-		Commandable monopoly = moveFromJson(json, Monopoly.class);
-
-		// Execute command
-		try {
-			monopoly.execute(fakeInfo);
-		} catch (IOException | InvalidCommandException e) {
-			fail("Exception in testStealBrick.execute();");
-			return;
-		}
-
-		// test that it worked
-		for (Player p : fakeInfo.getData().getPlayers()) {
-			// test to make sure that those who had a Brick lost one
-			if (p.getOrderNumber() == FIRST_PLAYER || p.getOrderNumber() == SECOND_PLAYER) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getBrick());
-			}
-			// test to make sure that those who didn't have anything didn't lose or gain anything
-			else if (p.getOrderNumber() == THIRD_PLAYER) {
-				assertEquals(LOW_NUMBER, p.getResources().getBrick());
-			}
-			// test to make sure that the user who played the card got the resources
-			else if (p.getOrderNumber() == FOURTH_PLAYER) {
-				assertEquals(LOW_NUMBER + 2, p.getResources().getBrick());
-			}
-		}
-	}
 
 	@Test
 	public void testStealWoodButNobodyHasWood() {
@@ -268,11 +124,11 @@ public class MonopolyTest {
 		for (Player p : fakeInfo.getData().getPlayers()) {
 			// test to make sure that those who had a Brick lost one
 			if (!(p.getOrderNumber() == FOURTH_PLAYER)) {
-				assertEquals(HIGH_NUMBER - 1, p.getResources().getBrick());
+				assertEquals(LOW_NUMBER, p.getResources().getBrick());
 			}
 			// The user should have received three resources
 			else {
-				assertEquals(HIGH_NUMBER + 3, p.getResources().getBrick());
+				assertEquals(HIGH_NUMBER * 4, p.getResources().getBrick());
 			}
 		}
 	}
