@@ -1,6 +1,10 @@
 package persistance;
 
 
+import modelInterfaces.users.User;
+
+import java.util.List;
+
 public interface UsersDba {
 
 	/**

@@ -3,6 +3,8 @@ package persistance;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 
+import java.util.List;
+
 /**
 * This interface specifies the methods used to query and mutate the Games and User_Games Tables.
 *
