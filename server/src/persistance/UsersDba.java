@@ -1,8 +1,6 @@
 package persistance;
 
 
-import modelInterfaces.users.User;
-
 import java.util.List;
 
 public interface UsersDba {
@@ -17,5 +15,5 @@ public interface UsersDba {
 	/**
 	 * Adds a user to the db
 	 */
-	public void addUser(UserDTO);
+	public void addUser(UserDTO user);
 }
