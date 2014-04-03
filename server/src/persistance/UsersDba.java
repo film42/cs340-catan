@@ -12,10 +12,10 @@ public interface UsersDba {
 	 * 
 	 * @return a List of User objects currently saved in the db
 	 */
-	public List<User> getUsers();
+	public List<UserDTO> getUsers();
 
 	/**
 	 * Adds a user to the db
 	 */
-	public void addUser();
+	public void addUser(UserDTO);
 }

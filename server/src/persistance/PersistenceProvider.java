@@ -56,4 +56,9 @@ public abstract class PersistenceProvider {
 	 * Deletes all changes made since the last beginTransaction().
 	 */
 	public abstract void rollbackTransaction();
+
+	/**
+	 * Wipes the database immediately
+	 */
+	public abstract void wipeDatabase();
 }
