@@ -73,7 +73,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
     MaritimeController.prototype.updateGiveType = function(){
       var types = catan.definitions.ResourceTypes;
-      this.getView().hideGiveOptions();
+      //this.getView().hideGiveOptions();
         //updates if not yet selected give value
       if(!this.typeToGive){
         var canTradeResources = [];
@@ -102,7 +102,7 @@ catan.trade.maritime.Controller = (function trade_namespace(){
 
     MaritimeController.prototype.updateGetType = function(){
       var types = catan.definitions.ResourceTypes;
-      this.getView().hideGetOptions();
+      //this.getView().hideGetOptions();
       //updates if not yet selected get value
       if(!this.typeToGet){
         var canGetResources = [];
