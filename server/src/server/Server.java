@@ -16,6 +16,7 @@ import model.map.MapImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.Player;
 import modelInterfaces.base.Resources;
+import persistance.PersistenceManager;
 import route.MoveRoute;
 import route.game.*;
 import route.games.CreateRoute;
@@ -47,7 +48,7 @@ public class Server {
     private void run() {
     }
 
-    private void config() {
+    private void config(int saveInterval) {
 		Server.log.info("Configuring server...");
 
         // Set port here
@@ -61,6 +62,9 @@ public class Server {
 
         // Facade Classes
 		Model myGame = injector.getInstance(Model.class);
+
+        PersistenceManager pm = new PersistenceManager(saveInterval);
+
         UtilFacade myUtilFacade = new UtilFacade(myGame);
         GamesFacade myGamesFacade = new GamesFacade(myGame);
         GameFacade myGameFacade = new GameFacade(myGame);
@@ -82,6 +86,8 @@ public class Server {
         new ChangeLogLevelRoute(myUtilFacade).attach();
 
 		Server.log.info("Server configured");
+
+
 
         myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
         myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
@@ -177,10 +183,19 @@ public class Server {
         return result;
     }
 
+    private static final int DEFAULT_INTERVAL = 10;
+
     public static void main(String[] args) {
 		// Server
         Server server = new Server();
-        server.config();
+        int saveInterval = DEFAULT_INTERVAL; //default save Interval
+        if(args.length > 0)
+            saveInterval = Integer.parseInt(args[0]);
+        if(saveInterval < 1) {
+            log.warning("Bad save Interval argument: " + args[0]);
+            saveInterval = DEFAULT_INTERVAL;
+        }
+        server.config(saveInterval);
         server.run();
     }
 
