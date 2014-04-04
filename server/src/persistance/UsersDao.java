@@ -3,7 +3,7 @@ package persistance;
 
 import java.util.List;
 
-public interface UsersDao {
+public interface UsersDAO {
 
 	/**
 	 * Gets the current users in the db
