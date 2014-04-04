@@ -11,14 +11,14 @@ import java.util.List;
 public class PersistenceManager {
 
     private PersistenceProvider persistenceProv;
-    private GamesDba gamesDba;
-    private UsersDba usersDba;
+    private GamesDao gamesDao;
+    private UsersDao usersDao;
     private int saveInterval;
 
     /**
      * load in config data for plug in.
      * instantiate persistenceProvider
-     * get gamesDba and usersDba
+     * get gamesDao and usersDao
      */
     public PersistenceManager(int saveInterval){
         this.saveInterval = saveInterval;

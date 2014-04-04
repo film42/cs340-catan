@@ -5,16 +5,16 @@ public interface PersistenceProvider {
 	/**
 	 * Gets the users Dba from the PersistenceProvider
 	 * 
-	 * @return the UsersDba object
+	 * @return the UsersDao object
 	 */
-	public UsersDba getUsersDba();
+	public UsersDao getUsersDba();
 
 	/**
 	 * Gets the Games Dba from the PersistenceProvider
 	 * 
-	 * @return the GamesDba object
+	 * @return the GamesDao object
 	 */
-	public GamesDba getGamesDba();
+	public GamesDao getGamesDba();
 
 	/**
 	 * Begins a transaction in this PersistenceProvider. Throws an error if already began a transaction.
