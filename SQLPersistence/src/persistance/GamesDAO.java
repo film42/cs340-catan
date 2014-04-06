@@ -222,12 +222,11 @@ public class GamesDAO {
     }
     public boolean deleteGame(int gameId){
         boolean isDeleted = false;
+
         PreparedStatement stmt = null;
-        ResultSet rs = null;
         try {
-            String query = "Delete FROM WHERE id = " + gameId;
+            String query = "Delete FROM games WHERE id = " + gameId;
             stmt = PersistenceProvider.getConnection().prepareStatement(query);
-            stmt.setInt(1,gameId);
             if (stmt.executeUpdate() == 1) {
                 isDeleted = true;
             }
@@ -235,7 +234,6 @@ public class GamesDAO {
             e.printStackTrace();
         } finally {
             PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
         }
         return isDeleted;
 

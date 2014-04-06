@@ -41,7 +41,7 @@ public class UsersDAOTest {
     }
 
     @Test
-    public void test_1() {
+    public void test_addUser() {
         // add users
 
         PersistenceProvider.beginTransaction();
@@ -53,7 +53,7 @@ public class UsersDAOTest {
     }
 
     @Test
-    public void test_2() {
+    public void test_getUsers() {
         //test getUsers
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();
         PersistenceProvider.beginTransaction();

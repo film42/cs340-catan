@@ -147,6 +147,37 @@ public class GamesDAOTest {
         }
     }
 
+    @Test
+    public void test_deleteGame() {
+
+         PersistenceProvider.beginTransaction();
+        //delete first
+        gamesDAO.deleteGames();
+
+        //add game
+        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+
+        //add another game
+        int gameId2 = gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
+
+        if(gamesDAO.getGames().size() != 2 )
+            fail();
+
+        gamesDAO.deleteGame(gameId);
+
+        if (gamesDAO.getGames().size() !=1 ){
+            fail();
+        }
+        gamesDAO.deleteGames();
+
+        if (gamesDAO.getGames().size() !=0 ){
+            fail();
+        }
+
+        PersistenceProvider.endTransaction(true);
+    }
+
+
     private boolean compareGame(GameDTO rec1, GameDTO rec2){
         if (rec1.getName().equals(rec2.getName()) &&
            rec1.getInitialPoint().equals(rec2.getInitialPoint()) &&
