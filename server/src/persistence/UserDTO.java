@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 /**
  * Created by Jon on 4/3/14.
