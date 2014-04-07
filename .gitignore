@@ -3,6 +3,9 @@
 .project
 bin/
 cs340-catan.iml
+
+SQLPersistence/SQLPersistence.iml
+
 .idea
 .settings/.jsdtscope
 
@@ -16,3 +19,6 @@ server/test-build/
 coverage-build/
 coverage-reports/
 server/test-reports/
+
+SQLPersistence/db/
+*.sqlite
