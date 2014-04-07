@@ -7,12 +7,12 @@ import java.sql.*;
 import java.net.ConnectException;
 import java.util.List;
 
-public class PersistenceProvider {
+public class SQLPersistenceProvider {
 
     private static Connection connection;
 
 
-    public PersistenceProvider() {
+    public SQLPersistenceProvider() {
         connection = null;
 
     }
@@ -37,7 +37,7 @@ public class PersistenceProvider {
         return connection;
     }
 	/**
-	 * Begins a transaction in this PersistenceProvider. Throws an error if already began a transaction.
+	 * Begins a transaction in this SQLPersistenceProvider. Throws an error if already began a transaction.
 	 */
 	public static boolean beginTransaction(){
         boolean isBeginTransaction = true;

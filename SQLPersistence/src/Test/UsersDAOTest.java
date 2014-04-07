@@ -6,18 +6,13 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistance.PersistenceProvider;
+import persistance.SQLPersistenceProvider;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import persistance.PersistenceProvider;
-import persistance.UsersDAO;
+import persistance.SQLUsersDAO;
 import persistance.UserDTO;
 
 import static org.junit.Assert.assertEquals;
@@ -26,15 +21,15 @@ import static org.junit.Assert.assertTrue;
 
 public class UsersDAOTest {
 
-    UsersDAO usersDAO;
+    SQLUsersDAO usersDAO;
 
     UserDTO userDTO1;
     UserDTO userDTO2;
 
     @Before
     public void setUp() throws Exception {
-        PersistenceProvider.initialize();
-        usersDAO = new UsersDAO();
+        SQLPersistenceProvider.initialize();
+        usersDAO = new SQLUsersDAO();
         userDTO1 = new UserDTO(1,"June", "june");
         userDTO2 = new UserDTO(2,"Tang", "tang");
 
@@ -44,11 +39,11 @@ public class UsersDAOTest {
     public void test_addUser() {
         // add users
 
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         usersDAO.deleteUsers();
         assertTrue(usersDAO.addUser(userDTO1));
         assertTrue(usersDAO.addUser(userDTO2));
-        PersistenceProvider.endTransaction(true);
+        SQLPersistenceProvider.endTransaction(true);
 
     }
 
@@ -56,9 +51,9 @@ public class UsersDAOTest {
     public void test_getUsers() {
         //test getUsers
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         usersDTO = usersDAO.getUsers();
-        PersistenceProvider.endTransaction(true);
+        SQLPersistenceProvider.endTransaction(true);
 
         //System.out.println("record " + usersDTO.size());
         if (usersDTO.size() == 2){

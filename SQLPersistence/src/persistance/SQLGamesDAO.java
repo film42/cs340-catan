@@ -12,7 +12,7 @@ import java.util.List;
 *
 *
 */
-public class GamesDAO {
+public class SQLGamesDAO {
 
     /**
      *
@@ -25,7 +25,7 @@ public class GamesDAO {
         ResultSet rs = null;
         try{
             String query = "SELECT id FROM games order by id";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             while(rs.next()){
                 gameIds.add(new Integer(rs.getInt(1)));
@@ -34,8 +34,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return gameIds;
     }
@@ -47,7 +47,7 @@ public class GamesDAO {
         ResultSet rs = null;
         try{
             String query = "SELECT "+ fieldName + " FROM games WHERE id = " + gameId;
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             if (rs.next()){
                fieldValue = rs.getString(1);
@@ -56,8 +56,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return fieldValue;
     }
@@ -71,7 +71,7 @@ public class GamesDAO {
         ResultSet rs = null;
         try{
             String query = "UPDATE games SET "+ fieldName + " = ? WHERE id = " + gameId;
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.setString(1, fieldValue);
             if(stmt.executeUpdate() == 1){
                 isUpdated = true;
@@ -80,8 +80,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return isUpdated;
     }
@@ -120,7 +120,7 @@ public class GamesDAO {
         ResultSet rs = null;
         try{
             String query = "INSERT INTO games( name, initialPoint) VALUES(?,?)";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.setString(1, name);
             stmt.setString(2,initialModel);
             if(stmt.executeUpdate() == 1){
@@ -131,8 +131,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return gameID;
 
@@ -180,7 +180,7 @@ public class GamesDAO {
 
         try {
             String query = "UPDATE games SET checkPoint = ?, checkPointCursor = ? WHERE id = " + gameId;
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.setString(1, checkpointModel);
             stmt.setInt(2,cursor);
             if (stmt.executeUpdate() == 1) {
@@ -189,8 +189,8 @@ public class GamesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return isUpdated;
     }
@@ -206,7 +206,7 @@ public class GamesDAO {
         ResultSet rs = null;
         try{
             String query = "SELECT checkPointCursor FROM games WHERE id = " + gameId;
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             if (rs.next()){
                 cursor = rs.getInt(1);
@@ -215,8 +215,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return cursor;
     }
@@ -226,14 +226,14 @@ public class GamesDAO {
         PreparedStatement stmt = null;
         try {
             String query = "Delete FROM games WHERE id = " + gameId;
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             if (stmt.executeUpdate() == 1) {
                 isDeleted = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            PersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(stmt);
         }
         return isDeleted;
 
@@ -246,7 +246,7 @@ public class GamesDAO {
         try{
             String query = "SELECT id, name,initialPoint,checkPoint,commandList,checkPointCursor "+
                            "FROM games";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             while(rs.next()){
                 GameDTO gameDTO = new GameDTO();
@@ -262,8 +262,8 @@ public class GamesDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return gamesDTO;
     }
@@ -278,12 +278,12 @@ public class GamesDAO {
         PreparedStatement stmt = null;
         try {
             String query = "DELETE FROM games";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            PersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(stmt);
         }
     }
 } 

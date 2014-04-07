@@ -11,8 +11,8 @@ import java.util.List;
 public class PersistenceManager {
 
 
-    private GamesDAO gamesDAO;
-    private UsersDAO usersDAO;
+    private SQLGamesDAO gamesDAO;
+    private SQLUsersDAO usersDAO;
     private int saveInterval;
 
     /**
@@ -22,16 +22,16 @@ public class PersistenceManager {
      */
     public PersistenceManager(int saveInterval){
         this.saveInterval = saveInterval;
-        PersistenceProvider.initialize();
-        gamesDAO = new GamesDAO();
-        usersDAO = new UsersDAO();
+        SQLPersistenceProvider.initialize();
+        gamesDAO = new SQLGamesDAO();
+        usersDAO = new SQLUsersDAO();
     }
 
     /**
      *
      * @return a persistance provider given by the plugin or uses the default provider.
      */
-    private PersistenceProvider loadPlugin(){
+    private SQLPersistenceProvider loadPlugin(){
         return null;
     }
 
@@ -40,12 +40,12 @@ public class PersistenceManager {
      * @param newUser - the user to save
      */
     public void addUser(UserDTO newUser){
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         if (usersDAO.addUser(newUser)){
-            PersistenceProvider.endTransaction(true);
+            SQLPersistenceProvider.endTransaction(true);
         }
         else{
-            PersistenceProvider.endTransaction(false);
+            SQLPersistenceProvider.endTransaction(false);
         }
     }
 
@@ -55,12 +55,12 @@ public class PersistenceManager {
      */
     public void addGame(GameDTO game){
 
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         if (gamesDAO.addGame(game.getName(), game.getInitialPoint()) > 0){
-            PersistenceProvider.endTransaction(true);
+            SQLPersistenceProvider.endTransaction(true);
         }
         else{
-            PersistenceProvider.endTransaction(false);
+            SQLPersistenceProvider.endTransaction(false);
         }
     }
 
@@ -70,9 +70,9 @@ public class PersistenceManager {
      */
     public List<UserDTO> loadUsers(){
 
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         List<UserDTO> users = usersDAO.getUsers();
-        PersistenceProvider.endTransaction(true);
+        SQLPersistenceProvider.endTransaction(true);
         return users;
     }
 
@@ -82,9 +82,9 @@ public class PersistenceManager {
      */
     public List<GameDTO> loadGames(){
 
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         List<GameDTO> games = gamesDAO.getGames();
-        PersistenceProvider.endTransaction(true);
+        SQLPersistenceProvider.endTransaction(true);
         return games;
     }
 
@@ -94,12 +94,12 @@ public class PersistenceManager {
      */
     public void updateCommandList(GameDTO game) {
 
-        PersistenceProvider.beginTransaction();
+        SQLPersistenceProvider.beginTransaction();
         if (gamesDAO.updateCommandList(game.getId(), game.getCommandList())){
-            PersistenceProvider.endTransaction(true);
+            SQLPersistenceProvider.endTransaction(true);
         }
         else{
-            PersistenceProvider.endTransaction(true);
+            SQLPersistenceProvider.endTransaction(true);
         }
 
     }

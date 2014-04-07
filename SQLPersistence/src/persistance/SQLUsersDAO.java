@@ -1,12 +1,11 @@
 package persistance;
 
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersDAO {
+public class SQLUsersDAO {
 
 	/**
 	 * Gets the current users in the db
@@ -21,7 +20,7 @@ public class UsersDAO {
         ResultSet rs = null;
         try{
             String query = "SELECT id, username, password FROM users order by id";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             while(rs.next()){
               UserDTO userDTO = new UserDTO(rs.getInt(1),
@@ -34,8 +33,8 @@ public class UsersDAO {
             e.printStackTrace();
         }
         finally{
-            PersistenceProvider.close(stmt);
-            PersistenceProvider.close(rs);
+            SQLPersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(rs);
         }
         return usersDTO;
     }
@@ -49,7 +48,7 @@ public class UsersDAO {
 
         try{
             String query = "INSERT INTO users (id, username, password) values(?,?,?)";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.setInt(1, user.getId());
             stmt.setString(2, user.getUsername());
             stmt.setString(3, user.getPassword());
@@ -60,7 +59,7 @@ public class UsersDAO {
             e.printStackTrace();
         }
         finally {
-            PersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(stmt);
         }
         return isUserAdded;
     }
@@ -72,12 +71,12 @@ public class UsersDAO {
         PreparedStatement stmt = null;
         try {
             String query = "DELETE FROM users";
-            stmt = PersistenceProvider.getConnection().prepareStatement(query);
+            stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            PersistenceProvider.close(stmt);
+            SQLPersistenceProvider.close(stmt);
         }
     }
 
