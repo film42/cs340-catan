@@ -13,4 +13,6 @@ public interface User {
     String getPassword();
 
     int getId();
+
+	String toJson();
 }
