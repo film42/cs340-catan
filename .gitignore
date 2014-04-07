@@ -15,10 +15,13 @@ SQLPersistence/SQLPersistence.iml
 
 *.prefs
 
+*.class
+
 server/test-build/
 coverage-build/
 coverage-reports/
 server/test-reports/
 
+SQLPersistence/out/
 SQLPersistence/db/
 *.sqlite
