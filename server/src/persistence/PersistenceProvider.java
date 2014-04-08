@@ -1,20 +1,20 @@
-package persistance;
+package persistence;
 
 public interface PersistenceProvider {
 
 	/**
-	 * Gets the users Dba from the PersistenceProvider
+	 * Gets the users DAO from the PersistenceProvider
 	 * 
 	 * @return the UsersDAO object
 	 */
-	public UsersDAO getUsersDBA();
+	public UsersDAO getUsersDAO();
 
 	/**
-	 * Gets the Games Dba from the PersistenceProvider
+	 * Gets the Games DAO from the PersistenceProvider
 	 * 
 	 * @return the GamesDAO object
 	 */
-	public GamesDAO getGamesDBA();
+	public GamesDAO getGamesDAO();
 
 	/**
 	 * Begins a transaction in this PersistenceProvider. Throws an error if already began a transaction.

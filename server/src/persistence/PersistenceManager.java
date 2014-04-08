@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import modelInterfaces.base.Game;
 import modelInterfaces.users.User;
@@ -28,7 +28,7 @@ public class PersistenceManager {
 
     /**
      *
-     * @return a persistance provider given by the plugin or uses the default provider.
+     * @return a persistence provider given by the plugin or uses the default provider.
      */
     private PersistenceProvider loadPlugin(){
         return null;

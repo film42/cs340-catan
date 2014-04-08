@@ -1,11 +1,13 @@
 package model.users;
 
+import model.JsonImpl;
+
 import com.google.inject.Inject;
 
 /**
  * Created by Jon George on 3/13/14.
  */
-public class UserImpl implements modelInterfaces.users.User {
+public class UserImpl extends JsonImpl implements modelInterfaces.users.User {
     private static int nextID = 0;
     private String name = null;
     private String password = null;
