@@ -1,5 +1,7 @@
 package persistance;
 
+import copied.*;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.List;
 *
 *
 */
-public class SQLGamesDAO {
+public class SQLGamesDAO implements copied.GamesDAO{
 
     /**
      *
@@ -138,6 +140,11 @@ public class SQLGamesDAO {
 
     }
 
+    @Override
+    public boolean updateInitialModel(int gameId) {
+        return false;
+    }
+
 
     /**
     *Since the Players are stored inside of the model, just restore the intial model.
@@ -220,6 +227,12 @@ public class SQLGamesDAO {
         }
         return cursor;
     }
+
+    @Override
+    public void clearDatabase() {
+
+    }
+
     public boolean deleteGame(int gameId){
         boolean isDeleted = false;
 

@@ -18,6 +18,7 @@ import persistance.UserDTO;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import copied.PersistenceProvider;
 
 public class UsersDAOTest {
 
@@ -25,10 +26,11 @@ public class UsersDAOTest {
 
     UserDTO userDTO1;
     UserDTO userDTO2;
+    PersistenceProvider sqlProvider;
 
     @Before
     public void setUp() throws Exception {
-        SQLPersistenceProvider.initialize();
+        sqlProvider = new SQLPersistenceProvider();
         usersDAO = new SQLUsersDAO();
         userDTO1 = new UserDTO(1,"June", "june");
         userDTO2 = new UserDTO(2,"Tang", "tang");
@@ -39,21 +41,20 @@ public class UsersDAOTest {
     public void test_addUser() {
         // add users
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
         usersDAO.deleteUsers();
         assertTrue(usersDAO.addUser(userDTO1));
         assertTrue(usersDAO.addUser(userDTO2));
-        SQLPersistenceProvider.endTransaction(true);
-
+        sqlProvider.commitTransaction();
     }
 
     @Test
     public void test_getUsers() {
         //test getUsers
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
         usersDTO = usersDAO.getUsers();
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();
 
         //System.out.println("record " + usersDTO.size());
         if (usersDTO.size() == 2){

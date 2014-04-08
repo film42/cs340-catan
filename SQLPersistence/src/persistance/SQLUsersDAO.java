@@ -1,20 +1,22 @@
 package persistance;
 
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import copied.*;
 
-public class SQLUsersDAO {
+public class SQLUsersDAO implements copied.UsersDAO {
 
 	/**
 	 * Gets the current users in the db
 	 * 
 	 * @return a List of User objects currently saved in the db
 	 */
-	public List<UserDTO> getUsers(){
+	public List<persistance.UserDTO> getUsers(){
 
-        List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+        List<persistance.UserDTO> usersDTO = new ArrayList<persistance.UserDTO>();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -23,7 +25,7 @@ public class SQLUsersDAO {
             stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
             rs = stmt.executeQuery();
             while(rs.next()){
-              UserDTO userDTO = new UserDTO(rs.getInt(1),
+              persistance.UserDTO userDTO = new persistance.UserDTO(rs.getInt(1),
                                             rs.getString(2),
                                             rs.getString(3));
               usersDTO.add(userDTO);

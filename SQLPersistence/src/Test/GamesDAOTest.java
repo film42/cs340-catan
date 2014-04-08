@@ -1,5 +1,6 @@
 package Test;
 
+import copied.PersistenceProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +21,12 @@ public class GamesDAOTest {
 
     private GameDTO gameDTO1;
     private GameDTO gameDTO2;
+    PersistenceProvider sqlProvider;
 
     @Before
     public void setUp() throws Exception {
 
-        SQLPersistenceProvider.initialize();
+        sqlProvider = new SQLPersistenceProvider();
 
         gamesDAO = new SQLGamesDAO();
         gameDTO1 = new GameDTO(0, "Game1", "initialPoint1", "checkPoint1", "commandList1", 10);
@@ -37,7 +39,7 @@ public class GamesDAOTest {
         // add game and get initial Model
 // add game and get initial Model
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
         //delete first
         gamesDAO.deleteGames();
 
@@ -47,7 +49,7 @@ public class GamesDAOTest {
         //check
         assertEquals(gamesDAO.getName(gameId),gameDTO1.getName());
         assertEquals(gamesDAO.getInitialModel(gameId), gameDTO1.getInitialPoint());
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();;
 
     }
 
@@ -58,7 +60,7 @@ public class GamesDAOTest {
         String newCheckPoint = "CheckPoint 5";
         int newCursor = 4;
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
 
         //delete first
         gamesDAO.deleteGames();
@@ -75,7 +77,7 @@ public class GamesDAOTest {
         if (gamesDAO.getCursor(gameId) != newCursor){
             fail();
         }
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();
     }
 
     @Test
@@ -83,7 +85,7 @@ public class GamesDAOTest {
 
         String newUpdateList = "command1";
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
 
         //delete first
         gamesDAO.deleteGames();
@@ -96,13 +98,13 @@ public class GamesDAOTest {
         // validate checkPoit
         assertEquals(gamesDAO.getCommandList(gameId), newUpdateList);
 
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();
     }
 
     @Test
     public void test_getGameIds() {
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
 
         //delete first
         gamesDAO.deleteGames();
@@ -113,14 +115,14 @@ public class GamesDAOTest {
         gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
         if (gamesDAO.getGameIds().size() != 2)
             fail();
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();
     }
 
     @Test
     public void test_getGame() {
 
 
-        SQLPersistenceProvider.beginTransaction();
+        sqlProvider.beginTransaction();
         //delete first
         gamesDAO.deleteGames();
 
@@ -135,7 +137,7 @@ public class GamesDAOTest {
         gamesDAO.updateCommandList(gameId2, gameDTO2.getCommandList());
 
         List<GameDTO> games = gamesDAO.getGames();
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();
 
         // validate
         if (games.size() != 2) {
@@ -149,7 +151,7 @@ public class GamesDAOTest {
     @Test
     public void test_deleteGame() {
 
-         SQLPersistenceProvider.beginTransaction();
+         sqlProvider.beginTransaction();
         //delete first
         gamesDAO.deleteGames();
 
@@ -173,7 +175,7 @@ public class GamesDAOTest {
             fail();
         }
 
-        SQLPersistenceProvider.endTransaction(true);
+        sqlProvider.commitTransaction();;
     }
 
 

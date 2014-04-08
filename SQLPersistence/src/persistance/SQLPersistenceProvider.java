@@ -1,49 +1,44 @@
 package persistance;
 
-import javax.xml.transform.Result;
+
 import java.io.File;
 import java.sql.*;
 
-import java.net.ConnectException;
-import java.util.List;
+import copied.*;
 
-public class SQLPersistenceProvider {
+public class SQLPersistenceProvider implements copied.PersistenceProvider {
 
     private static Connection connection;
+    private GamesDAO gamesDAO;
+    private UsersDAO usersDAO;
 
+    private static boolean  dbInitialize = false;
 
     public SQLPersistenceProvider() {
         connection = null;
-
+        gamesDAO = new SQLGamesDAO();
+        usersDAO = new SQLUsersDAO();
     }
 
-    public static boolean initialize(){
-
-        boolean isInitialize = true;
+    public static void initialize(){
 
         try{
             final String driver = "org.sqlite.JDBC";
             Class.forName(driver);
+            dbInitialize = true;
         } catch (ClassNotFoundException e) {
-            isInitialize = false;
             e.printStackTrace();
         }
-        return isInitialize;
-
     }
 
 
     public static Connection getConnection(){
-        return connection;
-    }
-	/**
-	 * Begins a transaction in this SQLPersistenceProvider. Throws an error if already began a transaction.
-	 */
-	public static boolean beginTransaction(){
-        boolean isBeginTransaction = true;
 
         String dbName = "db" + File.separator + "catan.sqlite";
         String connectionURL = "jdbc:sqlite:" + dbName;
+
+        if (dbInitialize == false)
+            initialize();
 
         try{
 
@@ -53,15 +48,48 @@ public class SQLPersistenceProvider {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            isBeginTransaction = false;
         }
-        return isBeginTransaction;
+        return connection;
     }
-	
-	/**
+
+    @Override
+    public UsersDAO getUsersDAO() {
+        return this.usersDAO;
+    }
+
+    @Override
+    public GamesDAO getGamesDAO() {
+        return this.gamesDAO;
+    }
+
+    /**
+	 * Begins a transaction in this SQLPersistenceProvider. Throws an error if already began a transaction.
+	 */
+	public void beginTransaction(){
+        getConnection();
+    }
+
+    @Override
+    public void commitTransaction() {
+        endTransaction(true);
+
+    }
+
+    @Override
+    public void rollbackTransaction() {
+        endTransaction(false);
+
+    }
+
+    @Override
+    public void wipeDatabase() {
+       this.gamesDAO.clearDatabase();
+    }
+
+    /**
 	 * if commit is true, commit. otherwise rollback.
    	 */
-	public static void  endTransaction(boolean commit){
+	public void  endTransaction(boolean commit){
         assert(connection != null);
 
         try{
@@ -123,19 +151,5 @@ public class SQLPersistenceProvider {
             }
         }
     }
-
-
-    public static void main(String[] args){
-
-         initialize();
-         beginTransaction();
-         if(getConnection() != null)
-             System.out.println("connected");
-         else
-            System.out.println("not connected");
-         endTransaction(true);
-
-    }
-
 
 }
