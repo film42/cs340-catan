@@ -14,6 +14,7 @@ public interface UsersDAO {
 
 	/**
 	 * Adds a user to the db
+     * @return true if success otherwise failed
 	 */
-	public void addUser(UserDTO user);
+	public boolean addUser(UserDTO user);
 }

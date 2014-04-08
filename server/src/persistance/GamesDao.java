@@ -33,20 +33,23 @@ public interface GamesDAO {
     /**
     * Add a created game to the database
     * Sets the cursor to 0.
+    * @return game id or 0 for failed
     */
-    public void addGame(String name, String intialModel);
+    public int addGame(String name, String intialModel);
 
     /**
      * Updates the initial model
      * This is used to update the list of players who have joined the game since creation.
      * @param gameId
+     * @return true for success and false for failed
      */
-    public void updateInitialModel(int gameId);
+    public boolean updateInitialModel(int gameId);
 
     /**
     *Since the Players are stored inside of the model, just restore the intial model.
+    *@return true for success and false for failed
     */
-    public void joinGame(int gameId, String intialModel);
+    public boolean joinGame(int gameId, String intialModel);
 
     /**
     * retrieves the commandList json for a certain game
@@ -54,9 +57,10 @@ public interface GamesDAO {
     public String getCommandList(int gameId);
 
     /**
-    * Updates the commandList json for a certain game
+    * Updates the commandList json for a certain game@return true for success and false for failed
+    * @return true for success and false for failed
     */
-    public void updateCommandList(int gameId, String commandListJson);
+    public boolean updateCommandList(int gameId, String commandListJson);
 
     /**
      *
@@ -67,8 +71,9 @@ public interface GamesDAO {
 
     /**
     * Updates the checkpoint json and the cursor
+    * @return true for success and false for failed
     */
-    public void updateCheckpoint(int gameId, String checkpointModel, int cursor);
+    public boolean updateCheckpoint(int gameId, String checkpointModel, int cursor);
 
     /**
     * get the cursor out of the database
