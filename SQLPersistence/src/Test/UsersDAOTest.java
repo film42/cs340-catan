@@ -6,19 +6,19 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistance.SQLPersistenceProvider;
+import persistence.SQLPersistenceProvider;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import persistance.SQLUsersDAO;
-import persistance.UserDTO;
+import persistence.SQLUsersDAO;
+import persistence.UserDTO;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import copied.PersistenceProvider;
+import persistence.PersistenceProvider;
 
 public class UsersDAOTest {
 

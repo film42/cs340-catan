@@ -1,13 +1,13 @@
 package Test;
 
-import copied.PersistenceProvider;
+import persistence.PersistenceProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistance.SQLPersistenceProvider;
-import persistance.GameDTO;
-import persistance.SQLGamesDAO;
+import persistence.SQLPersistenceProvider;
+import persistence.GameDTO;
+import persistence.SQLGamesDAO;
 
 import java.util.List;
 
