@@ -35,21 +35,13 @@ public interface GamesDAO {
     * Sets the cursor to 0.
     * @return game id or 0 for failed
     */
-    public int addGame(String name, String intialModel);
+    public int addGame(String name, String initialModel);
 
     /**
-     * Updates the initial model
-     * This is used to update the list of players who have joined the game since creation.
-     * @param gameId
-     * @return true for success and false for failed
-     */
-    public boolean updateInitialModel(int gameId);
-
-    /**
-    *Since the Players are stored inside of the model, just restore the intial model.
+    *Since the Players are stored inside of the model, just restore the initial model.
     *@return true for success and false for failed
     */
-    public boolean joinGame(int gameId, String intialModel);
+    public boolean joinGame(int gameId, String initialModel);
 
     /**
     * retrieves the commandList json for a certain game

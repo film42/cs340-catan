@@ -138,14 +138,10 @@ public class SQLGamesDAO implements GamesDAO {
 
     }
 
-    @Override
-    public boolean updateInitialModel(int gameId) {
-        return false;
-    }
 
 
     /**
-    *Since the Players are stored inside of the model, just restore the intial model.
+    *Since the Players are stored inside of the model, just restore the initial model.
     */
     public boolean joinGame(int gameId, String initialModel) {
         return this.updateStringField(gameId, "initialPoint", initialModel);
