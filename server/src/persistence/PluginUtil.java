@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import model.JsonImpl;
 import model.base.GameImpl;
