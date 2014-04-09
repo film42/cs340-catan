@@ -7,7 +7,11 @@ import sun.plugin.dom.exception.PluginNotSupportedException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.Scanner;
+
+import java.net.URLClassLoader;
+import java.net.URL;
 
 /**
  * Created by Adam on 4/7/14.
@@ -38,8 +42,19 @@ public class PluginUtil {
 
     public PersistenceProvider getPersistenceProvider(){
         //use URLClassLoader to load PersistenceProvider
-        
+        try{
+            File jarFile = new File(this.pluginName + "/" + configfile.jar);
+            URL fileURL = jarFile.toURI().toURL();
+            String jarURL = "jar:" + fileURL + "!/";
+            URL urls [] = { new URL(jarURL) };
+            URLClassLoader ucl = new URLClassLoader(urls);
+            PersistenceProvider provider = (PersistenceProvider) Class.forName(configfile.persistenceprovider, true,   ucl).newInstance();
+            return provider;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new PluginNotSupportedException("Not a valid plugin.");
+        }
 
-        return null;
     }
 }
