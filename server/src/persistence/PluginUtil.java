@@ -48,7 +48,7 @@ public class PluginUtil {
     public PersistenceProvider getPersistenceProvider(){
         //use URLClassLoader to load PersistenceProvider
         try{
-            File jarFile = new File(this.pluginName + "/" + configfile.jar);
+            File jarFile = new File("../" + this.pluginName + "/" + configfile.jar);
             URL fileURL = jarFile.toURI().toURL();
             String jarURL = "jar:" + fileURL + "!/";
             URL urls [] = { new URL(jarURL) };
