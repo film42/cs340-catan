@@ -29,6 +29,11 @@ public class UserImpl extends JsonImpl implements modelInterfaces.users.User {
         this.password = password;
     }
 
+	@Override
+	public void setId(int id) {
+		this.id = id;
+	}
+
     @Override
     public String getName() {
         return name;

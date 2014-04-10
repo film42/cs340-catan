@@ -17,14 +17,14 @@ public class GameInfoImpl implements modelInterfaces.base.GameInfo {
     private int id;
     private String title;
     private Game data;
-    private List<Command> commandList;
+	private CommandList commandList;
 
     @Inject
     public GameInfoImpl(Game data) {
         this.id = next_id;
         this.data = data;
         next_id++;
-        commandList = new ArrayList<>();
+		commandList = new CommandList();
     }
 
     @Override
@@ -68,13 +68,13 @@ public class GameInfoImpl implements modelInterfaces.base.GameInfo {
     }
 
     @Override
-    public List<Command> getCommandList() {
+	public CommandList getCommandList() {
         return commandList;
     }
 
     @Override
-    public void setCommandList(List<Command> commandList) {
-        this.commandList = commandList;
+	public void setCommandList(CommandList commandList) {
+		this.commandList = commandList;
     }
 
     @Override

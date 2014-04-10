@@ -8,6 +8,8 @@ public interface User {
 
     void setPassword(String password);
 
+	void setId(int id);
+
     String getName();
 
     String getPassword();

@@ -2,6 +2,7 @@ package modelInterfaces.base;
 
 import comm.moves.base.Command;
 import comm.request.CreateGameRequest;
+import model.base.CommandList;
 import modelInterfaces.users.User;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public interface GameInfo {
 
     void addPlayer(User user, String color);
 
-    List<Command> getCommandList();
+	CommandList getCommandList();
 
-    void setCommandList(List<Command> commandList);
+	void setCommandList(CommandList commandList);
 
     void addCommand(Command command);
 }
