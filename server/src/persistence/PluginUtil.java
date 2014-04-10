@@ -1,5 +1,7 @@
 package persistence;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.JsonImpl;
 import model.base.GameImpl;
 import modelInterfaces.base.Game;
@@ -21,7 +23,7 @@ public class PluginUtil {
     private String pluginName;
     private ConfigFormat configfile;
 
-    private class ConfigFormat{
+    public class ConfigFormat{
         String name;
         String persistenceprovider;
         String jar;
@@ -32,8 +34,11 @@ public class PluginUtil {
         //load jarPath and classPath from config file config.json
         String configjson = null;
         try {
-            configjson = new Scanner(new File(this.pluginName + "/config.json")).useDelimiter("\\Z").next();
-            configfile = JsonImpl.fromJson(configjson, ConfigFormat.class);
+            configjson = new Scanner(new File("../" + this.pluginName + "/config.json")).useDelimiter("\\Z").next();
+            GsonBuilder gb = new GsonBuilder();
+            Gson gson = gb.create();
+            configfile = gson.fromJson(configjson, ConfigFormat.class);
+            //configfile = JsonImpl.fromJson(configjson, ConfigFormat.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new PluginNotSupportedException("Not a valid plugin.");
@@ -48,6 +53,7 @@ public class PluginUtil {
             String jarURL = "jar:" + fileURL + "!/";
             URL urls [] = { new URL(jarURL) };
             URLClassLoader ucl = new URLClassLoader(urls);
+            ucl.loadClass(configfile.persistenceprovider);
             PersistenceProvider provider = (PersistenceProvider) Class.forName(configfile.persistenceprovider, true,   ucl).newInstance();
             return provider;
         }

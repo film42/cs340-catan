@@ -1,0 +1,5 @@
+{
+	"name" : "SQLPersistenceProvider",
+	"persistenceprovider" : "persistence.SQLPersistenceProvider",
+	"jar" : "SQLPersistence.jar"
+}
