@@ -28,7 +28,7 @@ public class PluginUtil {
         String jar;
     }
 
-    public void loadPlugin(String pluginName) throws PluginNotSupportedException{
+	public void loadPlugin(String pluginName) {
         this.pluginName = pluginName;
         //load jarPath and classPath from config file config.json
         String configjson = null;

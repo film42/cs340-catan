@@ -15,7 +15,6 @@ import java.util.List;
 
 import comm.moves.base.Command;
 import server.Server;
-import sun.plugin.dom.exception.PluginNotSupportedException;
 
 /**
  * Created by Jon on 4/4/14.
@@ -41,17 +40,11 @@ public class PersistenceManager {
      */
 	public PersistenceProvider loadPlugin(String pluginName) {
         if(pluginName.equals(""))
-            return null; //no plugin String
-        try{
-            PluginUtil pu = new PluginUtil();
-            pu.loadPlugin(pluginName);
-            return  persistenceProv = pu.getPersistenceProvider();
-        }catch (PluginNotSupportedException e){
-            e.printStackTrace();
-            Server.log.severe("Problem loading Plugin: " + pluginName);
-            Server.log.severe("No Persistence Loaded");
-        }
-        return null;
+			return null; // no plugin String
+		PluginUtil pu = new PluginUtil();
+		pu.loadPlugin(pluginName);
+		persistenceProv = pu.getPersistenceProvider();
+		return persistenceProv;
     }
 
 
