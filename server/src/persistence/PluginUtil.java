@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import model.JsonImpl;
 import model.base.GameImpl;
 import modelInterfaces.base.Game;
-import sun.plugin.dom.exception.PluginNotSupportedException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,7 +40,6 @@ public class PluginUtil {
             //configfile = JsonImpl.fromJson(configjson, ConfigFormat.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new PluginNotSupportedException("Not a valid plugin.");
         }
     }
 
@@ -59,8 +57,8 @@ public class PluginUtil {
         }
         catch (Exception e){
             e.printStackTrace();
-            throw new PluginNotSupportedException("Not a valid plugin.");
         }
+		return null;
 
     }
 }
