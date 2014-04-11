@@ -137,7 +137,7 @@ public class PersistenceManager {
 			// We need to assemble the command list first.
 			CommandList commandList = new CommandList();
 
-            String commandListJson = gamesDAO.getCommandList(gameIndex);
+            String commandListJson = gamesDAO.getCommandList(gameIds.get(gameIndex));
             List<String> jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class).getJsonCommands();
 			for (int i = 0; i < jsonCommands.size(); i++) {
 				String command = jsonCommands.get(i);
@@ -146,9 +146,9 @@ public class PersistenceManager {
 			}
 
 			// Construct a new GameInfo and pass in the Game object (from json) into the constructor
-			GameInfo gameInfo = new GameInfoImpl(JsonImpl.fromJson(gamesDAO.getCheckpoint(gameIndex), Game.class));
+			GameInfo gameInfo = new GameInfoImpl(JsonImpl.fromJson(gamesDAO.getCheckpoint(gameIds.get(gameIndex)), Game.class));
 
-            int cursor = gamesDAO.getCursor(gameIndex);
+            int cursor = gamesDAO.getCursor(gameIds.get(gameIndex));
             //Catch up from the checkpoint to current state
             for(;cursor<commandList.size(); cursor++){
                 try {
@@ -162,8 +162,8 @@ public class PersistenceManager {
 
 			// Set a few more things for the GameInfo
 			gameInfo.setCommandList(commandList);
-			gameInfo.setId(gameIndex);
-			gameInfo.setTitle(gamesDAO.getName(gameIndex));
+			gameInfo.setId(gameIds.get(gameIndex));
+			gameInfo.setTitle(gamesDAO.getName(gameIds.get(gameIndex)));
 
 			// Good to go, add it to the overall list
 			gameList.add(gameInfo);
