@@ -23,6 +23,8 @@
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="../gameplay"/>
     <property name="requests.arg" value="ug"/>
+	<property name="saveInterval" value="15"/>
+	<property name="persistentProvider" value="SQLPersistence"/>
 
     <!-- Base output folder -->
     <property name="dest.dir" value="docs"/>
@@ -38,9 +40,8 @@
 
     <target name="server" depends="compile" description="Runs the student server">
         <java classname="server.Server" fork="yes">
-            <arg value="${port.arg}"/>
-            <arg value="${web.arg}"/>
-            <arg value="${requests.arg}"/>
+            <arg value="${saveInterval}"/>
+            <arg value="${persistentProvider}"/>
             <classpath>
                 <path refid="all-classpath"/>
             </classpath>

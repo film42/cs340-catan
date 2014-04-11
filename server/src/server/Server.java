@@ -68,9 +68,10 @@ public class Server {
 
         PersistenceManager myPersistenceManager = new PersistenceManager(saveInterval);
 
-		if (myPersistenceManager.loadPlugin(pluginName) == null)
+		if (myPersistenceManager.loadPlugin(pluginName) == null) {
 			Server.log.warning("No persistence provider was provided.  Persistent state won't persist.");
-
+			return;
+		}
         myPersistenceManager.clearDatabase();
 
         Set<User> loadedUsers = new HashSet<>();
