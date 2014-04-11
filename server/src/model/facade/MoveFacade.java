@@ -7,6 +7,7 @@ import comm.moves.base.Commandable;
 import comm.moves.base.InvalidCommandException;
 import model.Model;
 import modelInterfaces.base.GameInfo;
+import persistence.PersistenceManager;
 
 import java.io.IOException;
 
@@ -18,8 +19,11 @@ import static comm.moves.base.Command.commandForType;
 public class MoveFacade {
 
     private Model m_model;
-    public MoveFacade(Model model) {
+    private PersistenceManager m_PersistenceManager;
+
+    public MoveFacade(Model model, PersistenceManager myPersistenceManager) {
         m_model = model;
+        m_PersistenceManager = myPersistenceManager;
     }
 
     public String onGetCommands(int gameId){
@@ -50,6 +54,8 @@ public class MoveFacade {
 
         // Run this command then return OK
         command.execute(game);
+
+        m_PersistenceManager.updateCommandList(game);
 
         // Test game for winner
         game.getData().checkForCompletedGame();

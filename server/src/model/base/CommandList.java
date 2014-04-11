@@ -11,11 +11,16 @@ import comm.moves.base.Command;
 import model.JsonImpl;
 
 public class CommandList extends JsonImpl implements Iterable {
+    private ArrayList<String> jsonCommands;
 
-	ArrayList<Command> commandList;
+    public ArrayList<String> getJsonCommands() {
+        return jsonCommands;
+    }
+
+    transient ArrayList<Command> commandList;
 
 	public CommandList() {
-		commandList = new ArrayList<Command>();
+		commandList = new ArrayList<>();
 	}
 
 	public CommandList(List<Command> oldList) {
@@ -114,5 +119,17 @@ public class CommandList extends JsonImpl implements Iterable {
 	public List<Command> subList(int fromIndex, int toIndex) {
 		return commandList.subList(fromIndex, toIndex);
 	}
+
+
+
+    @Override
+    public String toJson(){
+
+        for (Command command : commandList) {
+            jsonCommands.add(command.toJson());
+        }
+
+        return super.toJson();
+    }
 
 }

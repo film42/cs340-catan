@@ -4,6 +4,7 @@ package persistence;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import sun.plugin.dom.exception.PluginNotSupportedException;
 
 
 import static org.junit.Assert.assertEquals;
@@ -18,10 +19,10 @@ public class PluginUtilTest {
 
     @Test
     public void plugInTest(){
-
         PluginUtil pu = new PluginUtil();
         pu.loadPlugin("SQLPersistence");
-        PersistenceProvider pp =pu.getPersistenceProvider();
+        PersistenceProvider pp = pu.getPersistenceProvider();
+
 
     }
 }

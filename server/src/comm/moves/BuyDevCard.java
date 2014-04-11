@@ -13,6 +13,8 @@ import java.io.IOException;
  * Created by: film42 on: 3/13/14.
  */
 public class BuyDevCard extends Command {
+    private String cardType = "";
+
     @Override
     public String getLogMessage() {
         return " bought a development card";
@@ -30,9 +32,10 @@ public class BuyDevCard extends Command {
 		Player player = game.getPlayerByIndex(playerIndex);
 		Deck newDevDeck = player.getNewDevCards();
 
-		String type = deck.getDevCard();
-		switch (type) {
-
+        if(cardType.equals("")) {
+            cardType = deck.getDevCard();
+        }
+		switch (cardType) {
 		case Deck.YEAR_OF_PLENTY:
 			newDevDeck.setYearOfPlenty(newDevDeck.getYearOfPlenty() + 1);
 			break;
@@ -49,7 +52,7 @@ public class BuyDevCard extends Command {
 			newDevDeck.setMonument(newDevDeck.getMonument() + 1);
 			break;
 		default:
-            throw new InvalidCommandException("Invalid Development Card Type " + type);
+            throw new InvalidCommandException("Invalid Development Card Type " + cardType);
 		}
         player.buyDevCard(game.getBank());
 		gameInfo.setData(game);

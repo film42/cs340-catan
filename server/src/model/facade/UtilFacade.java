@@ -5,6 +5,7 @@ import model.Model;
 import comm.request.UserRequest;
 import comm.request.ChangeLogLevelRequest;
 import modelInterfaces.users.User;
+import persistence.PersistenceManager;
 
 /**
  * Created by Jon George on 3/6/14.
@@ -14,9 +15,11 @@ import modelInterfaces.users.User;
 public class UtilFacade {
 
     private Model m_model;
+    private PersistenceManager m_PersistenceManager;
 
-    public UtilFacade(Model model) {
+    public UtilFacade(Model model, PersistenceManager myPersistenceManager) {
         m_model = model;
+        m_PersistenceManager = myPersistenceManager;
     }
 
     /**
@@ -32,7 +35,12 @@ public class UtilFacade {
      * @return success/failure based on whether the username/password is valid
      */
     public boolean onUserRegister(UserRequest userRequest){
-        return m_model.addUser(userRequest.getName(), userRequest.getPassword());
+        User newUser = m_model.addUser(userRequest.getName(), userRequest.getPassword());
+        if(newUser == null) {
+            return false;
+        }
+        m_PersistenceManager.addUser(newUser);
+        return true;
     }
 
     public boolean onChangeLogLevel(ChangeLogLevelRequest changeLogLevelRequest){

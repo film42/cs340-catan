@@ -8,6 +8,7 @@ import model.Model;
 import model.preview.GameStub;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
+import persistence.PersistenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +18,28 @@ import java.util.List;
  */
 public class GamesFacade{
     private Model m_model;
+    private PersistenceManager m_PersistenceManager;
 
-    public GamesFacade(Model model) {
+    public GamesFacade(Model model, PersistenceManager myPersistenceManager) {
         m_model = model;
+        m_PersistenceManager = myPersistenceManager;
     }
 
     public String onCreateGame(CreateGameRequest createGameRequest){
         GameInfo game = m_model.createGame(createGameRequest);
+        m_PersistenceManager.addGame(game);
         GameStub gS = new GameStub(game.getId(), game.getTitle(), game.getData().getPlayers());
         return gS.toJson();
     }
+
     public boolean onJoinGame(JoinGameRequest joinGameRequest, String userName){
-        m_model.joinGame(joinGameRequest, userName);
+        try {
+            m_model.joinGame(joinGameRequest, userName);
+            GameInfo game = m_model.findGameById(Integer.parseInt(joinGameRequest.getId()));
+            m_PersistenceManager.joinGame(game);
+        }catch(NumberFormatException e){
+            return false;
+        }
         return true;
     }
     public String onListGames(){

@@ -29,19 +29,24 @@ public class Model extends JsonImpl {
     @Inject
     public void initUsers(User adam, User steve, User june, User garrett){
         //initialize the server information
-        adam.setName("Adam");
-        adam.setPassword("adam");
-        users.add(adam);
-        steve.setName("Steve");
-        steve.setPassword("steve");
-        users.add(steve);
-        june.setName("June");
-        june.setPassword("june");
-        users.add(june);
-        garrett.setName("Garrett");
-        garrett.setPassword("garrett");
-        users.add(garrett);
+//        adam.setName("Adam");
+//        adam.setPassword("adam");
+//        users.add(adam);
+//        steve.setName("Steve");
+//        steve.setPassword("steve");
+//        users.add(steve);
+//        june.setName("June");
+//        june.setPassword("june");
+//        users.add(june);
+//        garrett.setName("Garrett");
+//        garrett.setPassword("garrett");
+//        users.add(garrett);
     }
+
+    public void setUsers(Set<User> users){
+        this.users = users;
+    }
+
 
     /**
      *
@@ -49,15 +54,15 @@ public class Model extends JsonImpl {
      * @param password
      * @return true if user was added, false if user already exist.
      */
-    public boolean addUser(String username, String password){
+    public User addUser(String username, String password){
         User user = findUserByName(username);
         if(user != null)
-            return false;
+            return null;
         User newUser = InjectorFactory.getInjector().getInstance(User.class);
         newUser.setName(username);
         newUser.setPassword(password);
         users.add(newUser);
-        return true;
+        return newUser;
     }
 
     /**
@@ -96,6 +101,14 @@ public class Model extends JsonImpl {
     public List<GameInfo> getGames(){
         return games;
     }
+
+    /**
+     * set the games list. This is used for loading from the database
+     */
+    public void setGames(List<GameInfo> games){
+        this.games = games;
+    }
+
 
     /**
      * @return GameInfo or Null

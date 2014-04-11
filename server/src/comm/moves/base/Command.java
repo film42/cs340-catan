@@ -23,6 +23,7 @@ import comm.moves.TradeOfferCommand;
 import comm.moves.YearOfPlenty;
 
 import model.InjectorFactory;
+import model.JsonImpl;
 import model.messaging.LineImpl;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
@@ -33,7 +34,7 @@ import java.io.IOException;
 /**
  * Created by: film42 on: 3/12/14.
  */
-public abstract class Command implements Commandable {
+public abstract class Command extends JsonImpl implements Commandable {
 
 	final static String SEND_CHAT = "/moves/sendChat";
 	final static String ROLL_NUMBER = "/moves/rollNumber";

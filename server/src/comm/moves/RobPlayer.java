@@ -17,6 +17,7 @@ import java.io.IOException;
 public class RobPlayer extends Command {
     private int victimIndex;
     private Location location;
+    private String cardStolen = "";
 
     public int getVictimIndex() {
         return victimIndex;
@@ -51,7 +52,7 @@ public class RobPlayer extends Command {
         Player currentPlayer = game.getPlayerByIndex(getPlayerIndex());
 
         if(victimIndex != Player.NO_PLAYER) {
-            Soldier.stealResource(victim.getResources(), currentPlayer.getResources());
+            cardStolen = Soldier.stealResource(victim.getResources(), currentPlayer.getResources(), cardStolen);
         }
 
         game.getTurnTracker().setStatus(TurnTracker.PLAYING);

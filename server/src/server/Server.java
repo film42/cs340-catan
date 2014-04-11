@@ -13,8 +13,10 @@ import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
 import modelInterfaces.base.Game;
+import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
 import modelInterfaces.base.Resources;
+import modelInterfaces.users.User;
 import persistence.PersistenceManager;
 import route.MoveRoute;
 import route.game.*;
@@ -29,8 +31,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static spark.Spark.externalStaticFileLocation;
@@ -47,7 +51,7 @@ public class Server {
     private void run() {
     }
 
-    private void config(int saveInterval) {
+    private void config(int saveInterval, String pluginName) {
 		Server.log.info("Configuring server...");
 
         // Set port here
@@ -62,12 +66,22 @@ public class Server {
         // Facade Classes
 		Model myGame = injector.getInstance(Model.class);
 
-        PersistenceManager pm = new PersistenceManager(saveInterval);
+        PersistenceManager myPersistenceManager = new PersistenceManager(saveInterval);
 
-        UtilFacade myUtilFacade = new UtilFacade(myGame);
-        GamesFacade myGamesFacade = new GamesFacade(myGame);
+        myPersistenceManager.loadPlugin(pluginName);
+
+        myPersistenceManager.clearDatabase();
+
+        Set<User> loadedUsers = new HashSet<>();
+        loadedUsers.addAll(myPersistenceManager.loadUsers());
+
+        List<GameInfo> loadedGames = myPersistenceManager.loadGames();
+        myGame.setGames(loadedGames);
+
+        UtilFacade myUtilFacade = new UtilFacade(myGame, myPersistenceManager);
+        GamesFacade myGamesFacade = new GamesFacade(myGame, myPersistenceManager);
         GameFacade myGameFacade = new GameFacade(myGame);
-        MoveFacade myMoveFacade = new MoveFacade(myGame);
+        MoveFacade myMoveFacade = new MoveFacade(myGame, myPersistenceManager);
 
 
         // Each Route
@@ -86,50 +100,48 @@ public class Server {
 
 		Server.log.info("Server configured");
 
-
-
-        myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
-        myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
-		myGame.joinGame(new JoinGameRequest("blue", "0"), "Garrett");
-		myGame.joinGame(new JoinGameRequest("orange", "0"), "June");
-		myGame.joinGame(new JoinGameRequest("green", "0"), "Steve");
-
-        myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
-		myGame.joinGame(new JoinGameRequest("red", "1"), "Adam");
-        myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
-
-		// Past Setup
-		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
-		myGame.joinGame(new JoinGameRequest("red", "2"), "Adam");
-		myGame.joinGame(new JoinGameRequest("blue", "2"), "June");
-		
-		// Half way
-		myGame.createGame(new CreateGameRequest(true, true, true, "Half Way"));
-		myGame.joinGame(new JoinGameRequest("red", "3"), "Adam");
-		myGame.joinGame(new JoinGameRequest("blue", "3"), "Garrett");
-		myGame.joinGame(new JoinGameRequest("orange", "3"), "June");
-		myGame.joinGame(new JoinGameRequest("green", "3"), "Steve");
-
-		// now load an existing model from a json and put it in our Past Setup game
-		try {
-			String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
-			Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
-			myGame.getGames().get(2).setData(game);
-
-			gameJson = new Scanner(new File("HalfWayGame.json")).useDelimiter("\\Z").next();
-			game = JsonImpl.fromJson(gameJson, GameImpl.class);
-			myGame.getGames().get(3).setData(game);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-        List<Player> players = myGame.findGameById(1).getData().getPlayers();
-        for (Player player : players) { //give them lots of resources
-            Resources money = injector.getInstance(Resources.class);
-            money.setResources(9,9,9,9,9);
-            player.setResources(money);
-        }
+//        myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
+//        myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
+//		myGame.joinGame(new JoinGameRequest("blue", "0"), "Garrett");
+//		myGame.joinGame(new JoinGameRequest("orange", "0"), "June");
+//		myGame.joinGame(new JoinGameRequest("green", "0"), "Steve");
+//
+//        myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
+//		myGame.joinGame(new JoinGameRequest("red", "1"), "Adam");
+//        myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
+//
+//		// Past Setup
+//		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
+//		myGame.joinGame(new JoinGameRequest("red", "2"), "Adam");
+//		myGame.joinGame(new JoinGameRequest("blue", "2"), "June");
+//
+//		// Half way
+//		myGame.createGame(new CreateGameRequest(true, true, true, "Half Way"));
+//		myGame.joinGame(new JoinGameRequest("red", "3"), "Adam");
+//		myGame.joinGame(new JoinGameRequest("blue", "3"), "Garrett");
+//		myGame.joinGame(new JoinGameRequest("orange", "3"), "June");
+//		myGame.joinGame(new JoinGameRequest("green", "3"), "Steve");
+//
+//		// now load an existing model from a json and put it in our Past Setup game
+//		try {
+//			String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
+//			Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
+//			myGame.getGames().get(2).setData(game);
+//
+//			gameJson = new Scanner(new File("HalfWayGame.json")).useDelimiter("\\Z").next();
+//			game = JsonImpl.fromJson(gameJson, GameImpl.class);
+//			myGame.getGames().get(3).setData(game);
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//        List<Player> players = myGame.findGameById(1).getData().getPlayers();
+//        for (Player player : players) { //give them lots of resources
+//            Resources money = injector.getInstance(Resources.class);
+//            money.setResources(9,9,9,9,9);
+//            player.setResources(money);
+//        }
     }
 
     private static class UserCookie extends JsonImpl{
@@ -185,16 +197,23 @@ public class Server {
     private static final int DEFAULT_INTERVAL = 10;
 
     public static void main(String[] args) {
-		// Server
+        // Server
         Server server = new Server();
         int saveInterval = DEFAULT_INTERVAL; //default save Interval
-        if(args.length > 0)
+        String pluginName = "";
+        try{
+        if (args.length > 1) {
             saveInterval = Integer.parseInt(args[0]);
-        if(saveInterval < 1) {
+            pluginName = args[1];
+        }
+        if (saveInterval < 1) {
+            throw new IllegalArgumentException();
+        }
+        }catch (IllegalArgumentException e){
             log.warning("Bad save Interval argument: " + args[0]);
             saveInterval = DEFAULT_INTERVAL;
         }
-        server.config(saveInterval);
+        server.config(saveInterval, pluginName);
         server.run();
     }
 

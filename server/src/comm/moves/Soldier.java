@@ -17,6 +17,7 @@ public class Soldier extends Command {
 
     private int victimIndex;
     private Location location;
+    private String cardStolen = "";
 
     public int getVictimIndex() {
         return victimIndex;
@@ -47,7 +48,7 @@ public class Soldier extends Command {
             // (make sure they have at least one)
             // TODO: Logic check this for soldier
             Player victim = game.getPlayerByIndex(getVictimIndex());
-            stealResource(victim.getResources(), currentPlayer.getResources());
+            cardStolen = stealResource(victim.getResources(), currentPlayer.getResources(), cardStolen);
         }
 
         currentPlayer.setSoldiers(currentPlayer.getSoldiers() + 1);
@@ -67,17 +68,21 @@ public class Soldier extends Command {
 
     //This method is shared by Soldier and RobPlayer.
     //It is just util, so I figure inheritance wasn't needed.
-    public static void stealResource(Resources stealFrom, Resources giveTo) throws InvalidCommandException {
+    public static String stealResource(Resources stealFrom, Resources giveTo, String typeToTake) throws InvalidCommandException {
+        String type = typeToTake;
+        if(type.equals("")) {
+            List<String> availableList = stealFrom.getAvailibleResources();
 
-        List<String> availableList = stealFrom.getAvailibleResources();
+            if (availableList.size() <= 0) {
+                return "";
+            }
 
-        if(availableList.size() <= 0){
-			return;
+            int index = (int) (Math.random() * availableList.size());
+            type = availableList.get(index);
         }
-
-        int index = (int)(Math.random()*availableList.size());
-        String type = availableList.get(index);
         stealFrom.decrementResourceByString(type, 1);
         giveTo.incrementResourceByString(type, 1);
+        return type;
     }
+
 }
