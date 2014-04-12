@@ -152,11 +152,13 @@ public class PersistenceManager {
         String checkpointJson = gamesDAO.getCheckpoint(gameId);
         GameInfo gameInfo;
         if(checkpointJson != null) {
-            gameInfo = new GameInfoImpl(JsonImpl.fromJson(checkpointJson, Game.class));
+            Game game = JsonImpl.fromJson(checkpointJson, Game.class);
+            gameInfo = new GameInfoImpl(game);
         }else{ //if there is no checkpoint then load the initial.
             String initialJson = gamesDAO.getInitialModel(gameId);
             if(initialJson != null){
-                gameInfo = new GameInfoImpl(JsonImpl.fromJson(initialJson, Game.class));
+                Game game = JsonImpl.fromJson(initialJson, Game.class);
+                gameInfo = new GameInfoImpl(game);
             }else{
                 //this shouldn't happen
                 Server.log.severe("Attempted to load Game, but no game data to load");
@@ -189,7 +191,8 @@ public class PersistenceManager {
 
     private void loadCommandList(CommandList commandList, String commandListJson) {
         //undo the double serialization.
-        List<String> jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class).getJsonCommands();
+        CommandList dbCommands = JsonImpl.fromJson(commandListJson, CommandList.class);
+        List<String> jsonCommands = dbCommands.getJsonCommands();
         for (int i = 0; i < jsonCommands.size(); i++) {
             String command = jsonCommands.get(i);
             Command genericCommand = JsonImpl.fromJson(command, Command.class);

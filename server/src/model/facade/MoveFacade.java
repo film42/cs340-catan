@@ -2,8 +2,7 @@ package model.facade;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import comm.moves.*;
-import comm.moves.base.Commandable;
+import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import model.Model;
 import modelInterfaces.base.GameInfo;
@@ -47,13 +46,16 @@ public class MoveFacade {
             throw new InvalidCommandException(type);
         }
 
-		Commandable command = commandForType(type, json);
+		Command command = commandForType(type, json);
 
 		if (command == null)
 			return false;
 
         // Run this command then return OK
         command.execute(game);
+
+        // Add the command to the Game's command list
+        game.addCommand(command);
 
         m_PersistenceManager.updateCommandList(game);
 

@@ -1,14 +1,9 @@
 package model.base;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import comm.moves.base.Command;
-
 import model.JsonImpl;
+
+import java.util.*;
 
 public class CommandList extends JsonImpl implements Iterable {
     private ArrayList<String> jsonCommands;
@@ -124,6 +119,8 @@ public class CommandList extends JsonImpl implements Iterable {
 
     @Override
     public String toJson(){
+
+        jsonCommands = new ArrayList<>();
 
         for (Command command : commandList) {
             jsonCommands.add(command.toJson());

@@ -43,7 +43,6 @@ public class JsonImpl implements JsonSerializable, JsonParseable{
         gb.registerTypeAdapter(Line.class, new InterfaceDeserializer<LineImpl>(LineImpl.class));
         gb.registerTypeAdapter(Map.class, new InterfaceDeserializer<MapImpl>(MapImpl.class));
         gb.registerTypeAdapter(Location.class, new InterfaceDeserializer<LocationImpl>(LocationImpl.class));
-		gb.registerTypeAdapter(CommandList.class, new InterfaceDeserializer<CommandList>(CommandList.class));
 
 
         // Create and deserialize

@@ -1,40 +1,19 @@
 package comm.moves.base;
 
-import static comm.moves.base.Command.moveFromJson;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import comm.moves.AcceptTrade;
-import comm.moves.BuildCity;
-import comm.moves.BuildRoad;
-import comm.moves.BuildSettlement;
-import comm.moves.BuyDevCard;
-import comm.moves.DiscardCards;
-import comm.moves.FinishTurn;
-import comm.moves.MaritimeTrade;
-import comm.moves.Monopoly;
-import comm.moves.Monument;
-import comm.moves.RoadBuilding;
-import comm.moves.RobPlayer;
-import comm.moves.RollNumber;
-import comm.moves.SendChat;
-import comm.moves.Soldier;
-import comm.moves.TradeOfferCommand;
-import comm.moves.YearOfPlenty;
-
-import model.InjectorFactory;
+import comm.moves.*;
 import model.JsonImpl;
 import model.messaging.LineImpl;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.base.Player;
-import modelInterfaces.messaging.Line;
 
 import java.io.IOException;
 
 /**
  * Created by: film42 on: 3/12/14.
  */
-public abstract class Command extends JsonImpl implements Commandable {
+public class Command extends JsonImpl implements Commandable {
 
 	final static String SEND_CHAT = "/moves/sendChat";
 	final static String ROLL_NUMBER = "/moves/rollNumber";
@@ -67,7 +46,9 @@ public abstract class Command extends JsonImpl implements Commandable {
         return playerIndex;
     }
 
-    public abstract String getLogMessage();
+    public String getLogMessage() {
+        return null;
+    }
 
     @Override
     public void execute(GameInfo gameInfo) throws IOException, InvalidCommandException{

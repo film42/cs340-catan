@@ -8,15 +8,11 @@ import model.InjectorFactory;
 import model.JsonImpl;
 import model.Model;
 import model.ModelModule;
-import model.base.GameImpl;
 import model.facade.GameFacade;
 import model.facade.GamesFacade;
 import model.facade.MoveFacade;
 import model.facade.UtilFacade;
-import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
-import modelInterfaces.base.Player;
-import modelInterfaces.base.Resources;
 import modelInterfaces.users.User;
 import persistence.PersistenceManager;
 import route.MoveRoute;
@@ -28,13 +24,10 @@ import route.user.LoginRoute;
 import route.user.RegisterRoute;
 import route.util.ChangeLogLevelRoute;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -73,10 +66,11 @@ public class Server {
 			Server.log.warning("No persistence provider was provided.  Persistent state won't persist.");
 			return;
 		}
-        myPersistenceManager.clearDatabase();
+//        myPersistenceManager.clearDatabase();
 
         Set<User> loadedUsers = new HashSet<>();
-        loadedUsers.addAll(myPersistenceManager.loadUsers());
+        List<User> users = myPersistenceManager.loadUsers();
+        loadedUsers.addAll(users);
 
         List<GameInfo> loadedGames = myPersistenceManager.loadGames();
         myGame.setGames(loadedGames);
