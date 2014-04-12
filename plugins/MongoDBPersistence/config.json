@@ -1,0 +1,5 @@
+{
+    "name" : "MongoDB Persistence Provider",
+    "persistenceprovider" : "persistence.mongo.MongoPersistenceProvider",
+    "jar" : "MongoDBPersistence.jar"
+}
