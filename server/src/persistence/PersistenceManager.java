@@ -1,5 +1,6 @@
 package persistence;
 
+import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import model.InjectorFactory;
 import model.JsonImpl;
@@ -12,9 +13,6 @@ import modelInterfaces.users.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import comm.moves.base.Command;
-import server.Server;
 
 /**
  * Created by Jon on 4/4/14.
@@ -138,9 +136,11 @@ public class PersistenceManager {
 			CommandList commandList = new CommandList();
 
             String commandListJson = gamesDAO.getCommandList(gameIds.get(gameIndex));
-            List<String> jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class).getJsonCommands();
+            CommandList jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class);
+            List<String> jsonCommandsList = jsonCommands.getJsonCommands();
+
 			for (int i = 0; i < jsonCommands.size(); i++) {
-				String command = jsonCommands.get(i);
+				String command = jsonCommandsList.get(i);
                 Command genericCommand = JsonImpl.fromJson(command, Command.class);
 				commandList.add(Command.commandForType("/moves/" + genericCommand.getType(), command));
 			}
