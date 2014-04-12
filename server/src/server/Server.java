@@ -71,6 +71,7 @@ public class Server {
         Set<User> loadedUsers = new HashSet<>();
         List<User> users = myPersistenceManager.loadUsers();
         loadedUsers.addAll(users);
+        myGame.setUsers(loadedUsers);
 
         List<GameInfo> loadedGames = myPersistenceManager.loadGames();
         myGame.setGames(loadedGames);
