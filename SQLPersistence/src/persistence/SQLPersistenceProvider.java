@@ -82,6 +82,7 @@ public class SQLPersistenceProvider implements PersistenceProvider {
     @Override
     public void wipeDatabase() {
        this.gamesDAO.clearDatabase();
+       this.usersDAO.clearDatabase();
     }
 
     /**

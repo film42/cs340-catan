@@ -3,6 +3,7 @@ package server;
 import com.google.inject.Injector;
 import comm.request.CreateGameRequest;
 import comm.request.JoinGameRequest;
+import comm.request.UserRequest;
 import model.InjectorFactory;
 import model.JsonImpl;
 import model.Model;
@@ -102,46 +103,65 @@ public class Server {
 
 		Server.log.info("Server configured");
 
-//        myGame.createGame(new CreateGameRequest(true, true, true, "Just Started"));
-//        myGame.joinGame(new JoinGameRequest("red", "0"), "Adam");
-//		myGame.joinGame(new JoinGameRequest("blue", "0"), "Garrett");
-//		myGame.joinGame(new JoinGameRequest("orange", "0"), "June");
-//		myGame.joinGame(new JoinGameRequest("green", "0"), "Steve");
+        if(loadedUsers.size() < 1){
+            initDefaultUsers(myUtilFacade);
+        }
+        if(loadedGames.size() < 1) {
+            initDefaultGames(myGamesFacade, myGame);
+        }
+
+    }
+
+    private void initDefaultUsers(UtilFacade myUtilFacade) {
+        myUtilFacade.onUserRegister(new UserRequest("Adam", "adam"));
+        myUtilFacade.onUserRegister(new UserRequest("Steve", "steve"));
+        myUtilFacade.onUserRegister(new UserRequest("June", "june"));
+        myUtilFacade.onUserRegister(new UserRequest("Garrett", "garrett"));
+    }
+
+    private void initDefaultGames(GamesFacade myGamesFacade, Model myGame) {
+        List<GameInfo> games = myGame.getGames();
+        myGamesFacade.onCreateGame(new CreateGameRequest(true, true, true, "Just Started"));
+        int id = games.get(games.size() - 1).getId();
+        myGamesFacade.onJoinGame(new JoinGameRequest("red", ""+id), "Adam");
+        myGamesFacade.onJoinGame(new JoinGameRequest("blue", ""+id), "Garrett");
+        myGamesFacade.onJoinGame(new JoinGameRequest("orange", ""+id), "June");
+        myGamesFacade.onJoinGame(new JoinGameRequest("green",""+id), "Steve");
+        id = games.get(games.size() - 1).getId();
+        myGamesFacade.onCreateGame(new CreateGameRequest(true, true, true, "Test Game"));
+        myGamesFacade.onJoinGame(new JoinGameRequest("red", ""+id), "Adam");
+        myGamesFacade.onJoinGame(new JoinGameRequest("blue", ""+id), "Garrett");
+        id = games.get(games.size() - 1).getId();
+        // Past Setup
+        myGamesFacade.onCreateGame(new CreateGameRequest(true, true, true, "Past Setup"));
+        myGamesFacade.onJoinGame(new JoinGameRequest("red", ""+id), "Adam");
+        myGamesFacade.onJoinGame(new JoinGameRequest("blue", ""+id), "June");
+        id = games.get(games.size() - 1).getId();
+        // Half way
+        myGamesFacade.onCreateGame(new CreateGameRequest(true, true, true, "Half Way"));
+        myGamesFacade.onJoinGame(new JoinGameRequest("red", ""+id), "Adam");
+        myGamesFacade.onJoinGame(new JoinGameRequest("blue", ""+id), "Garrett");
+        myGamesFacade.onJoinGame(new JoinGameRequest("orange", ""+id), "June");
+        myGamesFacade.onJoinGame(new JoinGameRequest("green", ""+id), "Steve");
+
+        // now load an existing model from a json and put it in our Past Setup game
+//        try {
+//            String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
+//            Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
+//            myGame.getGames().get(2).setData(game);
 //
-//        myGame.createGame(new CreateGameRequest(true, true, true, "Test Game"));
-//		myGame.joinGame(new JoinGameRequest("red", "1"), "Adam");
-//        myGame.joinGame(new JoinGameRequest("blue","1"), "Garrett");
+//            gameJson = new Scanner(new File("HalfWayGame.json")).useDelimiter("\\Z").next();
+//            game = JsonImpl.fromJson(gameJson, GameImpl.class);
+//            myGame.getGames().get(3).setData(game);
 //
-//		// Past Setup
-//		myGame.createGame(new CreateGameRequest(true, true, true, "Past Setup"));
-//		myGame.joinGame(new JoinGameRequest("red", "2"), "Adam");
-//		myGame.joinGame(new JoinGameRequest("blue", "2"), "June");
-//
-//		// Half way
-//		myGame.createGame(new CreateGameRequest(true, true, true, "Half Way"));
-//		myGame.joinGame(new JoinGameRequest("red", "3"), "Adam");
-//		myGame.joinGame(new JoinGameRequest("blue", "3"), "Garrett");
-//		myGame.joinGame(new JoinGameRequest("orange", "3"), "June");
-//		myGame.joinGame(new JoinGameRequest("green", "3"), "Steve");
-//
-//		// now load an existing model from a json and put it in our Past Setup game
-//		try {
-//			String gameJson = new Scanner(new File("PastSetupGame.json")).useDelimiter("\\Z").next();
-//			Game game = JsonImpl.fromJson(gameJson, GameImpl.class);
-//			myGame.getGames().get(2).setData(game);
-//
-//			gameJson = new Scanner(new File("HalfWayGame.json")).useDelimiter("\\Z").next();
-//			game = JsonImpl.fromJson(gameJson, GameImpl.class);
-//			myGame.getGames().get(3).setData(game);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //
 //        List<Player> players = myGame.findGameById(1).getData().getPlayers();
 //        for (Player player : players) { //give them lots of resources
 //            Resources money = injector.getInstance(Resources.class);
-//            money.setResources(9,9,9,9,9);
+//            money.setResources(9, 9, 9, 9, 9);
 //            player.setResources(money);
 //        }
     }

@@ -76,7 +76,8 @@ public class PersistenceManager {
 		persistenceProv.beginTransaction();
 		GamesDAO gamesDAO = persistenceProv.getGamesDAO();
         //I'm concerned we don't pass the ID in.
-		gamesDAO.addGame(gameInfo.getTitle(), gameInfo.getData().toJson());
+		int gameId = gamesDAO.addGame(gameInfo.getTitle(), gameInfo.getData().toJson());
+        gameInfo.setId(gameId);
 		persistenceProv.commitTransaction();
     }
 
@@ -128,28 +129,47 @@ public class PersistenceManager {
 
 		persistenceProv.beginTransaction();
 		GamesDAO gamesDAO = persistenceProv.getGamesDAO();
-		ArrayList<GameInfo> gameList = new ArrayList<GameInfo>();
-
+		ArrayList<GameInfo> gameList = new ArrayList<>();
 
         List<Integer> gameIds = gamesDAO.getGameIds();
 		for (int gameIndex = 0; gameIndex < gameIds.size(); gameIndex++) {
+            loadGame(gamesDAO, gameList, gameIds.get(gameIndex));
+        }
 
-			// We need to assemble the command list first.
-			CommandList commandList = new CommandList();
+		persistenceProv.commitTransaction();
 
-            String commandListJson = gamesDAO.getCommandList(gameIds.get(gameIndex));
-            List<String> jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class).getJsonCommands();
-			for (int i = 0; i < jsonCommands.size(); i++) {
-				String command = jsonCommands.get(i);
-                Command genericCommand = JsonImpl.fromJson(command, Command.class);
-				commandList.add(Command.commandForType("/moves/" + genericCommand.getType(), command));
-			}
+		// Return the list of games
+		return gameList;
+    }
 
-			// Construct a new GameInfo and pass in the Game object (from json) into the constructor
-			GameInfo gameInfo = new GameInfoImpl(JsonImpl.fromJson(gamesDAO.getCheckpoint(gameIds.get(gameIndex)), Game.class));
+    private void loadGame(GamesDAO gamesDAO, ArrayList<GameInfo> gameList, int gameId) {
+        // We need to assemble the command list first.
+        CommandList commandList = new CommandList();
 
-            int cursor = gamesDAO.getCursor(gameIds.get(gameIndex));
-            //Catch up from the checkpoint to current state
+        String commandListJson = gamesDAO.getCommandList(gameId);
+        if(commandListJson != null ) {
+            loadCommandList(commandList, commandListJson);
+        }
+
+        // Construct a new GameInfo and pass in the Game object (from json) into the constructor
+        String checkpointJson = gamesDAO.getCheckpoint(gameId);
+        GameInfo gameInfo;
+        if(checkpointJson != null) {
+            gameInfo = new GameInfoImpl(JsonImpl.fromJson(checkpointJson, Game.class));
+        }else{ //if there is no checkpoint then load the initial.
+            String initialJson = gamesDAO.getInitialModel(gameId);
+            if(initialJson != null){
+                gameInfo = new GameInfoImpl(JsonImpl.fromJson(initialJson, Game.class));
+            }else{
+                //this shouldn't happen
+                Server.log.severe("Attempted to load Game, but no game data to load");
+                return; //if there is no initial json either... return out.
+            }
+        }
+
+        int cursor = gamesDAO.getCursor(gameId);
+        //Catch up from the checkpoint to current state
+        if(cursor >= 0){
             for(;cursor<commandList.size(); cursor++){
                 try {
                     commandList.get(cursor).execute(gameInfo);
@@ -159,20 +179,25 @@ public class PersistenceManager {
                     e.printStackTrace();
                 }
             }
+        }
 
-			// Set a few more things for the GameInfo
-			gameInfo.setCommandList(commandList);
-			gameInfo.setId(gameIds.get(gameIndex));
-			gameInfo.setTitle(gamesDAO.getName(gameIds.get(gameIndex)));
+        // Set a few more things for the GameInfo
+        gameInfo.setCommandList(commandList);
+        gameInfo.setId(gameId);
+        gameInfo.setTitle(gamesDAO.getName(gameId));
 
-			// Good to go, add it to the overall list
-			gameList.add(gameInfo);
-		}
+        // Good to go, add it to the overall list
+        gameList.add(gameInfo);
+    }
 
-		persistenceProv.commitTransaction();
-
-		// Return the list of games
-		return gameList;
+    private void loadCommandList(CommandList commandList, String commandListJson) {
+        //undo the double serialization.
+        List<String> jsonCommands = JsonImpl.fromJson(commandListJson, CommandList.class).getJsonCommands();
+        for (int i = 0; i < jsonCommands.size(); i++) {
+            String command = jsonCommands.get(i);
+            Command genericCommand = JsonImpl.fromJson(command, Command.class);
+            commandList.add(Command.commandForType("/moves/" + genericCommand.getType(), command));
+        }
     }
 
     /**

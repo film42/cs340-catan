@@ -224,7 +224,10 @@ public class SQLGamesDAO implements GamesDAO {
 
     @Override
     public void clearDatabase() {
-
+        List<Integer> ids = getGameIds();
+        for (Integer id : ids) {
+            deleteGame(id);
+        }
     }
 
     public boolean deleteGame(int gameId){

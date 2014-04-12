@@ -26,23 +26,6 @@ public class Model extends JsonImpl {
         games = new ArrayList<>();
 	}
 
-    @Inject
-    public void initUsers(User adam, User steve, User june, User garrett){
-        //initialize the server information
-//        adam.setName("Adam");
-//        adam.setPassword("adam");
-//        users.add(adam);
-//        steve.setName("Steve");
-//        steve.setPassword("steve");
-//        users.add(steve);
-//        june.setName("June");
-//        june.setPassword("june");
-//        users.add(june);
-//        garrett.setName("Garrett");
-//        garrett.setPassword("garrett");
-//        users.add(garrett);
-    }
-
     public void setUsers(Set<User> users){
         this.users = users;
     }

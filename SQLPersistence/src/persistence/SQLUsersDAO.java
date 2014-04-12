@@ -64,6 +64,12 @@ public class SQLUsersDAO implements UsersDAO {
         }
         return isUserAdded;
     }
+
+    @Override
+    public void clearDatabase() {
+        deleteUsers();
+    }
+
     /**
      * delete Users
      */

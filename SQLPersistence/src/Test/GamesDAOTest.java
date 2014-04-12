@@ -30,7 +30,7 @@ public class GamesDAOTest {
 
         gamesDAO = new SQLGamesDAO();
         gameDTO1 = new GameDTO(0, "Game1", "initialPoint1", "checkPoint1", "commandList1", 10);
-        gameDTO2 = new GameDTO(0, "Game2", "initialPoint2", "checkPoint2", "commandList2", 20);
+        gameDTO2 = new GameDTO(1, "Game2", "initialPoint2", "checkPoint2", "commandList2", 20);
 
     }
 
@@ -49,7 +49,7 @@ public class GamesDAOTest {
         //check
         assertEquals(gamesDAO.getName(gameId),gameDTO1.getName());
         assertEquals(gamesDAO.getInitialModel(gameId), gameDTO1.getInitialPoint());
-        sqlProvider.commitTransaction();;
+        sqlProvider.rollbackTransaction();
 
     }
 
@@ -77,7 +77,7 @@ public class GamesDAOTest {
         if (gamesDAO.getCursor(gameId) != newCursor){
             fail();
         }
-        sqlProvider.commitTransaction();
+        sqlProvider.rollbackTransaction();
     }
 
     @Test
@@ -98,7 +98,7 @@ public class GamesDAOTest {
         // validate checkPoit
         assertEquals(gamesDAO.getCommandList(gameId), newUpdateList);
 
-        sqlProvider.commitTransaction();
+        sqlProvider.rollbackTransaction();
     }
 
     @Test
@@ -115,7 +115,7 @@ public class GamesDAOTest {
         gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
         if (gamesDAO.getGameIds().size() != 2)
             fail();
-        sqlProvider.commitTransaction();
+        sqlProvider.rollbackTransaction();
     }
 
     @Test
@@ -137,7 +137,7 @@ public class GamesDAOTest {
         gamesDAO.updateCommandList(gameId2, gameDTO2.getCommandList());
 
         List<GameDTO> games = gamesDAO.getGames();
-        sqlProvider.commitTransaction();
+        sqlProvider.rollbackTransaction();
 
         // validate
         if (games.size() != 2) {
@@ -175,7 +175,7 @@ public class GamesDAOTest {
             fail();
         }
 
-        sqlProvider.commitTransaction();;
+        sqlProvider.rollbackTransaction();
     }
 
 

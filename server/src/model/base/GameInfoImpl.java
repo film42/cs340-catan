@@ -13,7 +13,7 @@ import java.util.List;
  * Created by qzcx on 3/17/14.
  */
 public class GameInfoImpl implements modelInterfaces.base.GameInfo {
-    private static int next_id = 0;
+    private static int next_id = 1;
     private int id;
     private String title;
     private Game data;
@@ -25,6 +25,10 @@ public class GameInfoImpl implements modelInterfaces.base.GameInfo {
         this.data = data;
         next_id++;
 		commandList = new CommandList();
+    }
+
+    public static void setNextId(int nextId){
+        next_id = nextId;
     }
 
     @Override
