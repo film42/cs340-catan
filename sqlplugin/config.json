@@ -1,5 +1,0 @@
-{
-"name": "SQL Plugin",
-"persistenceprovider": "SQLPersistenceProvider",
-"jar": "SQLPersistence.jar"
-}

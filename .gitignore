@@ -4,6 +4,8 @@
 bin/
 cs340-catan.iml
 
+*.iml
+
 SQLPersistence/SQLPersistence.iml
 
 .idea
@@ -21,7 +23,13 @@ server/test-build/
 coverage-build/
 coverage-reports/
 server/test-reports/
+server/coverage-reports/
 
-SQLPersistence/out/
-SQLPersistence/db/
+plugins/SQLPersistence/out/
+plugins/SQLPersistence/db/
 *.sqlite
+
+
+ant-build/
+cobertura.ser
+*.ser

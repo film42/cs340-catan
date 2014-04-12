@@ -2,17 +2,12 @@ package persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.JsonImpl;
-import model.base.GameImpl;
-import modelInterfaces.base.Game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.util.Scanner;
-
-import java.net.URLClassLoader;
 import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Scanner;
 
 /**
  * Created by Adam on 4/7/14.
@@ -21,6 +16,7 @@ public class PluginUtil {
 
     private String pluginName;
     private ConfigFormat configfile;
+    private final String PLUGINS_DIR = "../plugins/";
 
     public class ConfigFormat{
         String name;
@@ -33,7 +29,7 @@ public class PluginUtil {
         //load jarPath and classPath from config file config.json
         String configjson = null;
         try {
-            configjson = new Scanner(new File("../" + this.pluginName + "/config.json")).useDelimiter("\\Z").next();
+            configjson = new Scanner(new File(PLUGINS_DIR + this.pluginName + "/config.json")).useDelimiter("\\Z").next();
             GsonBuilder gb = new GsonBuilder();
             Gson gson = gb.create();
             configfile = gson.fromJson(configjson, ConfigFormat.class);
@@ -46,7 +42,7 @@ public class PluginUtil {
     public PersistenceProvider getPersistenceProvider(){
         //use URLClassLoader to load PersistenceProvider
         try{
-            File jarFile = new File("../" + this.pluginName + "/" + configfile.jar);
+            File jarFile = new File(PLUGINS_DIR + this.pluginName + "/" + configfile.jar);
             URL fileURL = jarFile.toURI().toURL();
             String jarURL = "jar:" + fileURL + "!/";
             URL urls [] = { new URL(jarURL) };
