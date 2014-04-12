@@ -35,7 +35,7 @@ public interface GamesDAO {
     * Sets the cursor to 0.
     * @return game id or 0 for failed
     */
-    public int addGame(String name, String initialModel);
+    public int addGame(int gameId, String name, String initialModel);
 
     /**
     *Since the Players are stored inside of the model, just restore the initial model.
