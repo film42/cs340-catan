@@ -111,7 +111,7 @@ public class SQLGamesDAO implements GamesDAO {
     * Sets the cursor to 0.
     * return gameID
     */
-    public int addGame(String name, String initialModel) {
+    public int addGame(int gameId, String name, String initialModel) {
 
 
         int gameID = 0;
@@ -119,10 +119,12 @@ public class SQLGamesDAO implements GamesDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try{
-            String query = "INSERT INTO games( name, initialPoint) VALUES(?,?)";
+
+            String query = "INSERT INTO games(id, name, initialPoint) VALUES(?,?,?)";
             stmt = SQLPersistenceProvider.getConnection().prepareStatement(query);
-            stmt.setString(1, name);
-            stmt.setString(2,initialModel);
+            stmt.setInt(1,gameId);
+            stmt.setString(2, name);
+            stmt.setString(3,initialModel);
             if(stmt.executeUpdate() == 1){
                 rs = stmt.getGeneratedKeys();
                 gameID = rs.getInt(1);
