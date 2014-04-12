@@ -29,9 +29,8 @@ public class GamesDAOTest {
         sqlProvider = new SQLPersistenceProvider();
 
         gamesDAO = new SQLGamesDAO();
-        gameDTO1 = new GameDTO(0, "Game1", "initialPoint1", "checkPoint1", "commandList1", 10);
-        gameDTO2 = new GameDTO(1, "Game2", "initialPoint2", "checkPoint2", "commandList2", 20);
-
+        gameDTO1 = new GameDTO(1, "Game1", "initialPoint1", "checkPoint1", "commandList1", 10);
+        gameDTO2 = new GameDTO(2, "Game2", "initialPoint2", "checkPoint2", "commandList2", 20);
     }
 
     @Test
@@ -44,7 +43,7 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        int gameId = gamesDAO.addGame(gameDTO1.getId(),gameDTO1.getName(), gameDTO1.getInitialPoint());
 
         //check
         assertEquals(gamesDAO.getName(gameId),gameDTO1.getName());
@@ -66,7 +65,7 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        int gameId = gamesDAO.addGame(gameDTO1.getId(),gameDTO1.getName(), gameDTO1.getInitialPoint());
 
         assertTrue(gamesDAO.updateCheckpoint(gameId, newCheckPoint, newCursor));
 
@@ -91,7 +90,7 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        int gameId = gamesDAO.addGame(gameDTO1.getId(),gameDTO1.getName(), gameDTO1.getInitialPoint());
 
         assertTrue(gamesDAO.updateCommandList(gameId, newUpdateList));
 
@@ -110,9 +109,9 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        gamesDAO.addGame(gameDTO1.getId(),gameDTO1.getName(), gameDTO1.getInitialPoint());
         //add another game
-        gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
+        gamesDAO.addGame(gameDTO2.getId(),gameDTO2.getName(), gameDTO2.getInitialPoint());
         if (gamesDAO.getGameIds().size() != 2)
             fail();
         sqlProvider.rollbackTransaction();
@@ -127,12 +126,12 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        int gameId = gamesDAO.addGame(1,gameDTO1.getName(), gameDTO1.getInitialPoint());
         gamesDAO.updateCheckpoint(gameId, gameDTO1.getCheckPoint(), gameDTO1.getCheckPointCursor());
         gamesDAO.updateCommandList(gameId, gameDTO1.getCommandList());
 
         //add another game
-        int gameId2 = gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
+        int gameId2 = gamesDAO.addGame(2, gameDTO2.getName(), gameDTO2.getInitialPoint());
         gamesDAO.updateCheckpoint(gameId2, gameDTO2.getCheckPoint(), gameDTO2.getCheckPointCursor());
         gamesDAO.updateCommandList(gameId2, gameDTO2.getCommandList());
 
@@ -156,10 +155,10 @@ public class GamesDAOTest {
         gamesDAO.deleteGames();
 
         //add game
-        int gameId = gamesDAO.addGame(gameDTO1.getName(), gameDTO1.getInitialPoint());
+        int gameId = gamesDAO.addGame(1, gameDTO1.getName(), gameDTO1.getInitialPoint());
 
         //add another game
-        int gameId2 = gamesDAO.addGame(gameDTO2.getName(), gameDTO2.getInitialPoint());
+        int gameId2 = gamesDAO.addGame(2, gameDTO2.getName(), gameDTO2.getInitialPoint());
 
         if(gamesDAO.getGames().size() != 2 )
             fail();

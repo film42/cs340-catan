@@ -1,5 +1,6 @@
 package persistence;
 
+import comm.moves.base.Command;
 import comm.moves.base.InvalidCommandException;
 import model.InjectorFactory;
 import model.JsonImpl;
@@ -8,13 +9,11 @@ import model.base.GameInfoImpl;
 import modelInterfaces.base.Game;
 import modelInterfaces.base.GameInfo;
 import modelInterfaces.users.User;
+import server.Server;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import comm.moves.base.Command;
-import server.Server;
 
 /**
  * Created by Jon on 4/4/14.
@@ -23,7 +22,6 @@ public class PersistenceManager {
 
 	private PersistenceProvider persistenceProv = null;
     private int saveInterval;
-	private int commandNumber = 0;
 
     /**
      * load in config data for plug in.
@@ -75,9 +73,9 @@ public class PersistenceManager {
 
 		persistenceProv.beginTransaction();
 		GamesDAO gamesDAO = persistenceProv.getGamesDAO();
-        //I'm concerned we don't pass the ID in.
-		int gameId = gamesDAO.addGame(gameInfo.getTitle(), gameInfo.getData().toJson());
-        gameInfo.setId(gameId);
+
+		gamesDAO.addGame(gameInfo.getId(), gameInfo.getTitle(), gameInfo.getData().toJson());
+        //gameInfo.setId(gameId);
 		persistenceProv.commitTransaction();
     }
 
@@ -106,7 +104,7 @@ public class PersistenceManager {
 
 		persistenceProv.beginTransaction();
 		UsersDAO usersDAO = persistenceProv.getUsersDAO();
-		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<User> users = new ArrayList<>();
 		for (UserDTO uDTO : usersDAO.getUsers()) {
 			User user = InjectorFactory.getInjector().getInstance(User.class);
 			user.setId(uDTO.getId());
@@ -137,7 +135,6 @@ public class PersistenceManager {
         }
 
 		persistenceProv.commitTransaction();
-
 		// Return the list of games
 		return gameList;
     }
