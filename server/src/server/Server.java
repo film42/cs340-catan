@@ -45,7 +45,7 @@ public class Server {
     private void run() {
     }
 
-    private void config(int saveInterval, String pluginName) {
+    private void config(int saveInterval, String pluginName, boolean doWipe) {
 		Server.log.info("Configuring server...");
 
         // Set port here
@@ -71,7 +71,10 @@ public class Server {
 			Server.log.warning("No persistence provider was provided.  Persistent state won't persist.");
 			return;
 		}
-//        myPersistenceManager.clearDatabase();
+
+        // Wipe if requested
+        if(doWipe)
+            myPersistenceManager.clearDatabase();
 
         Set<User> loadedUsers = new HashSet<>();
         List<User> users = myPersistenceManager.loadUsers();
@@ -223,10 +226,12 @@ public class Server {
         Server server = new Server();
         int saveInterval = DEFAULT_INTERVAL; //default save Interval
         String pluginName = "";
+        boolean doWipe = false;
         try{
         if (args.length > 1) {
             saveInterval = Integer.parseInt(args[0]);
             pluginName = args[1];
+            doWipe = Boolean.parseBoolean(args[2]);
         }
         if (saveInterval < 1) {
             throw new IllegalArgumentException();
@@ -235,7 +240,7 @@ public class Server {
             log.warning("Bad save Interval argument: " + args[0]);
             saveInterval = DEFAULT_INTERVAL;
         }
-        server.config(saveInterval, pluginName);
+        server.config(saveInterval, pluginName, doWipe);
         server.run();
     }
 

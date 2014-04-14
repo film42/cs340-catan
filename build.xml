@@ -7,6 +7,9 @@
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="gameplay"/>
     <property name="requests.arg" value="ug"/>
+		<property name="save_interval" value="10"/>
+		<property name="db" value="MongoDBPersistence"/>
+		<property name="wipe" value="false"/>
 
     <!-- Base output folder -->
     <property name="dest.dir" value="docs"/>
@@ -90,10 +93,12 @@
 	<!-- ******* -->
   <target name="our-server" depends="compile" description="Runs the student server">
       <java classname="server.Server" fork="yes" dir="server">
-          <arg value="${port.arg}"/>
+<!--           <arg value="${port.arg}"/> -->
 <!--           <arg value="${web.arg}"/> -->
 <!--           <arg value="${requests.arg}"/> -->
-					<arg value="MongoDBPersistence"/>
+          <arg value="${save_interval}"/>
+					<arg value="${db}"/>
+					<arg value="${wipe}"/>
           <classpath>
               <path refid="server-classpath"/>
           </classpath>

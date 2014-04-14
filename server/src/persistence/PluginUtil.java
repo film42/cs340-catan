@@ -2,6 +2,7 @@ package persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import server.Server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +26,7 @@ public class PluginUtil {
     }
 
 	public void loadPlugin(String pluginName) {
+
         this.pluginName = pluginName;
         //load jarPath and classPath from config file config.json
         String configjson = null;
@@ -33,6 +35,8 @@ public class PluginUtil {
             GsonBuilder gb = new GsonBuilder();
             Gson gson = gb.create();
             configfile = gson.fromJson(configjson, ConfigFormat.class);
+
+            Server.log.severe("Starting server with: " + configfile.name);
             //configfile = JsonImpl.fromJson(configjson, ConfigFormat.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
