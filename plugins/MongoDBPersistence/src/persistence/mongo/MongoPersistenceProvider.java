@@ -26,18 +26,21 @@ public class MongoPersistenceProvider implements PersistenceProvider {
      */
     public static DB getConnection() {
 
+
+        Connection conn = Connection.fromLocalSettings();
+
         // Return DB if we've established a connection
         if(mongoClient != null) {
-            DB db = mongoClient.getDB("catan");
-            // db.authenticate("", ""); // Later for deployment
+            DB db = mongoClient.getDB(conn.getDatabaseName());
+            db.authenticate(conn.getUsername(), conn.getPassword());
             return db;
         }
 
         // Otherwise create a new Client and connect
         try {
-            mongoClient = new MongoClient("localhost", 27017);
-            DB db = mongoClient.getDB("catan");
-            // db.authenticate("", ""); // Later for deployment
+            mongoClient = new MongoClient(conn.getHost(), conn.getPort());
+            DB db = mongoClient.getDB(conn.getDatabaseName());
+            db.authenticate(conn.getUsername(), conn.getPassword());
             return db;
         } catch (UnknownHostException e) {
             e.printStackTrace();

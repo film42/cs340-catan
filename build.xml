@@ -91,8 +91,9 @@
   <target name="our-server" depends="compile" description="Runs the student server">
       <java classname="server.Server" fork="yes" dir="server">
           <arg value="${port.arg}"/>
-          <arg value="${web.arg}"/>
-          <arg value="${requests.arg}"/>
+<!--           <arg value="${web.arg}"/> -->
+<!--           <arg value="${requests.arg}"/> -->
+					<arg value="MongoDBPersistence"/>
           <classpath>
               <path refid="server-classpath"/>
           </classpath>

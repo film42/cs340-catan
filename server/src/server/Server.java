@@ -49,7 +49,12 @@ public class Server {
 		Server.log.info("Configuring server...");
 
         // Set port here
-        setPort(8081);
+        if(System.getenv("PORT") == null)
+            setPort(8081);
+        else {
+            int port = Integer.parseInt( System.getenv("PORT") );
+            setPort(port);
+        }
 
         // Set static directory to "gameplay"
         externalStaticFileLocation("../gameplay");
