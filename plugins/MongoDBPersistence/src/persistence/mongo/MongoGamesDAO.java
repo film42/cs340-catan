@@ -71,7 +71,7 @@ public class MongoGamesDAO implements GamesDAO {
 
         coll.insert(obj); // NOT ATOMIC
 
-        return 0;
+        return (Integer)obj.get( "id" );
     }
 
     @Override

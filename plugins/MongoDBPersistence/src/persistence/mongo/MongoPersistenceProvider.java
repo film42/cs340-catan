@@ -24,11 +24,7 @@ public class MongoPersistenceProvider implements PersistenceProvider {
      *
      * @return MongoClient
      */
-    public static DB getConnection() {
-
-
-        Connection conn = Connection.fromLocalSettings();
-
+    public static DB getConnection(Connection conn) {
         // Return DB if we've established a connection
         if(mongoClient != null) {
             DB db = mongoClient.getDB(conn.getDatabaseName());
@@ -47,6 +43,11 @@ public class MongoPersistenceProvider implements PersistenceProvider {
         }
 
         return null;
+    }
+
+    public static DB getConnection() {
+        Connection conn = Connection.fromLocalSettings();
+        return getConnection(conn);
     }
 
     /**
